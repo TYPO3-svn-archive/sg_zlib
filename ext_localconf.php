@@ -30,6 +30,7 @@ if(TYPO3_MODE == 'FE') {
 
 	require_once(PATH_tslib.'class.tslib_pibase.php');
 	require_once(t3lib_extMgm::extPath('sg_zlib').'class.tx_sglib_factory.php');
+	require_once(t3lib_extMgm::extPath('sg_zlib').'class.tx_sglib_exceptions.php');
 
 	require_once(t3lib_extMgm::extPath('sg_zlib').'class.tx_sglib_config.php');
 	require_once(t3lib_extMgm::extPath('sg_zlib').'class.tx_sglib_const.php');

@@ -63,51 +63,55 @@
  *
  *
  *
- *  109: class tx_sglib_modelbase extends tx_sglib_data
- *  131:     function __construct ($designator, $factoryObj, $cached)
- *  153:     protected function init()
+ *  115: class tx_sglib_modelbase extends tx_sglib_data
+ *  143:     function __construct ($designator, $factoryObj, $cached)
+ *  163:     protected function init()
  *
  *              SECTION: Setters
- *  169:     function showAllIfEmptySearch($mode)
- *  180:     function setActivePage($value)
- *  193:     function setResultsPerPage($value)
- *  206:     function setSearchMode($mode)
- *  217:     function setSearchParams($params)
- *  228:     function setListMode($params)
+ *  179:     function showAllIfEmptySearch($mode)
+ *  190:     function setActivePage($value)
+ *  203:     function setResultsPerPage($value)
+ *  216:     function setSearchMode($mode)
+ *  227:     function setSearchParams($params)
+ *  238:     function setListMode($params)
+ *  250:     function setWhereRestrict($params)
+ *  261:     function allowFrom(array $paramsArray)
+ *  283:     function clearExtraParams($params)
  *
  *              SECTION: Main Functions
- *  247:     function readReferenceTables($tables,$mode)
- *  267:     protected function readTable($table,$mode)
- *  298:     function performSearch()
- *  359:     protected function readResultList($res,$data)
- *  372:     protected function clearResult()
+ *  301:     function readReferenceTables($tables,$mode='')
+ *  323:     protected function readTable($table,$data=NULL,$mode='',$where='1=1')
+ *  379:     function getRefItems($table,$field,$em,$row)
+ *  426:     function performSearch()
+ *  487:     protected function readResultList($res,$data)
+ *  500:     protected function clearResult()
  *
  *              SECTION: Getters
- *  388:     public function getResult()
- *  401:     public function getDescriptions($table='')
- *  431:     public function __get($nm)
+ *  516:     public function getResult()
+ *  529:     public function getSingleRecord($uid=-1)
+ *  557:     public function getUid($uid=-1)
+ *  570:     public function getDescriptions($table='')
+ *  600:     public function __get($nm)
  *
  *              SECTION: Query Generation Functions
- *  460:     protected function createWhere()
- *  474:     protected function createWhereFromParams()
- *  486:     protected function createOrder($table='')
- *  510:     protected function createAddSelect()
- *  525:     protected function createGroup()
- *  541:     protected function getLabelField($table)
+ *  632:     protected function createWhere($table='',$excludeFields='')
+ *  697:     protected function createWhereFromParams($q=array(), $table='',$excludeFields='')
+ *  760:     function getDbBuildSingleQuery ($table,$key,$text)
+ *  891:     protected function createOrder($table='')
+ *  915:     protected function createAddSelect()
+ *  930:     protected function createGroup()
+ *  946:     protected function getLabelField($table)
  *
  *              SECTION: Functions for References
- *  563:     protected function includeSortingReferences(&$q)
- *  590:     protected function findAllReferences()
+ *  968:     protected function includeSortingReferences(&$q)
  *
  *              SECTION: Low Level Functions
- *  628:     function defaultTable($field)
+ * 1003:     function defaultTable($field)
  *
- * TOTAL FUNCTIONS: 25
+ * TOTAL FUNCTIONS: 31
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
-
-
 class tx_sglib_modelbase extends tx_sglib_data {
 	protected $designator;
 	protected $factoryObj;
@@ -126,6 +130,10 @@ class tx_sglib_modelbase extends tx_sglib_data {
 	protected $searchParams = Array();
 	protected $listMode;
 	protected $myWhereRestrict;
+	protected $globalAllowed = false;
+	protected $storagePageAllowed = true;
+	protected $samePageAllowed = false;
+	protected $anyPageAllowed = false;
 
 	protected $resultData = NULL;
 	protected $resultParams = Array();
@@ -244,6 +252,27 @@ class tx_sglib_modelbase extends tx_sglib_data {
 		$this->clearResult();
 	}
 
+	/**
+	 * [Describe function...]
+	 *
+	 * @param	[type]		$array $paramsArray: ...
+	 * @return	[type]		...
+	 */
+	function allowFrom(array $paramsArray) {
+		if (isset($paramsArray['globalPage'])) {
+			$this->globalAllowed = $paramsArray['globalPage'];
+		}
+		if (isset($paramsArray['storagePage'])) {
+			$this->storagePageAllowed = $paramsArray['storagePage'];
+		}
+		if (isset($paramsArray['samePage'])) {
+			$this->samePageAllowed = $paramsArray['samePage'];
+		}
+		if (isset($paramsArray['anyPage'])) {
+			$this->anyPageAllowed = $paramsArray['anyPage'];
+		}
+	}
+
 
 	/**
 	 * [Describe function...]
@@ -255,7 +284,6 @@ class tx_sglib_modelbase extends tx_sglib_data {
 		$this->myWhereRestrict = NULL;
 		$this->clearResult();
 	}
-
 
 	/***********************************************************************************************
 	 *
@@ -288,6 +316,8 @@ class tx_sglib_modelbase extends tx_sglib_data {
 	 *
 	 * @param	[type]		$table: ...
 	 * @param	[type]		$mode: ...
+	 * @param	[type]		$mode: ...
+	 * @param	[type]		$where: ...
 	 * @return	[type]		...
 	 */
 	protected function readTable($table,$data=NULL,$mode='',$where='1=1') {
@@ -307,7 +337,7 @@ class tx_sglib_modelbase extends tx_sglib_data {
 			if (is_array($this->searchParams))foreach ($this->searchParams as $key=>$value) {
 				if (strcmp($key,$mode) && $value) {
 					$q['where'] .= ' AND '.$this->mainTable.'.'.$key.'='.$value.' ';
-				} 
+				}
 			}
 			$q['order'] = $this->createOrder($table);
 			$q['group'] = '';
@@ -337,6 +367,15 @@ class tx_sglib_modelbase extends tx_sglib_data {
 		return ($data);
 	}
 
+	/**
+	 * [Describe function...]
+	 *
+	 * @param	[type]		$table: ...
+	 * @param	[type]		$field: ...
+	 * @param	[type]		$em: ...
+	 * @param	[type]		$row: ...
+	 * @return	[type]		...
+	 */
 	function getRefItems($table,$field,$em,$row) {
 
 		if ($em<=SGZLIB_SEARCHALL) {
@@ -484,6 +523,47 @@ class tx_sglib_modelbase extends tx_sglib_data {
 	/**
 	 * [Describe function...]
 	 *
+	 * @param	[type]		$uid: ...
+	 * @return	[type]		...
+	 */
+	public function getSingleRecord($uid=-1) {
+		$record = NULL;
+		$uid = $this->getUid($uid);
+
+		$q['select'] = $this->mainTable.'.*';
+		$q['table'] = $this->mainTable;
+		$q['where'] = $this->mainTable.'.uid='.$uid.$this->cObj->enableFields($this->mainTable);
+		$q['order'] = '';
+		$q['group'] = '';
+		$q['limit'] = '';
+
+		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($q['select'], $q['table'], $q['where'], $q['group'], $q['order'], $q['limit']);
+		if ($res) {
+			$cnt = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
+			if ($cnt) {
+				$record = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+			}
+		}
+
+		return ($record);
+	}
+
+	/**
+	 * [Describe function...]
+	 *
+	 * @param	[type]		$uid: ...
+	 * @return	[type]		...
+	 */
+	public function getUid($uid=-1) {
+		if ($uid<0) {
+			$uid=$this->paramsObj->getUid();
+		}
+		return (intval($uid));
+	}
+
+	/**
+	 * [Describe function...]
+	 *
 	 * @param	[type]		$table: ...
 	 * @return	[type]		...
 	 */
@@ -545,9 +625,12 @@ class tx_sglib_modelbase extends tx_sglib_data {
 	/**
 	 * [Describe function...]
 	 *
+	 * @param	[type]		$table: ...
+	 * @param	[type]		$excludeFields: ...
 	 * @return	[type]		...
 	 */
 	protected function createWhere($table='',$excludeFields='') {
+		$table = $table ? $table : $this->mainTable;
 		$q = Array();
 
 //		// first: always set default where-clause (set in TS) (if any)
@@ -565,6 +648,24 @@ class tx_sglib_modelbase extends tx_sglib_data {
 //			}
 //		}
 
+		if (!$this->anyPageAllowed) {
+			$pidQuery = Array();
+			if ($this->globalAllowed) {
+				$pidQuery[] = $table.'.pid=0';
+			}
+			if ($this->storagePageAllowed) {
+				if ($this->confObj->getPidList()) {
+					$pidQuery[] = $table.'.pid IN ('.$this->confObj->getPidList().')';
+				} else {
+					$pidQuery[] = $table.'.pid>=0';
+				}
+			}
+			if ($this->samePageAllowed) {
+				$pidQuery[] = $table.'.pid='.intval($GLOBALS['TSFE']->id);
+			}
+			$q['pid'] = '('.implode(' OR ',$pidQuery).')';
+		}
+
 		// third: set all defined queries
 		if (strcmp($excludeFields,'*')) {
 			$q = $this->createWhereFromParams($q,$table,$excludeFields);
@@ -581,12 +682,16 @@ class tx_sglib_modelbase extends tx_sglib_data {
 
 
 		$where .= $this->cObj->enableFields($this->mainTable);
+		// t3lib_div::debug(Array('$where'=>$where, '$q'=>$q, 'File:Line'=>__FILE__.':'.__LINE__));
 		return ($where);
 	}
 
 	/**
 	 * [Describe function...]
 	 *
+	 * @param	[type]		$q: ...
+	 * @param	[type]		$table: ...
+	 * @param	[type]		$excludeFields: ...
 	 * @return	[type]		...
 	 */
 	protected function createWhereFromParams($q=array(), $table='',$excludeFields='') {
@@ -638,7 +743,7 @@ class tx_sglib_modelbase extends tx_sglib_data {
 				}
 			}
 
-		
+
 		}
 		return ($q);
 	}

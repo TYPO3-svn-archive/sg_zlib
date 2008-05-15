@@ -1,0 +1,5 @@
+#Constants:
+
+plugin.tx_myplugin_pi1.PIDitemDisplay = 0
+plugin.tx_myplugin_pi1.PIDlistDisplay = 0
+plugin.tx_myplugin_pi1.langImport = LLL:EXT:my_plugin/pi1/locallang_import.php

@@ -59,6 +59,7 @@ class txsg_cached_base_standard extends txsg_cached_base {
 		$model->showAllIfEmptySearch($listConf['showAllIfEmptySearch']);
 		$model->setSearchMode($this->paramsObj->getSearchmode());
 		$model->setSearchParams($this->paramsObj->getSearch());
+		$model->allowFrom((array)$listConf['allowFrom.']);
 		$model->setListMode($listMode);
 		$model->setResultsPerPage($this->paramsObj->getListResultsPerPage());
 		$model->setActivePage($this->paramsObj->getListActivePage());

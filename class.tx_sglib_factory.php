@@ -28,22 +28,23 @@
  *
  *
  *   53: class tx_sglib_factory
- *   90:     public function setBaseConfig($designator, $parentCObj, $conf)
- *  105:     public function setBaseTables($mainTable, $tables)
- *  153:     public function getconfObj()
- *  183:     public function getDebugObj()
- *  194:     public function getConstObj()
- *  209:     public function getParamsObj()
- *  223:     public function getMarkersObj()
- *  238:     public function getLangObj()
- *  252:     public function getPermitObj()
- *  267:     public function getTemplateObj()
- *  279:     public function getItemsObj()
- *  291:     public function getDivObj()
- *  304:     public function getData($name='tx_sglib_data')
- *  316:     public function getModel($name)
- *  336:     public function getView($name)
- *  356:     private function checkForconfObj()
+ *  101:     public function setBaseTables($mainTable, $tables)
+ *  140:     public function __get($nm)
+ *  185:     public function getConfObj()
+ *  213:     protected function getDebugObj()
+ *  223:     protected function getConstObj()
+ *  235:     protected function getParamsObj()
+ *  247:     protected function getMarkersObj()
+ *  259:     protected function getLangObj()
+ *  271:     protected function getPermitObj()
+ *  283:     protected function getTemplateObj()
+ *  293:     protected function getItemsObj()
+ *  303:     protected function getDivObj()
+ *  316:     public function getData($name='tx_sglib_data')
+ *  328:     public function getModel($name)
+ *  348:     public function getView($name)
+ *  367:     function getDesignator()
+ *  377:     private function checkForconfObj()
  *
  * TOTAL FUNCTIONS: 17
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -73,7 +74,14 @@ class tx_sglib_factory {
 			self::$instance[$designator] = new tx_sglib_factory();
 			self::$instance[$designator]->designator = $designator;
 		}
-		self::$instance[$designator]->cObj = $parentCObj;
+		if (self::$instance[$designator]->cObj!=$parentCObj) {
+			self::$instance[$designator]->cObj = $parentCObj;
+			if (is_object(self::$instance[$designator]->confObj)) {
+				self::$instance[$designator]->confObj->setParentObject($parentCObj);
+				self::$instance[$designator]->confObj->setLocalConf();
+				self::$instance[$designator]->confObj->combineTCAandConf('*');
+			}
+		}
 		if (!is_array(self::$instance[$designator]->baseConfig)) {
 			self::$instance[$designator]->baseConfig = Array();
 		}
@@ -175,27 +183,25 @@ class tx_sglib_factory {
 	 * @return	[type]		...
 	 */
 	public function getConfObj() {
-		$conf = $this->baseConfig['conf'];
-
 		if (!isset($this->confObj)) {
+			$conf = $this->baseConfig['conf'];
 			$this->confObj = tx_sglib_config::getInstance($this->designator, $this, $conf);
 			$tables = $this->baseConfig['tables'];
 			if (is_array($tables)) foreach ($tables as $table) {
 				$this->confObj->setTCAdata($table);
 			}
 			$this->confObj->setTCAname($this->baseConfig['mainTable']);
+			$this->confObj->setPreConfData('tx_sgzlib', $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sgzlib.']);
 			$this->confObj->setConfData($conf);
-			$this->confObj->mergeWithConfData($GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sgzlib.']);
+			$this->confObj->setLocalConf();
 			$this->confObj->combineTCAandConf('*');
-		} else {
-			$this->confObj->setParentObject($this->cObj);
 		}
 
 		if (!isset($this->debugObj)) {
 			$this->debugObj = tx_sglib_debug::getInstance($this->designator, $this);
+			$this->myDebugObj = $this->debugObj;
 		}
 
-		$this->myDebugObj = $this->debugObj;
 		return ($this->confObj);
 	}
 
@@ -304,6 +310,7 @@ class tx_sglib_factory {
 	/**
 	 * [Describe function...]
 	 *
+	 * @param	[type]		$name: ...
 	 * @return	[type]		...
 	 */
 	public function getData($name='tx_sglib_data') {
@@ -326,7 +333,7 @@ class tx_sglib_factory {
 			$obj = new $name($argList[1],$this,$argList[2]);
 		} else {
 			$error = 'getModel("'.$name.'",$designator,$cached)<br />... only '.$numArgs.' Arguments given!';
-			$this->myDebugObj->showError(0,$error,SGZLIB_FATALERROR); 
+			$this->myDebugObj->showError(0,$error,SGZLIB_FATALERROR);
 		}
 
 		return ($obj);
@@ -346,7 +353,7 @@ class tx_sglib_factory {
 			$obj = new $name($argList[1],$this,$argList[2],$argList[3]);
 		} else {
 			$error = 'getView("'.$name.'",$designator,$model,$cached)<br />... only '.$numArgs.' Arguments given!';
-			$this->myDebugObj->showError(0,$error,SGZLIB_FATALERROR); 
+			$this->myDebugObj->showError(0,$error,SGZLIB_FATALERROR);
 		}
 
 		return ($obj);

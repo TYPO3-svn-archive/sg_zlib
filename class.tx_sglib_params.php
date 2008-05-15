@@ -27,17 +27,19 @@
  *
  *
  *
- *   44: class tx_sglib_params
- *   72:     private function init(tx_sglib_config $confObj, tx_sglib_debug $debugObj)
- *   90:     private function _fCount ($name=NULL)
- *  113:     function __destruct()
- *  122:     function getSearchmode()
- *  131:     function getSearch()
- *  140:     function getListMode()
- *  160:     function getListResultsPerPage()
- *  174:     function getListActivePage()
+ *   46: class tx_sglib_params
+ *   75:     private function init(tx_sglib_factory $factoryObj)
+ *   94:     private function _fCount ($name=NULL)
+ *  117:     function __destruct()
+ *  126:     function getPluginParams()
+ *  135:     function getSearchmode()
+ *  144:     function getSearch()
+ *  153:     function getUid()
+ *  162:     function getListMode()
+ *  182:     function getListResultsPerPage()
+ *  196:     function getListActivePage()
  *
- * TOTAL FUNCTIONS: 8
+ * TOTAL FUNCTIONS: 10
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -141,6 +143,15 @@ class tx_sglib_params {
 	 */
 	function getSearch() {
 		return ($this->params['search']);
+	}
+
+	/**
+	 * [Describe function...]
+	 *
+	 * @return	[type]		...
+	 */
+	function getUid() {
+		return intval($this->params['uid']);
 	}
 
 	/**

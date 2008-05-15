@@ -28,7 +28,7 @@
  *
  *
  *   50: class tx_sglib_lang
- *   79:     private function init(tx_sglib_config $confObj, tx_sglib_debug $debugObj)
+ *   79:     private function init(tx_sglib_factory $factoryObj)
  *  104:     private function _fCount ($name=NULL)
  *  127:     function __destruct()
  *  136:     function _initGlobalLangObject ()
@@ -53,7 +53,6 @@ class tx_sglib_lang {
 	private $factoryObj = NULL;
 	private $confObj;
 	private $debugObj;
-	private $cObj;
 	private $conf=Array();
 	private $defaultDesignator;
 	private $langUid;
@@ -83,7 +82,6 @@ class tx_sglib_lang {
 		$this->confObj = $factoryObj->confObj;
 		$this->defaultDesignator = $this->confObj->getDesignator();
 		$this->debugObj = $factoryObj->debugObj;
-		$this->cObj = $factoryObj->cObj;
 		$this->conf = (array) $this->confObj->lang;
 
 		$this->_initGlobalLangObject();

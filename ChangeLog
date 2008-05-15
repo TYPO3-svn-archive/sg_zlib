@@ -1,4 +1,12 @@
 
+0.1.643	Working on viewDetail
+
+0.1.642	Added: modelbase->allowFrom select list of allowed PIDs
+	Added: functionality for TS list.segment.
+
+0.1.641	New: tx_sgzlib_exceptions
+	Changed: view is using exceptions now.
+
 0.1.640	configObj is now an IteratorObject
 
 0.1.639	Import extended by function importPreProcessSummary(); 

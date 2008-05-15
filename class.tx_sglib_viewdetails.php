@@ -49,11 +49,13 @@
  *
  *
  *
- *   63: class tx_sglib_viewdetails extends tx_sglib_viewbase
- *   66:     protected function init()
- *   74:     function getOutput()
+ *   65: class tx_sglib_viewdetails extends tx_sglib_viewbase
+ *   68:     protected function init()
+ *   82:     function renderOutput()
+ *   99:     protected function getTemplate()
+ *  110:     protected function renderRecord($record,$markers=Array())
  *
- * TOTAL FUNCTIONS: 2
+ * TOTAL FUNCTIONS: 4
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -64,6 +66,12 @@ class tx_sglib_viewdetails extends tx_sglib_viewbase  {
 	private $flagEmptyResultAsSubpart = '';
 
 	protected function init() {
+		$this->dConf = $this->confObj->details;
+		$this->subparts = Array();
+		$this->markers = $this->constObj->getMarkers();
+		$this->markers = $this->markersObj->getDescriptions('',$this->markers);
+		$this->markers = $this->markersObj->getTtContent($this->listConf['tt_content.'],$this->markers);
+		$this->subpartMarkers = Array();
 	}
 
 	/**
@@ -71,13 +79,48 @@ class tx_sglib_viewdetails extends tx_sglib_viewbase  {
 	 *
 	 * @return	[type]		...
 	 */
-	function getOutput() {
-		$content = '';
-		$content .= 'Default Output of View-Details-Object!<br />';
-
-		return ($content);
+	function renderOutput() {
+		$this->getTemplate();
+		$record = $this->model->getSingleRecord();
+		if ($record) {
+			$this->markers = $this->renderRecord($record,$this->markers);
+			$this->output = $this->cObj->substituteMarkerArrayCached($this->template,$this->markers,$this->subpartMarkers);
+		} else {
+			// Error Output!
+			$this->output = '--NO RECORD FOUND!--';
+		}
 	}
 
+	/**
+	 * [Describe function...]
+	 *
+	 * @return	[type]		...
+	 */
+	protected function getTemplate() {
+		$this->getTemplateSubpart($this->dConf['template'],  $this->dConf['subpart']);
+	}
+
+	/**
+	 * [Describe function...]
+	 *
+	 * @param	[type]		$record: ...
+	 * @param	[type]		$markers: ...
+	 * @return	[type]		...
+	 */
+	protected function renderRecord($record,$markers=Array()) {
+		if (is_array($this->registeredFunctions['processSingleDataRow']))
+			foreach ($this->registeredFunctions['processSingleDataRow'] as $theFunction) {
+			//t3lib_div::debug(Array('$theFunction'=>$theFunction, 'File:Line'=>__FILE__.':'.__LINE__));
+			$obj = $theFunction[0];
+			$func = $theFunction[1];
+			$markers = $obj->$func($record, $markers);
+		}
+
+		$markers = $this->markersObj->getDescriptions('',$markers);
+		$markers = $this->getRow($record,$markers);
+
+		return ($markers);
+	}
 
 }
 

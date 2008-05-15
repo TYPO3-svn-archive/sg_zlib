@@ -28,16 +28,16 @@
  *
  *
  *   46: class tx_sglib_debug
- *   73:     private function init(tx_sglib_config $confObj)
- *   93:     private function _fCount ($name=NULL)
- *  116:     function __destruct()
- *  130:     function isDebug ($when,$field='',$onlyIf=TRUE,$alwaysIf=FALSE)
- *  148:     function debug($what,$view=false)
- *  174:     function debugIf ($when,$what,$onlyIf=TRUE,$alwaysIf=FALSE)
- *  190:     function displayIf ($when,$what,$onlyIf=TRUE,$alwaysIf=FALSE)
- *  209:     function debugVal ($when,$field,$what,$condition=TRUE,$alwaysIf=FALSE)
- *  223:     function shortBacktrace ($count=5,$minimize=0)
- *  263:     function showError ($shortcut, $message, $mode=0, $data=array(),$file='',$line=0)
+ *   74:     private function init(tx_sglib_factory $factoryObj)
+ *   95:     private function _fCount ($name=NULL)
+ *  118:     function __destruct()
+ *  132:     function isDebug ($when,$field='',$onlyIf=TRUE,$alwaysIf=FALSE)
+ *  150:     function debug($what,$view=false)
+ *  176:     function debugIf ($when,$what,$onlyIf=TRUE,$alwaysIf=FALSE)
+ *  192:     function displayIf ($when,$what,$onlyIf=TRUE,$alwaysIf=FALSE)
+ *  211:     function debugVal ($when,$field,$what,$condition=TRUE,$alwaysIf=FALSE)
+ *  225:     function shortBacktrace ($count=5,$minimize=0)
+ *  265:     function showError ($shortcut, $message, $mode=0, $data=array(),$file='',$line=0)
  *
  * TOTAL FUNCTIONS: 10
  * (This index is automatically created/updated by the extension "extdeveval")

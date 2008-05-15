@@ -28,24 +28,24 @@
  *
  *
  *   54: class tx_sglib_const
- *   88:     private function init(tx_sglib_config $confObj, tx_sglib_debug $debugObj, tx_sglib_lang $langObj, $cObj)
- *  110:     private function _fCount ($name=NULL)
- *  133:     function __destruct()
- *  143:     private function _initWraps($conf)
- *  158:     private function _initConst($conf)
- *  183:     private function _initMoreConst()
- *  233:     private function _initIcons($conf)
- *  247:     private function _initButtons($conf)
- *  260:     function getWrap ($name=NULL,$part='')
- *  279:     function getConst ($name=NULL)
- *  294:     function getIcon ($name)
- *  309:     function isIconTypeText ($name)
- *  324:     function getIconResource ($name)
- *  338:     function getMarkers()
- *  358:     function getButton($name,$defaultText='',$asResource=FALSE)
- *  401:     function buttonExists($name)
- *  412:     function getButtonType($name)
- *  423:     function getButtonConf($name)
+ *   87:     private function init(tx_sglib_factory $factoryObj)
+ *  109:     private function _fCount ($name=NULL)
+ *  132:     function __destruct()
+ *  142:     private function _initWraps($conf)
+ *  157:     private function _initConst($conf)
+ *  182:     private function _initMoreConst()
+ *  232:     private function _initIcons($conf)
+ *  246:     private function _initButtons($conf)
+ *  259:     function getWrap ($name=NULL,$part='')
+ *  278:     function getConst ($name=NULL)
+ *  293:     function getIcon ($name)
+ *  308:     function isIconTypeText ($name)
+ *  323:     function getIconResource ($name)
+ *  337:     function getMarkers()
+ *  357:     function getButton($name,$defaultText='',$asResource=FALSE)
+ *  400:     function buttonExists($name)
+ *  411:     function getButtonType($name)
+ *  422:     function getButtonConf($name)
  *
  * TOTAL FUNCTIONS: 18
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -57,7 +57,6 @@ class tx_sglib_const {
 	private $factoryObj = NULL;
 	private $confObj;
 	private $debugObj;
-	private $cObj;
 	private $defaultDesignator;
 
 	private $conf=Array();
@@ -82,8 +81,7 @@ class tx_sglib_const {
 	/**
 	 * [Describe function...]
 	 *
-	 * @param	[type]		$tx_sglib_config $confObj, tx_sglib_debug $debugObj: ...
-	 * @param	[type]		$cObj: ...
+	 * @param	[type]		$factoryObj: ...
 	 * @return	[type]		...
 	 */
 	private function init(tx_sglib_factory $factoryObj) {
@@ -95,7 +93,6 @@ class tx_sglib_const {
 		$this->conf = (array) $this->confObj->constants;
 		$this->debugObj->debugIf('constConf',Array('conf(constants.)'=>$this->conf, 'File:Line'=>__FILE__.':'.__LINE__));
 		$this->langObj = $factoryObj->langObj;
-		$this->cObj = $factoryObj->cObj;
 
 		$this->_initWraps($this->conf['wraps.']);
 		$this->_initConst($this->conf['const.']);
@@ -145,7 +142,7 @@ class tx_sglib_const {
 	private function _initWraps($conf) {
 		$this->_fCount(__FUNCTION__);
 		if (is_array($conf)) foreach ($conf as $key=>$value) if(substr($key,-1)!='.') {
-			$tmp = isset($conf[$key.'.']) ? $this->cObj->cObjGetSingle($value,$conf[$key.'.']) : $value;
+			$tmp = $this->confObj->TSobj($value,$conf[$key.'.']);
 			$this->wraps[$key] = explode ('|', $tmp ,2);
 		}
 		$this->debugObj->debugIf('constConf',Array('constants/wraps'=>$this->wraps, 'File:Line'=>__FILE__.':'.__LINE__));
@@ -164,15 +161,15 @@ class tx_sglib_const {
 			$this->const[$key] = $indpEnv[$key];
 		}
 
-		$this->const['PAGE_URL'] = $this->cObj->TypoLink_URL(array('parameter'=>$GLOBALS['TSFE']->id, 'target'=>'_self'));
+		$this->const['PAGE_URL'] = $this->factoryObj->cObj->TypoLink_URL(array('parameter'=>$GLOBALS['TSFE']->id, 'target'=>'_self'));
 		$this->const['PAGE_URL'] .= (strpos($this->const['PAGE_URL'], '?')>0) ? '' : '?';
 
 		$this->_initMoreConst();
 
 		if (is_array($conf)) foreach ($conf as $key=>$value) if(substr($key,-1)!='.') {
-			$this->const[$key] = isset($conf[$key.'.']) ?
-				$this->cObj->cObjGetSingle($value,$conf[$key.'.']) : $this->cObj->insertData($this->cObj->TEXT(Array('value'=>$value)));
+			$this->const[$key] = $this->confObj->TSObj($conf[$key],$conf[$key.'.']);
 		}
+		//t3lib_div::debug(Array('$this->const'=>$this->const, 'File:Line'=>__FILE__.':'.__LINE__));
 
 		$this->debugObj->debugIf('constConf',Array('constants/const'=>$this->const, 'File:Line'=>__FILE__.':'.__LINE__));
 	}
@@ -235,7 +232,7 @@ class tx_sglib_const {
 	private function _initIcons($conf) {
 		$this->_fCount(__FUNCTION__);
 		if (is_array($conf)) foreach ($conf as $key=>$value) if(substr($key,-1)!='.') {
-			$this->icons[$key] = isset($conf[$key.'.']) ? $this->cObj->cObjGetSingle($value,$conf[$key.'.']) : $this->cObj->getData($value,array());
+			$this->icons[$key] = $this->confObj->TSobj($value,$conf[$key.'.']);
 		}
 		$this->debugObj->debugIf('constConf',Array('constants/icons'=>$this->icons, 'File:Line'=>__FILE__.':'.__LINE__));
 	}
@@ -328,7 +325,7 @@ class tx_sglib_const {
 		if ($this->isIconTypeText($name)) {
 			return($this->getIcon($name));
 		} else {
-			return($this->cObj->IMG_RESOURCE($this->conf['icons.'][$name.'.']));
+			return($this->factoryObj->cObj->IMG_RESOURCE($this->conf['icons.'][$name.'.']));
 		}
 	}
 
@@ -371,8 +368,8 @@ class tx_sglib_const {
 			if (!isset($buttonResources[$this->defaultDesignator][$name])) {
 				$myConf = $this->conf['buttons.'][$name.'.'];
 				$buttonCode = (strlen($defaultText)>0) ? $defaultText : '[['.$name.']]';
-				$this->cObj->setCurrentVal($buttonCode);
-				$buttonResources[$this->defaultDesignator][$name] = $this->cObj->IMG_RESOURCE($myConf);
+				$this->factoryObj->cObj->setCurrentVal($buttonCode);
+				$buttonResources[$this->defaultDesignator][$name] = $this->factoryObj->cObj->IMG_RESOURCE($myConf);
 			}
 			return ($buttonResources[$this->defaultDesignator][$name]);
 		} else {
@@ -384,9 +381,9 @@ class tx_sglib_const {
 					$myConf = $this->conf['buttons.'][$name.'.'];
 
 					$buttons[$this->defaultDesignator][$name] = (strlen($defaultText)>0) ? $defaultText : '[['.$name.']]';
-					$this->cObj->setCurrentVal($buttons[$name]);
+					$this->factoryObj->cObj->setCurrentVal($buttons[$name]);
 					if (strlen($myType)>0) {
-						$buttons[$this->defaultDesignator][$name] = $this->cObj->cObjGetSingle($myType,$myConf);
+						$buttons[$this->defaultDesignator][$name] = $this->confObj->TSobj($myType,$myConf);
 					}
 				}
 			}

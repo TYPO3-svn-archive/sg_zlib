@@ -77,6 +77,7 @@ class txsg_cached_base extends tslib_pibase {
 	 */
 	function main($content,$conf)	{
 		$content = '';
+		//t3lib_div::debug(Array('$conf'=>$conf, 'File:Line'=>__FILE__.':'.__LINE__));
 
 		$this->factoryObj = tx_sglib_factory::getInstance($this->prefixId, $this->cObj, $conf);
 		$this->factoryObj->setBaseTables($this->mainTable, '*') ;
@@ -84,6 +85,7 @@ class txsg_cached_base extends tslib_pibase {
 		$ms = $this->divObj->getMicroSec();
 
 		$this->confObj = $this->factoryObj->confObj;
+		$this->confObj->setPluginConfig($conf['pluginSubMode'],$conf['pluginMode'],$conf['cmdMode'],$conf['cached']);
 		$this->debugObj = $this->factoryObj->debugObj;
 		$this->constObj = $this->factoryObj->constObj;
 		$this->paramsObj = $this->factoryObj->paramsObj;
@@ -130,7 +132,14 @@ class txsg_cached_base extends tslib_pibase {
 
 		if ($this->conf['pluginSubMode']) {
 			if (method_exists ($this, $this->conf['pluginSubMode'])) {
-				$content = call_user_method ($this->conf['pluginSubMode'], $this);
+				try {
+					$functionName = $this->conf['pluginSubMode'];
+					//$content = call_user_method ($this->conf['pluginSubMode'], $this);
+					$content = $this->$functionName();
+				}
+				catch (tx_sglib_viewexception $e) {
+					$content = $e;
+				}
 			} else {
 				$content = '<br /><b>ERROR: pluginSubMode "'.$this->conf['pluginSubMode'].'" is not (yet) defined !</b><br /><br />';
 			}

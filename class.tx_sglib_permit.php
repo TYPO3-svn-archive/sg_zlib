@@ -28,33 +28,33 @@
  *
  *
  *   63: class tx_sglib_permit
- *   94:     private function init(tx_sglib_config $confObj, tx_sglib_debug $debugObj, tx_sglib_const $constObj, tx_sglib_lang $langObj)
- *  133:     private function _fCount ($name=NULL)
- *  156:     function __destruct()
+ *   95:     private function init(tx_sglib_factory $factoryObj)
+ *  135:     private function _fCount ($name=NULL)
+ *  158:     function __destruct()
  *
  *              SECTION: User Functions
- *  169:     function getActiveFeUser()
- *  190:     function getActiveFeGroups()
- *  207:     function getActiveBeUser()
- *  228:     function getActiveBeGroups()
- *  247:     function getFeUid()
- *  257:     function getBeUid()
- *  268:     function getFeUser($name=NULL)
- *  283:     function getBeUser($name=NULL)
- *  297:     function getFeGroups()
- *  307:     function getBeGroups()
- *  319:     function checkFeUserIn ($chkUserList,$chkGroupList)
- *  366:     function checkBeUserIn ($chkUserList,$chkGroupList)
+ *  171:     function getActiveFeUser()
+ *  192:     function getActiveFeGroups()
+ *  209:     function getActiveBeUser()
+ *  230:     function getActiveBeGroups()
+ *  249:     function getFeUid()
+ *  259:     function getBeUid()
+ *  270:     function getFeUser($name=NULL)
+ *  285:     function getBeUser($name=NULL)
+ *  299:     function getFeGroups()
+ *  309:     function getBeGroups()
+ *  321:     function checkFeUserIn ($chkUserList,$chkGroupList)
+ *  368:     function checkBeUserIn ($chkUserList,$chkGroupList)
  *
  *              SECTION: FE-Editing permissons
- *  417:     function allowed($property)
- *  426:     function useEditMode()
- *  435:     function getEditPropertiesAsText ()
- *  445:     function processTemplate($template)
+ *  419:     function allowed($property)
+ *  428:     function useEditMode()
+ *  437:     function getEditPropertiesAsText ()
+ *  447:     function processTemplate($template)
  *
  *              SECTION: Private functions
- *  504:     function _getEditMode ()
- *  812:     private function _getListOfEditors($myAllow)
+ *  506:     function _getEditMode ()
+ *  814:     private function _getListOfEditors($myAllow)
  *
  * TOTAL FUNCTIONS: 21
  * (This index is automatically created/updated by the extension "extdeveval")

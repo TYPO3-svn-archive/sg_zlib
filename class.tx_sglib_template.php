@@ -28,18 +28,18 @@
  *
  *
  *   48: class tx_sglib_template
- *   79:     private function init(tx_sglib_config $confObj, tx_sglib_debug $debugObj, tx_sglib_const $constObj, tx_sglib_lang $langObj, tx_sglib_permit $permitObj)
- *  100:     private function _fCount ($name=NULL)
- *  123:     function __destruct()
- *  133:     private function _initTemplateFiles($conf)
- *  168:     function getTemplate ($templateName,$globalMarkers=Array())
- *  203:     function getSubPartName($forWhat)
- *  225:     function getSubpart ($tmpl,$name,$default='')
- *  272:     function get3Subpart ($tmpl,$name,$altName='',$default='')
- *  292:     private function _getASubpart ($tmpl,$list=Array(),$info='',$hideMissing=0)
- *  356:     function getConfSubpart ($tmpl,$subpartname,$PCA='',$extConf='',$typConf='',$defdef='',$hideMissing=0)
- *  460:     function getConfSubpartArray ($tmpl,$subpartname,&$PCA,$defaultdefault='')
- *  520:     function getSubpartFromArray ($spArray,$PCA='',$row='')
+ *   80:     private function init(tx_sglib_factory $factoryObj)
+ *  102:     private function _fCount ($name=NULL)
+ *  125:     function __destruct()
+ *  135:     private function _initTemplateFiles($conf)
+ *  170:     function getTemplate ($templateName,$globalMarkers=Array())
+ *  205:     function getSubPartName($forWhat)
+ *  227:     function getSubpart ($tmpl,$name,$default='')
+ *  274:     function get3Subpart ($tmpl,$name,$altName='',$default='')
+ *  294:     private function _getASubpart ($tmpl,$list=Array(),$info='',$hideMissing=0)
+ *  358:     function getConfSubpart ($tmpl,$subpartname,$PCA='',$extConf='',$typConf='',$defdef='',$hideMissing=0)
+ *  462:     function getConfSubpartArray ($tmpl,$subpartname,&$PCA,$defaultdefault='')
+ *  522:     function getSubpartFromArray ($spArray,$PCA='',$row='')
  *
  * TOTAL FUNCTIONS: 12
  * (This index is automatically created/updated by the extension "extdeveval")

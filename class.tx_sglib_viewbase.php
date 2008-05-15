@@ -47,10 +47,17 @@
 /**
  * [CLASS/FUNCTION INDEX of SCRIPT]
  *
- *   67: function __construct ($designator, $factoryObj, $model, $cached)
- *   86: function emptyResultAsSubpart($mode)
+ *   80: function __construct ($designator, $factoryObj, $model, $cached)
+ *  100: function emptyResultAsSubpart($mode)
+ *  112: function registerFunction ($name,$myObject,$myFunction)
+ *  129: function getFeSingleField($table,$field,$row,$em,$opt=Array())
+ *  227: function getSingleField_typeSelect($table,$field,$row,$em,$myMode,$opt=Array())
+ *  266: function getSelectSearchList($myItems,$field,$value,$onc,$classname,$myMode,$em)
+ *  346: function getOutput()
+ *  360: protected function getTemplateSubpart($templateFilename,$subpart)
+ *  383: protected function getRow ($record,$markers=Array())
  *
- * TOTAL FUNCTIONS: 2
+ * TOTAL FUNCTIONS: 9
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -61,11 +68,14 @@ abstract class tx_sglib_viewbase  {
 	protected $designator;
 	protected $factoryObj;
 	protected $confObj;
+	protected $paramsObj;
 	protected $debugObj;
 	protected $markersObj;
 	protected $langObj;
 	protected $model;
 	protected $cached;
+	protected $registeredFunctions = Array();
+	protected $output = NULL;
 
 	function __construct ($designator, $factoryObj, $model, $cached) {
 		$this->designator = $designator;
@@ -91,20 +101,33 @@ abstract class tx_sglib_viewbase  {
 		$this->flagEmptyResultAsSubpart = $mode;
 	}
 
-	abstract function getOutput();
-
-		/**
+	/**
 	 * [Describe function...]
 	 *
-	 * @param	[type]		$table: ...
-	 * @param	[type]		$field: ...
-	 * @param	[type]		$row: ...
-	 * @param	[type]		$em: ...
-	 * @param	[type]		$opt: ...
+	 * @param	[type]		$name: ...
+	 * @param	[type]		$myObject: ...
+	 * @param	[type]		$myFunction: ...
 	 * @return	[type]		...
 	 */
+	function registerFunction ($name,$myObject,$myFunction) {
+		if (!is_array($this->registeredFunctions[$name])) {
+			$this->registeredFunctions[$name] = array();
+		}
+		$this->registeredFunctions[$name][] = Array($myObject,$myFunction);
+	}
+
+		/**
+ * [Describe function...]
+ *
+ * @param	[type]		$table: ...
+ * @param	[type]		$field: ...
+ * @param	[type]		$row: ...
+ * @param	[type]		$em: ...
+ * @param	[type]		$opt: ...
+ * @return	[type]		...
+ */
 	function getFeSingleField($table,$field,$row,$em,$opt=Array())	{
-		$myType = strtolower($this->confObj->mainConf[$field.'.']['type']); 
+		$myType = strtolower($this->confObj->mainConf[$field.'.']['type']);
 		$mySearchType = strtolower($this->confObj->mainSearch[$field.'.']['formtype']);
 		if ($em>=SGZLIB_SEARCH && $mySearchType) {
 			$myType = $mySearchType;
@@ -228,18 +251,18 @@ abstract class tx_sglib_viewbase  {
 	}
 
 		/**
-	 * [Describe function...]
-	 *
-	 * @param	[type]		$myItems: ...
-	 * @param	[type]		$name: ...
-	 * @param	[type]		$field: ...
-	 * @param	[type]		$value: ...
-	 * @param	[type]		$onc: ...
-	 * @param	[type]		$classname: ...
-	 * @param	[type]		$myMode: ...
-	 * @param	[type]		$em: ...
-	 * @return	[type]		...
-	 */
+ * [Describe function...]
+ *
+ * @param	[type]		$myItems: ...
+ * @param	[type]		$name: ...
+ * @param	[type]		$field: ...
+ * @param	[type]		$value: ...
+ * @param	[type]		$onc: ...
+ * @param	[type]		$classname: ...
+ * @param	[type]		$myMode: ...
+ * @param	[type]		$em: ...
+ * @return	[type]		...
+ */
 	function getSelectSearchList($myItems,$field,$value,$onc,$classname,$myMode,$em) {
 		$wrap = t3lib_div::trimExplode('|',$this->confObj->mainSearch[$field.'.']['wrap']);
 		$wrapAll = t3lib_div::trimExplode('|',$this->confObj->mainSearch[$field.'.']['wrapAll']);
@@ -279,7 +302,7 @@ abstract class tx_sglib_viewbase  {
 				$lnr++;
 				$vValue = urlencode((substr($key,-1)=='.') ? substr($key,0,-1) : $key);
 				//TODO// $itemText = $this->itemsObj->getItemText('search',$lnr,$field,$myItems,$key,$PCA);
-				$itemText = $iValue['title']; 
+				$itemText = $iValue['title'];
 				if (strlen($value)>0) {
 					$tmpItems .= TAB.$wrap[0].'<option '.($vValue==$value?'selected="selected" ':'').
 							' value="'.$vValue.'" '.$classname.'>'.$itemText.'</option>'.$wrap[1].CRLF;
@@ -315,7 +338,59 @@ abstract class tx_sglib_viewbase  {
 		return ($item);
 	}
 
+	/**
+	 * [Describe function...]
+	 *
+	 * @return	[type]		...
+	 */
+	function getOutput() {
+		if (!$this->output) {
+			$this->renderOutput();
+		}
+		return ($this->output);
+	}
 
+	/**
+	 * [Describe function...]
+	 *
+	 * @param	[type]		$templateFilename: ...
+	 * @param	[type]		$subpart: ...
+	 * @return	[type]		...
+	 */
+	protected function getTemplateSubpart($templateFilename,$subpart) {
+		if (!strlen($templateFilename)) {
+			throw new tx_sglib_viewexception ('No Template Name set',1);
+		}
+		$tmp = $this->cObj->fileResource($templateFilename);
+		if (!strlen($tmp)) {
+			throw new tx_sglib_viewexception ('Templatefile empty or not found',2,'TemplateFileName = "'.$templateFilename.'"');
+		}
+		$subpart = $subpart ? $subpart : 'main';
+		$this->template = $this->cObj->getSubpart($tmp,'###'.$subpart.'###');
+		if (!strlen($this->template)) {
+			throw new tx_sglib_viewexception ('Subpart empty or not found',3,'TemplateFileName="'.$templateFilename.'" SubpartName="'.$subpart.'"');
+		}
+	return ($this->template);
+	}
+
+	/**
+	 * [Describe function...]
+	 *
+	 * @param	[type]		$record: ...
+	 * @param	[type]		$markers: ...
+	 * @return	[type]		...
+	 */
+	protected function getRow ($record,$markers=Array()) {
+
+		foreach ($record as $key=>$value) {
+			$markers['###TEXT_'.strtoupper($key).'###'] = $value;
+			if ($this->confObj->mainConf[$key.'.']['uploadfolder']) {
+				$markers['###PATH_'.strtoupper($key).'###'] = $this->confObj->mainConf[$key.'.']['uploadfolder'];
+			}
+		}
+
+		return ($markers);
+	}
 
 }
 

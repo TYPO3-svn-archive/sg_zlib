@@ -61,21 +61,22 @@
  *
  *
  *
- *   85: class tx_sglib_viewlist extends tx_sglib_viewbase
- *  103:     protected function init()
+ *   86: class tx_sglib_viewlist extends tx_sglib_viewbase
+ *  104:     protected function init()
  *  126:     function emptyResultAsSubpart($mode)
  *  136:     function showAllIfNoSearch($mode)
  *  146:     function setListGroup($listGroup)
  *  158:     function renderOutput()
- *  171:     protected function renderList($data)
- *  189:     protected function catlistCheckPreset()
- *  205:     protected function catlistCheckBeforeLine($record)
- *  239:     protected function catlistOutputLine($record)
- *  254:     protected function catlistCheckFinish()
- *  278:     function getOutput()
- *  290:     private function getTemplate()
+ *  179:     protected function renderList($data)
+ *  199:     protected function segmentCheckPreset()
+ *  224:     protected function segmentCheckFinish()
+ *  246:     protected function catlistCheckPreset()
+ *  262:     protected function catlistCheckBeforeLine($record)
+ *  297:     protected function catlistOutputLine($record)
+ *  332:     protected function catlistCheckFinish()
+ *  356:     private function getTemplate()
  *
- * TOTAL FUNCTIONS: 12
+ * TOTAL FUNCTIONS: 13
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -111,8 +112,8 @@ class tx_sglib_viewlist extends tx_sglib_viewbase  {
 		$this->subparts = Array();
 		$this->markers = $this->constObj->getMarkers();
 		$this->markers = $this->markersObj->getDescriptions('',$this->markers);
+		$this->markers = $this->markersObj->getTtContent($this->listConf['tt_content.'],$this->markers);
 		$this->subpartMarkers = Array();
-
 	}
 
 
@@ -159,6 +160,14 @@ class tx_sglib_viewlist extends tx_sglib_viewbase  {
 		$this->markers['###PAGEBROWSER###'] = '---TODO:-Page-Browser--';
 		$this->subpartMarkers['###LINE###'] = $this->renderList($this->model->data);
 		$this->output = $this->cObj->substituteMarkerArrayCached($this->template,$this->markers,$this->subpartMarkers);
+		$removeComments=Array('<!-- ###HEADER### -->'=>'', '<!-- ###FOOTER### -->'=>'');
+		if (!is_array($this->listConf['segment.'])) {
+			$removeComments['<!-- ###REMOVE_ON_SEGMENT### -->'] = '';
+		}
+		if (!is_array($this->listConf['divide.'])) {
+			$removeComments['<!-- ###REMOVE_ON_DIVIDE### -->'] = '';
+		}
+		$this->output = $this->cObj->substituteMarkerArrayCached($this->output,$removeComments);
 	}
 
 	/**
@@ -171,11 +180,60 @@ class tx_sglib_viewlist extends tx_sglib_viewbase  {
 		$content = '';
 
 		$content .= $this->catlistCheckPreset();
+		$content .= $this->segmentCheckPreset();
 		foreach ($data as $record) {
 			$content .= $this->catlistCheckBeforeLine($record);
 			$content .= $this->catlistOutputLine($record);
 		}
+		$content .= $this->segmentCheckFinish();
 		$content .= $this->catlistCheckFinish();
+
+		return ($content);
+	}
+
+	/**
+	 * [Describe function...]
+	 *
+	 * @return	[type]		...
+	 */
+	protected function segmentCheckPreset() {
+		$content = '';
+
+		if (is_array($this->listConf['segment.'])) {
+			if (intval($this->listConf['segment.']['parts'])<2) {
+				$this->listConf['segment.']['parts'] = 2;
+			}
+			$this->wrapSegList = t3lib_div::trimExplode('|',$this->listConf['segment.']['wrap']);
+			$this->wrapSegFirst = isset($this->listConf['segment.']['wrapFirstPart']) ?
+							t3lib_div::trimExplode('|',$this->listConf['segment.']['wrapFirstPart']): $this->wrapSegList;
+			$this->wrapSegTail = isset($this->listConf['segment.']['wrapTailPart']) ?
+							t3lib_div::trimExplode('|', $this->listConf['segment.']['wrapTailPart']): $this->wrapSegList;
+			$this->wrapSegLast =  isset($this->listConf['segment.']['wrapLastPart']) ?
+							t3lib_div::trimExplode('|',$this->listConf['segment.']['wrapLastPart']): $this->wrapSegTail;
+		}
+		$this->segmentCount = 0;
+
+		return ($content);
+	}
+
+	/**
+	 * [Describe function...]
+	 *
+	 * @return	[type]		...
+	 */
+	protected function segmentCheckFinish() {
+		$content = '';
+
+		if (is_array($this->listConf['segment.']) && $this->segmentCount>0) {
+			for (;$this->segmentCount < intval($this->listConf['segment.']['parts']);$this->segmentCount++) {
+				if ($this->segmentCount>=(intval($this->listConf['segment.']['parts'])-1)) {
+					$content .= $this->wrapSegLast[0].$this->listConf['segment.']['fill'].$this->wrapSegLast[1]."\n";
+				} else {
+					$content .= $this->wrapSegTail[0].$this->listConf['segment.']['fill'].$this->wrapSegTail[1]."\n";
+				}
+			}
+			$this->segmentCount = 0;
+		}
 
 		return ($content);
 	}
@@ -208,6 +266,7 @@ class tx_sglib_viewlist extends tx_sglib_viewbase  {
 			for ($i=count($this->listGroup)-1;$i>=0;$i--) {
 				if (strcmp($this->listGroupValues[$i],$record[$this->listGroup[$i]])) {
 					if ($this->listGroupValues[$i]) {
+						$this->segmentCheckFinish();
 						$tmpl = $this->subparts['footer_ref_'.$this->listGroup[$i]];
 						$tmpl = $this->cObj->substituteMarkerArray($tmpl,$this->listGroupMarkers[$i]);
 						$content .= $this->cObj->substituteMarkerArray($tmpl,array(),'###TEXT_|###',1);
@@ -240,7 +299,27 @@ class tx_sglib_viewlist extends tx_sglib_viewbase  {
 
 		$tmpl = $this->cObj->substituteMarkerArray($this->subparts['line'],$this->markers,'###TEXT_|###',1);
 		$lineMarkers = $this->markersObj->getRefValues($record);
-		$content .= $this->cObj->substituteMarkerArray($tmpl,$lineMarkers);
+		if (is_array($this->registeredFunctions['processSingleDataRow']))
+			foreach ($this->registeredFunctions['processSingleDataRow'] as $theFunction) {
+			// t3lib_div::debug(Array('$theFunction'=>$theFunction, 'File:Line'=>__FILE__.':'.__LINE__));
+			$obj = $theFunction[0];
+			$func = $theFunction[1];
+			$lineMarkers = $obj->$func($record, $lineMarkers);
+		}
+		$output = $this->cObj->substituteMarkerArray($tmpl,$lineMarkers);
+		if (is_array($this->listConf['segment.'])) {
+			if (!$this->segmentCount) {
+				$output = $this->wrapSegFirst[0].$output.$this->wrapSegFirst[1];
+				$this->segmentCount++;
+			} else if ($this->segmentCount>=(intval($this->listConf['segment.']['parts'])-1)) {
+				$output = $this->wrapSegLast[0].$output.$this->wrapSegLast[1];
+				$this->segmentCount = 0;
+			} else {
+				$output = $this->wrapSegTail[0].$output.$this->wrapSegTail[1];
+				$this->segmentCount++;
+			}
+		}
+		$content .= $output."\n";
 
 		return ($content);
 	}
@@ -274,21 +353,15 @@ class tx_sglib_viewlist extends tx_sglib_viewbase  {
 	 *
 	 * @return	[type]		...
 	 */
-	function getOutput() {
-		if (!$this->output) {
-			$this->renderOutput();
-		}
-		return ($this->output);
-	}
-
-	/**
-	 * [Describe function...]
-	 *
-	 * @return	[type]		...
-	 */
 	private function getTemplate() {
-		$tmp = $this->cObj->fileResource($this->listConf['template']);
-		$this->template = $this->cObj->getSubpart($tmp,'###'.$this->listConf['subpart'].'###');
+		$this->getTemplateSubpart($this->listConf['template'],  $this->listConf['subpart']);
+
+		if (is_array($this->listConf['segment.'])) {
+			$this->template = $this->cObj->substituteSubpart($this->template,'###REMOVE_ON_SEGMENT###','',1);
+		}
+		if (is_array($this->listConf['divide.'])) {
+			$this->template = $this->cObj->substituteSubpart($this->template,'###REMOVE_ON_DIVIDE###','',1);
+		}
 
 		$this->subparts['header'] = $this->cObj->getSubpart($this->template,'###HEADER###');
 		$this->subparts['footer'] = $this->cObj->getSubpart($this->template,'###FOOTER###');

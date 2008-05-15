@@ -1,0 +1,204 @@
+#Static Setup
+
+
+plugin.tx_myplugin_pi1 {
+	pid_list = 0
+	pid_list.override.field = pages
+	recursive = 0
+	recursive.override.field = recursive
+
+	list.maxPerPage = 500
+
+	listmode {
+		fullSorted {
+			name = Fully Sorted and Categorized
+			order = tx_myplugin_lang.title,tx_myplugin_cat.title,tx_myplugin.file,uid DESC
+			addToSelect = , tx_myplugin_lang.title AS lang_title, tx_myplugin_cat.title AS cat_title, tx_myplugin_app.title AS app_title
+			template = EXT:sartorius_mech_pdf/pi1/catlist.tmpl
+			subpart = LANGCATLIST_PART
+			listGroup = lang,cat
+		}
+		familySorted {
+			name = Family Sorted and Categorized
+			order = tx_myplugin_lang.title,tx_myplugin_cat.title,tx_myplugin.file,uid DESC
+			addToSelect = , tx_myplugin_lang.title AS lang_title, tx_myplugin_cat.title AS cat_title, tx_myplugin_app.title AS app_title
+			template = EXT:sartorius_mech_pdf/pi1/familylist.tmpl
+			subpart = FAMILYLIST_PART
+			listGroup = lang,cat
+		}
+	}
+
+	dispatcher.9001 { 
+		conf = USER_INT
+		conf.userFunc = tx_myplugin_main->main
+		conf.pluginSubMode = doSearchAndList
+		conf.list.template = EXT:sartorius_mech_pdf/pi1/searchlist.tmpl
+		conf.list.subpart = SEARCHLIST_PART
+		conf.search.template = EXT:sartorius_mech_pdf/pi1/searchlist.tmpl
+		conf.search.subpart = SEARCHFORM_PART
+		}
+	dispatcher.20 { 
+		conf = USER
+		conf.userFunc = tx_myplugin_main->main
+		conf.pluginSubMode = doList
+		conf.list.showAllIfEmptySearch = 1
+		conf.list.showAllIfNoSearch = 1
+		conf.list.emptyResultAsSubpart = 0
+		conf.list.maxPerPage = 20000
+		conf.tx_myplugin.ctrl.defaultListmode = fullSorted
+		}
+	dispatcher.9003 { 
+		conf = USER_INT
+		conf.userFunc = tx_myplugin_main->main
+		conf.pluginSubMode = doFamilyList
+		conf.tx_myplugin.ctrl.defaultListmode = familySorted
+		}
+	dispatcher.1040 {
+		conf = USER_INT
+		conf.userFunc = tx_myplugin_import->main
+		}
+
+	tx_myplugin.ctrl {
+		crfeuser_id = crfeuser_id
+		defaultOrder = tx_myplugin.title
+		defaultListmode = title
+		emptySearch = 1
+	}
+
+	tx_myplugin.conf {
+		hidden.preItems.no.id = -1
+		hidden.preItems.no.text = - Show all -
+		hidden.preItems.null.id = 0
+		hidden.preItems.null.text = Only Unhidden Items
+		hidden.preItems.eins.id = 1
+		hidden.preItems.eins.text = Only Hidden Items
+
+		crfeuser_id.label = Owner
+		crfeuser_id.type = selectsingle
+		crfeuser_id.foreign.label = username
+		crfeuser_id.foreign_pid = 0
+		crfeuser_id.preItems.null.id = 0
+		crfeuser_id.preItems.null.text = - Show Any -
+
+		tstamp.type = date
+		tstamp.label = TimeStamp
+
+		crdate.type = date
+		crdate.label = TEXT
+		crdate.label.value = CreationDate
+		crdate.label.lang.de = ErstellungsDatum
+
+		fe_group.label = FE-Group
+		fe_group.foreign.sort = title
+		fe_group.foreign.label = CONCAT(title,' (=',uid,')')
+		fe_group.foreign_pid = 0
+
+		cat.type = select
+
+		title.ifempty = &nbsp;
+
+		file.type = pdflist
+		file.linkIfFileExists = file
+		file.stdWrap {
+			listNum = 0
+			#filelink = APPL-Analytisches-Waegen-Zwechverband_Muellverwertung_Schwandorf-2007-d.pdf
+			#filelink.path = uploads/tx_myplugin/
+			#outerWrap.ifBlank = leer
+			##outerWrap.override = APPL-Analytisches-Waegen-Zwechverband_Muellverwertung_Schwandorf-2007-d.pdf
+			##outerWrap.filelink.path = uploads/tx_myplugin/
+		}
+
+	}
+	tx_myplugin.search {
+		lang.type = 2
+		lang.directLink.default = 0
+		lang.preItems.empty.id = 0
+		lang.preItems.empty.text = TEXT
+		lang.preItems.empty.text.value = -Language-
+		lang.preItems.empty.text.lang.de = Sprache:
+		lang.preItems.empty.text.lang.en = Language:
+
+		cat.type = 3
+		cat.directLink.default = 0
+		cat.preItems.empty.id = 0
+		cat.preItems.empty.text = TEXT
+		cat.preItems.empty.text.value = -Document-Type-
+		cat.preItems.empty.text.lang.en = Please select Document-Type:
+		cat.preItems.empty.text.lang.de = Bitte wählen Sie einen Dokumenten-Typ:
+
+		app.type = 3
+		app.directLink.default = 0
+		app.preItems.empty.id = 0
+		app.preItems.empty.text = TEXT
+		app.preItems.empty.text.value = -Series/Application-
+		app.preItems.empty.text.lang.de = Bitte wählen Sie eine Typreihe/Applikation:
+		app.preItems.empty.text.lang.en = Please select a Series/Application:
+
+		submit.label = SEARCH !
+	}
+
+	templates.files {
+		import_main = EXT:sartorius_mech_pdf/pi1/import_main.tmpl
+	}
+
+	import.tx_myplugin {
+		label.data = {$plugin.tx_myplugin.langImport}:mainImport.label_main
+		table = tx_myplugin
+		useTemplate = import_main
+		postProcessPrepare = postProcessPrepare
+		notify {
+			mailfrom = mytester@geithware.de
+			mailto = ###feuser_email###,mytester@geithware.de
+			subject =  Server ###SRV_HTTP_HOST###: Import by User "###feuser_name###"
+			mailbody = FILE
+			mailbody.file = EXT:sartorius_mech_pdf/pi1/mailimport.tmpl
+			detailsLine = ###detailsline### : title=###title###
+			detailsInfo = %6.6d %10.10s
+		}
+		settings {
+			title.data = {$plugin.tx_myplugin.langImport}:mainImport.importLabel
+			part1.data = {$plugin.tx_myplugin.langImport}:mainImport.importStep1
+			part2.data = {$plugin.tx_myplugin.langImport}:mainImport.importStep2
+			part3.data = {$plugin.tx_myplugin.langImport}:mainImport.importStep3
+			part4.data = {$plugin.tx_myplugin.langImport}:mainImport.importStep4
+			part5.data = {$plugin.tx_myplugin.langImport}:mainImport.importStep5
+			pid.label = PID=ID of Storage-Page
+			pid.value = -9
+			fieldCountText.data = {$plugin.tx_myplugin.langImport}:mainImport.fieldCountText
+			separator.1.value = tab
+			separator.1.text.data = {$plugin.tx_myplugin.langImport}:mainImport.tabulator
+			separator.2.value = pipe
+			separator.2.text.data = {$plugin.tx_myplugin.langImport}:mainImport.pipe
+			separator.3.value = ;
+			separator.3.text.data = {$plugin.tx_myplugin.langImport}:mainImport.semicolon
+			maxSizeError = 2000000
+			minSizeError = 50
+			minSizeWarn = 200
+			maxLineWarn = 20000
+			minLineWarn = 200
+			skip3 = 1
+			deleteAll = all
+		}
+		fields {
+			file.id = 1
+			app.id = 2
+			lang.id = 3
+			cat.id = 4
+			title.id = 5
+			filesize.id = 6
+			rel.id = 7
+			laborflag.id = 8
+			processflag.id = 9
+
+			pid.set = pid
+			tstamp.set = time
+			crdate.set = time
+			#comment.set = input2
+			hidden.set = 0
+		}
+	}
+}
+
+
+tx_myplugin_pi1 >
+tx_myplugin_pi1 < plugin.tx_myplugin_pi1

@@ -27,43 +27,45 @@
  *
  *
  *
- *   71: class tx_sglib_config
- *  106:     private function init($designator, $factoryObj, $conf)
- *  129:     public function setParentObject($parentCObj)
- *  140:     private function _initRecursive($recursive)
- *  157:     private function _fCount ($name=NULL)
- *  180:     function __destruct()
+ *   72: class tx_sglib_config extends ArrayIterator
+ *  110:     private function init($designator, tx_sglib_factory $factoryObj, $conf)
+ *  134:     public function setParentObject($parentCObj)
+ *  151:     public function setPluginConfig($pluginSubMode, $pluginMode, $cmdMode, $cached)
+ *  165:     protected function _initRecursive($recursive)
+ *  181:     public function _findAllReferences()
+ *  214:     protected function getLabelField($table)
+ *  231:     private function _fCount ($name=NULL)
+ *  254:     function __destruct()
  *
  *              SECTION: Functions
- *  199:     function setDesignator($string)
- *  209:     function getDesignator()
- *  219:     function getPid()
- *  229:     function getPidList()
- *  242:     function setTCAname($tableName)
- *  252:     function getTCAname()
- *  263:     function setTCAdata($tableName='')
- *  306:     function getTCAdata($tableName='')
- *  318:     function setConfData($conf,$localConf=NULL)
- *  347:     function mergeWithConfData($conf)
- *  357:     function getConfData()
- *  368:     function combineTCAandConf($tableName='')
- *  411:     function getCombined()
+ *  273:     function setDesignator($string)
+ *  283:     function getDesignator()
+ *  293:     function getPid()
+ *  303:     function getPidList()
+ *  316:     function setTCAname($tableName)
+ *  326:     function getTCAname()
+ *  337:     function setTCAdata($tableName='')
+ *  380:     function getTCAdata($tableName='')
+ *  391:     function setPreConfData($name, array $conf)
+ *  404:     function setConfData(array $conf)
+ *  418:     function setLocalConf($localConf=NULL)
+ *  440:     function getConfData()
+ *  464:     function combineTCAandConf($tableName='')
+ *  514:     function getCombined()
  *
  *              SECTION: Getters
- *  448:     function get($name)
- *  466:     function getTbl($name)
- *  485:     function getByArgs()
- *  501:     function getTblByArgs()
- *  520:     function getFFvalue($fieldName,$sheet='sDEF',$lang='lDEF',$value='vDEF')
- *  534:     function setDebugObj ($debugObj)
+ *  533:     public function __get($nm)
+ *  593:     function TSObj ($name,$conf)
+ *  613:     function getFFvalue($fieldName,$sheet='sDEF',$lang='lDEF',$value='vDEF')
+ *  627:     function setDebugObj ($debugObj)
  *
  *              SECTION: Local helpers
- *  556:     public function initFlexForm($field='pi_flexform')
- *  574:     private function _getFFvalueFromSheetArray($sheetArray,$fieldNameArr,$value)
- *  605:     private function _configTCA ($tableName='',$config=NULL)
- *  627:     private function _getDotArray($myValue)
+ *  649:     public function initFlexForm($field='pi_flexform')
+ *  666:     private function _getFFvalueFromSheetArray($sheetArray,$fieldNameArr,$value)
+ *  697:     private function _configTCA ($tableName='',$config=NULL)
+ *  719:     private function _getDotArray($myValue)
  *
- * TOTAL FUNCTIONS: 29
+ * TOTAL FUNCTIONS: 30
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -72,7 +74,9 @@ class tx_sglib_config extends ArrayIterator {
 
 	private $factoryObj = NULL;
 	private $config = Array();
-	private $confData = Array();
+	private $preConf = Array();
+	private $pluginConf = Array();
+	private $localConf = Array();
 	private $flexFormData;
 	private $defaultTableName = '';
 	private $debugObj=NULL;
@@ -128,9 +132,29 @@ class tx_sglib_config extends ArrayIterator {
 	 * @return	[type]		...
 	 */
 	public function setParentObject($parentCObj) {
-		$this->cObj = $parentCObj;
-		$this->initFlexForm();
+		if ($this->cObj != $parentCObj) {
+			// t3lib_div::debug(Array('New ParentObj'=>($this->cObj != $parentCObj), 'File:Line'=>__FILE__.':'.__LINE__));
+			$this->cObj = $parentCObj;
+			$this->initFlexForm();
+		}
 	}
+
+	/**
+	 * [Describe function...]
+	 *
+	 * @param	[type]		$pluginSubMode: ...
+	 * @param	[type]		$pluginMode: ...
+	 * @param	[type]		$cmdMode: ...
+	 * @param	[type]		$cached: ...
+	 * @return	[type]		...
+	 */
+	public function setPluginConfig($pluginSubMode, $pluginMode, $cmdMode, $cached) {
+		$this['pluginSubMode'] = $this->pluginConf['pluginSubMode'] = $pluginSubMode;
+		$this['pluginMode'] = $this->pluginConf['pluginMode'] = $pluginMode;
+		$this['cmdMode'] = $this->pluginConf['cmdMode'] = $cmdMode;
+		$this['cached'] = $this->pluginConf['cached'] = $cached;
+	}
+
 
 	/**
 	 * Extends the internal pid_list by the levels given by $recursive
@@ -359,44 +383,53 @@ class tx_sglib_config extends ArrayIterator {
 	}
 
 	/**
+	 * Merge this with existing confData
+	 *
+	 * @param	array		Array with configuration
+	 * @return	array		void
+	 */
+	function setPreConfData($name, array $conf) {
+		$this->_fCount(__FUNCTION__);
+		$this->preConf[$name] = $conf;
+		$this->debugData[] = Array('confData',Array('preConf['.$name.']='=>$conf, 'File:Line'=>__FILE__.':'.__LINE__));
+	}
+
+	/**
 	 * [Describe function...]
 	 *
 	 * @param	array		Array with plugins configuration
 	 * @param	string		LocalConf that overwrites $conf; if empty will be searchted in flexform
 	 * @return	array		void
 	 */
-	function setConfData($conf,$localConf=NULL) {
+	function setConfData(array $conf) {
+		$this->_fCount(__FUNCTION__);
+		$this->pluginConf = $conf;
+		$this->debugData[] = Array('confData',Array('pluginConf='=>$conf, 'File:Line'=>__FILE__.':'.__LINE__));
+	}
+
+
+	/**
+	 * [Describe function...]
+	 *
+	 * @param	array		Array with plugins configuration
+	 * @param	string		LocalConf that overwrites $conf; if empty will be searchted in flexform
+	 * @return	array		void
+	 */
+	function setLocalConf($localConf=NULL) {
 		$this->_fCount(__FUNCTION__);
 		if (!isset($localConf)) {
 			$localConf = $this->getFFvalue('fieldLocalConf','sLocalConf');
 		}
 
-		if (strlen($localConf)>1) {
+		if (!is_array($localConf)) {
 			$parseObj = t3lib_div::makeInstance('t3lib_TSparser');
 			$parseObj->parse($localConf);
 			if (is_array($parseObj->setup)) {
-				if (is_array($conf)) {
-					$conf = t3lib_div::array_merge_recursive_overrule($conf,$parseObj->setup);
-				} else {
-					$conf = $parseObj->setup;
-				}
+				$localConf = $parseObj->setup;
 			}
-		} else if (is_array($localConf)) {
-			$conf = t3lib_div::array_merge_recursive_overrule($conf,$localConf);
 		}
-		$this->confData = $conf;
+		$this->localConf = $localConf;
 		$this->debugData[] = Array('confData',Array('confData'=>$confData, 'File:Line'=>__FILE__.':'.__LINE__));
-	}
-
-	/**
-	 * Merge this with existing confData
-	 *
-	 * @param	array		Array with configuration
-	 * @return	array		void
-	 */
-	function mergeWithConfData($conf) {
-		$this->_fCount(__FUNCTION__);
-		$this->confData = t3lib_div::array_merge_recursive_overrule($conf,$this->confData);
 	}
 
 	/**
@@ -406,7 +439,20 @@ class tx_sglib_config extends ArrayIterator {
 	 */
 	function getConfData() {
 		$this->_fCount(__FUNCTION__);
-		return($this->confData);
+
+		$confData = Array();
+		foreach ($this->preConf as $name=>$conf) {
+			if (is_array($conf)) {
+				$confData = t3lib_div::array_merge_recursive_overrule($confData,$conf);
+			}
+		}
+		if (is_array($this->pluginConf)) {
+			$confData = t3lib_div::array_merge_recursive_overrule($confData,$this->pluginConf);
+		}
+		if (is_array($this->localConf)) {
+			$confData = t3lib_div::array_merge_recursive_overrule($confData,$this->localConf);
+		}
+		return($confData);
 	}
 
 	/**
@@ -430,7 +476,7 @@ class tx_sglib_config extends ArrayIterator {
 			}
 		}
 
-		$confArray = $this->confData;
+		$confArray = $this->getConfData();
 		foreach ($this as $table=>$config) if (strcmp($config,'TABLEDEF')==0) {
 			// t3lib_div::debug(Array('check for [ignoreTCAsettings] in '=>$table, 'File:Line'=>__FILE__.':'.__LINE__));
 			if ($confArray[$table.'.']['ignoreTCAsettings']) {
@@ -484,7 +530,6 @@ class tx_sglib_config extends ArrayIterator {
 	 * @param	string		$name of $confVar
 	 * @return	string		Content.
 	 */
-
 	public function __get($nm) {
 	    if (is_array($this[$nm.'.'])) {
 			return ($this[$nm.'.']);
@@ -497,16 +542,16 @@ class tx_sglib_config extends ArrayIterator {
 					return (is_array(($this[$this->defaultTableName.'.'])) ? ($this[$this->defaultTableName.'.']) : Array() );
 				case 'mainconf':
 				case 'mainConf':
-					return (is_array(($this[$this->defaultTableName.'.']['conf.'])) ? 
+					return (is_array(($this[$this->defaultTableName.'.']['conf.'])) ?
 							($this[$this->defaultTableName.'.']['conf.']) : Array() );
 				case 'mainctrl':
 				case 'mainCtrl':
-					return (is_array(($this[$this->defaultTableName.'.']['ctrl.'])) ? 
+					return (is_array(($this[$this->defaultTableName.'.']['ctrl.'])) ?
 							($this[$this->defaultTableName.'.']['ctrl.']) : Array() );
 					return ($this[$this->defaultTableName.'.']['ctrl.']);
 				case 'mainsearch':
 				case 'mainSearch':
-					return (is_array(($this[$this->defaultTableName.'.']['search.'])) ? 
+					return (is_array(($this[$this->defaultTableName.'.']['search.'])) ?
 							($this[$this->defaultTableName.'.']['search.']) : Array() );
 				case 'maintable':
 				case 'mainTable':
@@ -514,17 +559,22 @@ class tx_sglib_config extends ArrayIterator {
 				case 'references':
 					return (is_array($this->references) ? $this->references : ($this->references = $this->_findAllReferences()));
 				case 'dodebug':
+				case 'listmode':
 				case 'lang':
+				case 'list':
+				case 'details':
+				case 'search':
 				case 'permit':
 				case 'xajax':
-					return ( array() );
+				case 'view':
+					return ( (array)$this[$nm] );
 				default:
 					if (isset($this[$nm]) && !is_array($this[$nm])) {
 					return ($this[$nm]);
 				} else {
 					$error = 'variable "'.$nm.'" not defined in confObj !';
 					if (is_object($this->debugObj)) {
-						$this->debugObj->showError(0,$error,SGZLIB_FATALERROR); 
+						$this->debugObj->showError(0,$error,SGZLIB_FATALERROR);
 					} else {
 						die($error);
 					}
@@ -543,6 +593,8 @@ class tx_sglib_config extends ArrayIterator {
 	function TSObj ($name,$conf) {
 		if (is_array($conf)) {
 			return ($this->cObj->cObjGetSingle($name,$conf));
+		} if (strncmp($name,'EXT:',4)==0) {
+			return (substr(t3lib_div::getFileAbsFileName($name),strlen(PATH_site)));
 		} else {
 			return (strncmp($name,'LLL:',4)) ? $this->cObj->insertData($name) : $this->cObj->getData($name,$this->cObj->data);
 		}

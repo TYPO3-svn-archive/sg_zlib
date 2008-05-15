@@ -27,27 +27,27 @@
  *
  *
  *
- *   43: class tx_sglib_markers
- *   76:     protected function init(tx_sglib_config $confObj, tx_sglib_debug $debugObj, tx_sglib_lang $langObj, $cObj)
- *   97:     protected function _fCount ($name=NULL)
- *  122:     public function __destruct()
- *  132:     public function __get($nm)
- *  152:     public function __set($nm, $val)
- *  172:     public function getDescriptions($table='', $markers=array())
- *  192:     public function getRefValues($record, $table='', $markers=array())
+ *   44: class tx_sglib_markers
+ *   77:     private function init(tx_sglib_factory $factoryObj)
+ *   93:     protected function _fCount ($name=NULL)
+ *  118:     public function __destruct()
+ *  128:     public function __get($nm)
+ *  148:     public function __set($nm, $val)
+ *  168:     public function getDescriptions($table='', $markers=array())
+ *  187:     public function getTtContent($ttConf,$markers=array())
+ *  205:     public function getRefValues($record, $table='', $markers=array())
  *
- * TOTAL FUNCTIONS: 7
+ * TOTAL FUNCTIONS: 8
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
 class tx_sglib_markers {
-	private static $instance = NULL;
+	private static $instance = Array();
 
 	private $factoryObj = NULL;
 	protected $confObj;
 	protected $debugObj;
 	protected $langObj;
-	protected $cObj;
 	protected $defaultDesignator;
 	protected $model;
 
@@ -60,11 +60,11 @@ class tx_sglib_markers {
 	private function __clone() {}
 
 	public static function getInstance($designator, tx_sglib_factory $factoryObj) {
-		if (!isset(self::$instance)) {
-			self::$instance = new tx_sglib_markers();
-			self::$instance->init($factoryObj);
+		if (!isset(self::$instance[$designator])) {
+			self::$instance[$designator] = new tx_sglib_markers();
+			self::$instance[$designator]->init($factoryObj);
 		}
-		return (self::$instance);
+		return (self::$instance[$designator]);
 	}
 
 	/**
@@ -81,7 +81,6 @@ class tx_sglib_markers {
 		$this->defaultDesignator = $this->confObj->getDesignator();
 		$this->debugObj = $factoryObj->debugObj;
 		$this->langObj = $factoryObj->langObj;
-		$this->cObj = $factoryObj->cObj;
 		$this->mainTable = $this->confObj->getTCAname();
 	}
 
@@ -170,10 +169,27 @@ class tx_sglib_markers {
 		$tmp = $this->model->getDescriptions($table);
 		if (is_array($tmp) && count($tmp)) foreach ($tmp as $key=>$value) {
 			if (is_array($value)) {
-				$markers['###DESCR_'.strtoupper($key).'###'] = $this->cObj->cObjGetSingle($value['name'],$value['conf']);
+				$markers['###DESCR_'.strtoupper($key).'###'] = $this->confObj->TSobj($value['name'],$value['conf']);
 			} else {
 				$markers['###DESCR_'.strtoupper($key).'###'] = $this->langObj->getLLL($value);
 			}
+		}
+		return ($markers);
+	}
+
+	/**
+	 * [Describe function...]
+	 *
+	 * @param	[type]		$table: ...
+	 * @param	[type]		$markers: ...
+	 * @return	[type]		...
+	 */
+	public function getTtContent($ttConf,$markers=array()) {
+		if (is_array($this->factoryObj->cObj->data)) foreach ($this->factoryObj->cObj->data as $key=>$value) {
+			if (is_array($ttConf[$key.'.'])) {
+				$value = $this->confObj->TSObj($ttConf[$key],$ttConf[$key.'.']);
+			}
+			$markers['###TTCONTENT_'.strtoupper($key).'###'] = $value;
 		}
 		return ($markers);
 	}
@@ -199,15 +215,15 @@ class tx_sglib_markers {
 				}
 				$markers['###TEXT_'.strtoupper($key).'###'] = $textValue;
 				if (is_array($this->confObj->mainConf[$key.'.']['stdWrap.'])) {
-					$textValue = $this->cObj->stdWrap($textValue,$this->confObj->mainConf[$key.'.']['stdWrap.']);
+					$textValue = $this->factoryObj->cObj->stdWrap($textValue,$this->confObj->mainConf[$key.'.']['stdWrap.']);
 				}
 				if ($tmp=$this->confObj->mainConf[$key.'.']['linkIfFileExists']) {
 					$path = $textValue;
 					$textValue = (is_string($tmp) && $record[$tmp]) ? $record[$tmp] : $textValue;
-					$textValue = (is_array($tmp)) ? $this->cObj->stdWrap($textValue, $tmp) : $textValue;
+					$textValue = (is_array($tmp)) ? $this->factoryObj->cObj->stdWrap($textValue, $tmp) : $textValue;
 					if (file_exists(t3lib_div::getFileAbsFileName($this->confObj->mainConf[$key.'.']['uploadfolder'].'/'.$path))) {
 						$myConf = Array('path'=>$this->confObj->mainConf[$key.'.']['uploadfolder'].'/', 'labelStdWrap.'=>array('override'=>$textValue));
-						$textValue = $this->cObj->filelink($path,$myConf);
+						$textValue = $this->factoryObj->cObj->filelink($path,$myConf);
 					}
 				}
 				$markers['###AUTO_'.strtoupper($key).'###'] = $textValue;
