@@ -121,6 +121,15 @@ class tx_sglib_params {
 	 *
 	 * @return	[type]		...
 	 */
+	function getPluginParams() {
+		return ($this->params);
+	}
+
+	/**
+	 * [Describe function...]
+	 *
+	 * @return	[type]		...
+	 */
 	function getSearchmode() {
 		return ($this->params['searchmode']);
 	}

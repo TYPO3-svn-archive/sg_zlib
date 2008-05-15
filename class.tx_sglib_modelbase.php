@@ -106,6 +106,8 @@
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
+
+
 class tx_sglib_modelbase extends tx_sglib_data {
 	protected $designator;
 	protected $factoryObj;
@@ -123,16 +125,19 @@ class tx_sglib_modelbase extends tx_sglib_data {
 	protected $searchMode = 0;
 	protected $searchParams = Array();
 	protected $listMode;
+	protected $myWhereRestrict;
 
 	protected $resultData = NULL;
 	protected $resultParams = Array();
 	protected $references;
+	protected $refItems;
 
 	function __construct ($designator, $factoryObj, $cached) {
 		$this->designator = $designator;
 		$this->factoryObj = $factoryObj;
 		$this->configObj = $factoryObj->configObj;
 		$this->debugObj = $factoryObj->debugObj;
+		$this->paramsObj = $factoryObj->paramsObj;
 		$this->cObj = $factoryObj->cObj;
 
 		$this->mainTable = $this->configObj->getTCAname();
@@ -152,6 +157,7 @@ class tx_sglib_modelbase extends tx_sglib_data {
 	 */
 	protected function init() {
 		$this->references = $this->findAllReferences();
+		$this->searchParams = $this->paramsObj->getSearch();
 	}
 
 	/***********************************************************************************************
@@ -231,6 +237,30 @@ class tx_sglib_modelbase extends tx_sglib_data {
 	}
 
 
+	/**
+	 * [Describe function...]
+	 *
+	 * @param	[type]		$params: ...
+	 * @return	[type]		...
+	 */
+	function setWhereRestrict($params) {
+		$this->myWhereRestrict = $params;
+		$this->clearResult();
+	}
+
+
+	/**
+	 * [Describe function...]
+	 *
+	 * @param	[type]		$params: ...
+	 * @return	[type]		...
+	 */
+	function clearExtraParams($params) {
+		$this->myWhereRestrict = NULL;
+		$this->clearResult();
+	}
+
+
 	/***********************************************************************************************
 	 *
 	 * Main Functions
@@ -244,7 +274,7 @@ class tx_sglib_modelbase extends tx_sglib_data {
 	 * @param	[type]		$mode: ...
 	 * @return	[type]		...
 	 */
-	function readReferenceTables($tables,$mode) {
+	function readReferenceTables($tables,$mode='') {
 		if (strcmp($tables,'*')==0) {
 			$tables = $this->references['table'];
 		} else if (!is_array($tables)) {
@@ -252,7 +282,7 @@ class tx_sglib_modelbase extends tx_sglib_data {
 		}
 
 		foreach ($tables as $table) {
-			$this->references['data'][$table] = $this->readTable($table,$mode);
+			$this->references['data'][$table] = $this->readTable($table,NULL,$mode);
 		}
 		// t3lib_div::debug(Array('$this->references'=>$this->references, 'File:Line'=>__FILE__.':'.__LINE__));
 	}
@@ -264,15 +294,36 @@ class tx_sglib_modelbase extends tx_sglib_data {
 	 * @param	[type]		$mode: ...
 	 * @return	[type]		...
 	 */
-	protected function readTable($table,$mode) {
-		$data = $this->factoryObj->getData();
+	protected function readTable($table,$data=NULL,$mode='',$where='1=1') {
+		$data = (isset($data)) ? $data : $this->factoryObj->getData();
 
-		$q['select'] = $table.'.*';
-		$q['table'] = $table;
-		$q['where'] = '1=1'.$this->cObj->enableFields($table);
-		$q['order'] = $this->createOrder($table);
-		$q['group'] = '';
-		$q['limit'] = '';
+		if (strcmp($mode,'*')==0) {
+			$q['select'] = $table.'.*';
+			$q['table'] = $table.' LEFT JOIN '.$this->mainTable.' ON '.$this->mainTable.'.'.$this->references['field'][$table].'='.$table.'.uid  ';
+			$q['where'] = $this->mainTable.'.uid>0 AND '.$where.$this->cObj->enableFields($table);
+			$q['order'] = $this->createOrder($table);
+			$q['group'] = '';
+			$q['limit'] = '';
+		} else if (strlen($mode)>=2) {
+			$q['select'] = $table.'.*';
+			$q['table'] = $table.' LEFT JOIN '.$this->mainTable.' ON '.$this->mainTable.'.'.$this->references['field'][$table].'='.$table.'.uid  ';
+			$q['where'] = $this->mainTable.'.uid>0 AND '.$where.$this->cObj->enableFields($table);
+			if (is_array($this->searchParams))foreach ($this->searchParams as $key=>$value) {
+				if (strcmp($key,$mode) && $value) {
+					$q['where'] .= ' AND '.$this->mainTable.'.'.$key.'='.$value.' ';
+				} 
+			}
+			$q['order'] = $this->createOrder($table);
+			$q['group'] = '';
+			$q['limit'] = '';
+		} else {
+			$q['select'] = $table.'.*';
+			$q['table'] = $table;
+			$q['where'] = $where.$this->cObj->enableFields($table);
+			$q['order'] = $this->createOrder($table);
+			$q['group'] = '';
+			$q['limit'] = '';
+		}
 
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($q['select'], $q['table'], $q['where'], $q['group'], $q['order'], $q['limit']);
 		$myError = $GLOBALS['TYPO3_DB']->sql_error();
@@ -286,9 +337,49 @@ class tx_sglib_modelbase extends tx_sglib_data {
 			$this->readResultList($res,$data);
 		}
 
+		//t3lib_div::debug(Array('read table = '.$table=>'Mode="'.$mode.'"', '$q'=>$q, '$data'=>$data, 'File:Line'=>__FILE__.':'.__LINE__));
 		return ($data);
 	}
 
+	function getRefItems($table,$field,$em,$row) {
+
+
+		if ($em<=SGZLIB_SEARCHALL) {
+			$myName = $table.'.'.$field.'.all';
+			$myMode = '';
+		} else if ($em==SGZLIB_SEARCHUSED) {
+			$myName = $table.'.'.$field.'.used';
+			$myMode = '*';
+		} else  {
+			$myName = $table.'.'.$field.'.search';
+			$myMode = $field;
+		}
+
+		if (!isset($this->refItems[$myName])) {
+			$data = $this->factoryObj->getData();
+			$tmp = $this->configObj->get($table.'.search.'.$field.'.preItems.');
+			if ($em>=SGZLIB_SEARCHALL && is_array($tmp)) {
+				foreach ($tmp as $key=>$value) {
+					$data[intval($value['id'])] = $value['text'];
+				}
+				// Add PreItems
+			}
+
+		    $data = $this->readTable($this->references['table'][$field],$data,$myMode);
+
+			$tmp = $this->configObj->get($table.'.search.'.$field.'.preItems.');
+			if ($em>=SGZLIB_SEARCHALL && is_array($tmp)) {
+				// Add PostItems
+				foreach ($tmp as $key=>$value) {
+					$data[intval($value['id'])] = $value['text'];
+				}
+			}
+			$this->refItems[$myName] = $data;
+		}
+
+		// t3lib_div::debug(Array('Read Items for'=>$myName, '$em'=>$em, '$row'=>$row, '$data'=>$this->refItems[$myName], 'File:Line'=>__FILE__.':'.__LINE__));
+		return ($this->refItems[$myName]);
+	}
 
 	/**
 	 * [Describe function...]
@@ -457,12 +548,40 @@ class tx_sglib_modelbase extends tx_sglib_data {
 	 *
 	 * @return	[type]		...
 	 */
-	protected function createWhere() {
-		$where = $this->createWhereFromParams();
-		$where = $where ? $where : '1=1';
+	protected function createWhere($table='',$excludeFields='') {
+		$q = Array();
+
+//		// first: always set default where-clause (set in TS) (if any)
+//		if (isset($PCA['ctrl']['defaultWhere'])) {
+//			$q['defaultWhere'] = $this->replaceArray($this->cObj->insertData(
+//				str_replace('###val###',trim($PCA['ctrl']['defaultWhereVal']),
+//				   str_replace('###feuser_id###',$this->permitObj->getFeUid(),$PCA['ctrl']['defaultWhere']))
+//				) , $this->globalReplace);
+//		}
+//
+//		// second: always set default where-clause from listmode, set in TS (if any)
+//		if (isset($PCA['listmode'][$piVarSearch['listmode']])) {
+//			if (isset($PCA['listmode'][$piVarSearch['listmode']]['where'])) {
+//				$q['listmode'] = $this->cObj->insertData($PCA['listmode'][$piVarSearch['listmode']]['where']);
+//			}
+//		}
+
+		// third: set all defined queries
+		if (strcmp($excludeFields,'*')) {
+			$q = $this->createWhereFromParams($q,$table,$excludeFields);
+		}
+
+		// fourth: do another restrict
+		if ($this->myWhereRestrict) {
+			$q['restrict'] = $this->myWhereRestrict;
+		}
+
+		// last: if no query yet: set 'find all'
+		$where = implode (' AND ',$q);
+		$where = ' ( '.($where ? $where : '1=1').' ) ';
+
 
 		$where .= $this->cObj->enableFields($this->mainTable);
-
 		return ($where);
 	}
 
@@ -471,11 +590,193 @@ class tx_sglib_modelbase extends tx_sglib_data {
 	 *
 	 * @return	[type]		...
 	 */
-	protected function createWhereFromParams() {
-		$where = '';
+	protected function createWhereFromParams($q=array(), $table='',$excludeFields='') {
+		$table = $table ? $table : $this->mainTable;
+		if (is_array($this->searchParams)) for (reset($this->searchParams);$key=key($this->searchParams);next($this->searchParams)) {
+			if (strcmp($key,'listmode')==0) {
+//			} else if (strcmp($key,$PCA['ctrl']['enablecolumns']['disabled'])==0) {
+//			} else if (strncmp($key,'restrict_',9)==0) {
+//				if (strlen($piVarSearch[$key])>0) {
+//					$q['restrict'] = $table.'.'.substr($key,9).' IN ('.$piVarSearch[$key].')';
+//				} else {
+//					$q['restrict'] = '1=2 ';
+//				}
+//			} else if (strcmp($key,'idlist')==0) {
+//				if (strlen($piVarSearch[$key])>0) {
+//					$q['idlist'] = $table.'.uid IN ('.$piVarSearch[$key].')';
+//				} else {
+//					$q['idlist'] = '1=2 ';
+//				}
+//			} else if (strcmp($key,'abc')==0) {
+//				...
+			} else {
+				// Warning : $this->searchParams[$key] may be an array !!!
+				$doit = true;
+				$searchConfKey = $this->configObj->get($table.'.search.'.$key.'.');
+				if (is_array($this->searchParams[$key])) {
+					$tmp = Array();
+					while (list ($sKey, $val) = each ($this->searchParams[$key])) {
+					//no! this doesnt work with index 0,1,2) for (reset($this->searchParams[$key]);...;next($this->searchParams[$key])) {
+						//$text = urldecode(trim($val));
+						$text = $GLOBALS['TYPO3_DB']->quoteStr(trim($val),$table);
+						$tmp[] =  '( '.implode(' AND ',$this->getDbBuildSingleQuery($table,$key,$text)).' )';
+					}
+					if (count($tmp)) {
+						$q['searches_'.$key] = '( '.implode(' OR ',$tmp).' )';
+					}
+				} else {
+					$text = $GLOBALS['TYPO3_DB']->quoteStr(urldecode(trim($this->searchParams[$key])),$table);
+					if (intval($searchConfKey['searchZero'])>0) {
+						if (strcmp($text,'-1')==0) { $doit=FALSE; }
+					} else {
+						if (strcmp($text,'0')==0) { $doit=FALSE; }
+					}
+					if ($doit) {
+						if (strlen($this->searchParams[$key])>0) {
+							$q = array_merge ($q, $this->getDbBuildSingleQuery($table,$key,($text=="''" ? '' : $text)));
+						}
+					}
+				}
+			}
 
-		return ($where);
+		
+		}
+		return ($q);
 	}
+
+
+	/**
+	 * [Describe function...]
+	 *
+	 * @param	[type]		$table: ...
+	 * @param	[type]		$key: ...
+	 * @param	[type]		$text: ...
+	 * @return	[type]		...
+	 */
+	function getDbBuildSingleQuery ($table,$key,$text) {
+		$searchConfKey = $this->configObj->get($table.'.search.'.$key.'.');
+		$confKey = $this->configObj->get($table.'.conf.'.$key.'.');
+
+		$q = Array();
+		$specialMatch = false;
+		if (is_array($searchConfKey['special'])) {
+			for (reset($searchConfKey['special']);$sKey=key($searchConfKey['special']);next($searchConfKey['special'])) {
+				if (strcmp($searchConfKey['special'][$sKey]['value'],$text)==0) {
+					$q['special_'.$key] = $this->cObj->insertData(
+						str_replace('###time###',time(),$searchConfKey['special'][$sKey]['query']));
+					$specialMatch = true;
+				}
+			}
+		}
+
+		if (!$specialMatch) {
+			if (is_array($confKey['foreign']) && strlen($confKey['foreign_table'])<1) {
+				$myField = $confKey['foreign']['field'] ? $confKey['foreign']['field'] : $key;
+				$ini = '(';
+				if (strlen($confKey['foreign']['where'])>0) {
+					$ini = '('.$this->cObj->insertData($confKey['foreign']['where']).' AND ';
+				}
+				if (strlen($text)>0 && strcmp($confKey['foreign']['mode'],'text')==0) {
+					$myQ = $ini.$myField.' LIKE '.QT.addslashes(str_replace('*','%',$text)).QT.')';
+				} else if ((strcasecmp($text,'null')==0) || intval($text)>0) {
+					if (strcmp($confKey['mode'],'selectmulti')==0) {
+						$ini.$myField.' IN ( '.addslashes($text).' ) '.')';
+					} else {
+						$myQ = $ini.$myField.( (strcasecmp($text,'null')==0) ? ' is NULL' : '='.intval($text)).')';
+					}
+				}
+				$q['foreign_'.$key] = $myQ;
+				//t3lib_div::debug(Array($key=>$confKey, '$myQ'=>$myQ, 'File:Line'=>__FILE__.':'.__LINE__));
+			} else if (strlen($confKey['type'])<1 || $confKey['type']=='input' || $confKey['type']=='none' || $confKey['type']=='text') {
+				// Field seems to be a text-type field
+				$fieldList = explode(',',  (isset($searchConfKey['fields'])) ? $searchConfKey['fields'] : $table.'.'.$key ) ;
+					for ($i=0;$i<count($fieldList);$i++) {
+					if (strpos($fieldList[$i],'.')<1) {
+						$fieldList[$i] = $table.'.'.$fieldList[$i];
+					}
+				}
+
+				if (isset($searchConfKey['query'])) {
+					$this->globalReplace['###val###'] = $text;
+					$fieldList[0] = $this->replaceArray($this->cObj->insertData($searchConfKey['query']),$this->globalReplace);
+					$fieldList[0] = str_replace('*','%',$fieldPrepend.$fieldList[0].$fieldAppend);
+					$q['inputq_'.$key] = $fieldList[0];
+				} else {
+					// check if range is given
+					$p = explode ('...',$text,2);
+					if (count($p)>1) {
+						for ($i=0;$i<count($fieldList);$i++) {
+							$fieldList[$i] = ' ('.$fieldList[$i].' >= "'.$p[0].'" '.
+											 ' AND '.$fieldList[$i].' <= "'.$p[1].'") ';
+						}
+						$q['inputs_'.$key] = '('.implode($fieldMode,$fieldList).')';
+					} else {
+						$fieldComp =   (isset($searchConfKey['comp'])) ? $searchConfKey['comp'] : 'LIKE'   ;
+						$fieldMode =  (isset($searchConfKey['mode'])) ? $searchConfKey['mode'] : 'OR'  ;
+						$fieldAppend =  (isset($searchConfKey['append'])) ? $searchConfKey['append'] : ''  ;
+						$fieldPrepend =  (isset($searchConfKey['prepend'])) ? $searchConfKey['prepend'] : ''  ;
+						for ($i=0;$i<count($fieldList);$i++) {
+							$fieldList[$i] = ' '.$fieldList[$i].' '.$fieldComp.
+												' "'.str_replace('*','%',$fieldPrepend.$text.$fieldAppend).'" ';
+						}
+						$q['input_'.$key] = '('.implode($fieldMode,$fieldList).')';
+					}
+				}
+			} else if (substr($confKey['type'],0,4)=='date') {
+				// Field is of type 'date'
+				$fieldList = explode(',',  (isset($searchConfKey['fields'])) ? $searchConfKey['fields'] : $table.'.'.$key   ) ;
+				$fieldComp =   (isset($searchConfKey['comp'])) ? $searchConfKey['comp'] : '='   ;
+				$fieldMode =  (isset($searchConfKey['mode'])) ? $searchConfKey['mode'] : 'OR'  ;
+				if (isset($searchConfKey['query'])) {
+					$this->globalReplace['###val###'] = $text;
+					$fieldList[0] = $this->replaceArray($this->cObj->insertData($searchConfKey['query']),$this->globalReplace);
+					$fieldList[0] = str_replace('*','%',$fieldPrepend.$fieldList[0].$fieldAppend);
+				} else {
+					if (strcmp($text,'0')==0 || strcmp($text,'-')==0) {
+						$fieldList[0] = ' '.$fieldList[0].'=0 ';
+					} else {
+						$fieldList[0] = ' ('.$this->dateCompareString($text,$fieldList[0]).') ';
+					}
+				}
+				//t3lib_div::debug(Array('$myComp'=>$myComp, '$fieldList[0]'=>$fieldList[0], 'File:Line'=>__FILE__.':'.__LINE__));
+				$q['date_'.$key] = $fieldList[0];
+			} else if ($confKey['MM']) {
+				$q['MM_'.$key] = ' ( '.$confKey['MM'].'.uid_foreign='.intval($text).') ';
+				if ($searchConfKey['foreign']['subSearch']) {
+					$this->itemsObj->prepareItems($table,$key,0,Array());
+					if ($tmp = $this->itemsObj->getItemsSub('',$key,intval($text).'.')) {
+						$q['MM_'.$key] = '('.$q['MM_'.$key].' OR '.$confKey['MM'].'.uid_foreign IN ('.$tmp.'))';
+					}
+				}
+			} else if ($confKey['type']=='select' ||
+					$confKey['type']=='radio' || $confKey['type']=='check' ||
+					   $confKey['type']=='checklist' ||
+					   $confKey['type']=='selectmulti' || $confKey['type']=='selectsingle') {
+				$fieldList = explode(',',  (isset($searchConfKey['fields'])) ? $searchConfKey['fields'] : $table.'.'.$key   ) ;
+				$fieldComp =   (isset($searchConfKey['comp'])) ? $searchConfKey['comp'] : '='   ;
+				$fieldMode =  (isset($searchConfKey['mode'])) ? $searchConfKey['mode'] : 'OR'  ;
+				$fieldAppend =  (isset($searchConfKey['append'])) ? $searchConfKey['append'] : ''  ;
+				$fieldPrepend =  (isset($searchConfKey['prepend'])) ? $searchConfKey['prepend'] : ''  ;
+
+				if (isset($searchConfKey['query'])) {
+					$this->globalReplace['###val###'] = $text;
+					$fieldList[0] = $this->replaceArray($this->cObj->insertData($searchConfKey['query']),$this->globalReplace);
+					$fieldList[0] = str_replace('*','%',$fieldPrepend.$fieldList[0].$fieldAppend);
+				} else {
+					$fieldList[0] = ' '.$fieldList[0].$fieldComp.QT.str_replace('*','%',$fieldPrepend.$text.$fieldAppend).QT.' ';
+				}
+				if ($fieldList[0]) {
+					$q['select_'.$key] = $fieldList[0];
+				}
+			}
+
+		}
+
+		//t3lib_div::debug(Array('$q('.$key.','.$text.')'=>$q, 'File:Line'=>__FILE__.':'.__LINE__));
+		return ($q);
+	}
+
+
 
 	/**
 	 * [Describe function...]

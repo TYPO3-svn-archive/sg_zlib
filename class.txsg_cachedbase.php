@@ -25,6 +25,18 @@
 require_once(PATH_tslib.'class.tslib_pibase.php');
 require_once(t3lib_extMgm::extPath('sg_zlib').'class.tx_sglib_modelbase.php');
 
+ 	define ('SGZLIB_TEXT', 0);
+	define ('SGZLIB_FORM', 1);
+	define ('SGZLIB_AUTO', 2);
+	define ('SGZLIB_AUTOHIDDEN', 3);
+	define ('SGZLIB_CMD', 4);
+	define ('SGZLIB_LIST', 5);
+	define ('SGZLIB_LISTEDIT', 6);
+	define ('SGZLIB_SEARCH', 7);
+	define ('SGZLIB_SEARCHALL', 7);
+	define ('SGZLIB_SEARCHUSED', 8);
+	define ('SGZLIB_SEARCHUSEDPLUS', 9);
+
 /**
  * Plugin 'Sartorius Mechatronics PDFs' for the 'sartorius_mech_pdf' extension.
  *

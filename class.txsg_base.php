@@ -111,7 +111,6 @@ class txsg_base extends tslib_pibase {
 
 		$this->pTime = Array();
 		list($usec, $sec) = explode(' ',microtime()); $s = (((float)$usec + (float)$sec) * 1000);
-
 		$this->factoryObj = tx_sglib_factory::getInstance($this->prefixId, $this->cObj, $conf);
 		$this->factoryObj->setBaseTables($this->mainTable, array()) ;
 
@@ -146,6 +145,7 @@ class txsg_base extends tslib_pibase {
 		$this->pid = $this->configObj->getPid();
 		$this->pid_list = $this->configObj->getPidList();
 
+		$this->configObj->setParentObject($this->cObj);
 		$pluginMode = $this->configObj->getFFvalue('fieldModuleMode','sDefault');
 		$dbg = $this->configObj->getFFvalue('fieldDebugMode','sDefault');
 

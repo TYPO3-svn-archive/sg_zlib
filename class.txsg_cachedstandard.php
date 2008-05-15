@@ -25,6 +25,7 @@
 require_once(t3lib_extMgm::extPath('sg_zlib').'class.txsg_cachedbase.php');
 require_once(t3lib_extMgm::extPath('sg_zlib').'class.tx_sglib_viewdetails.php');
 require_once(t3lib_extMgm::extPath('sg_zlib').'class.tx_sglib_viewlist.php');
+require_once(t3lib_extMgm::extPath('sg_zlib').'class.tx_sglib_viewsearchform.php');
 
 /**
  * Plugin 'Sartorius Mechatronics PDFs' for the 'sartorius_mech_pdf' extension.
@@ -54,7 +55,7 @@ class txsg_cached_base_standard extends txsg_cached_base {
 		}
 
 		$model = $this->factoryObj->getModel('tx_sglib_modelbase', $this->prefixId, $this->conf['cached']);
-		$model->readReferenceTables('*',SGZLIB_READALL);
+		$model->readReferenceTables('*','');
 		$model->showAllIfEmptySearch($listConf['showAllIfEmptySearch']);
 		$model->setSearchMode($this->paramsObj->getSearchmode());
 		$model->setSearchParams($this->paramsObj->getSearch());
