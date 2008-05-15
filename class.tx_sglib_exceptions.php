@@ -99,6 +99,31 @@ class tx_sglib_viewexception extends tx_sglib_exception {
 }
 
 
+	/**
+	 * [Describe function...]
+	 *
+	 */
+class tx_sglib_templateexception extends tx_sglib_exception {
+	protected $exceptionType = 'Template';
+
+	function getDescription() {
+		$description = '';
+		$code = ($this->getCode() & 255);
+		switch ($code) {
+			case 1:
+				$description = 'Set a line like this in your TypoScript:<br />'.
+					'<kbd>templates.files.<i>xxx</i> =</kbd>';
+			case 4:
+				$description = 'Set a line like this in your TypoScript:<br />'.
+					'<kbd>templates.named.<i>name</i> =</kbd>';
+			break;
+		}
+		return ($description);
+	}
+
+}
+
+
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sg_zlib/class.tx_sglib_exceptions.php'])	{
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sg_zlib/class.tx_sglib_exceptions.php']);
 }

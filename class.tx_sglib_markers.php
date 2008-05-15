@@ -44,7 +44,7 @@
 class tx_sglib_markers {
 	private static $instance = Array();
 
-	private $factoryObj = NULL;
+	protected $factoryObj = NULL;
 	protected $confObj;
 	protected $debugObj;
 	protected $langObj;

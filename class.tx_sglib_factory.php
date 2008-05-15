@@ -60,6 +60,7 @@ class tx_sglib_factory {
 	protected $langObj = NULL;
 	protected $permitObj = NULL;
 	protected $paramsObj = NULL;
+	protected $linksObj = NULL;
 	protected $markersObj = NULL;
 	protected $divObj = NULL;
 	protected $myDebugObj = NULL;
@@ -152,6 +153,8 @@ class tx_sglib_factory {
 				return ($this->getConstObj());
 			case 'paramsObj':
 				return ($this->getParamsObj());
+			case 'linksObj':
+				return ($this->getLinksObj());
 			case 'markersObj':
 				return ($this->getMarkersObj());
 			case 'langObj':
@@ -237,6 +240,18 @@ class tx_sglib_factory {
 			$this->paramsObj = tx_sglib_params::getInstance($this->designator, $this);
 		}
 		return ($this->paramsObj);
+	}
+
+	/**
+	 * [Describe function...]
+	 *
+	 * @return	[type]		...
+	 */
+	protected function getLinksObj() {
+		if (!isset($this->linksObj)) {
+			$this->linksObj = tx_sglib_links::getInstance($this->designator, $this);
+		}
+		return ($this->linksObj);
 	}
 
 	/**

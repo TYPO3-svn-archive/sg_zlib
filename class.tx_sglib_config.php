@@ -86,6 +86,7 @@ class tx_sglib_config extends ArrayIterator {
 
 	protected $pid_list,$pid;
 	protected $references;
+	protected $addedJsFunctions;
 
 	// protected function __construct() {}
 
@@ -498,6 +499,10 @@ class tx_sglib_config extends ArrayIterator {
 			}
 		}
 		if (is_array($confArray)) foreach ($confArray as $key=>$value) {
+			if (is_array($value['moreConf.']) && count($value['moreConf.'])) {
+				$value['conf.'] = t3lib_div::array_merge_recursive_overrule((array) $value['conf.'],$value['moreConf.']) ;
+			}
+
 			$this[$key] = is_array($value) ?
 				(is_array($this[$key]) ? t3lib_div::array_merge_recursive_overrule($this[$key],$value) : $value) :
 				$value;
@@ -559,6 +564,9 @@ class tx_sglib_config extends ArrayIterator {
 				case 'references':
 					return (is_array($this->references) ? $this->references : ($this->references = $this->_findAllReferences()));
 				case 'dodebug':
+				case 'templates':
+				case 'image':
+				case 'format':
 				case 'listmode':
 				case 'lang':
 				case 'list':
@@ -633,6 +641,41 @@ class tx_sglib_config extends ArrayIterator {
 		}
 		$this->debugData = Array();
 	}
+
+	/******************************************************************************
+	 *
+	 * JS Functions
+	 *
+	 ******************************************************************************/
+
+	/**
+	 * @return	[type]		...
+	 */
+	function addJs ($name) {
+		$content = '';
+		if ($name && !$this->addedJsFunctions[$name]) {
+			$this->addedJsFunctions[$name] = TRUE;
+			switch ($name) {
+				case 'userFunctions':
+					$fileName = $GLOBALS['TSFE']->tmpl->getFileName($this['userJsFunc']);
+					$content = CRLF.'<script src="'.$fileName.'" type="text/javascript">'."\r\n".'</script>'."\r\n";
+				break;
+				case 'popupFunctions':
+					$fileName = $GLOBALS['TSFE']->tmpl->getFileName($this['popupFunc']);
+					$content = CRLF.'<script src="'.$fileName.'" type="text/javascript">'."\r\n".'</script>'."\r\n";
+				break;
+				case 'searchFunctions':
+					$fileName = $GLOBALS['TSFE']->tmpl->getFileName($this['searchFunc']);
+					$content = CRLF.'<script src="'.$fileName.'" type="text/javascript">'."\r\n".'</script>'."\r\n";
+				break;
+				default:
+					//error;
+				break;
+			}
+		}
+		return ($content);
+	}
+
 
 	/******************************************************************************
 	 *
@@ -732,6 +775,13 @@ class tx_sglib_config extends ArrayIterator {
 			return ($myValue);
 		}
 	}
+
+
+
+
+
+
+
 }
 
 

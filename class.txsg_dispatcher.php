@@ -85,7 +85,7 @@ class txsg_dispatcher extends tslib_pibase {
 			$conf['cmdMode'] = $myCmdMode;
 			$conf['cached'] = (strcmp(substr($myConf['conf'],-4),'_INT')!=0);
 			// t3lib_div::debug(Array('$conf'=>$conf, 'File:Line'=>__FILE__.':'.__LINE__));
-			$tmp .= '<!-- ------Dispatcher('.$this->prefixId.',Mode='.$myPluginMode.'/'.$myCmdMode.')--Rendered-at-('.date('H:i:s').')------ -->'.CRLF;
+			$tmp .= '<!-- Dispatcher('.$this->prefixId.',Mode='.$myPluginMode.'/'.$myCmdMode.') Rendered at ('.date('H:i:s').') -->'.CRLF;
 			$tmp .= $this->cObj->cObjGetSingle($myConf['conf'],$conf);
 			$content .= $this->pi_wrapInBaseClass($tmp);
 		} else {

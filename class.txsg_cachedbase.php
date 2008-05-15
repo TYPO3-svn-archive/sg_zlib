@@ -140,6 +140,9 @@ class txsg_cached_base extends tslib_pibase {
 				catch (tx_sglib_viewexception $e) {
 					$content = $e;
 				}
+				catch (tx_sglib_templateexception $e) {
+					$content = $e;
+				}
 			} else {
 				$content = '<br /><b>ERROR: pluginSubMode "'.$this->conf['pluginSubMode'].'" is not (yet) defined !</b><br /><br />';
 			}

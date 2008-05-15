@@ -168,10 +168,10 @@ class txsg_base extends tslib_pibase {
 
 		$this->useLocking = $this->conf['useLocking'];
 
-		$content .= $this->felib->addJsUserFunctions();
-		$content .= $this->felib->addJsSearchFunctions();
+		$content .= $this->confObj->addJs('userFunctions');
+		$content .= $this->confObj->addJs('searchFunctions');
 		if ($this->permitObj->useEditMode()) {
-			$content .= $this->felib->addJsPopupFunctions();
+			$content .= $this->confObj->addJs('popupFunctions');
 			$TSFE->set_no_cache();
 		}
 

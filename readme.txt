@@ -34,6 +34,8 @@ Version 0.1.120 and above
 - change TS:
   templateXxx    to   templates.files.xxx
   subparts.xxx   to   templates.subparts.xxx
+- New:
+  templates.named.name = templateXxx:subPartName
 
 Version 0.1.130 and above
 - Change TS:
@@ -44,4 +46,8 @@ Version 0.1.130 and above
   groupSubParts.xx    to   permit.groupSubParts.xx  
   beAdminIsNoFeAdmin  to   permit.beAdminIsNoFeAdmin
 
-
+Version 0.1.500 and above
+- Change calls to $PCA['conf'][$key]		to	$this->confObj->mainConf[$key.'.']
+- Change calls to $PCA['ctrl'][$key]		to	$this->confObj->mainCtrl
+- Change calls to $this->pi_getLL(xy)		to	$this->langObj->getLL(xy)
+- Change calls to $this->cObj				to	$this->factoryObj->cObj

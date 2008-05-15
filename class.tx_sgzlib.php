@@ -121,9 +121,6 @@
  * 5279:     function getDeleteButton($myHiddenState,$myPage,$uid,$wordparam,$myOwner,$myParams='',$row=Array())
  *
  *              SECTION: Functions vor JavaScript FE-Editing and Searchforms
- * 5321:     function addJsUserFunctions ()
- * 5339:     function addJsPopupFunctions ()
- * 5358:     function addJsSearchFunctions ()
  * 5384:     function addFileLink ($PCA,$field,$listmode='unknown',$mode=0,$row=Array())
  * 5443:     function addDbLink ($PCA,$field,$mode,$row=Array())
  * 5524:     function addListModify ($PCA,$varname,$mode='Up',$idMode=0)
@@ -264,10 +261,6 @@ class tx_sgzlib {
 		$this->emptyUrl = $this->conf['emptyUrl'];
 
 		$this->lCObj = t3lib_div::makeInstance('tslib_cObj');
-
-		$this->feuserJsFunc = $GLOBALS['TSFE']->tmpl->getFileName($this->conf['userJsFunc']);
-		$this->popupFunc = $GLOBALS['TSFE']->tmpl->getFileName($this->conf['popupFunc']);
-		$this->searchFunc = $GLOBALS['TSFE']->tmpl->getFileName($this->conf['searchFunc']);
 
 		if (substr($this->conf['browser'],0,5)=='index') {
 			$this->browser = $this->conf['browser'];
@@ -1179,14 +1172,14 @@ class tx_sgzlib {
 			default:
 			if ($myMode=='datetime') {
 				$myDate =  ($this->dateTimeStringToTime($row[$field])>10000) ?
-					$row[$field] : ($row[$field] > 80000 ? date('d.m.Y H:i',$row[$field]) : '') ;
+					$row[$field] : ($row[$field] > 80000 ? $this->formatDateTime($row[$field]) : '') ;
 				$item = (intval($row[$field])==0) ? '' : $myDate;
 			} else if ($myMode=='date') {
 				$myDate =  ($this->dateStringToTime($row[$field])>10000) ?
-					$row[$field] : ($row[$field] > 80000 ? date('d.m.Y',$row[$field]) : '') ;
+					$row[$field] : ($row[$field] > 80000 ? $this->formatDate($row[$field]) : '') ;
 				$item = (intval($row[$field])==0) ? '' : $myDate;
 			} else if ($myMode=='time') {
-				$myTime =  ($this->timeStringToTime($row[$field]) ? $row[$field] : date('H:i',$row[$field]-3600) )  ;
+				$myTime =  ($this->timeStringToTime($row[$field]) ? $row[$field] : $this->formatTime($row[$field]-3600) )  ;
 				$item = (intval($row[$field])==0) ? '' : $myTime;
 			} else {
 				if ($tmp=$PCA['conf'][$field]['numFormat']) {
@@ -3570,12 +3563,12 @@ class tx_sgzlib {
 		$constMarker = $this->constObj->getMarkers();
 		$m = array_merge ($m,$constMarker);
 
-		for (reset($PCA['conf']);$key=key($PCA['conf']);next($PCA['conf'])) {
-			//$m['###DESCR_'.strtoupper($key).'###'] = $this->langObj->getLLL($PCA['conf'][$key]['label']); 050103sg
-			$m['###DESCR_'.strtoupper($key).'###'] = $this->langObj->getLLL($PCA['conf'][$key]['label']);
-			if (isset($PCA['conf'][$key]['slabel'])) { $m['###SDESCR_'.strtoupper($key).'###'] = $PCA['conf'][$key]['slabel']; }
-			if ($PCA['conf'][$key]['bold']) {
-				$m['###DESCR_'.strtoupper($key).'###']  = '<b>'.$m['###DESCR_'.strtoupper($key).'###'] .'</b>';
+		foreach ($this->confObj->mainConf as $key=>$value) {
+			$field = (substr($key,-1)=='.') ? substr($key,0,-1) : $key;
+			$m['###DESCR_'.strtoupper($field).'###'] = $this->langObj->getLLL($value['label']);
+			if (isset($value['slabel'])) { $m['###SDESCR_'.strtoupper($field).'###'] = $value['slabel']; }
+			if ($value['bold']) {
+				$m['###DESCR_'.strtoupper($field).'###']  = '<b>'.$m['###DESCR_'.strtoupper($field).'###'] .'</b>';
 			}
 		}
 
@@ -3614,12 +3607,14 @@ class tx_sgzlib {
 			$this->writelog($msg.' (F'.$this->permitObj->getFeUid().'/B'.$this->permitObj->getBeUid().')',2,Array(1,2,3));
 		}
 		if (is_array($row)) for (reset($row);$key=key($row);next($row)) {
-			$tmpFT = $PCA['conf'][$key]['foreign_table'] ? $PCA['conf'][$key]['foreign_table'] : $PCA['conf'][$key]['allowed'];
-			if ($tmpFT && $PCA['conf'][$key]['MM'] && intval($row['uid'])>0) {
+			$tmpFT = $this->confObj->mainConf[$key.'.']['foreign_table'] ? 
+					$this->confObj->mainConf[$key.'.']['foreign_table'] : $this->confObj->mainConf[$key.'.']['allowed'];
+			if ($tmpFT && $this->confObj->mainConf[$key.'.']['MM'] && intval($row['uid'])>0) {
 				// this line is has a mm relation to foreign_table
 				$new = Array();
-//				$res = $this->doSelect ('uid_foreign',$PCA['conf'][$key]['MM'],'uid_local='.intval($row['uid']),'','',500,'',0);
-				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid_foreign',$PCA['conf'][$key]['MM'],'uid_local='.intval($row['uid']),'','','0,1000');
+//				$res = $this->doSelect ('uid_foreign',$this->confObj->mainConf[$key.'.']['MM'],'uid_local='.intval($row['uid']),'','',500,'',0);
+				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery
+						('uid_foreign',$this->confObj->mainConf[$key.'.']['MM'],'uid_local='.intval($row['uid']),'','','0,1000');
 				if ($res) {
 					while ($s = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 						$new[] = $s['uid_foreign'];
@@ -3638,8 +3633,8 @@ class tx_sgzlib {
 
 		if (is_array($row)) {
 			// BE-USER
-			$myOwner = (strlen($PCA['ctrl']['crfeuser_id'])>0) ? $row [$PCA['ctrl']['crfeuser_id']] :0;
-			$myBeOwner = $row [ (strlen($PCA['ctrl']['cruser_id'])>0) ? $PCA['ctrl']['cruser_id']:'cruser_id'];
+			$myOwner = (strlen($this->confObj->mainCtrl['crfeuser_id'])>0) ? $row [$this->confObj->mainCtrl['crfeuser_id']] :0;
+			$myBeOwner = $row [ (strlen($this->confObj->mainCtrl['cruser_id'])>0) ? $this->confObj->mainCtrl['cruser_id']:'cruser_id'];
 			$iAmEditor = FALSE;
 			if ($this->permitObj->allowed('editUserlist') && t3lib_div::inList($this->permitObj->allowed('editUserlist'),$myOwner)) {
 				$iAmEditor = TRUE;
@@ -3651,10 +3646,10 @@ class tx_sgzlib {
 			if (!$allowEditAll && !$row['uid'] && $this->permitObj->allowed('addEntry')) {
 				$allowEditAll = 1;
 			}
-			$myXtra = $row [ (strlen($PCA['ctrl']['xtrauser_id'])>0) ? $PCA['ctrl']['xtrauser_id']:'xtrauser_id'];
+			$myXtra = $row [ (strlen($this->confObj->mainCtrl['xtrauser_id'])>0) ? $this->confObj->mainCtrl['xtrauser_id']:'xtrauser_id'];
 			$allowedFields = Array();
 			if (!$allowEditAll && $myXtra==$this->feUser['uid'] && strlen($this->feUser['uid'])>0) {
-				$tmp = explode(',',$PCA['ctrl']['xtrauser_fields']);
+				$tmp = explode(',',$this->confObj->mainCtrl['xtrauser_fields']);
 				for ($i1=0;$i1<count($tmp);$i1++) {
 					$allowedFields[$tmp[$i1]] = 1;
 				}
@@ -3662,7 +3657,7 @@ class tx_sgzlib {
 
 			//$s = $this->divObj->getMicrosec();
 			for (reset($row);$key=key($row);next($row)) {
-				if ($em==0 && $row[$key] && $PCA['conf'][$key]['makeEmailLink']) {
+				if ($em==0 && $row[$key] && $this->confObj->mainConf[$key.'.']['makeEmailLink']) {
 					$row[$key] = $this->lCObj->mailto_makelinks('mailto:'.$row[$key],'');
 					//t3lib_div::debug(Array($key=>'spamProtect('.$row[$key].')=>'.$tmp, 'File:Line'=>__FILE__.':'.__LINE__));
 				}
@@ -3679,20 +3674,20 @@ class tx_sgzlib {
 					if ($allowEditAll || isset($allowedFields[strtolower($key)]) || ($PCA['todo']['Edit']>0 && $PCA['todo']['New']>0)) {
 						$m['###AUTO_'.$keyU.'###'] = $this->getFeSingleField_SW($dbName,$key,$row,SGZ_FORM,$PCA);
 					}
-					if ($PCA['conf'][$key]['editEmptyOrNewOnly']) {
+					if ($this->confObj->mainConf[$key.'.']['editEmptyOrNewOnly']) {
 						if ($PCA['todo']['Uid'] && strlen(trim($row[$key]))>1) {
 							$m['###AUTO_'.$keyU.'###'] = $m['###TEXT_'.$keyU.'###'];
 						}
 					}
 
 					if ($em==SGZ_AUTOHIDDEN) {
-						if ($PCA['conf'][$key]['type']=='datetime') {
+						if ($this->confObj->mainConf[$key.'.']['type']=='datetime') {
 							$myDate =  ($this->dateTimeStringToTime($row[$key])>10000) ? $row[$key] : date('d.m.Y H:i',intval($row[$key]))  ;
 							$m['###HIDDEN_'.$keyU.'###'] = '<input type="hidden"  name="'.$PCA['name'].$this->formDataName.'['.$key.']" value="'.$myDate.'" />';
-						} else if ($PCA['conf'][$key]['type']=='date') {
+						} else if ($this->confObj->mainConf[$key.'.']['type']=='date') {
 							$myDate =  ($this->dateStringToTime($row[$key])>10000) ? $row[$key] : date('d.m.Y',intval($row[$key]))  ;
 							$m['###HIDDEN_'.$keyU.'###'] = '<input type="hidden"  name="'.$PCA['name'].$this->formDataName.'['.$key.']" value="'.$myDate.'" />';
-						} else if ($PCA['conf'][$key]['type']=='time') {
+						} else if ($this->confObj->mainConf[$key.'.']['type']=='time') {
 							$myTime =  ($this->timeStringToTime($row[$key]) ? $row[$key] : date('H:i',intval($row[$key])-3600) )  ;
 							$m['###HIDDEN_'.$keyU.'###'] = '<input type="hidden"  name="'.$PCA['name'].$this->formDataName.'['.$key.']" value="'.$myTime.'" />';
 						} else {
@@ -3704,15 +3699,15 @@ class tx_sgzlib {
 			//$xz = $xz+$this->divObj->getMicrodur($s); t3lib_div::debug(Array('$xz'=>$xz, 'File:Line'=>__FILE__.':'.__LINE__));
 
 
-			for (reset($PCA['conf']);$key=key($PCA['conf']);next($PCA['conf'])) {
-				//
-				if (isset($PCA['conf'][$key]['mode'])) {
-					if (strcasecmp($PCA['conf'][$key]['mode'],'calc')==0) {
+			foreach ($this->confObj->mainConf as $key=>$fieldConf) {
+				$field = (substr($key,-1)=='.') ? substr($key,0,-1) : $key;
+				if (isset($fieldConf['mode'])) {
+					if (strcasecmp($fieldConf['mode'],'calc')==0) {
 						# #todo# do calculation of a formula (e.g. like filemaker)
-						//$m['###TEXT_'.strtoupper($key).'###'] = $PCA['conf'][$key]['calc'];
+						//$m['###TEXT_'.strtoupper($field).'###'] = $fieldConf['calc'];
 						//t3lib_div::debug(Array('row'=>$row, 'File:Line'=>__FILE__.':'.__LINE__));
-					} else if (strcasecmp($PCA['conf'][$key]['mode'],'concat')==0) {
-						$concat = explode (',', ( isset($PCA['conf'][$key]['fields']) ? $PCA['conf'][$key]['fields'] : $PCA['ctrl']['label'] ) );
+					} else if (strcasecmp($fieldConf['mode'],'concat')==0) {
+						$concat = explode (',', ( isset($fieldConf['fields']) ? $fieldConf['fields'] : $this->confObj->mainCtrl['label'] ) );
 						$myTitle = Array();
 						for ($j=0;$j<count($concat);$j++) {
 							if (isset($row[$concat[$j]])) {
@@ -3733,24 +3728,24 @@ class tx_sgzlib {
 								$myTitle[$j] = str_replace('comma',',',$concat[$j]);
 							}
 						}
-						$m['###TEXT_'.strtoupper($key).'###'] = implode('',$myTitle);
+						$m['###TEXT_'.strtoupper($field).'###'] = implode('',$myTitle);
 					}
 				}
 
-				if (strcmp($PCA['conf'][$key]['type'],'linklist')==0) {
-					$cap = $PCA['conf'][$key]['captionfield'];
+				if (strcmp($fieldConf['type'],'linklist')==0) {
+					$cap = $fieldConf['captionfield'];
 					$captions = $cap ? explode("\r\n",$row[$cap]) : Array();
-					$links = explode("\r\n",$row[$key]);
-					if ( ($em==SGZ_AUTO || $em==SGZ_AUTOHIDDEN)  && ($allowEditAll || isset($allowedFields[strtolower($key)])) ) {
-						$m['###AUTO_'.strtoupper($key).'###'] = $this->editListWrap[0].
-							$this->editListElementWrap[0].$m['###FORM_'.strtoupper($key).'###'].$this->editListElementWrap[1].
+					$links = explode("\r\n",$row[$field]);
+					if ( ($em==SGZ_AUTO || $em==SGZ_AUTOHIDDEN)  && ($allowEditAll || isset($allowedFields[strtolower($field)])) ) {
+						$m['###AUTO_'.strtoupper($field).'###'] = $this->editListWrap[0].
+							$this->editListElementWrap[0].$m['###FORM_'.strtoupper($field).'###'].$this->editListElementWrap[1].
 								$this->conf['form.']['editList.']['linkListSeparator'];
-						if ($cap && intval($PCA['conf'][$key]['autocaption'])>0) {
-							$m['###AUTO_'.strtoupper($key).'###'] .= $this->editListElementWrap[0].
+						if ($cap && intval($fieldConf['autocaption'])>0) {
+							$m['###AUTO_'.strtoupper($field).'###'] .= $this->editListElementWrap[0].
 								$this->getSingleField_typeText($dbName,$cap,$row,$em,$PCA,'textnowrap').
 								$this->editListElementWrap[1];
 						}
-						$m['###AUTO_'.strtoupper($key).'###'] .= $this->editListWrap[1];
+						$m['###AUTO_'.strtoupper($field).'###'] .= $this->editListWrap[1];
 					} else {
 						if (count($captions)<count($links)) {
 							$captions[count($links)-1] = $captions[count($links)-1];
@@ -3764,26 +3759,26 @@ class tx_sgzlib {
 								($links[$i] ? '</a>':'');
 						}
 
-						$m['###TEXT_'.strtoupper($key).'###'] = implode ('<br />',$myTmp);;
-						$m['###AUTO_'.strtoupper($key).'###'] = $m['###TEXT_'.strtoupper($key).'###'];
+						$m['###TEXT_'.strtoupper($field).'###'] = implode ('<br />',$myTmp);;
+						$m['###AUTO_'.strtoupper($field).'###'] = $m['###TEXT_'.strtoupper($field).'###'];
 					}
-				} else if (strcmp(substr($PCA['conf'][$key]['type'],-4),'list')==0 && strcmp($PCA['conf'][$key]['type'],'checklist')) {
-					$viewInForm = intval($PCA['conf'][$key]['viewInForm']);
-					if (strcmp($PCA['conf'][$key]['type'],'imagelist')==0) {
-						$cap = $PCA['conf'][$key]['captionfield'];
-						$link = $PCA['conf'][$key]['linkfield'];
+				} else if (strcmp(substr($fieldConf['type'],-4),'list')==0 && strcmp($fieldConf['type'],'checklist')) {
+					$viewInForm = intval($fieldConf['viewInForm']);
+					if (strcmp($fieldConf['type'],'imagelist')==0) {
+						$cap = $fieldConf['captionfield'];
+						$link = $fieldConf['linkfield'];
 						$tmpListMode = 'webimg';
-					} else if (strcmp($PCA['conf'][$key]['type'],'filelist')==0) {
-						$tmpListMode = strlen($PCA['conf'][$key]['filetypes'])>1 ? $PCA['conf'][$key]['filetypes'] : 'files';
+					} else if (strcmp($fieldConf['type'],'filelist')==0) {
+						$tmpListMode = strlen($fieldConf['filetypes'])>1 ? $fieldConf['filetypes'] : 'files';
 						$cap = '';
 						$link = '';
-					} else if (strcmp($PCA['conf'][$key]['type'],'pdflist')==0) {
-						$tmpListMode = $PCA['conf'][$key]['filetypes'] ? $PCA['conf'][$key]['filetypes'] :  'pdf';
-						$cap = $PCA['conf'][$key]['captionfield']; //sg 051211
+					} else if (strcmp($fieldConf['type'],'pdflist')==0) {
+						$tmpListMode = $fieldConf['filetypes'] ? $fieldConf['filetypes'] :  'pdf';
+						$cap = $fieldConf['captionfield']; //sg 051211
 						$link = '';
-					} else if (strcmp($PCA['conf'][$key]['type'],'doclist')==0) {
-						$tmpListMode = $PCA['conf'][$key]['filetypes'] ? $PCA['conf'][$key]['filetypes'] : 'pdf,doc,sxw,txt';
-						$cap = $PCA['conf'][$key]['captionfield']; //sg 051211
+					} else if (strcmp($fieldConf['type'],'doclist')==0) {
+						$tmpListMode = $fieldConf['filetypes'] ? $fieldConf['filetypes'] : 'pdf,doc,sxw,txt';
+						$cap = $fieldConf['captionfield']; //sg 051211
 						$link = '';
 					} else {
 						$tmpListMode = 'unknown';
@@ -3791,55 +3786,55 @@ class tx_sgzlib {
 						$link = '';
 					}
 
-					$row[$key] = str_replace("\n",',',str_replace("\r",',',str_replace("\r\n",',',
-							str_replace(",\r",',',str_replace(",\n",',',str_replace(','."\r\n",',',$row[$key]))))));
+					$row[$field] = str_replace("\n",',',str_replace("\r",',',str_replace("\r\n",',',
+							str_replace(",\r",',',str_replace(",\n",',',str_replace(','."\r\n",',',$row[$field]))))));
 
-					$single = (intval($PCA['conf'][$key]['maxitems'])==1);
-					$autoSort = (intval($PCA['conf'][$key]['autoSort'])==1);
+					$single = (intval($fieldConf['maxitems'])==1);
+					$autoSort = (intval($fieldConf['autoSort'])==1);
 					$xbr = '';
-					if (!$single || intval($PCA['conf'][$key]['buttonsMultiLine'])) { $xbr=$this->editListButtonSeparator; }
-					$m['###FORM_ADD_'.strtoupper($key).'###'] = $this->addFileLink ($PCA,$key,$tmpListMode,1,$row);
-					$m['###FORM_UP_'.strtoupper($key).'###'] = $single ? '' : $this->addListModify ($PCA,$key,'Up');
-					$m['###FORM_DEL_'.strtoupper($key).'###'] = $this->addListModify ($PCA,$key,$single ? 'Removeall' : 'Remove');
-					if ( ($em==SGZ_AUTO || $em==SGZ_AUTOHIDDEN)  && ($allowEditAll || isset($allowedFields[strtolower($key)])) ) {
-						$m['###AUTO_'.strtoupper($key).'###'] = $this->editListWrap[0].
-							$this->editListElementWrap[0].$m['###FORM_'.strtoupper($key).'###'].$this->editListElementWrap[1].
-							$this->editListElementWrap[0].$m['###FORM_ADD_'.strtoupper($key).'###'].$xbr.
-								(($single || $autoSort) ? '' : $m['###FORM_UP_'.strtoupper($key).'###'].$xbr).
-								$m['###FORM_DEL_'.strtoupper($key).'###'].$this->editListButtonSeparator.$this->editListElementWrap[1];
-						if ($cap && intval($PCA['conf'][$key]['autocaption'])>0) {
-							$m['###AUTO_'.strtoupper($key).'###'] .= $this->editListElementWrap[0].
+					if (!$single || intval($fieldConf['buttonsMultiLine'])) { $xbr=$this->editListButtonSeparator; }
+					$m['###FORM_ADD_'.strtoupper($field).'###'] = $this->addFileLink ($PCA,$field,$tmpListMode,1,$row);
+					$m['###FORM_UP_'.strtoupper($field).'###'] = $single ? '' : $this->addListModify ($PCA,$field,'Up');
+					$m['###FORM_DEL_'.strtoupper($field).'###'] = $this->addListModify ($PCA,$field,$single ? 'Removeall' : 'Remove');
+					if ( ($em==SGZ_AUTO || $em==SGZ_AUTOHIDDEN)  && ($allowEditAll || isset($allowedFields[strtolower($field)])) ) {
+						$m['###AUTO_'.strtoupper($field).'###'] = $this->editListWrap[0].
+							$this->editListElementWrap[0].$m['###FORM_'.strtoupper($field).'###'].$this->editListElementWrap[1].
+							$this->editListElementWrap[0].$m['###FORM_ADD_'.strtoupper($field).'###'].$xbr.
+								(($single || $autoSort) ? '' : $m['###FORM_UP_'.strtoupper($field).'###'].$xbr).
+								$m['###FORM_DEL_'.strtoupper($field).'###'].$this->editListButtonSeparator.$this->editListElementWrap[1];
+						if ($cap && intval($fieldConf['autocaption'])>0) {
+							$m['###AUTO_'.strtoupper($field).'###'] .= $this->editListElementWrap[0].
 								$this->getSingleField_typeText($dbName,$cap,$row,$em,$PCA,'textnowrap').
 								$this->editListElementWrap[1];
 						}
-						if ($link && intval($PCA['conf'][$key]['autolink'])>0) {
-							$m['###AUTO_'.strtoupper($key).'###'] .= $this->editListElementWrap[0].
+						if ($link && intval($fieldConf['autolink'])>0) {
+							$m['###AUTO_'.strtoupper($field).'###'] .= $this->editListElementWrap[0].
 								$this->getSingleField_typeText($dbName,$link,$row,$em,$PCA,'textnowrap').
 								$this->editListElementWrap[1];
 						}
-						$m['###AUTO_'.strtoupper($key).'###'] .= $this->editListWrap[1];
+						$m['###AUTO_'.strtoupper($field).'###'] .= $this->editListWrap[1];
 						if ($tmpListMode=='webimg') {
-							$cpt = $cap ? (isset($PCA['conf'][$cap]) ?
+							$cpt = $cap ? (isset($this->confObj->mainConf[$cap.'.']) ?
 								t3lib_div::trimExplode("\n",$row[$cap]):Array($cap)):Array();
 							$url = $link ? t3lib_div::trimExplode("\n",$row[$link]) : Array();
-							$imgMrk = '###TEXT_'.strtoupper($key);
+							$imgMrk = '###TEXT_'.strtoupper($field);
 							for (reset($PCA['image']);$iKey=key($PCA['image']);next($PCA['image'])) {
 								$m[$imgMrk.'_ALL_'.strtoupper($iKey).'###'] = $viewInForm ?
-									$this->getImages ($dbName,$key,$row,$PCA,strtolower($iKey),0,$cpt,$url) : '';
+									$this->getImages ($dbName,$field,$row,$PCA,strtolower($iKey),0,$cpt,$url) : '';
 								$m[$imgMrk.'_FIRST_'.strtoupper($iKey).'###'] = $viewInForm ?
-									$this->getImages ($dbName,$key,$row,$PCA,strtolower($iKey),1,$cpt,$url) : '';
+									$this->getImages ($dbName,$field,$row,$PCA,strtolower($iKey),1,$cpt,$url) : '';
 								$m[$imgMrk.'_MORE_'.strtoupper($iKey).'###'] = $viewInForm ?
-									$this->getImages ($dbName,$key,$row,$PCA,strtolower($iKey),2,$cpt,$url) : '';
+									$this->getImages ($dbName,$field,$row,$PCA,strtolower($iKey),2,$cpt,$url) : '';
 							}
 						} else {
-							$m['###TEXT_'.strtoupper($key).'###'] = $viewInForm ? $this->getFileLinks ($dbName,$key,$row,$PCA) : '';
+							$m['###TEXT_'.strtoupper($field).'###'] = $viewInForm ? $this->getFileLinks ($dbName,$field,$row,$PCA) : '';
 						}
 					} else {
 					if ($tmpListMode=='webimg') {
-							$cpt = $cap ? (isset($PCA['conf'][$cap]) ? t3lib_div::trimExplode("\n",$row[$cap]):Array($cap)):Array();
+							$cpt = $cap ? (isset($this->confObj->mainConf[$cap.'.']) ? t3lib_div::trimExplode("\n",$row[$cap]):Array($cap)):Array();
 							$url = $link ? t3lib_div::trimExplode("\n",$row[$link]) : Array();
-							if (!$link && is_array($PCA['conf'][$key]['typoLink'])) {
-								$tlc = $PCA['conf'][$key]['typoLink'];
+							if (!$link && is_array($fieldConf['typoLink'])) {
+								$tlc = $fieldConf['typoLink'];
 								$tmpAP = $tlc['additionalParams'].'';
 								if (!$tlc['parameter'] || strcmp($tlc['parameter'],'0')==0) {
 									$tlc['parameter'] = $GLOBALS['TSFE']->id;
@@ -3847,122 +3842,126 @@ class tx_sgzlib {
 								$tlc['additionalParams'] = $tmpAP.'&uid='.intval($row['uid'].'.');
 								$url = Array($this->lCObj->typoLink_URL($tlc));
 							}
-							$imgMrk = '###TEXT_'.strtoupper($key);
-							$m['###AUTO_'.strtoupper($key).'###'] = '';
+							$imgMrk = '###TEXT_'.strtoupper($field);
+							$m['###AUTO_'.strtoupper($field).'###'] = '';
 							for (reset($PCA['image']);$iKey=key($PCA['image']);next($PCA['image'])) {
 								$m[$imgMrk.'_ALL_'.strtoupper($iKey).'###'] =
-									$this->getImages ($dbName,$key,$row,$PCA,strtolower($iKey),0,$cpt,$url);
+									$this->getImages ($dbName,$field,$row,$PCA,strtolower($iKey),0,$cpt,$url);
 								$m[$imgMrk.'_FIRST_'.strtoupper($iKey).'###'] =
-									$this->getImages ($dbName,$key,$row,$PCA,strtolower($iKey),1,$cpt,$url);
+									$this->getImages ($dbName,$field,$row,$PCA,strtolower($iKey),1,$cpt,$url);
 								$m[$imgMrk.'_MORE_'.strtoupper($iKey).'###'] =
-									$this->getImages ($dbName,$key,$row,$PCA,strtolower($iKey),2,$cpt,$url);
+									$this->getImages ($dbName,$field,$row,$PCA,strtolower($iKey),2,$cpt,$url);
 							}
 						} else {
-							$m['###TEXT_'.strtoupper($key).'###'] = $this->getFileLinks ($dbName,$key,$row,$PCA);
-							$m['###AUTO_'.strtoupper($key).'###'] = $m['###TEXT_'.strtoupper($key).'###'];
+							$m['###TEXT_'.strtoupper($field).'###'] = $this->getFileLinks ($dbName,$field,$row,$PCA);
+							$m['###AUTO_'.strtoupper($field).'###'] = $m['###TEXT_'.strtoupper($field).'###'];
 						}
 					}
-				} else if (strcmp($PCA['conf'][$key]['type'],'selectsingle')==0 ||
-					(strcmp($PCA['conf'][$key]['type'],'selectmulti')==0 && intval($PCA['conf'][$key]['maxitems'])==1)) {
-					$m['###FORM_ADD_'.strtoupper($key).'###'] = $this->addDbLink ($PCA,$key,1,$row);
-					$m['###FORM_UP_'.strtoupper($key).'###'] = '';
-					$m['###FORM_DEL_'.strtoupper($key).'###'] = $this->addListModify ($PCA,$key,'Removeall',1);
-					if ( ($em==SGZ_AUTO || $em==SGZ_AUTOHIDDEN)  && ($allowEditAll || isset($allowedFields[strtolower($key)])) ) {
-						$m['###AUTO_'.strtoupper($key).'###'] = $this->editListWrap[0].
-							$this->editListElementWrap[0].$m['###FORM_'.strtoupper($key).'###'].$this->editListElementWrap[1].
-							$this->editListElementWrap[0].$m['###FORM_ADD_'.strtoupper($key).'###'].
-								$m['###FORM_DEL_'.strtoupper($key).'###'].'<br />'.$this->editListElementWrap[1].
+				} else if (strcmp($fieldConf['type'],'selectsingle')==0 ||
+					(strcmp($fieldConf['type'],'selectmulti')==0 && intval($fieldConf['maxitems'])==1)) {
+					$m['###FORM_ADD_'.strtoupper($field).'###'] = $this->addDbLink ($PCA,$field,1,$row);
+					$m['###FORM_UP_'.strtoupper($field).'###'] = '';
+					$m['###FORM_DEL_'.strtoupper($field).'###'] = $this->addListModify ($PCA,$field,'Removeall',1);
+					if ( ($em==SGZ_AUTO || $em==SGZ_AUTOHIDDEN)  && ($allowEditAll || isset($allowedFields[strtolower($field)])) ) {
+						$m['###AUTO_'.strtoupper($field).'###'] = $this->editListWrap[0].
+							$this->editListElementWrap[0].$m['###FORM_'.strtoupper($field).'###'].$this->editListElementWrap[1].
+							$this->editListElementWrap[0].$m['###FORM_ADD_'.strtoupper($field).'###'].
+								$m['###FORM_DEL_'.strtoupper($field).'###'].'<br />'.$this->editListElementWrap[1].
 							$this->editListWrap[1];
 					} else {
 					}
-				} else if (strcmp($PCA['conf'][$key]['type'],'selectmulti')==0) {
+				} else if (strcmp($fieldConf['type'],'selectmulti')==0) {
 					$xbr = $this->editListButtonSeparator;
-					$autoSort = (intval($PCA['conf'][$key]['autoSort'])==1);
-					if (intval($PCA['conf'][$key]['buttonsInSingleLine'])) { $xbr=''; }
-					$m['###FORM_ADD_'.strtoupper($key).'###'] = $this->addDbLink ($PCA,$key,1,$row);
-					$m['###FORM_UP_'.strtoupper($key).'###'] = $this->addListModify ($PCA,$key,'Up',1);
-					$m['###FORM_DEL_'.strtoupper($key).'###'] = $this->addListModify ($PCA,$key,'Remove',1);
-					if ( ($em==SGZ_AUTO || $em==SGZ_AUTOHIDDEN)  && ($allowEditAll || isset($allowedFields[strtolower($key)])) ) {
-						$m['###AUTO_'.strtoupper($key).'###'] = $this->editListWrap[0].
-							$this->editListElementWrap[0].$m['###FORM_'.strtoupper($key).'###'].$this->editListElementWrap[1].
-							$this->editListElementWrap[0].$m['###FORM_ADD_'.strtoupper($key).'###'].$xbr.
-								($autoSort ? '' : $m['###FORM_UP_'.strtoupper($key).'###'].$xbr).
-								$m['###FORM_DEL_'.strtoupper($key).'###'].$xbr.$this->editListElementWrap[1].
+					$autoSort = (intval($fieldConf['autoSort'])==1);
+					if (intval($fieldConf['buttonsInSingleLine'])) { $xbr=''; }
+					$m['###FORM_ADD_'.strtoupper($field).'###'] = $this->addDbLink ($PCA,$field,1,$row);
+					$m['###FORM_UP_'.strtoupper($field).'###'] = $this->addListModify ($PCA,$field,'Up',1);
+					$m['###FORM_DEL_'.strtoupper($field).'###'] = $this->addListModify ($PCA,$field,'Remove',1);
+					if ( ($em==SGZ_AUTO || $em==SGZ_AUTOHIDDEN)  && ($allowEditAll || isset($allowedFields[strtolower($field)])) ) {
+						$m['###AUTO_'.strtoupper($field).'###'] = $this->editListWrap[0].
+							$this->editListElementWrap[0].$m['###FORM_'.strtoupper($field).'###'].$this->editListElementWrap[1].
+							$this->editListElementWrap[0].$m['###FORM_ADD_'.strtoupper($field).'###'].$xbr.
+								($autoSort ? '' : $m['###FORM_UP_'.strtoupper($field).'###'].$xbr).
+								$m['###FORM_DEL_'.strtoupper($field).'###'].$xbr.$this->editListElementWrap[1].
 							$this->editListWrap[1];
 					} else {
 					}
-				} else if (strcmp($PCA['conf'][$key]['type'],'checklist')==0) {
+				} else if (strcmp($fieldConf['type'],'checklist')==0) {
 					// t3lib_div::debug(Array('5'=>5, 'File:Line'=>__FILE__.':'.__LINE__));
 				}
 			}
 
 
-			for (reset($PCA['conf']);$key=key($PCA['conf']);next($PCA['conf'])) {
-				if (isset($PCA['conf'][$key]['link'])) {
-					$m['###LINK_'.strtoupper($key).'###'] = $this->getDbFieldLink($PCA,$m,$row,$key);
-					if (strlen($m['###LINK_'.strtoupper($key).'###'])>0 && $em<SGZ_FORM) {
-						$m['###AUTO_'.strtoupper($key).'###'] = $m['###LINK_'.strtoupper($key).'###'];
+			foreach ($this->confObj->mainConf as $key=>$fieldConf) {
+				$field = (substr($key,-1)=='.') ? substr($key,0,-1) : $key;
+				if (isset($fieldConf['link'])) {
+					$m['###LINK_'.strtoupper($field).'###'] = $this->getDbFieldLink($PCA,$m,$row,$field);
+					if (strlen($m['###LINK_'.strtoupper($field).'###'])>0 && $em<SGZ_FORM) {
+						$m['###AUTO_'.strtoupper($field).'###'] = $m['###LINK_'.strtoupper($field).'###'];
 					}
 				}
 			}
 
-			for (reset($PCA['conf']);$key=key($PCA['conf']);next($PCA['conf'])) {
+			foreach ($this->confObj->mainConf as $key=>$fieldConf) {
+				$field = (substr($key,-1)=='.') ? substr($key,0,-1) : $key;
 				// Now possibly wrap
-				$toWrap = strlen($m['###LINK_'.strtoupper($key).'###'])>0 ?
-						$m['###LINK_'.strtoupper($key).'###'] :$m['###TEXT_'.strtoupper($key).'###'];
-				$m['###WRAP_'.strtoupper($key).'###'] = '';
+				$toWrap = strlen($m['###LINK_'.strtoupper($field).'###'])>0 ?
+						$m['###LINK_'.strtoupper($field).'###'] :$m['###TEXT_'.strtoupper($field).'###'];
+				$m['###WRAP_'.strtoupper($field).'###'] = '';
 
-				if ($PCA['conf'][$key]['stdWrapName']) {
-					$myStdWrapConf = $PCA['stdwrap'][$PCA['conf'][$key]['stdWrapName'].'.'];
+				if ($fieldConf['stdWrapName']) {
+					$myStdWrapConf = $PCA['stdwrap'][$fieldConf['stdWrapName'].'.'];
 					$toWrap = $this->lCObj->stdWrap($toWrap,$myStdWrapConf);
-					$m['###WRAP_'.strtoupper($key).'###'] = $toWrap;
+					$m['###WRAP_'.strtoupper($field).'###'] = $toWrap;
 				}
 
-				if (isset($PCA['conf'][$key]['wrap'])) {
-					$myWrap = explode ('|',$PCA['conf'][$key]['wrap']);
+				if (isset($fieldConf['wrap'])) {
+					$myWrap = explode ('|',$fieldConf['wrap']);
 					$toWrap = $myWrap[0].$toWrap.$myWrap[1];
-					$m['###WRAP_'.strtoupper($key).'###'] = $toWrap;
-				} else if (isset($PCA['conf'][$key]['wrapIf']) && strlen(trim($toWrap))>0
+					$m['###WRAP_'.strtoupper($field).'###'] = $toWrap;
+				} else if (isset($fieldConf['wrapIf']) && strlen(trim($toWrap))>0
 							&& strcmp('&nbsp;',trim($toWrap)) ) {
-					$tmp = $PCA['conf'][$key]['wrapIf'];
+					$tmp = $fieldConf['wrapIf'];
 					$myWrap = explode ('|', substr($tmp,0,4)=="LLL:" ? $this->langObj->getLLL($tmp) : $tmp );
 					$toWrap = $myWrap[0].$toWrap.$myWrap[1];
-					$m['###WRAP_'.strtoupper($key).'###'] = $toWrap;
+					$m['###WRAP_'.strtoupper($field).'###'] = $toWrap;
 				}
 
-				if (strlen($m['###WRAP_'.strtoupper($key).'###'])>0 && $em<SGZ_FORM) {
-					$m['###AUTO_'.strtoupper($key).'###'] = $m['###WRAP_'.strtoupper($key).'###'];
+				if (strlen($m['###WRAP_'.strtoupper($field).'###'])>0 && $em<SGZ_FORM) {
+					$m['###AUTO_'.strtoupper($field).'###'] = $m['###WRAP_'.strtoupper($field).'###'];
 				}
 			}
 
-			for (reset($PCA['conf']);$key=key($PCA['conf']);next($PCA['conf'])) {
-				$toFormat = strlen($m['###LINK_'.strtoupper($key).'###'])>0 ? $m['###LINK_'.strtoupper($key).'###'] :$m['###TEXT_'.strtoupper($key).'###'];
+			foreach ($this->confObj->mainConf as $key=>$fieldConf) {
+				$field = (substr($key,-1)=='.') ? substr($key,0,-1) : $key;
+				$toFormat = strlen($m['###LINK_'.strtoupper($field).'###'])>0 ? 
+					$m['###LINK_'.strtoupper($field).'###'] : $m['###TEXT_'.strtoupper($field).'###'];
 				// Now evtl. Format
 				if (is_array($PCA['format'])) {
 					for(reset($PCA['format']);$foKey=key($PCA['format']);next($PCA['format'])) {
-						$m['###TEXT'.strtoupper($foKey.'_'.$key).'###'] = '';
+						$m['###TEXT'.strtoupper($foKey.'_'.$field).'###'] = '';
 						if (strlen(trim($toFormat))>0 && strcmp('&nbsp;',trim($toFormat)) ) {
-							$m['###TEXT'.strtoupper($foKey.'_'.$key).'###'] =
-								str_replace ('###name###',$this->descr['###DESCR_'.strtoupper($key).'###'],
+							$m['###TEXT'.strtoupper($foKey.'_'.$field).'###'] =
+								str_replace ('###name###',$this->descr['###DESCR_'.strtoupper($field).'###'],
 									str_replace ('###data###',$toFormat,$PCA['format'][$foKey]));
 						}
-						$m['###AUTO'.strtoupper($foKey.'_'.$key).'###'] = $m['###TEXT'.strtoupper($foKey.'_'.$key).'###'];
+						$m['###AUTO'.strtoupper($foKey.'_'.$field).'###'] = $m['###TEXT'.strtoupper($foKey.'_'.$field).'###'];
 						if ($em==SGZ_FORM || $em==SGZ_AUTO || $em==SGZ_AUTOHIDDEN) {
-							$m['###FORM'.strtoupper($foKey.'_'.$key).'###'] =
-								str_replace ('###name###',$this->descr['###DESCR_'.strtoupper($key).'###'],
-									str_replace ('###data###',$m['###FORM_'.strtoupper($key).'###'],$PCA['format'][$foKey]));
+							$m['###FORM'.strtoupper($foKey.'_'.$field).'###'] =
+								str_replace ('###name###',$this->descr['###DESCR_'.strtoupper($field).'###'],
+									str_replace ('###data###',$m['###FORM_'.strtoupper($field).'###'],$PCA['format'][$foKey]));
 						}
 						if ($em==SGZ_AUTO || $em==SGZ_AUTOHIDDEN) {
-							if ($allowEditAll || isset($allowedFields[strtolower($key)]) || ($PCA['todo']['Edit']>0 && $PCA['todo']['New']>0)) {
-								$m['###AUTO'.strtoupper($foKey.'_'.$key).'###'] = $m['###FORM'.strtoupper($foKey.'_'.$key).'###'];
+							if ($allowEditAll || isset($allowedFields[strtolower($field)]) || ($PCA['todo']['Edit']>0 && $PCA['todo']['New']>0)) {
+								$m['###AUTO'.strtoupper($foKey.'_'.$field).'###'] = $m['###FORM'.strtoupper($foKey.'_'.$field).'###'];
 							}
 						}
 					}
 				}
 			}
 
-			$txtListTitle = ( isset($PCA['conf']['listTitle']['fields']) ?
-						$PCA['conf']['listTitle']['fields'] : $PCA['ctrl']['label'] );
+			$txtListTitle = ( isset($this->confObj['listTitle.']['fields']) ?
+						$this->confObj['listTitle.']['fields'] : $this->confObj->mainCtrl['label'] );
 			$listTitles = explode (',',$txtListTitle);
 			$myTitle = '';
 			$preValue = false;
@@ -3980,9 +3979,9 @@ class tx_sgzlib {
 			t3lib_div::debug(Array('ERROR'=>'$row not set', 'BackTrace'=>debug_backtrace(), 'File:Line'=>__FILE__.':'.__LINE__));
 		}
 
-		if (is_array($PCA['ctrl']['printLink'])) {
-			$wrap = t3lib_div::trimExplode('|',$PCA['ctrl']['printLink']['wrap']);
-			$params = Array('no_cache'=>NULL, 'id'=>$GLOBALS['TSFE']->id, 'type'=>intval($PCA['ctrl']['printLink']['type']));
+		if (is_array($this->confObj->mainCtrl['printLink'])) {
+			$wrap = t3lib_div::trimExplode('|',$this->confObj->mainCtrl['printLink']['wrap']);
+			$params = Array('no_cache'=>NULL, 'id'=>$GLOBALS['TSFE']->id, 'type'=>intval($this->confObj->mainCtrl['printLink']['type']));
 			$myUrl = t3lib_div::getIndpEnv('TYPO3_REQUEST_HOST').t3lib_div::linkThisScript($params);
 			$m['###PRINTLINK###'] = $GLOBALS['TSFE']->type<90 ?
 					$wrap[0].'<a target="Print" href="'.$myUrl.'">'.$this->constObj->getButton('printLink').'</a>'.$wrap[1] : '';
@@ -3990,21 +3989,21 @@ class tx_sgzlib {
 			$m['###PRINTLINK###'] = '<u>Sorry, no Printlink</u>';
 		}
 
-		if (is_array($PCA['ctrl']['pdfLink'])) {
-			$wrap = t3lib_div::trimExplode('|',$PCA['ctrl']['pdfLink']['wrap']);
+		if (is_array($this->confObj->mainCtrl['pdfLink'])) {
+			$wrap = t3lib_div::trimExplode('|',$this->confObj->mainCtrl['pdfLink']['wrap']);
 			$myUrl = '';
-			if (strlen($PCA['ctrl']['pdfLink']['field'])>2) {
-				$tmp = t3lib_div::trimExplode(',',$row[$PCA['ctrl']['pdfLink']['field']]);
+			if (strlen($this->confObj->mainCtrl['pdfLink']['field'])>2) {
+				$tmp = t3lib_div::trimExplode(',',$row[$this->confObj->mainCtrl['pdfLink']['field']]);
 				$myUrl = is_array($tmp) ? $tmp[0] : '';
 			}
 			if (strlen($myUrl)<1) {
-				$params = Array('no_cache'=>NULL, 'id'=>$GLOBALS['TSFE']->id, 'type'=>intval($PCA['ctrl']['pdfLink']['type']));
+				$params = Array('no_cache'=>NULL, 'id'=>$GLOBALS['TSFE']->id, 'type'=>intval($this->confObj->mainCtrl['pdfLink']['type']));
 				$myUrl = t3lib_div::getIndpEnv('TYPO3_REQUEST_HOST').t3lib_div::linkThisScript($params);
 				$m['###PDFLINK###'] = $GLOBALS['TSFE']->type<90 ?
 						$wrap[0].'<a target="PDF" href="'.$myUrl.'">'.$this->constObj->getButton('pdfLink').'</a>'.$wrap[1] : '';
 			} else {
 				$m['###PDFLINK###'] = $GLOBALS['TSFE']->type<90 ?
-						$wrap[0].'<a target="PDF" href="'.$PCA['ctrl']['pdfLink']['path'].$myUrl.'">'.
+						$wrap[0].'<a target="PDF" href="'.$this->confObj->mainCtrl['pdfLink']['path'].$myUrl.'">'.
 							$this->constObj->getButton('pdfSpecialLink').'</a>'.$wrap[1] : '';
 			}
 		} else {
@@ -4636,6 +4635,24 @@ class tx_sgzlib {
 		//t3lib_div::debug(Array('error'=>$this->lastCheckError, '$myTime'=>$myTime, '$md'=>$md, '$ok1'=>$ok1, '$out'=>$out, 'File:Line'=>__FILE__.':'.__LINE__));
 		return ($out);
 	}
+
+
+	function formatDate ($myTime) {
+		$format = $this->conf['formats.']['date'] ? $this->conf['formats.']['date'] : 'd.m.Y';
+		return (gmdate($format,$myTime+43200));
+	}
+
+	function formatDateTime ($myTime) {
+		$format = $this->conf['formats.']['datetime'] ? $this->conf['formats.']['datetime'] : 'd.m.Y H:i';
+		return (gmdate($format,$myTime));
+	}
+
+	function formatTime ($myTime) {
+		$format = $this->conf['formats.']['time'] ? $this->conf['formats.']['time'] : 'H:i';
+		return (gmdate($format,$myTime));
+	}
+
+
 
 	/**
 	 * [Describe function...]
@@ -5314,62 +5331,6 @@ class tx_sgzlib {
 	 * Functions vor JavaScript FE-Editing and Searchforms
 	 *
 	 ***********************************************************************************************/
-
-	/**
-	 * @return	[type]		...
-	 */
-	function addJsUserFunctions () {
-		if (!$this->addedJsUserFunctions) {
-			$this->addedJsUserFunctions = TRUE;
-			if ($GLOBALS['TYPO_VERSION']<SGZ_VERSIONFORADDJS) {
-				return CRLF.'<script src="'.$this->feuserJsFunc.'" type="text/javascript">'."\r\n".'</script>'."\r\n";
-			} else {
-				$tmp = implode('',FILE($this->feuserJsFunc));
-				$GLOBALS['TSFE']->setJS('sg_userJsFunc',$tmp);
-				return '';
-			}
-		} else {
-			return '';
-		}
-	}
-
-	/**
-	 * @return	[type]		...
-	 */
-	function addJsPopupFunctions () {
-		if (!$this->addedJsPopupFunctions) {
-			$this->addedJsPopupFunctions = TRUE;
-			if ($GLOBALS['TYPO_VERSION']<SGZ_VERSIONFORADDJS) {
-				return '<script src="'.$this->popupFunc.'" type="text/javascript">'."\r\n".'</script>'."\r\n";
-			} else {
-				$tmp = implode('',FILE($this->popupFunc));
-				//t3lib_div::debug(Array('addJsPopupFunctions/'.strlen($tmp)=>$tmp, 'File:Line'=>__FILE__.':'.__LINE__));
-				$GLOBALS['TSFE']->setJS('sg_popupFunc',$tmp);
-				return '';
-			}
-		} else {
-			return '';
-		}
-	}
-
-	/**
-	 * @return	[type]		...
-	 */
-	function addJsSearchFunctions () {
-		if (!$this->addedJsSearchFunctions) {
-			$this->addedJsSearchFunctions = TRUE;
-			if ($GLOBALS['TYPO_VERSION']<SGZ_VERSIONFORADDJS) {
-				return '<script src="'.$this->searchFunc.'" type="text/javascript">'."\r\n".'</script>'."\r\n";
-			} else {
-				$tmp = implode('',FILE($this->searchFunc));
-				//t3lib_div::debug(Array('addJsSearchFunctions/'.strlen($tmp)=>$tmp, 'File:Line'=>__FILE__.':'.__LINE__));
-				$GLOBALS['TSFE']->setJS('sg_searchfunc',$tmp);
-				return '';
-			}
-		} else {
-			return '';
-		}
-	}
 
 	/**
 	 * [Describe function...]

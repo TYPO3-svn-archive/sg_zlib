@@ -34,6 +34,7 @@ if(TYPO3_MODE == 'FE') {
 
 	require_once(t3lib_extMgm::extPath('sg_zlib').'class.tx_sglib_config.php');
 	require_once(t3lib_extMgm::extPath('sg_zlib').'class.tx_sglib_const.php');
+	require_once(t3lib_extMgm::extPath('sg_zlib').'class.tx_sglib_links.php');
 	require_once(t3lib_extMgm::extPath('sg_zlib').'class.tx_sglib_data.php');
 	require_once(t3lib_extMgm::extPath('sg_zlib').'class.tx_sglib_debug.php');
 	require_once(t3lib_extMgm::extPath('sg_zlib').'class.tx_sglib_params.php');

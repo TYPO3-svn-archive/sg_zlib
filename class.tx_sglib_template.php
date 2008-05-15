@@ -170,24 +170,31 @@ class tx_sglib_template {
 	function getTemplate ($templateName,$globalMarkers=Array()) {
 		static $templates = Array();
 		$this->_fCount(__FUNCTION__);
-		if (!is_array($templates[$this->defaultDesignator])) {
-			$templates[$this->defaultDesignator] = Array();
-		}
 
-		if (!isset($templates[$this->defaultDesignator][$templateName])) {
-			$template = $this->cObj->cObjGetSingle($this->templateFiles[$templateName],$this->templateFiles[$templateName.'.']);
-			$template = $this->permitObj->processTemplate($template);
-
-			if (strlen($template)<10) {
-				$this->debugObj->debugIf(1,Array('WARNING'=>'Template not found', 'name='=>$templateName, 'backTrace='=>$this->debugObj->shortBacktrace(4,1)));
+		if (!strlen($templateName)) {
+			throw new tx_sglib_templateexception ('No Template Name set',1);
+			return ('');
+		} else {
+			if (!is_array($templates[$this->defaultDesignator])) {
+				$templates[$this->defaultDesignator] = Array();
 			}
 
-			$template =  $this->cObj->substituteMarkerArray($template, $this->constObj->getMarkers() );
-			$template =  $this->cObj->substituteMarkerArray($template, $globalMarkers);
-			$this->debugObj->debugIf('templates',Array('name='=>$templateName, '$template'=>$template));
-			$templates[$this->defaultDesignator][$templateName] =  $template;
+			if (!isset($templates[$this->defaultDesignator][$templateName])) {
+				$template = $this->cObj->cObjGetSingle($this->templateFiles[$templateName],$this->templateFiles[$templateName.'.']);
+				$template = $this->permitObj->processTemplate($template);
+
+				if (strlen($template)<10) {
+					throw new tx_sglib_templateexception ('Templatefile empty or not found',2,'TemplateName = "'.$templateName.'"');
+				}
+
+				$template =  $this->cObj->substituteMarkerArray($template, $this->constObj->getMarkers() );
+				$template =  $this->cObj->substituteMarkerArray($template, $globalMarkers);
+				$this->debugObj->debugIf('templates',Array('name='=>$templateName, '$template'=>$template));
+				$templates[$this->defaultDesignator][$templateName] =  $template;
+			}
+
+			return ($templates[$this->defaultDesignator][$templateName]);
 		}
-		return ($templates[$this->defaultDesignator][$templateName]);
 	}
 
 	/**
@@ -236,6 +243,7 @@ class tx_sglib_template {
 				// Illegal count of markers !
 				$error = str_replace('###count###',$n,str_replace('###marker###',$name,$this->langObj->getLL('getSubpart.countError')));
 				t3lib_div::debug(Array('ERROR:'=>$error, 'File:Line'=>__FILE__.':'.__LINE__));
+				throw new tx_sglib_templateexception ('Named SubPart of Template not found',5,'$error; SubPartName = "'.$name.'"');
 			}
 			if ($default) {
 				$n = substr_count($tmpl,$default);
@@ -255,9 +263,7 @@ class tx_sglib_template {
 					}
 				}
 			} else {
-				t3lib_div::debug(Array('ERROR:'=>$this->langObj->getLL('getSubpart.noMarkers'),
-					'$name'=>$name, '$default'=>$default,
-					'File:Line'=>__FILE__.':'.__LINE__));
+				throw new tx_sglib_templateexception ('Named SubPart of Template not found',6,'SubPartName = "'.$name.'"');
 			}
 		}
 		return ($retcode);
@@ -594,6 +600,35 @@ class tx_sglib_template {
 
 		return ($retcode);
 	}
+
+
+	/**
+	 * @param	[type]		$templateName: ...
+	 * @param	[type]		$globalmarkers: ...
+	 * @param	[type]		$gConf: ...
+	 * @param	[type]		$from: ...
+	 * @return	[type]		...
+	 */
+	public function getNamed ($named,$globalMarkers=Array()) {
+		$name = $this->conf['named.'][$named];
+		$tmp = t3lib_div::trimExplode(':',$name,2);
+		if (!strlen($name) || !strlen($tmp[0]) || ! strlen($tmp[1])) {
+			throw new tx_sglib_templateexception ('Named Template/SubPart empty or not found',4,'Name = "'.$named.'"');
+		}
+		$template = $this->getTemplate ($tmp[0],$globalMarkers);
+		$subPart = $this->getSubpart ($template,strtoupper($tmp[1]));
+		return ($subPart);
+	}
+
+//		$tmp = $this->cObj->fileResource($templateFilename);
+//		if (!strlen($tmp)) {
+//			throw new tx_sglib_viewexception ('Templatefile empty or not found',2,'TemplateFileName = "'.$templateFilename.'"');
+//		}
+//		$subpart = $subpart ? $subpart : 'main';
+//		$this->template = $this->cObj->getSubpart($tmp,'###'.$subpart.'###');
+//		if (!strlen($this->template)) {
+//			throw new tx_sglib_viewexception ('Subpart empty or not found',3,'TemplateFileName="'.$templateFilename.'" SubpartName="'.$subpart.'"');
+//		}
 
 
 
