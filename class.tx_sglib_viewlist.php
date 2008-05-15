@@ -102,9 +102,9 @@ class tx_sglib_viewlist extends tx_sglib_viewbase  {
 
 	protected function init() {
 
-		$this->listConf = $this->configObj->get('list.');
+		$this->listConf = $this->confObj->list;
 		$this->listMode = $this->paramsObj->getListMode();
-		$tmp = $this->configObj->get('listmode.'.$this->listMode.'.');
+		$tmp = $this->confObj->listmode[$this->listMode.'.'];
 		if (is_array($tmp)) {
 			$this->listConf = t3lib_div::array_merge_recursive_overrule($this->listConf,$tmp);
 		}
@@ -113,7 +113,6 @@ class tx_sglib_viewlist extends tx_sglib_viewbase  {
 		$this->markers = $this->markersObj->getDescriptions('',$this->markers);
 		$this->subpartMarkers = Array();
 
-		$this->references = $this->model->references;
 	}
 
 
@@ -220,7 +219,7 @@ class tx_sglib_viewlist extends tx_sglib_viewbase  {
 					$this->listGroupValues[$i] = $record[$this->listGroup[$i]];
 					$tmpl = $this->subparts['header_ref_'.$this->listGroup[$i]];
 					$this->listGroupMarkers[$i] = $this->markersObj->getRefValues
-						($this->listGroupValues[$i],$this->references['table'][$this->listGroup[$i]],$this->markers);
+						($this->listGroupValues[$i],$this->confObj->references['table'][$this->listGroup[$i]],$this->markers);
 					$tmpl = $this->cObj->substituteMarkerArray($tmpl,$this->listGroupMarkers[$i]);
 					$content .= $this->cObj->substituteMarkerArray($tmpl,array(),'###TEXT_|###',1);
 				}
@@ -296,7 +295,7 @@ class tx_sglib_viewlist extends tx_sglib_viewbase  {
 		$this->subparts['line'] = $this->cObj->getSubpart($this->template,'###LINE###');
 		$this->subpartMarkers['###LINE###'] = '';
 
-		if (is_array($this->references['field'])) foreach ($this->references['field'] as $fieldName) {
+		if (is_array($this->confObj->references['field'])) foreach ($this->confObj->references['field'] as $fieldName) {
 			$name = 'header_ref_'.$fieldName;
 			$tmp = $this->cObj->getSubpart($this->template,'###'.strtoupper($name).'###');
 			if ($tmp) {

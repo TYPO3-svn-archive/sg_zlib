@@ -195,9 +195,9 @@ class tx_sglib_markers {
 		if (is_array($record)) {
 			$table = $table ? $table : $this->mainTable;
 			foreach ($record as $key=>$value) {
-				$refTable = $this->model->references['table'][$key];
-				if ($refTable && ($labelField=$this->model->references['label'][$refTable])) {
-					$data = $this->model->references['data'][$refTable];
+				$refTable = $this->confObj->references['table'][$key];
+				if ($refTable && ($labelField=$this->confObj->references['label'][$refTable])) {
+					$data = $this->model->refData[$refTable];
 					$textValue = $data[$value][$labelField];
 				} else {
 					$textValue = $value;
@@ -218,7 +218,7 @@ class tx_sglib_markers {
 				$markers['###AUTO_'.strtoupper($key).'###'] = $textValue;
 			}
 		} else {
-			$data = $this->model->references['data'][$table];
+			$data = $this->model->refData[$table];
 			// t3lib_div::debug(Array('$data'=>$data, 'File:Line'=>__FILE__.':'.__LINE__));
 			$record = $data[$record];
 			// t3lib_div::debug(Array('$record'=>$record, 'File:Line'=>__FILE__.':'.__LINE__));

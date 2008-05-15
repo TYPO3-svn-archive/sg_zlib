@@ -63,14 +63,12 @@ class tx_sglib_viewsearchform extends tx_sglib_viewbase  {
 
 	
 	protected function init() {
-		$this->searchConf = $this->configObj->get('search.');
+		$this->searchConf = $this->confObj->search;
 
 		$this->subparts = Array();
 		$this->markers = $this->constObj->getMarkers();
 		$this->markers = $this->markersObj->getDescriptions('',$this->markers);
 		$this->subpartMarkers = Array();
-
-		$this->references = $this->model->references;
 	}
 
 
@@ -109,56 +107,54 @@ class tx_sglib_viewsearchform extends tx_sglib_viewbase  {
 
 
 	function getDbSearchFields ($table='', $markers=Array()) {
-		$table = $table ? $table : $this->configObj->getTCAname();
-		$fieldConf = $this->configObj->get($table.'.conf.');
-		$searchConf = $this->configObj->get($table.'.search.');
-		if (is_array($searchConf)) foreach ($searchConf as $key=>$searchConfKey) {
+		$table = $table ? $table : $this->confObj->getTCAname();
+		if (is_array($this->confObj->mainSearch)) foreach ($this->confObj->mainSearch as $key=>$searchConfKey) {
 			$fieldName = substr($key,0,-1);
 			// t3lib_div::debug(Array('$searchConf('.$fieldName.')'=>$searchConfKey, 'File:Line'=>__FILE__.':'.__LINE__));
 			if ($fieldName=='submit') {
-				$markers['###SEARCH_SUBMIT###'] = $this->getDbSearchFieldSubmit ($table,$fieldName,$fieldConf,$searchConf);
+				$markers['###SEARCH_SUBMIT###'] = $this->getDbSearchFieldSubmit ($table,$fieldName);
 			} else if ($key=='reset') {
 			} else if ($key=='clear') {
 			} else if ($key=='showall') {
 			} else if ($key=='listmode') {
 			} else if ($key=='disabled') {
 			} else if ($key=='feowner') {
-			} else if ($key=='abc' && is_array($searchConf[$key])) {
-			} else if (strcmp($searchConf[$key]['mode'],'usedselector')==0) {
-			} else if (strcmp($searchConf[$key]['mode'],'selector')==0) {
-			} else if (isset($fieldConf[$key]) || $key=='uid') {
-				$markers['###SEARCH_'.strtoupper($fieldName).'###'] = $this->getDbSearchFieldDefault ($table,$fieldName,&$fieldConf,&$searchConf);
+			} else if ($key=='abc' && is_array($this->confObj->mainSearch[$key])) {
+			} else if (strcmp($this->confObj->mainSearch[$key]['mode'],'usedselector')==0) {
+			} else if (strcmp($this->confObj->mainSearch[$key]['mode'],'selector')==0) {
+			} else if (isset($this->confObj->mainConf[$key]) || $key=='uid') {
+				$markers['###SEARCH_'.strtoupper($fieldName).'###'] = $this->getDbSearchFieldDefault ($table,$fieldName);
 			}
 		}
 
 		return ($markers);
 	}
 
-	function getDbSearchFieldSubmit ($table,$key,&$fieldConf,&$searchConf) {
+	function getDbSearchFieldSubmit ($table,$key) {
 		$marker = '';
 
-		if (intval($searchConf[$key.'.']['linkmode'])>0) {
+		if (intval($this->confObj->mainSearch[$key.'.']['linkmode'])>0) {
 			$marker = '<a href="#null" onclick="document.txsg_search.submit(); return false">'.
-					$this->constObj->getButton('search',$this->langObj->getLLL($searchConf[$key.'.']['label'])).'</a>';
-		} else if (intval($searchConf[$key.'.']['imagemode'])>0 && $this->constObj->buttonExists('search')) {
+					$this->constObj->getButton('search',$this->langObj->getLLL($this->confObj->mainSearch[$key.'.']['label'])).'</a>';
+		} else if (intval($this->confObj->mainSearch[$key.'.']['imagemode'])>0 && $this->constObj->buttonExists('search')) {
 			$marker = '<input type="image" src="'.
-					$this->constObj->getButton('search',$this->langObj->getLLL($searchConf[$key.'.']['label']),1).'" />';
+					$this->constObj->getButton('search',$this->langObj->getLLL($this->confObj->mainSearch[$key.'.']['label']),1).'" />';
 		} else {
-			$marker = '<input type="submit" value="'.$this->langObj->getLLL($searchConf[$key.'.']['label']).'" />';
+			$marker = '<input type="submit" value="'.$this->langObj->getLLL($this->confObj->mainSearch[$key.'.']['label']).'" />';
 		}
 
 		return ($marker);
 	}
 
-	function getDbSearchFieldDefault ($table,$key,&$fieldConf,&$searchConf) {
+	function getDbSearchFieldDefault ($table,$key) {
 		$marker = '--search-for-'.$key.'--';
-		$mySearchMode = intval($searchConf[$key.'.']['type']);
+		$mySearchMode = intval($this->confObj->mainSearch[$key.'.']['type']);
 		if ($mySearchMode>1) {
 			$searchMode = ($mySearchMode>2) ? SGZLIB_SEARCHUSEDPLUS : SGZLIB_SEARCHUSED;
 		} else {
 			$searchMode = SGZLIB_SEARCHALL;
 		}
-		$marker = $this->getFeSingleField($table,$key,$this->searchParams,$searchMode,$fieldConf,$searchConf);
+		$marker = $this->getFeSingleField($table,$key,$this->searchParams,$searchMode);
 		//$marker = $this->doXajaxFieldWrap($marker,'xajax_id_'.$key);
 
 

@@ -89,7 +89,7 @@ class txsg_base extends tslib_pibase {
 	var $pi_USER_INT_obj;
 
 	var $factoryObj;
-	var $configObj;
+	var $confObj;
 	var $debugObj;
 	var $constObj;
 	var $paramsObj;
@@ -114,7 +114,7 @@ class txsg_base extends tslib_pibase {
 		$this->factoryObj = tx_sglib_factory::getInstance($this->prefixId, $this->cObj, $conf);
 		$this->factoryObj->setBaseTables($this->mainTable, array()) ;
 
-		$this->configObj = $this->factoryObj->configObj;
+		$this->confObj = $this->factoryObj->confObj;
 		$this->debugObj = $this->factoryObj->debugObj;
 		$this->divObj = $this->factoryObj->divObj;
 		$this->paramsObj = $this->factoryObj->paramsObj;
@@ -124,7 +124,7 @@ class txsg_base extends tslib_pibase {
 		$this->templateObj = $this->factoryObj->templateObj;
 		$this->itemsObj = $this->factoryObj->itemsObj;
 
-		$this->conf = $this->configObj->getCombined();
+		$this->conf = $this->confObj->getCombined();
 
 		$this->insertDetails = '';
 		$this->insertUID = 0;
@@ -142,23 +142,23 @@ class txsg_base extends tslib_pibase {
 		$this->felib = t3lib_div::makeInstance('tx_sgzlib');
 		$this->felib->init($this->prefixId,$this->factoryObj);
 
-		$this->pid = $this->configObj->getPid();
-		$this->pid_list = $this->configObj->getPidList();
+		$this->pid = $this->confObj->getPid();
+		$this->pid_list = $this->confObj->getPidList();
 
-		$this->configObj->setParentObject($this->cObj);
-		$pluginMode = $this->configObj->getFFvalue('fieldModuleMode','sDefault');
-		$dbg = $this->configObj->getFFvalue('fieldDebugMode','sDefault');
+		$this->confObj->setParentObject($this->cObj);
+		$pluginMode = $this->confObj->getFFvalue('fieldModuleMode','sDefault');
+		$dbg = $this->confObj->getFFvalue('fieldDebugMode','sDefault');
 
-		$this->listPage = $this->configObj->getFFvalue('fieldListPage','sDefault');
+		$this->listPage = $this->confObj->getFFvalue('fieldListPage','sDefault');
 		if (intval($this->listPage)<1) { $this->listPage = intval($this->conf['PIDlistDisplay']); }
 		if (intval($this->listPage)<1) { $this->listPage = $TSFE->id; }
 		$this->felib->listPage = $this->listPage;
 
-		$this->editPage = $this->configObj->getFFvalue('fieldEditPage','sDefault');
+		$this->editPage = $this->confObj->getFFvalue('fieldEditPage','sDefault');
 		if (intval($this->editPage)<1) { $this->editPage = intval($this->conf['PIDitemDisplay']); }
 		if (intval($this->editPage)<1) { $this->editPage = $TSFE->id; }
 
-		$this->editPopup = $this->configObj->getFFvalue('fieldEditPopup','sDefault');
+		$this->editPopup = $this->confObj->getFFvalue('fieldEditPopup','sDefault');
 		if (intval($this->conf['alwaysViewInPopup'])==1) {
 			$this->editPopup = TRUE;
 		} else if (intval($this->conf['neverViewInPopup'])==1) {
@@ -185,7 +185,7 @@ class txsg_base extends tslib_pibase {
 		$this->getQuotas();
 		$this->returnEditToList = FALSE;
 
-		$confXajax = $this->configObj->get('xajax.');
+		$confXajax = $this->confObj->xajax;
 		if ($confXajax['try'] || $confXajax['force']) {
 			if (isset($TYPO3_LOADED_EXT['xajax']))   {
 				$this->felib->prepareXajax($this->prefixId);
@@ -500,7 +500,7 @@ class txsg_base extends tslib_pibase {
 		$this->rowHeaders = $this->getLocalHeaders($this->mainTable,$this->PCA,$this->rowHeaders,$this->debugObj->isDebug('headerMarkers'));
 		$this->template = $this->templateObj->getTemplate('list',$this->globalMarkers);
 
-		$this->returnEditToList = $this->configObj->get('list.returnEditToList');
+		$this->returnEditToList = $this->confObj->list[returnEditToList];
 		$content .= $this->getSearchBox($pluginMode);
 
 		return $content;
@@ -670,9 +670,9 @@ class txsg_base extends tslib_pibase {
 		GLOBAL $TSFE;
 
 		$content = '';
-		$altMaxCount = intval ($this->configObj->get('list.altColor.count'));
-		$altColorName = $this->configObj->get('list.altColor.name') ? $this->configObj->get('list.altColor.name') : 'altcolor';
-		$this->returnEditToList = $this->configObj->get('list.returnEditToList');
+		$altMaxCount = intval ($this->confObj->list['altColor.']['count']);
+		$altColorName = $this->confObj->list['altColor.']['name'] ? $this->confObj->list['altColor.']['name'] : 'altcolor';
+		$this->returnEditToList = $this->confObj->list['returnEditToList'];
 
 		$this->debugObj->debugIf('search',Array('pivars[searchmode]'=>$this->piVars['searchmode'], 'pivars[search]'=>$this->piVars['search'],
 			'File:Line'=>__FILE__.':'.__LINE__));
@@ -1458,7 +1458,7 @@ class txsg_base extends tslib_pibase {
 				} else {
 					// Check, if there is a dircect-url;
 					$directUrl = '';
-					$ilv = $this->configObj->get('view.','inline.');
+					$ilv = $this->confObj->view['inline.'];
 					if (intval($this->PCA['todo']['New'])==0 && intval($this->PCA['todo']['Edit'])==0 && is_array($ilv)) {
 						$dlf = $ilv['linkField'];
 						if ($dlf && $row[$dlf]) {
@@ -1535,9 +1535,9 @@ class txsg_base extends tslib_pibase {
 								}
 							}
 							$menuMarkers = Array();
-							if ($this->configObj->get('view.','setTitleTagTo')) {
+							if ($this->confObj->get('view.','setTitleTagTo')) {
 								$TSFE->page['title'] = $this->cObj->substituteMarkerArray(
-									$this->configObj->get('view.','setTitleTagTo'), $row+Array('TITLETAG'=>$TSFE->page['title']), '###|###');
+									$this->confObj->get('view.','setTitleTagTo'), $row+Array('TITLETAG'=>$TSFE->page['title']), '###|###');
 								$TSFE->indexedDocTitle = $TSFE->page['title'];
 							}
 							if ($this->PCA['todo']['Edit']>0) {
@@ -1672,7 +1672,7 @@ class txsg_base extends tslib_pibase {
 		$this->felib->myQuery = t3lib_div::getIndpEnv('TYPO3_REQUEST_URL');
 		$GLOBALS['TSFE']->fe_user->setKey('ses',$this->prefixId.'.lastQuery',$this->felib->myQuery);
 
-		$myConf = $this->configObj->get('latest.','list.');
+		$myConf = $this->confObj->get('latest.','list.');
 		$order = $myConf['order'] ? $myConf['order'] : 'tstamp DESC';
 		$limit = $myConf['limit'] ? $myConf['limit'] : '10';
 		$restrict = $myConf['restrict'];
@@ -1720,7 +1720,7 @@ class txsg_base extends tslib_pibase {
 		$this->felib->myQuery = t3lib_div::getIndpEnv('TYPO3_REQUEST_URL');
 		$GLOBALS['TSFE']->fe_user->setKey('ses',$this->prefixId.'.lastQuery',$this->felib->myQuery);
 
-		$myConf = $this->configObj->get('latest.','list.');
+		$myConf = $this->confObj->get('latest.','list.');
 		$order = $myConf['order'] ? $myConf['order'] : 'tstamp DESC';
 		$limit = $myConf['limit'] ? $myConf['limit'] : '10';
 
@@ -1756,7 +1756,7 @@ class txsg_base extends tslib_pibase {
 
 		$this->template = $this->templateObj->getTemplate('catMenu',$this->globalMarkers);
 
-		$this->clConf = $this->configObj->get('cat.','menu.');
+		$this->clConf = $this->confObj->get('cat.','menu.');
 		$catConf = $this->PCA['conf'][$this->clConf['field']];
 		if (!$this->clConf['order']) {
 			$this->clConf['order'] = 'sorting';
@@ -2581,7 +2581,7 @@ class txsg_base extends tslib_pibase {
 	 * @return	[type]		...
 	 */
 	function xajax_process_DemoData ($data) {
-		$encoding = $this->configObj->get('encoding');
+		$encoding = $this->confObj->get('encoding');
 		$objResponse = new tx_xajax_response($encoding ? $encoding : 'utf-8');
 		$objResponse->setCharEncoding($encoding ? $encoding : 'utf-8');
 		$response = '--time='.time().'--';
@@ -2616,17 +2616,6 @@ class txsg_base extends tslib_pibase {
 		return t3lib_div::getIndpEnv('TYPO3_REQUEST_HOST').'/'.$this->cObj->typoLink_URL($conf);
 	}
 
-	/**
-	 * Renders singleObject; ic $conf is not an array then $name is returned directly
-	 *
-	 * @param	string		The content object name, eg. "TEXT" or "USER" or "IMAGE"
-	 * @param	array		The array with TypoScript properties for the content object
-	 * @param	string		A string label used for the internal debugging tracking.
-	 * @return	string		cObject output
-	 */
-	function getSingleText ($name,$conf,$TSkey='__') {
-		return ( (is_array($conf)) ? $this->cObj->cObjGetSingle($name,$conf,$TSkey) : $name );
-	}
 
 }
 

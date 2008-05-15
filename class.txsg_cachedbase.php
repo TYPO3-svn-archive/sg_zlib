@@ -58,7 +58,7 @@ class txsg_cached_base extends tslib_pibase {
 	var $pi_USER_INT_obj = 0;
 
 	var $factoryObj;
-	var $configObj;
+	var $confObj;
 	var $debugObj;
 	var $constObj;
 	var $paramsObj;
@@ -83,12 +83,12 @@ class txsg_cached_base extends tslib_pibase {
 		$this->divObj = $this->factoryObj->divObj;
 		$ms = $this->divObj->getMicroSec();
 
-		$this->configObj = $this->factoryObj->configObj;
+		$this->confObj = $this->factoryObj->confObj;
 		$this->debugObj = $this->factoryObj->debugObj;
 		$this->constObj = $this->factoryObj->constObj;
 		$this->paramsObj = $this->factoryObj->paramsObj;
 
-		$this->conf = $this->configObj->getCombined();
+		$this->conf = $this->confObj->getCombined();
 		$this->myPage = $this->pi_getPageLink($TSFE->id,'','');
 		if (!strstr($this->myPage,'?')) {
 			$this->myPage .= '?';

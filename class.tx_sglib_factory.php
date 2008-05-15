@@ -30,7 +30,7 @@
  *   53: class tx_sglib_factory
  *   90:     public function setBaseConfig($designator, $parentCObj, $conf)
  *  105:     public function setBaseTables($mainTable, $tables)
- *  153:     public function getConfigObj()
+ *  153:     public function getconfObj()
  *  183:     public function getDebugObj()
  *  194:     public function getConstObj()
  *  209:     public function getParamsObj()
@@ -43,7 +43,7 @@
  *  304:     public function getData($name='tx_sglib_data')
  *  316:     public function getModel($name)
  *  336:     public function getView($name)
- *  356:     private function checkForConfigObj()
+ *  356:     private function checkForconfObj()
  *
  * TOTAL FUNCTIONS: 17
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -51,18 +51,18 @@
  */
 class tx_sglib_factory {
 	private static $instance = Array();
-	private $baseConfig = Array();
-	private $cObj = NULL;
-	private $configObj = NULL;
-	private $debugObj = NULL;
-	private $constObj = NULL;
-	private $langObj = NULL;
-	private $permitObj = NULL;
-	private $paramsObj = NULL;
-	private $markersObj = NULL;
-	private $divObj = NULL;
-	private $myDebugObj = NULL;
-	private $designator = 'tx_sglib_factory';
+	protected $baseConfig = Array();
+	protected $cObj = NULL;
+	protected $confObj = NULL;
+	protected $debugObj = NULL;
+	protected $constObj = NULL;
+	protected $langObj = NULL;
+	protected $permitObj = NULL;
+	protected $paramsObj = NULL;
+	protected $markersObj = NULL;
+	protected $divObj = NULL;
+	protected $myDebugObj = NULL;
+	protected $designator = 'tx_sglib_factory';
 
 	protected function __construct() {}
 
@@ -137,7 +137,7 @@ class tx_sglib_factory {
 				return ($this->cObj);
 			case 'confObj':
 			case 'configObj':
-				return ($this->getConfigObj());
+				return ($this->getConfObj());
 			case 'debugObj':
 				return ($this->getDebugObj());
 			case 'constObj':
@@ -174,21 +174,21 @@ class tx_sglib_factory {
 	 *
 	 * @return	[type]		...
 	 */
-	protected function getConfigObj() {
+	public function getConfObj() {
 		$conf = $this->baseConfig['conf'];
 
-		if (!isset($this->configObj)) {
-			$this->configObj = tx_sglib_config::getInstance($this->designator, $this, $conf);
+		if (!isset($this->confObj)) {
+			$this->confObj = tx_sglib_config::getInstance($this->designator, $this, $conf);
 			$tables = $this->baseConfig['tables'];
 			if (is_array($tables)) foreach ($tables as $table) {
-				$this->configObj->setTCAdata($table);
+				$this->confObj->setTCAdata($table);
 			}
-			$this->configObj->setTCAname($this->baseConfig['mainTable']);
-			$this->configObj->setConfData($conf);
-			$this->configObj->mergeWithConfData($GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sgzlib.']);
-			$this->configObj->combineTCAandConf('*');
+			$this->confObj->setTCAname($this->baseConfig['mainTable']);
+			$this->confObj->setConfData($conf);
+			$this->confObj->mergeWithConfData($GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sgzlib.']);
+			$this->confObj->combineTCAandConf('*');
 		} else {
-			$this->configObj->setParentObject($this->cObj);
+			$this->confObj->setParentObject($this->cObj);
 		}
 
 		if (!isset($this->debugObj)) {
@@ -196,7 +196,7 @@ class tx_sglib_factory {
 		}
 
 		$this->myDebugObj = $this->debugObj;
-		return ($this->configObj);
+		return ($this->confObj);
 	}
 
 	/**
@@ -205,7 +205,7 @@ class tx_sglib_factory {
 	 * @return	[type]		...
 	 */
 	protected function getDebugObj() {
-		$confObj = $this->checkForConfigObj();
+		$confObj = $this->checkForconfObj();
 		return ($this->debugObj);
 	}
 
@@ -275,7 +275,7 @@ class tx_sglib_factory {
 	 * @return	[type]		...
 	 */
 	protected function getTemplateObj() {
-		$confObj = $this->checkForConfigObj();
+		$confObj = $this->checkForconfObj();
 		return (tx_sglib_template::getInstance($this->designator, $this));
 	}
 
@@ -285,7 +285,7 @@ class tx_sglib_factory {
 	 * @return	[type]		...
 	 */
 	protected function getItemsObj() {
-		$confObj = $this->checkForConfigObj();
+		$confObj = $this->checkForconfObj();
 		return (tx_sglib_items::getInstance($this->designator, $this));
 	}
 
@@ -353,16 +353,26 @@ class tx_sglib_factory {
 	}
 
 	/**
+	 * Return the default designator.
+	 *
+	 * @return	string		default designator
+	 */
+	function getDesignator() {
+		return $this->designator;                    // explicit given designator
+	}
+
+
+	/**
 	 * [Describe function...]
 	 *
 	 * @return	[type]		...
 	 */
-	private function checkForConfigObj() {
-		if (!isset($this->configObj)) {
-			$error = 'configObj must be called first ! PrefixId='.$this->designator;
+	private function checkForconfObj() {
+		if (!isset($this->confObj)) {
+			$error = 'confObj must be called first ! PrefixId='.$this->designator;
 			$this->myDebugObj->showError(0,$error,SGZLIB_FATALERROR);
 		}
-		return ($this->configObj);
+		return ($this->confObj);
 	}
 
 }

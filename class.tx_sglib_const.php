@@ -92,7 +92,7 @@ class tx_sglib_const {
 		$this->confObj = $factoryObj->confObj;
 		$this->defaultDesignator = $this->confObj->getDesignator();
 		$this->debugObj = $factoryObj->debugObj;
-		$this->conf = (array) $this->confObj->getBase('constants.');
+		$this->conf = (array) $this->confObj->constants;
 		$this->debugObj->debugIf('constConf',Array('conf(constants.)'=>$this->conf, 'File:Line'=>__FILE__.':'.__LINE__));
 		$this->langObj = $factoryObj->langObj;
 		$this->cObj = $factoryObj->cObj;

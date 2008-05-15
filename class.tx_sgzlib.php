@@ -193,7 +193,7 @@ class tx_sgzlib {
 	var $debugCnt = 0;
 
 	var $factoryObj;
-	var $configObj;
+	var $confObj;
 	var $debugObj;
 	var $constObj;
 	var $templateObj;
@@ -240,15 +240,15 @@ class tx_sgzlib {
 	}
 
 	/**
-	 * @param	[type]		$tx_sglib_config $configObj,tx_sglib_debug $debugObj: ...
+	 * @param	[type]		$tx_sglib_config $confObj,tx_sglib_debug $debugObj: ...
 	 * @return	[type]		...
 	 */
 	function init($designator, tx_sglib_factory $factoryObj)	{
 
 		$this->_fCount(__FUNCTION__);
 		$this->factoryObj = $factoryObj;
-		$this->configObj = $factoryObj->configObj;
-		$this->conf = $this->configObj->getConfData();
+		$this->confObj = $factoryObj->confObj;
+		$this->conf = $this->confObj->getConfData();
 		$this->debugObj = $factoryObj->debugObj;
 		$this->divObj = $factoryObj->divObj;
 
@@ -941,7 +941,7 @@ class tx_sgzlib {
 		require_once(t3lib_extMgm::extPath("xajax").'class.tx_xajax.php');
 		$this->xajax = t3lib_div::makeInstance("tx_xajax");
 		$this->xajax->decodeUTF8InputOn();
-		$encoding = $this->configObj->get('encoding');
+		$encoding = $this->confObj->encoding;
 		$this->xajax->setCharEncoding($encoding ? $encoding : 'utf-8');
 		$this->xajax->setWrapperPrefix($this->xajaxPrefix);
 		$this->xajax->statusMessagesOn();

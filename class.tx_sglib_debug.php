@@ -74,10 +74,10 @@ class tx_sglib_debug {
 	private function init(tx_sglib_factory $factoryObj) {
 		$this->_fCount(__FUNCTION__);
 		$this->factoryObj = $factoryObj;
-		$this->confObj = $factoryObj->confObj;
-		$this->defaultDesignator = $this->confObj->getDesignator();
+		$this->confObj = $this->factoryObj->getConfObj();
+		$this->defaultDesignator =$this->factoryObj->getDesignator();
 
-		$conf = $this->confObj->getBase('dodebug.');
+		$conf = $this->confObj->dodebug;
 		if (is_array($conf)) foreach ($conf as $key=>$value) {
 			$this->dodebug[strtolower($key)] = strtolower($value);
 		}

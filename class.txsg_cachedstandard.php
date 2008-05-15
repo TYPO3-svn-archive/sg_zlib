@@ -47,9 +47,9 @@ class txsg_cached_base_standard extends txsg_cached_base {
 	 * @return	[type]		...
 	 */
 	function doList () {
-		$listConf = $this->configObj->get('list.');
+		$listConf = $this->confObj->list;
 		$listMode = $this->paramsObj->getListMode();
-		$tmp = $this->configObj->get('listmode.'.$listMode.'.');
+		$tmp = $this->confObj->listmode[$listMode.'.'];
 		if (is_array($tmp)) {
 			$listConf = t3lib_div::array_merge_recursive_overrule($listConf,$tmp);
 		}
@@ -81,7 +81,7 @@ class txsg_cached_base_standard extends txsg_cached_base {
 	 * @return	[type]		...
 	 */
 	function doDetails () {
-		$detailsConf = $this->configObj->get('details.');
+		$detailsConf = $this->confObj->details;
 		$model = $this->factoryObj->getModel('tx_sglib_modelbase', $this->prefixId, $this->conf['cached']);
 		$view = $this->factoryObj->getView('tx_sglib_viewdetails', $this->prefixId, $model, $this->conf['cached']);
 		// TODO: get uid-parameter

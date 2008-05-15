@@ -154,8 +154,8 @@ class tx_sglib_params {
 		} else if (isset($this->params['search']['listmode'])) {
 			$retVal = $this->params['search']['listmode'];
 		} else {
-			if ($this->confObj->getTbl('ctrl.defaultListmode')) {
-				$retVal = $this->confObj->getTbl('ctrl.defaultListmode');
+			if ($this->confObj->mainCtrl['defaultListmode']) {
+				$retVal = $this->confObj->mainCtrl['defaultListmode'];
 			} else {
 				$retVal = 'default';
 			}
@@ -170,7 +170,7 @@ class tx_sglib_params {
 	 */
 	function getListResultsPerPage() {
 		//TODO get from TS
-		$retVal = $this->confObj->get('list.maxPerPage');
+		$retVal = $this->confObj->list['maxPerPage'];
 		//TODO check if changes via Params possible
 		//TODO replace by params, if in range
 		$retVal = $retVal<2 ? 20 : $retVal;

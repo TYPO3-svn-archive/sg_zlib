@@ -1,4 +1,11 @@
 
+0.1.639	Import extended by function importPreProcessSummary(); 
+	Now needs at least sg_div version 0.1.539
+
+0.1.638 Changed: configObj in confObj
+
+0.1.636	New: configObj->__get
+
 0.1.635	Basically search_used and search_used_plus is working
 
 0.1.634	Work on model and view

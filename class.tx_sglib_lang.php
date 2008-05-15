@@ -84,12 +84,12 @@ class tx_sglib_lang {
 		$this->defaultDesignator = $this->confObj->getDesignator();
 		$this->debugObj = $factoryObj->debugObj;
 		$this->cObj = $factoryObj->cObj;
-		$this->conf = (array) $this->confObj->getBase('lang.');
+		$this->conf = (array) $this->confObj->lang;
 
 		$this->_initGlobalLangObject();
 		$this->llKey = $this->getActiveLanguage();
 		$this->langUid = $GLOBALS['TSFE']->config['config']['sys_language_uid'];
-		$override = $this->confObj->get('lang.override.');
+		$override = $this->confObj->lang['override.'];
 		if (isset($override['sys_language_uid'])) {
 			$this->langUid = intval($override['sys_language_uid']);
 		}

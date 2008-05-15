@@ -86,7 +86,7 @@ class tx_sglib_template {
 		$this->constObj = $factoryObj->constObj;
 		$this->langObj = $factoryObj->langObj;
 		$this->permitObj = $factoryObj->permitObj;
-		$this->conf = (array) $this->confObj->get('templates.');
+		$this->conf = (array) $this->confObj->templates;
 
 		$this->cObj = t3lib_div::makeInstance('tslib_cObj');
 

@@ -48,7 +48,6 @@
  *  357:     function getConfData()
  *  368:     function combineTCAandConf($tableName='')
  *  411:     function getCombined()
- *  424:     function getBase($name,$tableName='')
  *
  *              SECTION: Getters
  *  448:     function get($name)
@@ -81,9 +80,10 @@ class tx_sglib_config {
 	private $defaultDesignator;
 	private $cObj;
 
-	private $pid_list,$pid;
+	protected $pid_list,$pid;
+	protected $references;
 
-	protected function __construct() {}
+	// protected function __construct() {}
 
 	private function __clone() {}
 
@@ -138,7 +138,7 @@ class tx_sglib_config {
 	 * @param	[type]		$recursive: ...
 	 * @return	[type]		...
 	 */
-	private function _initRecursive($recursive)	{
+	protected function _initRecursive($recursive)	{
 		if ($recursive)	{		// get pid-list if recursivity is enabled
 			$pid_list_arr = explode(',',$this->pid_list);
 			$this->pid_list='';
@@ -148,6 +148,55 @@ class tx_sglib_config {
 			$this->pid_list = ereg_replace(",$","",$this->pid_list);
 		}
 	}
+
+	/**
+	 * [Describe function...]
+	 *
+	 * @return	[type]		...
+	 */
+	public function _findAllReferences() {
+		$references = Array('table'=>array(), 'field'=>array(), 'asName'=>array(), 'join'=>array(), 'joinMain'=>array(), 'label'=>array());
+		foreach ($this->mainConf as $key=>$fieldConf) {
+			$fieldName = substr($key,0,-1);
+			$table = '';
+			if ($fieldConf['allowed'] && strcmp($fieldConf['internal_type'],'db')==0) {
+				$table = $fieldConf['allowed'];
+			} else if ($fieldConf['foreign_table']) {
+				$table = $fieldConf['foreign_table'];
+			}
+			if ($table) {
+				$references['table'][$fieldName] = $table;
+				$references['field'][$table] = $fieldName;
+				$references['asName'][$table] = $fieldName.'#ref';
+				$references['join'][$table] = ' LEFT JOIN '.$table.' ON '.$this->mainTable.'.'.$fieldName.'='.$table.'.uid  ';
+				$references['joinMain'][$table] = ' LEFT JOIN '.$this->mainTable.' ON '.$this->mainTable.'.'.$fieldName.'='.$table.'.uid  ';
+				$references['label'][$table] = $this->getLabelField($table);
+			}
+
+			if (strcmp($fieldConf['allowed'],$field[0])==0 || strcmp($fieldConf['foreign_table'],$field[0])==0) {
+				$retVal = ' LEFT JOIN '.$field[0].' ON '.$this->mainTable.'.'.$fieldName.'='.$field[0].'.uid  ';
+			}
+		}
+		//t3lib_div::debug(Array('$references'=>$references, 'File:Line'=>__FILE__.':'.__LINE__));
+		return ($references);
+	}
+
+	/**
+	 * [Describe function...]
+	 *
+	 * @param	[type]		$table: ...
+	 * @return	[type]		...
+	 */
+	protected function getLabelField($table) {
+		$labelField = '';
+
+		$labelField = $this->mainCtrl['label'];
+		$labelField = $labelField ? $labelField : 'uid';
+
+		return ($labelField);
+	}
+
+
 
 	/**
 	 * [Describe function...]
@@ -369,14 +418,16 @@ class tx_sglib_config {
 	function combineTCAandConf($tableName='') {
 		$this->_fCount(__FUNCTION__);
 		$tableName = $tableName ? $tableName : $this->defaultTableName;
-		if (strcmp($tableName,'*')==0) {
-			foreach ($this->_configTCA($tableName) as $table=>$config) {
-			$this->config[$table] = 'TABLEDEF';
-			$this->config[$table.'.'] = $config;
+		if ($tableName) {
+			if (strcmp($tableName,'*')==0) {
+				foreach ($this->_configTCA($tableName) as $table=>$config) {
+				$this->config[$table] = 'TABLEDEF';
+				$this->config[$table.'.'] = $config;
+				}
+			} else {
+				$this->config[$tableName] = 'TABLEDEF';
+				$this->config[$tableName.'.'] = $this->_configTCA($tableName);
 			}
-		} else {
-			$this->config[$tableName] = 'TABLEDEF';
-			$this->config[$tableName.'.'] = $this->_configTCA($tableName);
 		}
 
 		$confArray = $this->confData;
@@ -402,6 +453,8 @@ class tx_sglib_config {
 		}
 		$this->config = t3lib_div::array_merge_recursive_overrule($this->config,(is_array($confArray) ? $confArray : Array()));
 		$this->debugData[] = Array('TCAconfData',Array('config'=>$this->config, 'File:Line'=>__FILE__.':'.__LINE__));
+
+		$this->references = $this->_findAllReferences();
 	}
 
 	/**
@@ -415,30 +468,65 @@ class tx_sglib_config {
 	}
 
 
-	/**
-	 * Return value from config-array
-	 *
-	 * @param	string		$name: Field name to extract
-	 * @param	string		$tableName: Tablename
-	 * @return	string		Content.
-	 */
-	function getBase($name,$tableName='') {
-		$this->_fCount(__FUNCTION__);
-		$tableName = $tableName ? $tableName : $this->defaultTableName;
-		if ($name=='conf') {
-			return (t3lib_div::array_merge_recursive_overrule($this->config[$tableName][$name],$this->config[$tableName]['moreConf']));
-		} else if ($name=='ctrl' || $name=='search' || $name=='export' || $name=='mail' || $name=='listmode') {
-			return ($this->config[$tableName][$name]);
-		} else {
-			return ($this->config[$name]);
-		}
-	}
 
 	/******************************************************************************
 	 *
 	 * Getters
 	 *
 	 ******************************************************************************/
+
+	/**
+	 * Return value from config-array
+	 *
+	 * @param	string		$name of $confVar
+	 * @return	string		Content.
+	 */
+
+	public function __get($nm) {
+	    if (is_array($this->config[$nm.'.'])) {
+			return ($this->config[$nm.'.']);
+		} else {
+			switch ($nm) {
+				case 'main':
+					return (is_array(($this->config[$this->defaultTableName.'.'])) ? ($this->config[$this->defaultTableName.'.']) : Array() );
+				case 'mainconf':
+				case 'mainConf':
+					return (is_array(($this->config[$this->defaultTableName.'.']['conf.'])) ? 
+							($this->config[$this->defaultTableName.'.']['conf.']) : Array() );
+				case 'mainctrl':
+				case 'mainCtrl':
+					return (is_array(($this->config[$this->defaultTableName.'.']['ctrl.'])) ? 
+							($this->config[$this->defaultTableName.'.']['ctrl.']) : Array() );
+					return ($this->config[$this->defaultTableName.'.']['ctrl.']);
+				case 'mainsearch':
+				case 'mainSearch':
+					return (is_array(($this->config[$this->defaultTableName.'.']['search.'])) ? 
+							($this->config[$this->defaultTableName.'.']['search.']) : Array() );
+				case 'maintable':
+				case 'mainTable':
+					return ($this->defaultTableName);
+				case 'references':
+					return (is_array($this->references) ? $this->references : ($this->references = $this->_findAllReferences()));
+				default:
+					return ($this->config[$nm]);
+			}
+		}
+	}
+
+	/**
+	 * Renders singleObject; if $conf is not an array then $name is returned via getData (if LLL:) or via insertData
+	 *
+	 * @param	string		The content object name, eg. "TEXT" or "USER" or "IMAGE"
+	 * @param	array		The array with TypoScript properties for the content object
+	 * @return	string		cObject output
+	 */
+	function TSObj ($name,$conf) {
+		return ( (is_array($conf)) ? 
+			$this->cObj->cObjGetSingle($name,$conf) : 
+		    (strncmp($name,'LLL:',4)) ? $this->cObj->insertData($name) : $this->cObj->getData($name,$this->cObj->data)
+		);
+	}
+
 
 	/**
 	 * Return value from config-array
@@ -458,56 +546,7 @@ class tx_sglib_config {
 		}
 		return ($retVal);
 	}
-	/**
-	 * Return value from config-array
-	 *
-	 * @param	string		$vars: ArrayKeys e.g. ('conf.cat.value') or ('conf.cat.')
-	 * @return	string		Content.
-	 */
-	function getTbl($name) {
-		$this->_fCount(__FUNCTION__);
-		$retVal = $this->config[$this->defaultTableName.'.'];
-		$tmp = explode('.',trim($name));
-		for ($i=0;$i<count($tmp)-1;$i++) {
-			$retVal = $retVal[$tmp[$i].'.'];
-		}
-		if ($tmp[$i]) {
-			$retVal = $retVal[$tmp[$i]];
-		}
-		return ($retVal);
-	}
 
-	/**
-	 * Return value from config-array
-	 *
-	 * @param	string		*	$vars[]: ArrayKeys e.g. ('conf.','cat.','value') or ('conf.','cat.')
-	 * @return	string		Content.
-	 */
-	function getByArgs() {
-		$this->_fCount(__FUNCTION__);
-		$retVal = $this->config;
-		$args = func_get_args();
-		for ($i=0;$i<func_num_args();$i++) {
-			$retVal = $retVal[$args[$i]];
-		}
-		return ($retVal);
-	}
-
-	/**
-	 * Return value from config-array[$this->defaultTableName]
-	 *
-	 * @param	string		$vars[]: ArrayKeys
-	 * @return	string		Content.
-	 */
-	function getTblByArgs() {
-		$this->_fCount(__FUNCTION__);
-		$retVal = $this->config[$this->defaultTableName.'.'];
-		$args = func_get_args();
-		for ($i=0;$i<func_num_args();$i++) {
-			$retVal = $retVal[$args[$i]];
-		}
-		return ($retVal);
-	}
 
 	/**
 	 * Return value from somewhere inside a FlexForm structure

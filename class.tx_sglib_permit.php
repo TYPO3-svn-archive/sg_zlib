@@ -102,15 +102,15 @@ class tx_sglib_permit {
 		$this->langObj = $factoryObj->langObj;
 		$this->cObj = t3lib_div::makeInstance('tslib_cObj');
 
-		$this->conf = $this->confObj->get('permit.');
+		$this->conf = $this->confObj->permit;
 		if (!is_array($this->conf)) {
 		$this->conf = Array(
-			'edit'=>$this->confObj->get('edit'),
-			'allow.'=>$this->confObj->get('allow.'),
-			'beEdit'=>$this->confObj->get('beEdit'),
-			'beAllow.'=>$this->confObj->get('beAllow.'),
-			'groupSubParts.'=>$this->confObj->get('groupSubParts.'),
-			'beAdminIsNoFeAdmin'=>$this->confObj->get('beAdminIsNoFeAdmin')
+			'edit'=>$this->confObj->edit,
+			'allow.'=>$this->confObj->allow,
+			'beEdit'=>$this->confObj->beEdit,
+			'beAllow.'=>$this->confObj->beAllow,
+			'groupSubParts.'=>$this->confObj->groupSubParts,
+			'beAdminIsNoFeAdmin'=>$this->confObj->beAdminIsNoFeAdmin
 			);
 		}
 		$this->debugObj->debugIf('permitConf',Array('$this->conf'=>$this->conf));

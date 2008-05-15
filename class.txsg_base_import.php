@@ -84,7 +84,7 @@ class txsg_base_import extends txsg_base {
 		$this->myMaxTime = $myTime + 365 * 24 * 3600;
 		$minImportFields = 2;
 
-		$cfImport = $this->configObj->get('import.'); //(isset($this->conf['import.']) ? $this->conf['import.'] : Array() );
+		$cfImport = $this->confObj->import; //(isset($this->conf['import.']) ? $this->conf['import.'] : Array() );
 
 		$myTypes = Array();
 		$myLabels = Array();
@@ -205,9 +205,9 @@ class txsg_base_import extends txsg_base {
 				$this->constText['imp_info_userid'] =
 					sprintf($this->constText['imp_info_userid'],$TSFE->fe_user->user['uid'],$TSFE->fe_user->user['username']);
 				$this->constText['imp_info_defaultpid'] =
-					sprintf($this->constText['imp_info_defaultpid'],$this->configObj->get('userStorageID'));
+					sprintf($this->constText['imp_info_defaultpid'],$this->confObj->userStorageID);
 				$this->constText['imp_info_usergroup'] =
-					sprintf($this->constText['imp_info_usergroup'],$this->configObj->get('defaultUsergroup'));
+					sprintf($this->constText['imp_info_usergroup'],$this->confObj->defaultUsergroup);
 
 				$m = Array();
 				for (reset($this->constText);$key=key($this->constText);next($this->constText)) {
@@ -1401,7 +1401,7 @@ class txsg_base_import extends txsg_base {
 							}
 							$m['###LIST_WARNINGS###'] .= '</table>';
 							$m['###MAILLIST_WARNINGS###'] .= CRLF;
-					} else {
+						} else {
 							$m['###LIST_WARNINGS###'] .= '&nbsp;';
 						}
 
@@ -1452,6 +1452,7 @@ class txsg_base_import extends txsg_base {
 							$content .= '<br />Show <a  target="_neweregcountlog" href="typo3temp/'.
 									$importName.'_eregcount.htm">Logfile for Ereg-Replace Counter</a> in new Window.<br />'.$eregCont;
 						}
+
 
 					} else {
 						$content .= sprintf($this->constText['imp_error_writeerror_fname'],
@@ -1539,6 +1540,8 @@ class txsg_base_import extends txsg_base {
 							$content .= $this->constObj->getWrap('warn','ERROR: Missing postprocessprepare-function $this->'.$cfImport['postProcessPrepare']);
 						}
 					}
+					$content .= '<br />'.$this->importPreProcessSummary();
+
 
 
 				} else if ($importState==5) { // ##################################################################################
@@ -1786,6 +1789,12 @@ class txsg_base_import extends txsg_base {
 	 */
 	function importPreProcess(&$myData,$input=Array(),$conf=Array()) {
 		//t3lib_div::debug(Array('importPreProcess'=>$myData, 'File:Line'=>__FILE__.':'.__LINE__));
+	}
+
+
+	function importPreProcessSummary() {
+		//t3lib_div::debug(Array('importPreProcess'=>$myData, 'File:Line'=>__FILE__.':'.__LINE__));
+		return ('');
 	}
 
 

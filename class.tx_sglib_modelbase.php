@@ -111,7 +111,7 @@
 class tx_sglib_modelbase extends tx_sglib_data {
 	protected $designator;
 	protected $factoryObj;
-	protected $configObj;
+	protected $confObj;
 	protected $debugObj;
 	protected $cObj;
 
@@ -129,19 +129,19 @@ class tx_sglib_modelbase extends tx_sglib_data {
 
 	protected $resultData = NULL;
 	protected $resultParams = Array();
-	protected $references;
+	protected $refData;
 	protected $refItems;
 
 	function __construct ($designator, $factoryObj, $cached) {
 		$this->designator = $designator;
 		$this->factoryObj = $factoryObj;
-		$this->configObj = $factoryObj->configObj;
+		$this->confObj = $factoryObj->confObj;
 		$this->debugObj = $factoryObj->debugObj;
 		$this->paramsObj = $factoryObj->paramsObj;
 		$this->cObj = $factoryObj->cObj;
 
-		$this->mainTable = $this->configObj->getTCAname();
-		$this->mainConf = $this->configObj->get($this->mainTable.'.');
+		$this->mainTable = $this->confObj->getTCAname();
+		$this->mainConf = $this->confObj->get($this->mainTable.'.');
 		$this->cached = $cached;
 
 		$this->init();
@@ -156,7 +156,6 @@ class tx_sglib_modelbase extends tx_sglib_data {
 	 * @return	[type]		...
 	 */
 	protected function init() {
-		$this->references = $this->findAllReferences();
 		$this->searchParams = $this->paramsObj->getSearch();
 	}
 
@@ -276,13 +275,13 @@ class tx_sglib_modelbase extends tx_sglib_data {
 	 */
 	function readReferenceTables($tables,$mode='') {
 		if (strcmp($tables,'*')==0) {
-			$tables = $this->references['table'];
+			$tables = $this->confObj->references['table'];
 		} else if (!is_array($tables)) {
 			$tables = t3lib_div::trimExplode(',',$tables);
 		}
 
 		foreach ($tables as $table) {
-			$this->references['data'][$table] = $this->readTable($table,NULL,$mode);
+			$this->refData[$table] = $this->readTable($table,NULL,$mode);
 		}
 		// t3lib_div::debug(Array('$this->references'=>$this->references, 'File:Line'=>__FILE__.':'.__LINE__));
 	}
@@ -299,14 +298,14 @@ class tx_sglib_modelbase extends tx_sglib_data {
 
 		if (strcmp($mode,'*')==0) {
 			$q['select'] = $table.'.*';
-			$q['table'] = $table.' LEFT JOIN '.$this->mainTable.' ON '.$this->mainTable.'.'.$this->references['field'][$table].'='.$table.'.uid  ';
+			$q['table'] = $table.' LEFT JOIN '.$this->mainTable.' ON '.$this->mainTable.'.'.$this->confObj->references['field'][$table].'='.$table.'.uid  ';
 			$q['where'] = $this->mainTable.'.uid>0 AND '.$where.$this->cObj->enableFields($table);
 			$q['order'] = $this->createOrder($table);
 			$q['group'] = '';
 			$q['limit'] = '';
 		} else if (strlen($mode)>=2) {
 			$q['select'] = $table.'.*';
-			$q['table'] = $table.' LEFT JOIN '.$this->mainTable.' ON '.$this->mainTable.'.'.$this->references['field'][$table].'='.$table.'.uid  ';
+			$q['table'] = $table.' LEFT JOIN '.$this->mainTable.' ON '.$this->mainTable.'.'.$this->confObj->references['field'][$table].'='.$table.'.uid  ';
 			$q['where'] = $this->mainTable.'.uid>0 AND '.$where.$this->cObj->enableFields($table);
 			if (is_array($this->searchParams))foreach ($this->searchParams as $key=>$value) {
 				if (strcmp($key,$mode) && $value) {
@@ -343,7 +342,6 @@ class tx_sglib_modelbase extends tx_sglib_data {
 
 	function getRefItems($table,$field,$em,$row) {
 
-
 		if ($em<=SGZLIB_SEARCHALL) {
 			$myName = $table.'.'.$field.'.all';
 			$myMode = '';
@@ -357,7 +355,7 @@ class tx_sglib_modelbase extends tx_sglib_data {
 
 		if (!isset($this->refItems[$myName])) {
 			$data = $this->factoryObj->getData();
-			$tmp = $this->configObj->get($table.'.search.'.$field.'.preItems.');
+			$tmp = $this->confObj->get($table.'.search.'.$field.'.preItems.');
 			if ($em>=SGZLIB_SEARCHALL && is_array($tmp)) {
 				foreach ($tmp as $key=>$value) {
 					$data[intval($value['id'])] = $value['text'];
@@ -365,9 +363,9 @@ class tx_sglib_modelbase extends tx_sglib_data {
 				// Add PreItems
 			}
 
-		    $data = $this->readTable($this->references['table'][$field],$data,$myMode);
+		    $data = $this->readTable($this->confObj->references['table'][$field],$data,$myMode);
 
-			$tmp = $this->configObj->get($table.'.search.'.$field.'.preItems.');
+			$tmp = $this->confObj->get($table.'.search.'.$field.'.preItems.');
 			if ($em>=SGZLIB_SEARCHALL && is_array($tmp)) {
 				// Add PostItems
 				foreach ($tmp as $key=>$value) {
@@ -391,7 +389,7 @@ class tx_sglib_modelbase extends tx_sglib_data {
 		$this->resultData = $this->factoryObj->getData();
 		$q['select'] = $this->defaultTable('*').$this->createAddSelect();
 		$q['UIDonly'] = $this->defaultTable('uid');
-		$q['table'] = $this->mainTable.' '.implode(' ',$this->references['join']);
+		$q['table'] = $this->mainTable.' '.implode(' ',$this->confObj->references['join']);
 
 		$q['where'] = $this->createWhere();
 		$q['order'] = $this->createOrder();
@@ -496,10 +494,10 @@ class tx_sglib_modelbase extends tx_sglib_data {
 		}
 		$descriptions['MAINTABLE'] = $table;
 		$descriptions['uid'] = 'UID';
-		$descriptions['hidden'] = $this->configObj->get('text.hidden');
-		$descriptions['disabled'] = $this->configObj->get('text.disabled');
+		$descriptions['hidden'] = $this->confObj->get('text.hidden');
+		$descriptions['disabled'] = $this->confObj->get('text.disabled');
 
-		$tmp = $this->configObj->get($table.'.conf.');
+		$tmp = $this->confObj->get($table.'.conf.');
 		if (is_array($tmp)) foreach ($tmp as $key=>$fieldConf) {
 			$fieldName = substr($key,0,-1);
 			$descriptions[$fieldName] = $fieldConf['label'];
@@ -522,8 +520,9 @@ class tx_sglib_modelbase extends tx_sglib_data {
     public function __get($nm)
     {
 		switch ($nm) {
-			case 'references':
-				return ($this->references);
+			case 'refData':
+			case 'refdata':
+				return ($this->refData);
 			case 'data':
 				return ($this->getResult());
 			case 'totalCount':
@@ -612,7 +611,7 @@ class tx_sglib_modelbase extends tx_sglib_data {
 			} else {
 				// Warning : $this->searchParams[$key] may be an array !!!
 				$doit = true;
-				$searchConfKey = $this->configObj->get($table.'.search.'.$key.'.');
+				$searchConfKey = $this->confObj->get($table.'.search.'.$key.'.');
 				if (is_array($this->searchParams[$key])) {
 					$tmp = Array();
 					while (list ($sKey, $val) = each ($this->searchParams[$key])) {
@@ -654,8 +653,8 @@ class tx_sglib_modelbase extends tx_sglib_data {
 	 * @return	[type]		...
 	 */
 	function getDbBuildSingleQuery ($table,$key,$text) {
-		$searchConfKey = $this->configObj->get($table.'.search.'.$key.'.');
-		$confKey = $this->configObj->get($table.'.conf.'.$key.'.');
+		$searchConfKey = $this->confObj->get($table.'.search.'.$key.'.');
+		$confKey = $this->confObj->get($table.'.conf.'.$key.'.');
 
 		$q = Array();
 		$specialMatch = false;
@@ -788,11 +787,11 @@ class tx_sglib_modelbase extends tx_sglib_data {
 		$order = '';
 
 		if (!$table) {
-			$order = ($this->configObj->get('list.listmode.'.$this->listMode.'.order'));
-			$order = $order ? $order : ($this->configObj->get('listmode.'.$this->listMode.'.order'));
-			$order = $order ? $order : ($this->configObj->getTbl('ctrl.defaultOrder'));
+			$order = ($this->confObj->get('list.listmode.'.$this->listMode.'.order'));
+			$order = $order ? $order : ($this->confObj->get('listmode.'.$this->listMode.'.order'));
+			$order = $order ? $order : ($this->confObj->mainCtrl['defaultOrder']);
 		} else {
-			$ctrl = $this->configObj->get($table.'.ctrl.');
+			$ctrl = $this->confObj->get($table.'.ctrl.');
 			if (is_array($ctrl)) {
 				$order = (strcmp(substr($ctrl['default_sortby'],0,9),'ORDER BY ')==0) ? substr($ctrl['default_sortby'],9) : '';
 				$order = ($ctrl['sortby']) ? $ctrl['sortby'] : $order;
@@ -811,9 +810,9 @@ class tx_sglib_modelbase extends tx_sglib_data {
 	protected function createAddSelect() {
 		$addSelect = '';
 
-		$addSelect = ($this->configObj->get('list.listmode.'.$this->listMode.'.addToSelect'));
-		$addSelect = $addSelect ? $addSelect : ($this->configObj->get('listmode.'.$this->listMode.'.addToSelect'));
-		$addSelect = $addSelect ? $addSelect : ($this->configObj->getTbl('ctrl.addToSelect'));
+		$addSelect = ($this->confObj->get('list.listmode.'.$this->listMode.'.addToSelect'));
+		$addSelect = $addSelect ? $addSelect : ($this->confObj->get('listmode.'.$this->listMode.'.addToSelect'));
+		$addSelect = $addSelect ? $addSelect : ($this->confObj->mainCtrl['addToSelect']);
 
 		return ($addSelect);
 	}
@@ -826,9 +825,9 @@ class tx_sglib_modelbase extends tx_sglib_data {
 	protected function createGroup() {
 		$group = '';
 
-		$group = ($this->configObj->get('list.listmode.'.$this->listMode.'.group'));
-		$group = $group ? $group : ($this->configObj->get('listmode.'.$this->listMode.'.group'));
-		$group = $group ? $group : ($this->configObj->getTbl('ctrl.defaultGroup'));
+		$group = ($this->confObj->get('list.listmode.'.$this->listMode.'.group'));
+		$group = $group ? $group : ($this->confObj->get('listmode.'.$this->listMode.'.group'));
+		$group = $group ? $group : ($this->confObj->mainCtrl['defaultGroup']);
 
 		return ($group);
 	}
@@ -842,7 +841,7 @@ class tx_sglib_modelbase extends tx_sglib_data {
 	protected function getLabelField($table) {
 		$labelField = '';
 
-		$labelField = $this->configObj->get($table.'.ctrl.label');
+		$labelField = $this->confObj->get($table.'.ctrl.label');
 		$labelField = $labelField ? $labelField : 'uid';
 
 		return ($labelField);
@@ -883,36 +882,6 @@ class tx_sglib_modelbase extends tx_sglib_data {
 		$q['order'] = implode(', ',$order);
 	}
 
-	/**
-	 * [Describe function...]
-	 *
-	 * @return	[type]		...
-	 */
-	protected function findAllReferences() {
-		$references = Array('table'=>array(), 'field'=>array(), 'asName'=>array(), 'join'=>array(), 'label'=>array(), 'data'=>array());
-		foreach ($this->mainConf['conf.'] as $key=>$fieldConf) {
-			$fieldName = substr($key,0,-1);
-			$table = '';
-			if ($fieldConf['allowed'] && strcmp($fieldConf['internal_type'],'db')==0) {
-				$table = $fieldConf['allowed'];
-			} else if ($fieldConf['foreign_table']) {
-				$table = $fieldConf['foreign_table'];
-			}
-			if ($table) {
-				$references['table'][$fieldName] = $table;
-				$references['field'][$table] = $fieldName;
-				$references['asName'][$table] = $fieldName.'#ref';
-				$references['join'][$table] = ' LEFT JOIN '.$table.' ON '.$this->mainTable.'.'.$fieldName.'='.$table.'.uid  ';
-				$references['label'][$table] = $this->getLabelField($table);
-			}
-
-			if (strcmp($fieldConf['allowed'],$field[0])==0 || strcmp($fieldConf['foreign_table'],$field[0])==0) {
-				$retVal = ' LEFT JOIN '.$field[0].' ON '.$this->mainTable.'.'.$fieldName.'='.$field[0].'.uid  ';
-			}
-		}
-		// t3lib_div::debug(Array('$references'=>$references, 'File:Line'=>__FILE__.':'.__LINE__));
-		return ($references);
-	}
 
 	/***********************************************************************************************
 	 *
