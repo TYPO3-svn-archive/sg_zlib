@@ -160,7 +160,12 @@ class tx_sglib_const {
 		for (reset($indpEnv);$key=key($indpEnv);next($indpEnv)) {
 			$this->const[$key] = $indpEnv[$key];
 		}
-
+		$this->const['TYPO3_LISTMODE_URL'] = 
+			preg_replace ('/\&*'.$this->defaultDesignator.'\[listmode\]\=[A-Za-z0-9]*/', '', $this->const['TYPO3_REQUEST_URL']);
+		if (strpos($this->const['TYPO3_LISTMODE_URL'],'?')===FALSE) {
+			$this->const['TYPO3_LISTMODE_URL'] .= '?';
+		}
+		
 		$this->const['PAGE_URL'] = $this->factoryObj->cObj->TypoLink_URL(array('parameter'=>$GLOBALS['TSFE']->id, 'target'=>'_self'));
 		$this->const['PAGE_URL'] .= (strpos($this->const['PAGE_URL'], '?')>0) ? '' : '?';
 
