@@ -1,0 +1,48 @@
+
+
+
+0.1.630	Change: factoryObj fully changed
+
+0.1.627	Change: factoryObj is now an own object for every differend designator
+	Change:	desginator no longer needs to be a parameter, when getting other objects from the factory
+	Change: factoryObj->getConfigObj() changed to factoryObj->configObj; also for debugObj, divObj, paramsObj, constObj, langObj, permitObj, templateObj, itemsObj, cObj;
+
+
+0.1.626	Bugfix: txsg_base/cachedbase now calls configObj->setParentObject($this->cObj) to get fresh config for each plugin!
+
+0.1.265	New: catList is basically Working;
+	Still Missing: search-parameters, all other pluginModes;
+
+0.1.624	New: tx_sgzlib_markers
+	New: viewlist proceeded
+
+0.1.623 Changed/New Classes: modelbase, viewbase, viewlist, viewdefault, cachedbase, cachedstandard
+	Worked on modelbase and params; Basic model working: no search, but sorting and references
+	Worked on viewbase, viewlist
+
+0.1.622	New: Some Basic Functions added to model and view
+	New: empty class class.tx_sglib_viewmainlist.php
+	New: class.tx_sglib_params.php with one basic function
+
+0.1.621 New: class.tx_sglib_data.php
+	New: empty classes class.tx_sglib_modelmain.php and class.tx_sglib_viewmain.php
+	New: empty directory interfaces
+
+0.1.620	New: class.txsg_dispatcher.php and class.txsg_cached.php
+
+0.1.611	New: divObj instead of tx_sgdiv::
+
+0.1.610	New: ExtDevEval Script-Documentation-Helper called for all files
+
+0.1.602 Change: tx_sglib: all subObject are now retrieved by factoryObj
+
+0.1.601 New: tx_sglib_factory is now able to create config-, debug-, const-, lang-, permit-, template- and items-Obj.
+	Change: tx_sgbase: all subObject are now retrieved by factoryObj
+
+0.1.600 New: tx_sglib_factory to create and deliver objects
+
+0.1.510	Move: tx_sglib_div functions move to tx_sgdiv
+
+0.1.500	New: Extension sg_div is now needed
+	New: ts_sgbase_import postPorcessPrepare implemented
+

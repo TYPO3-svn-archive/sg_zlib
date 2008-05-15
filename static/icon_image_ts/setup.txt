@@ -1,0 +1,57 @@
+plugin.tx_sgzlib {
+
+	constants.icons {
+		add = IMAGE
+		add.file = EXT:sg_zlib/img/icons/add_16.gif
+		add_locked = IMAGE
+		add_locked.file = EXT:sg_zlib/img/icons/add_locked_16.gif
+		add_disabled = IMAGE
+		add_disabled.file = EXT:sg_zlib/img/icons/add_disabled_16.gif
+		set = IMAGE
+		set.file = EXT:sg_zlib/img/icons/set_16.gif
+		edit = IMAGE
+		edit.file = EXT:sg_zlib/img/icons/edit_16.gif
+		edit_disabled = IMAGE
+		edit_disabled.file = EXT:sg_zlib/img/icons/edit_disabled_16.gif
+		editAsNew = IMAGE
+		editAsNew.file = EXT:sg_zlib/img/icons/editAsNew_16.gif
+		editAsNew_disabled = IMAGE
+		editAsNew_disabled.file = EXT:sg_zlib/img/icons/editAsNew_disabled_16.gif
+		edit_locked = IMAGE
+		edit_locked.file = EXT:sg_zlib/img/icons/edit_locked_16.gif
+		view = IMAGE
+		view.file = EXT:sg_zlib/img/icons/view_16.gif
+		view_disabled = IMAGE
+		view_disabled.file = EXT:sg_zlib/img/icons/view_disabled_16.gif
+		save = IMAGE
+		save.file = EXT:sg_zlib/img/icons/save_16.gif
+		reload = IMAGE
+		reload.file = EXT:sg_zlib/img/icons/reload_16.gif
+		update = IMAGE
+		update.file = EXT:sg_zlib/img/icons/update_16.gif
+		back = IMAGE
+		back.file = EXT:sg_zlib/img/icons/back_16.gif
+		cancel = IMAGE
+		cancel.file = EXT:sg_zlib/img/icons/cancel_16.gif
+		delete = IMAGE
+		delete.file = EXT:sg_zlib/img/icons/delete_16.gif
+		dodelete = IMAGE
+		dodelete.file = EXT:sg_zlib/img/icons/dodelete_16.gif
+		dodelete_disabled = IMAGE
+		dodelete_disabled.file = EXT:sg_zlib/img/icons/dodelete_disabled_16.gif
+		dodelete_unhidden = IMAGE
+		dodelete_unhidden.file = EXT:sg_zlib/img/icons/dodelete_unhidden_16.gif
+		up = IMAGE
+		up.file = EXT:sg_zlib/img/icons/up_16.gif
+		dohide = IMAGE
+		dohide.file = EXT:sg_zlib/img/icons/dohide_16.gif
+		dohide_disabled = IMAGE
+		dohide_disabled.file = EXT:sg_zlib/img/icons/dohide_disabled_16.gif
+		dounhide = IMAGE
+		dounhide.file = EXT:sg_zlib/img/icons/dounhide_16.gif
+		dounhide_disabled = IMAGE
+		dounhide_disabled.file = EXT:sg_zlib/img/icons/dounhide_disabled_16.gif
+		warning = IMAGE
+  		warning.file = EXT:sg_zlib/img/icons/warning_16.gif
+	}
+}

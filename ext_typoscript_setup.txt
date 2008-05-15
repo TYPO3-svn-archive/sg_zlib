@@ -1,0 +1,220 @@
+plugin.tx_sgzlib >
+
+plugin.tx_sgzlib = USER
+plugin.tx_sgzlib {
+
+#### NEW in zlib: -------------------------------
+	constants.wraps {
+		hot = {$plugin.tx_sgzlib.hotWrap}
+		warn = {$plugin.tx_sgzlib.warnWrap}
+		ok = {$plugin.tx_sgzlib.okWrap}
+	}
+
+	constants.const {
+		recordNotFound = LLL:EXT:sg_zlib/locallang.php:recordNotFound
+		accessDenied = LLL:EXT:sg_zlib/locallang.php:accessDenied
+		emptySearch = LLL:EXT:sg_zlib/locallang.php:emptySearch
+		emptyResult = LLL:EXT:sg_zlib/locallang.php:emptyResult
+		noUidGiven = LLL:EXT:sg_zlib/locallang.php:noUidGiven
+		sendMailOk = LLL:EXT:sg_zlib/locallang.php:sendMailOk
+		sendMailError = LLL:EXT:sg_zlib/locallang.php:sendMailError
+		return_to_result = LLL:EXT:sg_zlib/locallang.php:return_to_result
+		return_to = LLL:EXT:sg_zlib/locallang.php:return_to
+	}
+
+### --------------------------------------------
+
+	defaultHour = 0
+	#emptyUrl = #null
+	emptyUrl = 
+
+	log {
+		sendMailOk = 0
+		sendMailOkAlert = 0
+		sendMailError = 1
+		sendMailErrorAlert = 0
+	}
+
+	error {
+		wrap = <font color="red">|</font><br />
+		len = LLL:EXT:sg_zlib/locallang.php:errors.len
+		range = LLL:EXT:sg_zlib/locallang.php:errors.range
+		max = LLL:EXT:sg_zlib/locallang.php:errors.max
+		notnull = LLL:EXT:sg_zlib/locallang.php:errors.notnull
+		maildomain = LLL:EXT:sg_zlib/locallang.php:errors.maildomain
+		mailname = LLL:EXT:sg_zlib/locallang.php:errors.mailname
+		datetimeerror = LLL:EXT:sg_zlib/locallang.php:errors.datetimeerror
+		dateerror = LLL:EXT:sg_zlib/locallang.php:errors.dateerror
+		timeerror = LLL:EXT:sg_zlib/locallang.php:errors.timeerror
+		duperror = LLL:EXT:sg_zlib/locallang.php:errors.duperror
+		maxitems = LLL:EXT:sg_zlib/locallang.php:errors.maxitems
+		minitems = LLL:EXT:sg_zlib/locallang.php:errors.minitems
+	}
+
+	form.editList.wrap = <table border=0 cellspacing=0 cellpadding=0><tr> | </tr></table>
+	form.editList.elementWrap = <td valign="top"> | </td>
+	form.editList.buttonSeparator = <br />
+	form.editList.linkListSeparator = <td>&nbsp; &nbsp; &nbsp;</td>
+
+    # Uncomment this to enable german sorting for mysql (only with mysql 4.1 or later!)
+	# mysql.addToOrder = COLLATE latin1_german1_ci
+	# mysql.addToGroup = COLLATE latin1_german1_ci
+
+	text.hidden = Hidden
+	text.disabled = Disabled
+
+
+  nbspForSelect = &nbsp;
+
+  userJsFunc = {$plugin.tx_sgzlib.userJsFunc}
+  popupFunc = {$plugin.tx_sgzlib.popupFunc}
+  searchFunc = {$plugin.tx_sgzlib.searchFunc}
+  exporter = {$plugin.tx_sgzlib.exporter}
+
+  browser = {$plugin.tx_sgzlib.browser}
+  browserParams = {$plugin.tx_sgzlib.browserParams}
+
+  db {
+    browseFile = {$plugin.tx_sgzlib.db.browseFile}
+    browseClass = {$plugin.tx_sgzlib.db.browseClass}
+	default { 
+		template = {$plugin.tx_sgzlib.db.default.template}
+		lineTemplate = ###add### ###level######dblink###<br />
+		addButton = IMAGE
+		addButton.file = EXT:sg_zlib/img/add_12.gif
+		addDisButton = IMAGE
+		addDisButton.file = EXT:sg_zlib/img/add_disabled_12.gif
+		# linkMode: 0=none 1=set+close 2=set+dont-close 3=details
+		linkMode = 1
+		autoClose = 1
+		showAddButton = 0
+		showSetButton = 0
+		showDetailsButton = 0
+		singleMode = 0
+		noDups = 0
+		#titleTemplate = ###uid###. ###title###
+		showMax = 25
+		showSearch = 0
+		sort = uid
+		tt_news_cat.sort = title
+		tt_news_cat.pid = 0
+	}
+	cat {
+		catmode = 1
+		showAddButton = 1
+		allowNodes = 1
+	}
+  }
+
+
+  fb {
+    browseFile = {$plugin.tx_sgzlib.fb.browseFile}
+    browseClass = {$plugin.tx_sgzlib.fb.browseClass}
+	default { 
+		template = {$plugin.tx_sgzlib.fb.default.template}
+		lineTemplate = ###check### ###add### ###filelink###<br />
+		addButton = IMAGE
+		addButton.file = EXT:sg_zlib/img/add_12.gif
+		# linkMode: 0=none 1=set+close 2=set+dont-close 3=details
+		linkMode = 1
+		autoClose = 1
+		showAddButton = 0
+		showSetButton = 0
+		showDetailsButtob = 0
+		#titleTemplate = ###uid###. ###title###
+		showMin = 0
+		showMax = 0
+		showCntSelector = 0
+		showSearch = 0
+		sort = uid
+		#ext = jpg,gif,tif,png,doc,swx,pdf,txt
+	}
+	videos < .default
+	videos {
+		linkMode = 1
+		autoClose = 1
+		sort = uid
+		ext = mov,wmv,flv
+		accept = video/mov,video/flv,video/wmv
+	}
+  }
+ 
+
+  plugin {
+    browseFile = {$plugin.tx_sgzlib.plugin.browseFile}
+    browseClass = {$plugin.tx_sgzlib.plugin.browseClass}
+	default { 
+		template = {$plugin.tx_sgzlib.plugin.default.template}
+	}
+  }
+ 
+
+	autoInsert {
+		params {
+			# autoInsert-Parts for Marker ###AUTOINSERT###
+			# mode = all|include|exclude
+			mode = include
+			#list = text,sg_newsplus,sg_glossary,sg_address,sg_prodprom,sg_event
+			list = text
+			implodeWith = 
+			noLastFocusWarning = TEXT
+			noLastFocusWarning.value = ERROR: No Input Field selected
+			noLastFocusWarning.lang.de = FEHLER: Es war kein Eingabefeld ausgew&auml;hlt
+		}
+		globalText {
+			# autoInsert-Parts for Marker ###AUTOINSERT_TEXT###, together with localText
+			wrap = |
+			data = TEXT
+			data.value (
+				<b>|</b>
+				-
+			)
+		}
+		tables {
+			# autoInsert-Parts for Marker ###AUTOINSERT_pluginName###
+			sg_newsplus {
+				wrap = |
+				button = button
+				buttonText.value = News
+			}
+			sg_glossary {
+				wrap = |
+				button = button
+				buttonText.value = Glossary
+			}
+			sg_address {
+				wrap = |
+				button = button
+				buttonText.value = Address
+			}
+			sg_prodprom {
+				wrap = |
+				button = button
+				buttonText.value = Product
+			}
+			sg_event {
+				wrap = |
+				button = button
+				buttonText.value = Event
+			}
+			xx_test {
+			}
+		}
+	}
+
+	checkAccount {
+		allowNumeric = 1
+		numericBic = [1-8][0-9]{7}
+		numericAccount = [0-9]{4,16}
+
+		allowIban = 1
+		allowIbanCC = DE,AT,IT,CH
+	}
+  
+
+}
+
+
+
+tx_sgzlib >
+tx_sgzlib = < plugin.tx_sgzlib

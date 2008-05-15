@@ -1,0 +1,157 @@
+plugin.tx_sgzlib {
+
+	tmp.button = IMAGE
+	tmp.button {
+			params = {$plugin.tx_sgzlib.alignButton}
+			file = GIFBUILDER
+			file.XY = [10.w],[10.h]
+			file.10 = IMAGE
+			file.10.file = {$plugin.tx_sgzlib.button.file}
+			file.20 = TEXT
+			file.20.text = xxx
+			file.20.offset = {$plugin.tx_sgzlib.button.offset}
+			file.20.align = {$plugin.tx_sgzlib.button.align}
+			file.20.fontSize = {$plugin.tx_sgzlib.button.fontSize}
+			file.20.fontColor = {$plugin.tx_sgzlib.button.fontColor}
+			file.20.fontFile = {$plugin.tx_sgzlib.button.fontFile}
+		}
+
+  
+	constants.buttons {
+		clear < plugin.tx_sgzlib.tmp.button
+		#clear.file.10.file = EXT:sg_zlib/img/bt_clear.gif
+		clear.file.20.text = Clear
+		clear.file.20.text.lang.de = Löschen
+		clear.alttext = Clear Searchform
+		clear.alttext.lang.de = Suchformular löschen
+
+		showall < plugin.tx_sgzlib.tmp.button
+		#showall.file.10.file = EXT:sg_zlib/img/bt_reset.gif
+		showall.file.20.text = Show All
+		showall.file.20.text.lang.de = Alle Zeigen
+		showall.alttext = Clear Searchform and show All
+		showall.alttext.lang.de = Suchformular löschen und Alle anzeigen
+
+		reset < plugin.tx_sgzlib.tmp.button
+		#reset.file.10.file = EXT:sg_zlib/img/bt_reset.gif
+		reset.file.20.text = Reset
+		reset.alttext = Reset Searchform
+		reset.alttext.lang.de = Suchformular zurücksetzen
+
+		resetres < plugin.tx_sgzlib.tmp.button
+		#resetres.file.10.file = EXT:sg_zlib/img/bt_reset.gif
+		resetres.file.20.text = Reset
+		resetres.alttext = Reset Searchform
+		resetres.alttext.lang.de = Suchformular zurücksetzen
+
+		cancel < plugin.tx_sgzlib.tmp.button
+		#cancel.file.10.file = EXT:sg_zlib/img/bt_100.gif
+		cancel.file.20.text = Cancel
+		cancel.alttext = Cancel
+
+		submit < plugin.tx_sgzlib.tmp.button
+		#submit.file.10.file = EXT:sg_zlib/img/bt_100.gif
+		submit.file.20.text = Submit !
+		submit.alttext = Submit !
+
+		search < plugin.tx_sgzlib.tmp.button
+		#search.file.10.file = EXT:sg_zlib/img/bt_search.gif
+		search.file.20.text = Search !
+		search.file.20.text.lang.de = Suchen !
+		search.alttext = Start Search !
+		search.alttext.lang.de = Suchen starten !
+
+		mailLink < plugin.tx_sgzlib.tmp.button
+		mailLink.file.10.file = EXT:sg_zlib/img/bt_160.gif
+		mailLink = IMG_RESOURCE
+		mailLink.file.20.text = Zum Kontaktformular ...
+		mailLink.alttext = Zum Kontaktformular ...
+
+		prev < plugin.tx_sgzlib.tmp.button
+		#prev.file.10.file = EXT:sg_zlib/img/bt_prev.gif
+		prev.file.20.text = PREV
+		prev.file.20.text.lang.de = VORHER
+		prev.alttext = Previous Page
+		prev.alttext.lang.de = Vorherige Seite
+		prevDis < .prev
+		prevDis.file.20.fontColor = #808080
+		#prevDis.file.10.file = EXT:sg_zlib/img/bt_prevdis.gif
+
+		next < plugin.tx_sgzlib.tmp.button
+		#next.file.10.file = EXT:sg_zlib/img/bt_next.gif
+		next.file.20.offset = -6,13
+		next.file.20.text = NEXT
+		next.file.20.text.lang.de = WEITER
+		next.alttext = Next Page
+		next.alttext.lang.de = Nächste Seite
+		nextDis < .next
+		nextDis.file.20.fontColor = #808080
+		#nextDis.file.10.file = EXT:sg_zlib/img/bt_nextdis.gif
+
+		prevItem < .prev
+		prevItemDis < .prevDis
+		nextItem < .next
+		nextItemDis < .nextDis
+
+		addEntry < plugin.tx_sgzlib.tmp.button
+		#addEntry.file.10.file = EXT:sg_zlib/img/bt_add.gif
+		addEntry.file.20.text = Add Entry
+		addEntry.file.20.text.lang.de = Neuer Eintrag
+		addEntry.alttext = Add Entry
+		addEntry.alttext.lang.de = Neuen Eintrag hinzufügen
+
+		addEntryLocked < plugin.tx_sgzlib.tmp.button
+		#addEntryLocked.file.10.file = EXT:sg_zlib/img/bt_160.gif
+		addEntryLocked.file.20.text = No New Entry !
+		addEntryLocked.file.20.text.lang.de = Kein Neuer Eintrag !
+		addEntryLocked.alttext = No New Entry
+		addEntryLocked.alttext.lang.de = Kein neuer Eintrag
+		#addBigDis < plugin.tx_sgzlib.constants.button.next
+		#addBigDis.file.10.file = EXT:sg_zlib/img/btadddis.gif
+		#addBigDis.file.20.fontColor = #808080
+
+		export < plugin.tx_sgzlib.tmp.button
+		export.file.20.text.current = 1
+		#export.file.10.file = EXT:sg_zlib/img/bt_160.gif
+		export.file.20.text = EXPORT !
+		export.alttext = Export Items !
+
+		docancel < plugin.tx_sgzlib.tmp.button
+		docancel.file.20.text.current = 0
+		#docancel.file.10.file = EXT:sg_zlib/img/bt_160.gif
+		docancel.file.20.text = Cancel/Back
+		docancel.alttext = Cancel / Back
+
+		dosave < plugin.tx_sgzlib.tmp.button
+		dosave.file.20.text.current = 0
+		#dosave.file.10.file = EXT:sg_zlib/img/bt_160.gif
+		dosave.file.20.text = Save !
+		dosave.alttext = Save Data
+
+		printLink = TEXT
+		printLink.value = Printerversion
+		printLink.lang.de = Druckversion
+
+		pdfLink = TEXT
+		pdfLink.value = Download Page as PDF
+		pdfLink.lang.de = Seite als PDF downloaden
+
+		pdfSpecialLink = TEXT
+		pdfSpecialLink.value = Download PDF-version of this article
+		pdfSpecialLink.lang.de = PDF-Version dieses Artikels downloaden
+		
+		button < plugin.tx_sgzlib.tmp.button
+		#button.file.10.file = EXT:sg_zlib/img/bt_060.gif
+		button.file.20.offset = 0,12
+		button.file.20.text = Button
+		button.alttext = Open Popup for Inserting Link-Tags!
+		button.alttext.lang.de = Popup zum Einf&uuml;gen von Link-Tags &ouml;ffnen !
+
+		printButton = IMAGE
+		printButton.file = EXT:sg_zlib/img/print_16.gif
+		printButton.params = align="texttop"
+
+		}
+
+}
+

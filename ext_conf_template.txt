@@ -1,0 +1,2 @@
+  # cat=basic/conf/1; type=boolean; label= Add 'General Plugin': Add an 'Pagecontent: General Plugin'-Entry to 'New record'-Page
+  addGeneralPlugin = 0

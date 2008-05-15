@@ -1,0 +1,1469 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+    <meta type="array">
+        <description>Default Locallang for sg_zlib</description>
+        <type>module</type>
+        <csh_table></csh_table>
+        <labelContext type="array">
+        </labelContext>
+    </meta>
+    <data type="array">
+        <languageKey index="default" type="array">
+            <label index="showFromToOfTotal">%1$d to %2$d of %3$d</label>
+            <label index="showNoneOfTotal">none of %d</label>
+            <label index="save">Save</label>
+            <label index="update">Update</label>
+            <label index="reload">Reload</label>
+            <label index="saveexit">Save and Exit</label>
+            <label index="edit">Edit</label>
+            <label index="edit_disabled">Edit not permitted</label>
+            <label index="editAsNew">Add new with this as Preset</label>
+            <label index="editAsNew_disabled">Add not permitted</label>
+            <label index="add">Add</label>
+            <label index="add_disabled">Add not permitted</label>
+            <label index="up">Move to Top</label>
+            <label index="delete">Delete</label>
+            <label index="cancel">Cancel</label>
+            <label index="back">Back</label>
+            <label index="dounhide">Unhide</label>
+            <label index="dohide">Hide</label>
+            <label index="dounhide_disabled">Unhide not permitted</label>
+            <label index="dohide_disabled">Hide not permitted</label>
+            <label index="dodelete">DELETE this record !</label>
+            <label index="dodelete_disabled">Delete not permitted</label>
+            <label index="dodelete_unhidden">To Delete: first hide this entry !</label>
+            <label index="generalhidden">Hidden</label>
+            <label index="hidden">HIDDEN</label>
+            <label index="endreached">END=%2$d/%1$d/%3$d</label>
+            <label index="startfuture">START=%2$d/%1$d/%3$d</label>
+            <label index="noaccess">ACCESS=%s</label>
+            <label index="listhidden">(Hidden)</label>
+            <label index="listendreached">(End=%2$d/%1$d/%3$d)</label>
+            <label index="liststartfuture">(Start=%2$d/%1$d/%3$d)</label>
+            <label index="unhidden">Show</label>
+            <label index="isadmin">User has ADMIN-Rights</label>
+            <label index="userauthorities">User Perms: </label>
+            <label index="addEntry">Add Entry, </label>
+            <label index="unhideAll">Unhide, </label>
+            <label index="unhideOwn">Unhide Own, </label>
+            <label index="unhideFixedOwn">Unhide Fixed Own, </label>
+            <label index="editAll">Edit, </label>
+            <label index="editOwn">Edit Own, </label>
+            <label index="editFixedOwn">Edit Fixed Own, </label>
+            <label index="deleteEntry">Delete, </label>
+            <label index="deleteOwn">Delete Own, </label>
+            <label index="uploadDeleteImage">Upload/Delete Image, </label>
+            <label index="uploadImage">Upload Image, </label>
+            <label index="deleteImage">Delete Image, </label>
+            <label index="seeAllHidden">See All Hidden, </label>
+            <label index="doreallydelete">Do you really want to delete this entry</label>
+            <label index="areyousure">Are you sure ?</label>
+            <label index="entries">Entries</label>
+            <label index="BackToResultPage">Back to resultpage -&amp;gt;</label>
+            <label index="return_to_result">Return to searchresult</label>
+            <label index="return_to">Return to %s</label>
+            <label index="getSubpart.countError">Count of marker ###marker### was ###count### - Should be 2!</label>
+            <label index="getSubpart.noMarkers">No markers were defined - Not marker nor default!</label>
+            <label index="errors.len">Field ###FIELDNAME### must have at least ###MINLEN### characters.</label>
+            <label index="errors.range">Field ###FIELDNAME### must be withing range ###LOWER### to ###UPPER###</label>
+            <label index="errors.max">Field ###FIELDNAME### is to long; max. ###MAXLEN### characters.</label>
+            <label index="errors.notnull">Field ###FIELDNAME### must have a value.</label>
+            <label index="errors.maildomain">This is not a valid email-address: &quot;###MAILDOMAIN###&quot; cannot receive any emails.</label>
+            <label index="errors.mailname">This is not a valid email-address: &quot;###MAILNAME###&quot; is not valid.</label>
+            <label index="errors.datetimeerror">Invalid Date/Time: &quot;%s&quot; (Format: DD.MM.[YY]YY HH:MM).</label>
+            <label index="errors.dateerror">Invalid Date: &quot;%s&quot; (Format: DD.MM.[YY]YY).</label>
+            <label index="errors.timeerror">Invalid Time: &quot;%s&quot; (Format: HH:MM).</label>
+            <label index="errors.duperror">Field ###FIELDNAME### must have same value as verify field.</label>
+            <label index="errors.uniqueerror">Field ###FIELDNAME### is already used. You must habe a unique ###FIELDNAME###.</label>
+            <label index="errors.secure">Field ###FIELDNAME### contained invalid characters - they were removed!</label>
+            <label index="errors.account">Invalid Account Number</label>
+            <label index="errors.bic">Invalid BIC / SWIFT-Code</label>
+            <label index="errors.maxitems">Field ###FIELDNAME### has too many entries; max. ###MAXITEMS### entries.</label>
+            <label index="errors.minitems">Field ###FIELDNAME### has to few entries; at least ###MINITEMS### entries.</label>
+            <label index="editmessage.edit">Changes saved.</label>
+            <label index="editmessage.create">New Item saved.</label>
+            <label index="editmessage.hide">Item is now hidden.</label>
+            <label index="editmessage.unhide">Item is now visible.</label>
+            <label index="emptySearch">No search given.</label>
+            <label index="emptyResult">No records found.</label>
+            <label index="noUidGiven">Sorry - No UID was given - cannot show anything.</label>
+            <label index="recordNotFound">Sorry - Record ###UID### was not found.</label>
+            <label index="accessDenied">Sorry - Access denied for Record &quot;###UID###&quot; !</label>
+            <label index="sendMailOk">Mail was sent</label>
+            <label index="sendMailError">ERROR - Mail could not be sent</label>
+            <label index="disabled.I.any">--- Show any ---</label>
+            <label index="disabled.I.0">Only visible items</label>
+            <label index="disabled.I.1">Only unvisible items</label>
+            <label index="disabled.I.96">Hidden and before start</label>
+            <label index="disabled.I.97">Hidden and between start and end</label>
+            <label index="disabled.I.98">Hidden and after end</label>
+            <label index="disabled.I.99">Hidden</label>
+            <label index="disabled.I.80">Unhidden but before start</label>
+            <label index="disabled.I.81">Unhidden and between start and end</label>
+            <label index="disabled.I.82">Unhidden but after end</label>
+            <label index="disabled.I.83">Unhidden</label>
+            <label index="disabled.I.112">Hidden or Not, and before start</label>
+            <label index="disabled.I.113">Hidden or Not, and between start and end</label>
+            <label index="disabled.I.114">Hidden or Not, and after end</label>
+            <label index="fixed.I.any">--- Show any ---</label>
+            <label index="fixed.I.0">Only Unlocked Items</label>
+            <label index="fixed.I.1">Only Locked Items</label>
+            <label index="LGL.crfeuser_id">FE-User:</label>
+            <label index="LGL.startendtime">Timeframe:</label>
+            <label index="LGL.endtime">Stop:</label>
+            <label index="LGL.hidden">Hide:</label>
+            <label index="LGL.starttime">Start:</label>
+            <label index="LGL.fe_group">Access:</label>
+            <label index="LGL.hide_at_login">Hide at login</label>
+            <label index="LGL.any_login">Show at any login</label>
+            <label index="LGL.usergroups">__Usergroups:__</label>
+            <label index="pi_flexform.sheet_general">[ General Settings ]</label>
+            <label index="pi_flexform.sheet_general-mode">Plugin Mode:</label>
+            <label index="pi_flexform.sheet_general-mode2.1">search entries</label>
+            <label index="pi_flexform.sheet_general-mode2.11">select entries</label>
+            <label index="pi_flexform.sheet_general-mode2.2">list entries</label>
+            <label index="pi_flexform.sheet_general-mode2.3">view/edit entries</label>
+            <label index="pi_flexform.sheet_general-mode2.4">import entries</label>
+            <label index="pi_flexform.sheet_general-mode2.30">search+list entries</label>
+            <label index="pi_flexform.sheet_general-mode2.31">list+show entries</label>
+            <label index="pi_flexform.sheet_general-mode2.32">search+list+show entries</label>
+            <label index="pi_flexform.sheet_general-mode2.33">select+list entries</label>
+            <label index="pi_flexform.sheet_general-mode2.40">list latest entries</label>
+            <label index="pi_flexform.sheet_general-mode2.41">show latest entry</label>
+            <label index="pi_flexform.sheet_general-mode2.42">category menu</label>
+            <label index="pi_flexform.sheet_general-mode2.43">category list</label>
+            <label index="pi_flexform.sheet_general-mode2.50">simple basket</label>
+            <label index="pi_flexform.sheet_general-mode2.99">show info for plugin</label>
+            <label index="pi_flexform.sheet_general-debugmode">Plugins Debug-Mode:</label>
+            <label index="pi_flexform.sheet_general-debugmode.none">Debug completely off</label>
+            <label index="pi_flexform.sheet_general-debugmode.0">Debug only for dodebug.*</label>
+            <label index="pi_flexform.sheet_general-debugmode.1">Debug completely on</label>
+            <label index="pi_flexform.sheet_general-debugmode.2">Debug Verbose</label>
+            <label index="pi_flexform.sheet_general-listpage">PageID of Result ListPage:</label>
+            <label index="pi_flexform.sheet_general-editpage">PageID of View/EditPage:</label>
+            <label index="pi_flexform.sheet_general-editpopup">View/Edit in Popup-Window:</label>
+            <label index="pi_flexform.sheet_localconf">[ Local Config ]</label>
+            <label index="pi_flexform.sheet_localconf-data">LocalConf (TS-Style)</label>
+        </languageKey>
+        <languageKey index="dk" type="array">
+        </languageKey>
+        <languageKey index="de" type="array">
+            <label index="showFromToOfTotal">%1$d bis %2$d von %3$d</label>
+            <label index="showNoneOfTotal">0 von %d</label>
+            <label index="save">Speichern</label>
+            <label index="update">Update</label>
+            <label index="reload">Reload</label>
+            <label index="saveexit">Speichern und Zur&amp;uuml;ck</label>
+            <label index="edit">Bearbeiten</label>
+            <label index="edit_disabled">Bearbeiten nicht erlaubt</label>
+            <label index="editAsNew">Vorlage als neuen Datensatz hinzufügen</label>
+            <label index="editAsNew_disabled">Hinzuf&amp;uuml;gen nicht erlaubt</label>
+            <label index="add">Hinzuf&amp;uuml;gen</label>
+            <label index="add_disabled">Hinzuf&amp;uuml;gen nicht erlaubt</label>
+            <label index="up">Nach oben verschieben</label>
+            <label index="delete">L&amp;ouml;schen</label>
+            <label index="cancel">Abbrechen</label>
+            <label index="back">Zur&amp;uuml;ck</label>
+            <label index="dounhide">Sichtbar machen</label>
+            <label index="dohide">Verstecken</label>
+            <label index="dounhide_disabled">Sichtbar machen nicht erlaubt</label>
+            <label index="dohide_disabled">Verstecken nicht erlaubt</label>
+            <label index="dodelete">Diesen Datensatz L&amp;Ouml;SCHEN !</label>
+            <label index="dodelete_disabled">L&amp;ouml;schen nicht erlaubt</label>
+            <label index="dodelete_unhidden">Sichtbare Datens&amp;auml;tze k&amp;ouml;nnen nicht gel&amp;ouml;scht werden - erst verstecken !</label>
+            <label index="generalhidden">Versteckt</label>
+            <label index="hidden">VERSTECKT</label>
+            <label index="endreached">ENDE=%1$d.%2$d.%3$d</label>
+            <label index="startfuture">START=%1$d.%2$d.%3$d</label>
+            <label index="noaccess">ACCESS=%s</label>
+            <label index="listhidden">(Versteckt)</label>
+            <label index="listendreached">(Ende=%1$d.%2$d.%3$d)</label>
+            <label index="liststartfuture">(Start=%1$d.%2$d.%3$d)</label>
+            <label index="unhidden">Sichtbar</label>
+            <label index="isadmin">Benutzer hat ADMIN-Rechte</label>
+            <label index="userauthorities">Benutzerrechte:</label>
+            <label index="addEntry">Hinzuf&amp;uuml;gen,</label>
+            <label index="unhideAll">Sichtbar machen,</label>
+            <label index="unhideOwn">Eigene sichtbar machen,</label>
+            <label index="editFixedOwn">Eigene fixierte sichtbar machen, </label>
+            <label index="editAll">&amp;Auml;ndern,</label>
+            <label index="editOwn">Eigene &amp;auml;ndern,</label>
+            <label index="editFixedOwn">Eigene fixierte &amp;auml;ndern, </label>
+            <label index="deleteEntry">L&amp;ouml;schen,</label>
+            <label index="deleteOwn">Eigene l&amp;ouml;schen,</label>
+            <label index="uploadDeleteImage">Bilder laden/l&amp;ouml;schen,</label>
+            <label index="uploadImage">Bilder hochladen,</label>
+            <label index="deleteImage">Bilder l&amp;ouml;schen,</label>
+            <label index="seeAllHidden">Alle verst. sehen,</label>
+            <label index="doreallydelete">Wollen Sie diesen Datensatz wirklich l&amp;ouml;schen</label>
+            <label index="areyousure">Sind Sie sicher ?</label>
+            <label index="entries">Eintr&amp;auml;ge</label>
+            <label index="BackToResultPage">Zur&amp;uuml;ck zur Ergebnisseite -&amp;gt;</label>
+            <label index="return_to_result">Zur&amp;uuml;ck zum Suchergebnis</label>
+            <label index="return_to">Zur&amp;uuml;ck zu %s</label>
+            <label index="getSubpart.countError">Die Anzahl der Marker ###marker### betrug ###count### - Sie sollte aber 2 sein!</label>
+            <label index="getSubpart.noMarkers">Es wurden keine Marker definiert - weder Marker noch Standards!</label>
+            <label index="errors.len">Feld ###FIELDNAME### muss wenigstens ###MINLEN### Zeichen lang sein.</label>
+            <label index="errors.range">Feld ###FIELDNAME### muss im Bereich ###LOWER### bis ###UPPER### liegen.</label>
+            <label index="errors.max">Feld ###FIELDNAME### ist zu lang; darf höchstens ###MAXLEN### Zeichen lang sein.</label>
+            <label index="errors.notnull">Feld ###FIELDNAME### darf nicht leer sein.</label>
+            <label index="errors.maildomain">Keine g&amp;uuml;ltige eMail-Adresse: &quot;###MAILDOMAIN###&quot; kann keine Mails empfangen.</label>
+            <label index="errors.mailname">Keine g&amp;uuml;ltige eMail-Adresse: &quot;###MAILNAME###&quot; ist ung&amp;uuml;ltig.</label>
+            <label index="errors.dateerror">Datum falsch eingegeben: &quot;%s&quot; (Format: TT.MM.[JJ]JJ).</label>
+            <label index="errors.datetimeerror">Datum/Uhrzeit falsch eingegeben: &quot;%s&quot; (Format: TT.MM.[JJ]JJ HH:MM).</label>
+            <label index="errors.timeerror">Uhrzeit falsch eingegeben: &quot;%s&quot; (Format: HH:MM).</label>
+            <label index="errors.duperror">Feld ###FIELDNAME### muss mit dem Kontrollfeld &amp;uuml;bereinstimmen.</label>
+            <label index="errors.uniqueerror">Der Wert in Feld ###FIELDNAME### ist bereits verwendet. Der Wert muss aber eindeutig sein. Bitte wählen Sie einen anderen Wert.</label>
+            <label index="errors.secure">Feld ###FIELDNAME### enthielt ung&amp;uuml;ltige Zeichen - diese wurden entfernt!</label>
+            <label index="errors.account">Ung&amp;uuml;ltige Konto/IBAN-Nummer</label>
+            <label index="errors.bic">Ung&amp;uuml;ltige BLZ bzw. SWIFT/BIC-Code</label>
+            <label index="errors.maxitems">Feld ###FIELDNAME### hat zu viele Eintr&amp;auml;ge; h&amp;ouml;chstens ###MAXITEMS### Eintr&amp;auml;ge.</label>
+            <label index="errors.minitems">Feld ###FIELDNAME### hat zu wenige Eintr&amp;auml;ge; mindestens ###MINITEMS### Eintr&amp;auml;ge.</label>
+            <label index="editmessage.edit">&amp;Auml;nderungen gespeichert.</label>
+            <label index="editmessage.create">Neuer Datensatz gespeichert.</label>
+            <label index="editmessage.hide">Datensatz ist jetzt versteckt.</label>
+            <label index="editmessage.unhide">Datensatz ist jetzt sichtbar.</label>
+            <label index="emptySearch">Keine Suche angegeben.</label>
+            <label index="emptyResult">Kein Ergebnis gefunden.</label>
+            <label index="noUidGiven">Es wurde keine ID angegeben - kann leider nichts anzeigen.</label>
+            <label index="recordNotFound">Datensatz ###UID### konnte nicht gefunden werden.</label>
+            <label index="accessDenied">Zugriff auf den Datensatz &quot;###UID###&quot; wurde verweigert - Anmeldung nötig !</label>
+            <label index="sendMailOk">Mail wurde verschickt</label>
+            <label index="sendMailError">FEHLER: Mail konnte nicht verschickt werden !</label>
+            <label index="disabled.I.any">--- Alle zeigen ---</label>
+            <label index="disabled.I.0">Nur sichtbare Eintr&amp;auml;ge</label>
+            <label index="disabled.I.1">Nur unsichtbare Eintr&amp;auml;ge</label>
+            <label index="disabled.I.96">Versteckt und vor Start</label>
+            <label index="disabled.I.97">Versteckt und zwischen Start und Ende</label>
+            <label index="disabled.I.98">Versteckt und nach Ende</label>
+            <label index="disabled.I.99">Versteckt</label>
+            <label index="disabled.I.80">Nicht versteckt aber vor Start</label>
+            <label index="disabled.I.81">Nicht versteckt und zwischen Start und Ende</label>
+            <label index="disabled.I.82">Nicht versteckt aber nach Ende</label>
+            <label index="disabled.I.83">Nicht versteckt</label>
+            <label index="disabled.I.112">Versteckt oder nicht, und vor Start</label>
+            <label index="disabled.I.113">Versteckt oder nicht, und zwischen Start und Ende</label>
+            <label index="disabled.I.114">Versteckt oder nicht, und nach Ende</label>
+            <label index="fixed.I.any">--- Alle anzeigen ---</label>
+            <label index="fixed.I.0">Noch nicht freigeschaltete Anzeigen</label>
+            <label index="fixed.I.1">Freigeschaltete Anzeigen</label>
+            <label index="LGL.crfeuser_id">FE-User:</label>
+            <label index="LGL.startendtime">Zeitrahmen:</label>
+            <label index="LGL.endtime">Stop:</label>
+            <label index="LGL.hidden">Verstecken:</label>
+            <label index="LGL.starttime">Start:</label>
+            <label index="LGL.fe_group">Zugriff:</label>
+            <label index="LGL.hide_at_login">Beim Login verstecken</label>
+            <label index="LGL.any_login">Bei jedem Login anzeigen</label>
+            <label index="LGL.usergroups">__Benutzergruppen:__</label>
+            <label index="pi_flexform.sheet_general-editpopup">View/Edit in Popup-Window:</label>
+            <label index="pi_flexform.sheet_localconf">[ Local Config ]</label>
+            <label index="pi_flexform.sheet_localconf-data">LocalConf (TS-Style)</label>
+        </languageKey>
+        <languageKey index="no" type="array">
+        </languageKey>
+        <languageKey index="it" type="array">
+            <label index="showFromToOfTotal">%1$d di %2$d su %3$d</label>
+            <label index="showNoneOfTotal">nessuno di %d</label>
+            <label index="save">Salva</label>
+            <label index="reload">Ricarica</label>
+            <label index="saveexit">Salva e Esci</label>
+            <label index="edit">Edit</label>
+            <label index="edit_disabled">Editing non permesso</label>
+            <label index="editAsNew">Aggiungi come nuovo</label>
+            <label index="editAsNew_disabled">Aggiungi come nuovo DISABILITATO</label>
+            <label index="add">Aggiungi</label>
+            <label index="add_disabled">Aggiungi non permesso</label>
+            <label index="up">Muovi su</label>
+            <label index="delete">Rimuovi</label>
+            <label index="cancel">Annulla</label>
+            <label index="back">Indietro</label>
+            <label index="dounhide">Mostra</label>
+            <label index="dohide">Nascondi</label>
+            <label index="dounhide_disabled">Mostra non permesso</label>
+            <label index="dohide_disabled">Nascondi non permesso</label>
+            <label index="dodelete">Elimina questo record!</label>
+            <label index="dodelete_disabled">Elimina non permesso</label>
+            <label index="dodelete_unhidden">Per rimuovere: prima la voce va nascosta!</label>
+            <label index="generalhidden">Nascosto</label>
+            <label index="hidden">NASCOSTO</label>
+            <label index="unhidden">Mostra</label>
+            <label index="isadmin">L'utente ha i diritti di ADMIN</label>
+            <label index="userauthorities">Diritti dell'utente:</label>
+            <label index="addEntry">Aggiungi voce,</label>
+            <label index="unhideAll">Mostra,</label>
+            <label index="unhideOwn">Mostra i propri,</label>
+            <label index="unhideFixedOwn">Mostra i propri campi,</label>
+            <label index="editAll">Edita</label>
+            <label index="editOwn">Edita i propri,</label>
+            <label index="deleteEntry">Elimina,</label>
+            <label index="deleteOwn">Elimina i propri,</label>
+            <label index="uploadDeleteImage">Carica/Rimuovi Immagine,</label>
+            <label index="uploadImage">Carica Immagine,</label>
+            <label index="deleteImage">Rimuovi Immagine</label>
+            <label index="seeAllHidden">Vedi tutti quelli nascosti</label>
+            <label index="doreallydelete">Vuoi veramente rimuovere questa voce</label>
+            <label index="areyousure">Sei sicuro?</label>
+            <label index="entries">Voci</label>
+            <label index="BackToResultPage">Indietro alla pagina dei risultati -&amp;gt;</label>
+            <label index="getSubpart.countError">Il conto del marcatore  ###marker### era ###count### - dovrebbe essere 2!</label>
+            <label index="getSubpart.noMarkers">Non sono stati definiti marcatori, neppure di default!</label>
+            <label index="errors.len">Il campo ###FIELDNAME### deve essere di almeno ###MINLEN### caratteri.</label>
+            <label index="errors.max">Il campo ###FIELDNAME### è troppo lungo. al massimo ###MAXLEN### caratteri.</label>
+            <label index="errors.notnull">Il campo ###FIELDNAME### deve avere un valore.</label>
+            <label index="errors.maildomain">Questo non è un indirizzo email valido: &quot;###MAILDOMAIN###&quot; non può ricevere messaggi</label>
+            <label index="errors.mailname">Questo non è un indirizzo email valido: &quot;###MAILNAME###&quot; non è valido.</label>
+            <label index="errors.dateerror">Data non valida (Formato: DD.MM.[YY]YY):</label>
+            <label index="errors.duperror">Il campo ###FIELDNAME### deve avere gli stessi valori del campo di verifica.</label>
+            <label index="errors.uniqueerror">Il campo ###FIELDNAME### è già in uso. Devi avere un unico campo ###FIELDNAME###.</label>
+            <label index="errors.secure">Il campo ###FIELDNAME### contiene caratteri non ammessi che vanno rimossi!</label>
+            <label index="errors.account">Numero dell'account non valido</label>
+            <label index="errors.bic">Codice BIC/SWIFT non valido</label>
+            <label index="editmessage.edit">Modifiche salvate.</label>
+            <label index="editmessage.create">Nuovo elemnto salvato.</label>
+            <label index="editmessage.hide">L'elemento è ora invisibile.</label>
+            <label index="editmessage.unhide">L'elemento è ora visibile.</label>
+            <label index="emptySearch">Nessun record trovato.</label>
+            <label index="noUidGiven">Spiacente - non è stata passata alcuna UID - non posso mostrare nulla.</label>
+            <label index="recordNotFound">Spiacente - il record ###UID### non è stato trovato.</label>
+            <label index="sendMailOk">L'email è stata inviata</label>
+            <label index="sendMailError">ERRORE - l'email non può essere inviata</label>
+            <label index="disabled.I.any">--- Mostra qualsiasi ---</label>
+            <label index="disabled.I.0">Solo le voci visibili</label>
+            <label index="disabled.I.1">Solo le voci non visibili</label>
+            <label index="disabled.I.96">Nascondi e esegui la partenza</label>
+            <label index="disabled.I.97">Nascondi ed esegui tra l'inizio e la fine</label>
+            <label index="disabled.I.98">Nascondi ed esegui la parte finale</label>
+            <label index="disabled.I.99">Nascondi</label>
+            <label index="disabled.I.80">Mostra ma prima inizia</label>
+            <label index="disabled.I.81">Mostra ed esegui tra l'inizio e la fine</label>
+            <label index="disabled.I.82">Mostra ed esegui la parte finale</label>
+            <label index="disabled.I.83">Mostra</label>
+            <label index="disabled.I.112">Nascondi o no e prima esegui l'inizio</label>
+            <label index="disabled.I.113">Nascondi o no ed esegui tra l'inizio e la fine</label>
+            <label index="disabled.I.114">Nascondi o no ed esegui la parte finale</label>
+            <label index="fixed.I.any">--- Mostra qualsiasi ---</label>
+            <label index="LGL.endtime">Fine:</label>
+            <label index="LGL.hidden">Nascondi:</label>
+            <label index="LGL.starttime">Inizio:</label>
+            <label index="LGL.fe_group">Accesso:</label>
+            <label index="LGL.hide_at_login">Nascondi al login</label>
+            <label index="LGL.any_login">Mostra in caso di login</label>
+            <label index="LGL.usergroups">__Gruppi utenti:__</label>
+            <label index="pi_flexform.sheet_general">[ Parametri Generali ]</label>
+            <label index="pi_flexform.sheet_general-mode">Modalità del Plugin:</label>
+            <label index="pi_flexform.sheet_general-mode2.1">cerca</label>
+            <label index="pi_flexform.sheet_general-mode2.2">elenca</label>
+            <label index="pi_flexform.sheet_general-mode2.3">vedi/edita</label>
+            <label index="pi_flexform.sheet_general-mode2.4">importa</label>
+            <label index="pi_flexform.sheet_general-mode2.30">cerca+lista</label>
+            <label index="pi_flexform.sheet_general-mode2.31">lista+vedi</label>
+            <label index="pi_flexform.sheet_general-mode2.32">cerca+lista+vedi</label>
+            <label index="pi_flexform.sheet_general-mode2.99">vedi info del plugin</label>
+            <label index="pi_flexform.sheet_general-debugmode">Modalità Debug del plugin:</label>
+            <label index="pi_flexform.sheet_general-listpage">Page ID della pagina  Result ListPage:</label>
+            <label index="pi_flexform.sheet_general-editpage">Page ID della pagina View/EditPage:</label>
+            <label index="pi_flexform.sheet_general-editpopup">Edita in finestra di Popup:</label>
+            <label index="pi_flexform.sheet_localconf">[ Configurazione locale ]</label>
+            <label index="pi_flexform.sheet_localconf-data">Configurazione locale (LocalConf) in stile TS</label>
+        </languageKey>
+        <languageKey index="fr" type="array">
+            <label index="showFromToOfTotal">%1$d à %2$d de %3$d</label>
+            <label index="showNoneOfTotal">aucun de %d</label>
+            <label index="save">Sauvegarde</label>
+            <label index="reload">Recharge</label>
+            <label index="saveexit">Sauvegarde et sort</label>
+            <label index="edit">Modifier</label>
+            <label index="edit_disabled">Modification non autorisé</label>
+            <label index="add">Ajouter</label>
+            <label index="add_disabled">Ajout non autorisé</label>
+            <label index="up">Haut</label>
+            <label index="delete">Effacer</label>
+            <label index="cancel">Annuler</label>
+            <label index="back">Retour</label>
+            <label index="dounhide">Afficher</label>
+            <label index="dohide">Cacher</label>
+            <label index="dounhide_disabled">Affichage non autorisé</label>
+            <label index="dohide_disabled">Cacher non autorisé</label>
+            <label index="dodelete">EFFACER cet enregistrement !</label>
+            <label index="dodelete_disabled">Effacement non autorisé</label>
+            <label index="dodelete_unhidden">Pour effacer: cacher cet enregistrement !</label>
+            <label index="generalhidden">Cacher</label>
+            <label index="hidden">CACHER</label>
+            <label index="unhidden">Afficher</label>
+            <label index="isadmin">L'utilisateur a les droits ADMINISTRATEUR</label>
+            <label index="userauthorities">Permissions utilisateur: </label>
+            <label index="addEntry">Ajouter un enregistrement, </label>
+            <label index="unhideAll">Afficher, </label>
+            <label index="unhideOwn">Afficher Own, </label>
+            <label index="unhideFixedOwn">Afficher Fixed Own, </label>
+            <label index="editAll">Edition, </label>
+            <label index="editOwn">Edition Own, </label>
+            <label index="deleteEntry">Efface, </label>
+            <label index="deleteOwn">Efface Own, </label>
+            <label index="uploadDeleteImage">Télécharge/Efface Image, </label>
+            <label index="uploadImage">Télécharge Image, </label>
+            <label index="deleteImage">Efface Image, </label>
+            <label index="seeAllHidden">Affiche tout caché, </label>
+            <label index="doreallydelete">Voulez-vous vraiment effacer cet enregistrement</label>
+            <label index="entries">Entrée</label>
+            <label index="BackToResultPage">Retour à la page de résultats -&amp;gt;</label>
+            <label index="getSubpart.countError">Le nombre de marque ###marker### est ###count### - devrait être 2!</label>
+            <label index="getSubpart.noMarkers">Aucun marqueur défini!</label>
+            <label index="errors.len">Le champ ###FIELDNAME### doit au moins avoir ###MINLEN### characteres.</label>
+            <label index="errors.notnull">Champ ###FIELDNAME### doit avoir une valeur.</label>
+            <label index="errors.maildomain">Ceci n'est pas une adresse courriel valide: &quot;###MAILDOMAIN###&quot;.</label>
+            <label index="errors.mailname">Ceci n'est pas une adresse courriel valide: &quot;###MAILNAME###&quot;.</label>
+            <label index="errors.dateerror">Format de date invalide (Format: DD.MM.[YY]YY).</label>
+            <label index="errors.duperror">Le champ ###FIELDNAME### doit avoir la même valeur que le champ de vérification.</label>
+            <label index="errors.uniqueerror">Le champ ###FIELDNAME### est déja utilisé. Vous devez avoir un champ ###FIELDNAME### unique.</label>
+            <label index="errors.secure">Le champ ###FIELDNAME### contiens des charactères invalid - ils ont été enlevé!</label>
+            <label index="errors.account">Numéro de compte non valide</label>
+            <label index="errors.bic">BIC Invalide / code SWIFT</label>
+            <label index="emptySearch">Aucun enregistrement.</label>
+            <label index="noUidGiven">Aucun UID n'a été donné - rien ne peut être affiché.</label>
+            <label index="recordNotFound">Enregistrement ###UID### n'a pas été trouvé.</label>
+            <label index="sendMailOk">Le courriel à été envoyé</label>
+            <label index="sendMailError">ERREUR - Le courriel ne peut être envoyé</label>
+            <label index="disabled.I.any">--- Affiché n'importe ---</label>
+            <label index="disabled.I.0">Seulement les items visibles</label>
+            <label index="disabled.I.1">Seulement les items cachés</label>
+            <label index="disabled.I.96">Caché et avant le 'début'</label>
+            <label index="disabled.I.97">Caché et entre le 'début' et la 'fin'</label>
+            <label index="disabled.I.98">Caché et après la 'fin'</label>
+            <label index="disabled.I.99">Caché</label>
+            <label index="disabled.I.80">Non-caché et avant le 'début'</label>
+            <label index="disabled.I.81">Non-caché et entre le 'début' et la 'fin'</label>
+            <label index="disabled.I.82">Non-Caché et après la 'fin'</label>
+            <label index="disabled.I.83">Non-caché</label>
+            <label index="disabled.I.112">Caché ou non et avant le 'début'</label>
+            <label index="disabled.I.113">Caché ou non et entre le 'début' et la 'fin'</label>
+            <label index="disabled.I.114">Caché ou non et après la 'fin'</label>
+            <label index="fixed.I.any">--- Affiché n'importe ---</label>
+            <label index="LGL.endtime">Arrêt:</label>
+            <label index="LGL.hidden">Cacher:</label>
+            <label index="LGL.starttime">Lancement:</label>
+            <label index="LGL.fe_group">Accès:</label>
+            <label index="LGL.hide_at_login">Cacher à la connexion</label>
+            <label index="LGL.any_login">Afficher lors de tous les login</label>
+            <label index="LGL.usergroups">__Groupes utilisateurs:__</label>
+        </languageKey>
+        <languageKey index="es" type="array">
+        </languageKey>
+        <languageKey index="nl" type="array">
+        </languageKey>
+        <languageKey index="cz" type="array">
+        </languageKey>
+        <languageKey index="pl" type="array">
+        </languageKey>
+        <languageKey index="si" type="array">
+        </languageKey>
+        <languageKey index="fi" type="array">
+            <label index="showFromToOfTotal">väliltä %d - %d kaikkiaan %d</label>
+            <label index="showNoneOfTotal">ei yksikään %d:sta</label>
+            <label index="save">Tallenna</label>
+            <label index="reload">Lataa uudestaan</label>
+            <label index="saveexit">Tallenna ja poistu</label>
+            <label index="edit">Muokkaa</label>
+            <label index="edit_disabled">Muokkaus ei sallittu</label>
+            <label index="add">Lisää</label>
+            <label index="add_disabled">Lisäys ei sallittu</label>
+            <label index="up">Siirrä ylös</label>
+            <label index="delete">Poista</label>
+            <label index="cancel">Peruuta</label>
+            <label index="back">Takaisin</label>
+            <label index="dounhide">Poista piilosta</label>
+            <label index="dohide">Piilota</label>
+            <label index="dounhide_disabled">Piilosta poistaminen ei sallittu</label>
+            <label index="dohide_disabled">Piilottaminen ei sallittu</label>
+            <label index="dodelete">POISTA tämä tieto!</label>
+            <label index="dodelete_disabled">Poistaminen ei sallittu</label>
+            <label index="dodelete_unhidden">Poistaaksesi: tieto tulee ensin piilottaa!</label>
+            <label index="generalhidden">Piilotettu</label>
+            <label index="hidden">PIILOTETTU</label>
+            <label index="unhidden">Näytä</label>
+            <label index="isadmin">Käyttäjällä on ADMIN-oikeudet</label>
+            <label index="userauthorities">Käyttäjän oikeudet:</label>
+            <label index="addEntry">Lisää tieto,</label>
+            <label index="unhideAll">Poista piilosta,</label>
+            <label index="unhideOwn">Poista piilosta oma,</label>
+            <label index="editAll">Muokkaa,</label>
+            <label index="editOwn">Muokkaa omaa,</label>
+            <label index="deleteEntry">Poista,</label>
+            <label index="deleteOwn">Poista oma,</label>
+            <label index="uploadDeleteImage">Vie/Poista kuva,</label>
+            <label index="uploadImage">Vie kuva,</label>
+            <label index="deleteImage">Poista kuva,</label>
+            <label index="seeAllHidden">Näytä kaikki piilotetut,</label>
+            <label index="doreallydelete">Haluatko todella poistaa tämän tiedon</label>
+            <label index="entries">Syötteet</label>
+            <label index="BackToResultPage">Takaisin tulokset-sivulle -&amp;gt;</label>
+            <label index="getSubpart.countError">Markkerin ###marker### lukumäärä oli  ###count### - olisi pitänyt olla 2!</label>
+            <label index="getSubpart.noMarkers">Markkereita ei määritelty - ei Markereitä eikä oletusarvoja!</label>
+            <label index="errors.len">Tiedossa ###FIELDNAME### täytyy olla vähintään ###MINLEN### merkkiä.</label>
+            <label index="errors.notnull">Tiedossa ###FIELDNAME### on oltava arvo.</label>
+            <label index="errors.maildomain">Tämä ei ole oikea sähköpostiosoite: &quot;###MAILDOMAIN###&quot; ei voi vastaanottaa viestejä.</label>
+            <label index="errors.mailname">Tämä ei ole oikea sähköpostiosoite: &quot;###MAILNAME###&quot; ei ole oikea.</label>
+            <label index="errors.dateerror">Väärä päiväys (Muoto: PP.KK.[VV]VV).</label>
+            <label index="errors.duperror">Tiedossa ###FIELDNAME### on oltava sama arvo kuin vahvistustiedossa.</label>
+            <label index="errors.uniqueerror">Tieto ###FIELDNAME### on jo käytössä. SInulle tulee olla yksilöllinen ###FIELDNAME###.</label>
+            <label index="errors.secure">Tieto ###FIELDNAME###  sisälsi virheelliisiä merkkejä - ne poistettiin !</label>
+            <label index="noUidGiven">Valitan - UID ei ole annettu - emme voi näyttää mitään.</label>
+        </languageKey>
+        <languageKey index="tr" type="array">
+        </languageKey>
+        <languageKey index="se" type="array">
+        </languageKey>
+        <languageKey index="pt" type="array">
+        </languageKey>
+        <languageKey index="ru" type="array">
+        </languageKey>
+        <languageKey index="ro" type="array">
+        </languageKey>
+        <languageKey index="ch" type="array">
+        </languageKey>
+        <languageKey index="sk" type="array">
+        </languageKey>
+        <languageKey index="lt" type="array">
+        </languageKey>
+        <languageKey index="is" type="array">
+        </languageKey>
+        <languageKey index="hr" type="array">
+        </languageKey>
+        <languageKey index="hu" type="array">
+        </languageKey>
+        <languageKey index="gl" type="array">
+        </languageKey>
+        <languageKey index="th" type="array">
+        </languageKey>
+        <languageKey index="gr" type="array">
+        </languageKey>
+        <languageKey index="hk" type="array">
+        </languageKey>
+        <languageKey index="eu" type="array">
+        </languageKey>
+        <languageKey index="bg" type="array">
+        </languageKey>
+        <languageKey index="br" type="array">
+            <label index="pi_flexform.sheet_general">[ Configurações Gerais ]</label>
+            <label index="pi_flexform.sheet_general-mode">Modo Plugin:</label>
+            <label index="pi_flexform.sheet_general-mode2.1">buscar</label>
+            <label index="pi_flexform.sheet_general-mode2.2">listar</label>
+            <label index="pi_flexform.sheet_general-mode2.3">ver/editar</label>
+            <label index="pi_flexform.sheet_general-mode2.4">importar</label>
+            <label index="pi_flexform.sheet_general-mode2.30">busca+lista</label>
+            <label index="pi_flexform.sheet_general-mode2.31">lista+exibe</label>
+            <label index="pi_flexform.sheet_general-mode2.32">busca+lista+exibe</label>
+            <label index="pi_flexform.sheet_general-mode2.99">exibir informações do plugin</label>
+            <label index="pi_flexform.sheet_general-debugmode">Modo-debug de Plugins:</label>
+            <label index="pi_flexform.sheet_general-editpopup">Editar em Janela Pop-Up:</label>
+            <label index="pi_flexform.sheet_localconf">[ Config Local ]</label>
+            <label index="pi_flexform.sheet_localconf-data">LocalConf (Estilo TS)</label>
+        </languageKey>
+        <languageKey index="et" type="array">
+        </languageKey>
+        <languageKey index="ar" type="array">
+        </languageKey>
+        <languageKey index="he" type="array">
+        </languageKey>
+        <languageKey index="ua" type="array">
+        </languageKey>
+        <languageKey index="lv" type="array">
+            <label index="showFromToOfTotal">%1$d - %2$d no %3$d</label>
+            <label index="showNoneOfTotal">neviens no %d</label>
+            <label index="save">Saglabāt</label>
+            <label index="reload">Atjaunot</label>
+            <label index="saveexit">Saglabāt un Iziet</label>
+            <label index="edit">Rediģēt</label>
+            <label index="edit_disabled">Rediģēšana nav atļauta</label>
+            <label index="editAsNew">Pievienot jaunu ar šādiem uzstādījumiem</label>
+            <label index="editAsNew_disabled">Pievienošana nav atļauta</label>
+            <label index="add">Pievienot</label>
+            <label index="add_disabled">Pievienošana nav atļauta</label>
+            <label index="up">Pārvietot uz augšu</label>
+            <label index="delete">Izdzēst</label>
+            <label index="cancel">Atcelt</label>
+            <label index="back">Atpakaļ</label>
+            <label index="dounhide">Parādīt</label>
+            <label index="dohide">Paslēpt</label>
+            <label index="dounhide_disabled">Parādīšana nav atļauta</label>
+            <label index="dohide_disabled">Paslēpšana nav atļauta</label>
+            <label index="dodelete">DZĒST šo ierakstu !</label>
+            <label index="dodelete_disabled">Dzēšana nav atļauta</label>
+            <label index="dodelete_unhidden">Lai Izdzēstu, no sākuma paslēpiet šo ierakstu!</label>
+            <label index="hidden">PASLĒPTS</label>
+            <label index="unhidden">parādīts</label>
+            <label index="isadmin">Lietotājam ir ADMIN tiesības</label>
+            <label index="userauthorities">Lietotāja tiesības:</label>
+            <label index="addEntry">Pievienot ierakstu,</label>
+            <label index="unhideAll">Parādīt visus,</label>
+            <label index="unhideOwn">Parādīt savus,</label>
+            <label index="unhideFixedOwn">Parādīt savus fiksētos,</label>
+            <label index="editAll">Rediģēt visus,</label>
+            <label index="editOwn">Rediģēt savus,</label>
+            <label index="deleteEntry">Dzēst,</label>
+            <label index="deleteOwn">Dzēst savus,</label>
+            <label index="uploadDeleteImage">Augšuplādēt/Dzēst attēlu,</label>
+            <label index="uploadImage">Augšuplādēt attēlu,</label>
+            <label index="deleteImage">Dzēst attēlu,</label>
+            <label index="seeAllHidden">Apskatīt visus paslēptos,</label>
+            <label index="doreallydelete">Vai tiešām vēlies dzēst šo ierakstu</label>
+            <label index="areyousure">Vai esi pārliecināts?</label>
+            <label index="entries">Ieraksti</label>
+            <label index="BackToResultPage">Atpakaļ uz rezultātu lapu -&amp;gt</label>
+            <label index="getSubpart.countError">Iezīmes ###marker### skaits bija ###count### - Vajadzēja būt 2!</label>
+            <label index="getSubpart.noMarkers">Neviena iezīme netika definēta - ne iezīme ne noklusētais!</label>
+            <label index="errors.len">Laukam ###FIELDNAME### jabūt ar vismaz ###MINLEN### simboliem.</label>
+            <label index="errors.max">Lauks ###FIELDNAME### ir parāk garš; maks. ###MAXLEN### simboli.</label>
+            <label index="errors.notnull">Laukam ###FIELDNAME### jābūt ar vērtību.</label>
+            <label index="errors.maildomain">Šī nav derīga e-pasta adrese: &quot;###MAILDOMAIN###&quot; nav iespējams saņemt epastus.</label>
+            <label index="errors.mailname">Šī nav derīga e-pasta adrese: &quot;###MAILNAME###&quot; nav derīgs.</label>
+            <label index="errors.dateerror">Nepareizs datums (formāts: DD.MM.[YY]YY).</label>
+            <label index="errors.duperror">Laukam ###FIELDNAME### jābūt ar tādu pašu vērtību, kā pārbaudes laukam.</label>
+            <label index="errors.uniqueerror">Lauks ###FIELDNAME### jau ir izmantots. Jums jāizvēlas cits ###FIELDNAME###.</label>
+            <label index="errors.secure">Lauks ###FIELDNAME### saturēja neatļautus simbolus - tie tika izdzēsti!</label>
+            <label index="errors.account">Nepareizs Konta Numurs</label>
+            <label index="errors.bic">Nepareizs BIC / SWIFT-Kods</label>
+            <label index="errors.maxitems">Laukam ###FIELDNAME### ir par daudz ierakstu; maks. ###MAXITEMS### ieraksti.</label>
+            <label index="errors.minitems">Laukam ###FIELDNAME### ir par maz ierakstu; jābūt vismaz ###MINITEMS### ierakstiem.</label>
+            <label index="editmessage.edit">Izmaiņas saglabātas.</label>
+            <label index="editmessage.create">Jauna vienība saglabāta.</label>
+            <label index="editmessage.hide">Vienība ir paslēpta.</label>
+            <label index="editmessage.unhide">Vienība ir parādīta.</label>
+            <label index="emptySearch">Nav atrasts neviens ieraksts.</label>
+            <label index="noUidGiven">Diemžēl netika norādīts UID, tāpēc neko nevar parādīt.</label>
+            <label index="recordNotFound">Diemžēl ieraksts ###UID### netika atrasts.</label>
+            <label index="sendMailOk">E-vēstule tika nosūtīta</label>
+            <label index="sendMailError">ERROR - E-vēstuli nebija iespējams nosūtīt</label>
+            <label index="disabled.I.any">--- Parādīt jebkuru ---</label>
+            <label index="disabled.I.0">Tikai redzamās vienības</label>
+            <label index="disabled.I.1">Tikai neredzamās vienības</label>
+            <label index="disabled.I.96">Noslēptās un pirms sākuma</label>
+            <label index="disabled.I.97">Noslēptās un starp sākumu un beigām</label>
+            <label index="disabled.I.98">Noslēptās un pēc beigām</label>
+            <label index="disabled.I.99">Noslēptās</label>
+            <label index="disabled.I.80">Redzamās bet pirms sākuma</label>
+            <label index="disabled.I.81">Redzamās un starp sākumu un beigām</label>
+            <label index="disabled.I.82">Redzamās bet pēc beigām</label>
+            <label index="disabled.I.83">Parādītās</label>
+            <label index="disabled.I.112">Parādītās un noslēptās un pirms sākuma</label>
+            <label index="disabled.I.113">Parādītās un noslēptās un starp sākumu un beigām</label>
+            <label index="disabled.I.114">Parādītās un noslēptās un pēc beigām</label>
+            <label index="fixed.I.any">--- Parādīj jebkuru ---</label>
+            <label index="fixed.I.0">Tikai atbloķētās vienības</label>
+            <label index="fixed.I.1">Tikai bloķētās vienības</label>
+            <label index="pi_flexform.sheet_general">[ Vispārīgie uzstādījumi ]</label>
+            <label index="pi_flexform.sheet_general-mode">Iespraudņa režīms:</label>
+            <label index="pi_flexform.sheet_general-mode2.1">meklēšana</label>
+            <label index="pi_flexform.sheet_general-mode2.2">saraksts</label>
+            <label index="pi_flexform.sheet_general-mode2.3">apskate/rediģēšana</label>
+            <label index="pi_flexform.sheet_general-mode2.4">imports</label>
+            <label index="pi_flexform.sheet_general-mode2.30">meklēšana+saraksts</label>
+            <label index="pi_flexform.sheet_general-mode2.31">saraksts+apskate</label>
+            <label index="pi_flexform.sheet_general-mode2.32">meklēšana+saraksts+apskate</label>
+            <label index="pi_flexform.sheet_general-mode2.99">parādīt iespraudņa informāciju</label>
+            <label index="pi_flexform.sheet_general-debugmode">Iespraudņa atkļūdošanas režims:</label>
+            <label index="pi_flexform.sheet_general-listpage">Lapas ID rezultātu Saraksta Lapai:</label>
+            <label index="pi_flexform.sheet_general-editpage">Lapas ID Rediģēšanas Lapai:</label>
+            <label index="pi_flexform.sheet_general-editpopup">Rediģēt popup logā:</label>
+            <label index="pi_flexform.sheet_localconf">[ Vietējie uzstādījumi ]</label>
+            <label index="pi_flexform.sheet_localconf-data">Viet. Uzstād. (TS-stilā)</label>
+        </languageKey>
+        <languageKey index="jp" type="array">
+        </languageKey>
+        <languageKey index="vn" type="array">
+        </languageKey>
+        <languageKey index="ca" type="array">
+        </languageKey>
+        <languageKey index="ba" type="array">
+        </languageKey>
+        <languageKey index="kr" type="array">
+        </languageKey>
+        <languageKey index="eo" type="array">
+        </languageKey>
+        <languageKey index="my" type="array">
+        </languageKey>
+        <languageKey index="hi" type="array">
+        </languageKey>
+        <languageKey index="fo" type="array">
+        </languageKey>
+        <languageKey index="fa" type="array">
+        </languageKey>
+        <languageKey index="sr" type="array">
+        </languageKey>
+    </data>
+    <orig_hash type="array">
+        <languageKey index="default" type="array">
+            <label index="showFromToOfTotal" type="integer">173103218</label>
+            <label index="showNoneOfTotal" type="integer">38352556</label>
+            <label index="save" type="integer">211601612</label>
+            <label index="update" type="integer">6894342</label>
+            <label index="reload" type="integer">80857126</label>
+            <label index="saveexit" type="integer">13743945</label>
+            <label index="edit" type="integer">131916066</label>
+            <label index="edit_disabled" type="integer">31408702</label>
+            <label index="editAsNew" type="integer">194183203</label>
+            <label index="editAsNew_disabled" type="integer">197970513</label>
+            <label index="add" type="integer">247599607</label>
+            <label index="add_disabled" type="integer">197970513</label>
+            <label index="up" type="integer">54092686</label>
+            <label index="delete" type="integer">254438473</label>
+            <label index="cancel" type="integer">245659783</label>
+            <label index="back" type="integer">5603241</label>
+            <label index="dounhide" type="integer">205596222</label>
+            <label index="dohide" type="integer">103439945</label>
+            <label index="dounhide_disabled" type="integer">234299256</label>
+            <label index="dohide_disabled" type="integer">30204187</label>
+            <label index="dodelete" type="integer">249808777</label>
+            <label index="dodelete_disabled" type="integer">71172640</label>
+            <label index="dodelete_unhidden" type="integer">252833867</label>
+            <label index="generalhidden" type="integer">128769925</label>
+            <label index="hidden" type="integer">55043624</label>
+            <label index="endreached" type="integer">174727796</label>
+            <label index="startfuture" type="integer">201259272</label>
+            <label index="noaccess" type="integer">257765418</label>
+            <label index="listhidden" type="integer">46223605</label>
+            <label index="listendreached" type="integer">141357043</label>
+            <label index="liststartfuture" type="integer">79215034</label>
+            <label index="unhidden" type="integer">77133724</label>
+            <label index="isadmin" type="integer">195068504</label>
+            <label index="userauthorities" type="integer">256755546</label>
+            <label index="addEntry" type="integer">159581928</label>
+            <label index="unhideAll" type="integer">12451384</label>
+            <label index="unhideOwn" type="integer">72726305</label>
+            <label index="unhideFixedOwn" type="integer">13307039</label>
+            <label index="editAll" type="integer">109857305</label>
+            <label index="editOwn" type="integer">226512814</label>
+            <label index="deleteEntry" type="integer">36193775</label>
+            <label index="deleteOwn" type="integer">94528820</label>
+            <label index="uploadDeleteImage" type="integer">146673658</label>
+            <label index="uploadImage" type="integer">234724709</label>
+            <label index="deleteImage" type="integer">186208955</label>
+            <label index="seeAllHidden" type="integer">93411700</label>
+            <label index="doreallydelete" type="integer">113475179</label>
+            <label index="areyousure" type="integer">1942379</label>
+            <label index="entries" type="integer">197217034</label>
+            <label index="BackToResultPage" type="integer">23778105</label>
+            <label index="return_to_result" type="integer">77778022</label>
+            <label index="return_to" type="integer">83859893</label>
+            <label index="getSubpart.countError" type="integer">158261240</label>
+            <label index="getSubpart.noMarkers" type="integer">103166729</label>
+            <label index="errors.len" type="integer">47263053</label>
+            <label index="errors.range" type="integer">262921474</label>
+            <label index="errors.max" type="integer">254766862</label>
+            <label index="errors.notnull" type="integer">177977443</label>
+            <label index="errors.maildomain" type="integer">19893196</label>
+            <label index="errors.mailname" type="integer">266180264</label>
+            <label index="errors.dateerror" type="integer">102319900</label>
+            <label index="errors.timeerror" type="integer">162356471</label>
+            <label index="errors.duperror" type="integer">219424735</label>
+            <label index="errors.uniqueerror" type="integer">7454878</label>
+            <label index="errors.secure" type="integer">243061107</label>
+            <label index="errors.account" type="integer">91202047</label>
+            <label index="errors.bic" type="integer">137763680</label>
+            <label index="errors.maxitems" type="integer">214024768</label>
+            <label index="errors.minitems" type="integer">228994132</label>
+            <label index="editmessage.edit" type="integer">63002828</label>
+            <label index="editmessage.create" type="integer">90821199</label>
+            <label index="editmessage.hide" type="integer">131525414</label>
+            <label index="editmessage.unhide" type="integer">106195646</label>
+            <label index="emptySearch" type="integer">102351020</label>
+            <label index="emptyResult" type="integer">112429179</label>
+            <label index="noUidGiven" type="integer">118145185</label>
+            <label index="recordNotFound" type="integer">183306559</label>
+            <label index="accessDenied" type="integer">35711421</label>
+            <label index="sendMailOk" type="integer">180663567</label>
+            <label index="sendMailError" type="integer">166414065</label>
+            <label index="disabled.I.any" type="integer">206947935</label>
+            <label index="disabled.I.0" type="integer">156184464</label>
+            <label index="disabled.I.1" type="integer">92935153</label>
+            <label index="disabled.I.96" type="integer">211156461</label>
+            <label index="disabled.I.97" type="integer">153160708</label>
+            <label index="disabled.I.98" type="integer">93335629</label>
+            <label index="disabled.I.99" type="integer">128769925</label>
+            <label index="disabled.I.80" type="integer">154173449</label>
+            <label index="disabled.I.81" type="integer">231846718</label>
+            <label index="disabled.I.82" type="integer">82587481</label>
+            <label index="disabled.I.83" type="integer">2802562</label>
+            <label index="disabled.I.112" type="integer">40560614</label>
+            <label index="disabled.I.113" type="integer">68510936</label>
+            <label index="disabled.I.114" type="integer">88391508</label>
+            <label index="fixed.I.any" type="integer">206947935</label>
+            <label index="fixed.I.0" type="integer">91553195</label>
+            <label index="fixed.I.1" type="integer">125027517</label>
+            <label index="LGL.crfeuser_id" type="integer">43060221</label>
+            <label index="LGL.startendtime" type="integer">62936560</label>
+            <label index="LGL.endtime" type="integer">167679436</label>
+            <label index="LGL.hidden" type="integer">187640334</label>
+            <label index="LGL.starttime" type="integer">14051517</label>
+            <label index="LGL.fe_group" type="integer">152799121</label>
+            <label index="LGL.hide_at_login" type="integer">226183283</label>
+            <label index="LGL.any_login" type="integer">160946861</label>
+            <label index="LGL.usergroups" type="integer">157574305</label>
+            <label index="pi_flexform.sheet_general" type="integer">177986581</label>
+            <label index="pi_flexform.sheet_general-mode" type="integer">41664888</label>
+            <label index="pi_flexform.sheet_general-mode2.1" type="integer">150101925</label>
+            <label index="pi_flexform.sheet_general-mode2.11" type="integer">97505555</label>
+            <label index="pi_flexform.sheet_general-mode2.2" type="integer">174853077</label>
+            <label index="pi_flexform.sheet_general-mode2.3" type="integer">200813456</label>
+            <label index="pi_flexform.sheet_general-mode2.4" type="integer">14468341</label>
+            <label index="pi_flexform.sheet_general-mode2.30" type="integer">165642997</label>
+            <label index="pi_flexform.sheet_general-mode2.31" type="integer">63425822</label>
+            <label index="pi_flexform.sheet_general-mode2.32" type="integer">121197743</label>
+            <label index="pi_flexform.sheet_general-mode2.33" type="integer">59628888</label>
+            <label index="pi_flexform.sheet_general-mode2.40" type="integer">164590223</label>
+            <label index="pi_flexform.sheet_general-mode2.41" type="integer">65338248</label>
+            <label index="pi_flexform.sheet_general-mode2.42" type="integer">142350154</label>
+            <label index="pi_flexform.sheet_general-mode2.43" type="integer">177282717</label>
+            <label index="pi_flexform.sheet_general-mode2.50" type="integer">225387421</label>
+            <label index="pi_flexform.sheet_general-mode2.99" type="integer">236824211</label>
+            <label index="pi_flexform.sheet_general-debugmode" type="integer">194214981</label>
+            <label index="pi_flexform.sheet_general-debugmode.none" type="integer">243480018</label>
+            <label index="pi_flexform.sheet_general-debugmode.0" type="integer">20221790</label>
+            <label index="pi_flexform.sheet_general-debugmode.1" type="integer">197274323</label>
+            <label index="pi_flexform.sheet_general-debugmode.2" type="integer">81908307</label>
+            <label index="pi_flexform.sheet_general-listpage" type="integer">236555930</label>
+            <label index="pi_flexform.sheet_general-editpage" type="integer">126393731</label>
+            <label index="pi_flexform.sheet_general-editpopup" type="integer">127275702</label>
+            <label index="pi_flexform.sheet_localconf" type="integer">174757693</label>
+            <label index="pi_flexform.sheet_localconf-data" type="integer">113191694</label>
+        </languageKey>
+        <languageKey index="dk" type="array">
+        </languageKey>
+        <languageKey index="de" type="array">
+            <label index="showFromToOfTotal" type="integer">173103218</label>
+            <label index="showNoneOfTotal" type="integer">38352556</label>
+            <label index="save" type="integer">211601612</label>
+            <label index="update" type="integer">6894342</label>
+            <label index="reload" type="integer">80857126</label>
+            <label index="saveexit" type="integer">13743945</label>
+            <label index="edit" type="integer">131916066</label>
+            <label index="edit_disabled" type="integer">31408702</label>
+            <label index="editAsNew" type="integer">194183203</label>
+            <label index="editAsNew_disabled" type="integer">197970513</label>
+            <label index="add" type="integer">247599607</label>
+            <label index="add_disabled" type="integer">197970513</label>
+            <label index="up" type="integer">54092686</label>
+            <label index="delete" type="integer">254438473</label>
+            <label index="cancel" type="integer">245659783</label>
+            <label index="back" type="integer">5603241</label>
+            <label index="dounhide" type="integer">205596222</label>
+            <label index="dohide" type="integer">103439945</label>
+            <label index="dounhide_disabled" type="integer">234299256</label>
+            <label index="dohide_disabled" type="integer">30204187</label>
+            <label index="dodelete" type="integer">249808777</label>
+            <label index="dodelete_disabled" type="integer">71172640</label>
+            <label index="dodelete_unhidden" type="integer">252833867</label>
+            <label index="generalhidden" type="integer">128769925</label>
+            <label index="hidden" type="integer">55043624</label>
+            <label index="endreached" type="integer">174727796</label>
+            <label index="startfuture" type="integer">201259272</label>
+            <label index="noaccess" type="integer">257765418</label>
+            <label index="listhidden" type="integer">46223605</label>
+            <label index="listendreached" type="integer">141357043</label>
+            <label index="liststartfuture" type="integer">79215034</label>
+            <label index="unhidden" type="integer">77133724</label>
+            <label index="isadmin" type="integer">195068504</label>
+            <label index="userauthorities" type="integer">256755546</label>
+            <label index="addEntry" type="integer">159581928</label>
+            <label index="unhideAll" type="integer">12451384</label>
+            <label index="unhideOwn" type="integer">72726305</label>
+            <label index="editAll" type="integer">109857305</label>
+            <label index="editOwn" type="integer">226512814</label>
+            <label index="deleteEntry" type="integer">36193775</label>
+            <label index="deleteOwn" type="integer">94528820</label>
+            <label index="uploadDeleteImage" type="integer">146673658</label>
+            <label index="uploadImage" type="integer">234724709</label>
+            <label index="deleteImage" type="integer">186208955</label>
+            <label index="seeAllHidden" type="integer">93411700</label>
+            <label index="doreallydelete" type="integer">113475179</label>
+            <label index="areyousure" type="integer">1942379</label>
+            <label index="entries" type="integer">197217034</label>
+            <label index="BackToResultPage" type="integer">23778105</label>
+            <label index="return_to_result" type="integer">77778022</label>
+            <label index="return_to" type="integer">83859893</label>
+            <label index="getSubpart.countError" type="integer">158261240</label>
+            <label index="getSubpart.noMarkers" type="integer">103166729</label>
+            <label index="errors.len" type="integer">47263053</label>
+            <label index="errors.range" type="integer">262921474</label>
+            <label index="errors.max" type="integer">254766862</label>
+            <label index="errors.notnull" type="integer">177977443</label>
+            <label index="errors.maildomain" type="integer">19893196</label>
+            <label index="errors.mailname" type="integer">266180264</label>
+            <label index="errors.dateerror" type="integer">102319900</label>
+            <label index="errors.timeerror" type="integer">162356471</label>
+            <label index="errors.duperror" type="integer">219424735</label>
+            <label index="errors.uniqueerror" type="integer">7454878</label>
+            <label index="errors.secure" type="integer">243061107</label>
+            <label index="errors.account" type="integer">91202047</label>
+            <label index="errors.bic" type="integer">137763680</label>
+            <label index="errors.maxitems" type="integer">214024768</label>
+            <label index="errors.minitems" type="integer">228994132</label>
+            <label index="editmessage.edit" type="integer">63002828</label>
+            <label index="editmessage.create" type="integer">90821199</label>
+            <label index="editmessage.hide" type="integer">131525414</label>
+            <label index="editmessage.unhide" type="integer">106195646</label>
+            <label index="emptySearch" type="integer">102351020</label>
+            <label index="emptyResult" type="integer">112429179</label>
+            <label index="noUidGiven" type="integer">118145185</label>
+            <label index="recordNotFound" type="integer">183306559</label>
+            <label index="accessDenied" type="integer">35711421</label>
+            <label index="sendMailOk" type="integer">180663567</label>
+            <label index="sendMailError" type="integer">166414065</label>
+            <label index="disabled.I.any" type="integer">206947935</label>
+            <label index="disabled.I.0" type="integer">156184464</label>
+            <label index="disabled.I.1" type="integer">92935153</label>
+            <label index="disabled.I.96" type="integer">211156461</label>
+            <label index="disabled.I.97" type="integer">153160708</label>
+            <label index="disabled.I.98" type="integer">93335629</label>
+            <label index="disabled.I.99" type="integer">128769925</label>
+            <label index="disabled.I.80" type="integer">154173449</label>
+            <label index="disabled.I.81" type="integer">231846718</label>
+            <label index="disabled.I.82" type="integer">82587481</label>
+            <label index="disabled.I.83" type="integer">2802562</label>
+            <label index="disabled.I.112" type="integer">40560614</label>
+            <label index="disabled.I.113" type="integer">68510936</label>
+            <label index="disabled.I.114" type="integer">88391508</label>
+            <label index="fixed.I.any" type="integer">206947935</label>
+            <label index="fixed.I.0" type="integer">91553195</label>
+            <label index="fixed.I.1" type="integer">125027517</label>
+            <label index="LGL.crfeuser_id" type="integer">43060221</label>
+            <label index="LGL.startendtime" type="integer">62936560</label>
+            <label index="LGL.endtime" type="integer">167679436</label>
+            <label index="LGL.hidden" type="integer">187640334</label>
+            <label index="LGL.starttime" type="integer">14051517</label>
+            <label index="LGL.fe_group" type="integer">152799121</label>
+            <label index="LGL.hide_at_login" type="integer">226183283</label>
+            <label index="LGL.any_login" type="integer">160946861</label>
+            <label index="LGL.usergroups" type="integer">157574305</label>
+            <label index="pi_flexform.sheet_general-editpopup" type="integer">127275702</label>
+            <label index="pi_flexform.sheet_localconf" type="integer">174757693</label>
+            <label index="pi_flexform.sheet_localconf-data" type="integer">113191694</label>
+        </languageKey>
+        <languageKey index="no" type="array">
+        </languageKey>
+        <languageKey index="it" type="array">
+            <label index="showFromToOfTotal" type="integer">173103218</label>
+            <label index="showNoneOfTotal" type="integer">38352556</label>
+            <label index="save" type="integer">211601612</label>
+            <label index="reload" type="integer">80857126</label>
+            <label index="saveexit" type="integer">13743945</label>
+            <label index="edit" type="integer">131916066</label>
+            <label index="edit_disabled" type="integer">31408702</label>
+            <label index="editAsNew" type="integer">194183203</label>
+            <label index="editAsNew_disabled" type="integer">197970513</label>
+            <label index="add" type="integer">247599607</label>
+            <label index="add_disabled" type="integer">197970513</label>
+            <label index="up" type="integer">54092686</label>
+            <label index="delete" type="integer">254438473</label>
+            <label index="cancel" type="integer">245659783</label>
+            <label index="back" type="integer">5603241</label>
+            <label index="dounhide" type="integer">205596222</label>
+            <label index="dohide" type="integer">103439945</label>
+            <label index="dounhide_disabled" type="integer">234299256</label>
+            <label index="dohide_disabled" type="integer">30204187</label>
+            <label index="dodelete" type="integer">249808777</label>
+            <label index="dodelete_disabled" type="integer">71172640</label>
+            <label index="dodelete_unhidden" type="integer">252833867</label>
+            <label index="generalhidden" type="integer">128769925</label>
+            <label index="hidden" type="integer">55043624</label>
+            <label index="unhidden" type="integer">77133724</label>
+            <label index="isadmin" type="integer">195068504</label>
+            <label index="userauthorities" type="integer">256755546</label>
+            <label index="addEntry" type="integer">159581928</label>
+            <label index="unhideAll" type="integer">12451384</label>
+            <label index="unhideOwn" type="integer">72726305</label>
+            <label index="unhideFixedOwn" type="integer">13307039</label>
+            <label index="editAll" type="integer">109857305</label>
+            <label index="editOwn" type="integer">226512814</label>
+            <label index="deleteEntry" type="integer">36193775</label>
+            <label index="deleteOwn" type="integer">94528820</label>
+            <label index="uploadDeleteImage" type="integer">146673658</label>
+            <label index="uploadImage" type="integer">234724709</label>
+            <label index="deleteImage" type="integer">186208955</label>
+            <label index="seeAllHidden" type="integer">93411700</label>
+            <label index="doreallydelete" type="integer">113475179</label>
+            <label index="areyousure" type="integer">1942379</label>
+            <label index="entries" type="integer">197217034</label>
+            <label index="BackToResultPage" type="integer">23778105</label>
+            <label index="getSubpart.countError" type="integer">158261240</label>
+            <label index="getSubpart.noMarkers" type="integer">103166729</label>
+            <label index="errors.len" type="integer">47263053</label>
+            <label index="errors.max" type="integer">254766862</label>
+            <label index="errors.notnull" type="integer">177977443</label>
+            <label index="errors.maildomain" type="integer">19893196</label>
+            <label index="errors.mailname" type="integer">266180264</label>
+            <label index="errors.dateerror" type="integer">102319900</label>
+            <label index="errors.duperror" type="integer">219424735</label>
+            <label index="errors.uniqueerror" type="integer">7454878</label>
+            <label index="errors.secure" type="integer">243061107</label>
+            <label index="errors.account" type="integer">91202047</label>
+            <label index="errors.bic" type="integer">137763680</label>
+            <label index="editmessage.edit" type="integer">63002828</label>
+            <label index="editmessage.create" type="integer">90821199</label>
+            <label index="editmessage.hide" type="integer">131525414</label>
+            <label index="editmessage.unhide" type="integer">106195646</label>
+            <label index="emptySearch" type="integer">102351020</label>
+            <label index="noUidGiven" type="integer">118145185</label>
+            <label index="recordNotFound" type="integer">183306559</label>
+            <label index="sendMailOk" type="integer">180663567</label>
+            <label index="sendMailError" type="integer">166414065</label>
+            <label index="disabled.I.any" type="integer">206947935</label>
+            <label index="disabled.I.0" type="integer">156184464</label>
+            <label index="disabled.I.1" type="integer">92935153</label>
+            <label index="disabled.I.96" type="integer">211156461</label>
+            <label index="disabled.I.97" type="integer">153160708</label>
+            <label index="disabled.I.98" type="integer">93335629</label>
+            <label index="disabled.I.99" type="integer">128769925</label>
+            <label index="disabled.I.80" type="integer">154173449</label>
+            <label index="disabled.I.81" type="integer">231846718</label>
+            <label index="disabled.I.82" type="integer">82587481</label>
+            <label index="disabled.I.83" type="integer">2802562</label>
+            <label index="disabled.I.112" type="integer">40560614</label>
+            <label index="disabled.I.113" type="integer">68510936</label>
+            <label index="disabled.I.114" type="integer">88391508</label>
+            <label index="fixed.I.any" type="integer">206947935</label>
+            <label index="LGL.endtime" type="integer">167679436</label>
+            <label index="LGL.hidden" type="integer">187640334</label>
+            <label index="LGL.starttime" type="integer">14051517</label>
+            <label index="LGL.fe_group" type="integer">152799121</label>
+            <label index="LGL.hide_at_login" type="integer">226183283</label>
+            <label index="LGL.any_login" type="integer">160946861</label>
+            <label index="LGL.usergroups" type="integer">157574305</label>
+            <label index="pi_flexform.sheet_general" type="integer">177986581</label>
+            <label index="pi_flexform.sheet_general-mode" type="integer">41664888</label>
+            <label index="pi_flexform.sheet_general-mode2.1" type="integer">150101925</label>
+            <label index="pi_flexform.sheet_general-mode2.2" type="integer">174853077</label>
+            <label index="pi_flexform.sheet_general-mode2.3" type="integer">200813456</label>
+            <label index="pi_flexform.sheet_general-mode2.4" type="integer">14468341</label>
+            <label index="pi_flexform.sheet_general-mode2.30" type="integer">165642997</label>
+            <label index="pi_flexform.sheet_general-mode2.31" type="integer">63425822</label>
+            <label index="pi_flexform.sheet_general-mode2.32" type="integer">121197743</label>
+            <label index="pi_flexform.sheet_general-mode2.99" type="integer">236824211</label>
+            <label index="pi_flexform.sheet_general-debugmode" type="integer">194214981</label>
+            <label index="pi_flexform.sheet_general-listpage" type="integer">236555930</label>
+            <label index="pi_flexform.sheet_general-editpage" type="integer">126393731</label>
+            <label index="pi_flexform.sheet_general-editpopup" type="integer">127275702</label>
+            <label index="pi_flexform.sheet_localconf" type="integer">174757693</label>
+            <label index="pi_flexform.sheet_localconf-data" type="integer">113191694</label>
+        </languageKey>
+        <languageKey index="fr" type="array">
+            <label index="showFromToOfTotal" type="integer">173103218</label>
+            <label index="showNoneOfTotal" type="integer">38352556</label>
+            <label index="save" type="integer">211601612</label>
+            <label index="reload" type="integer">80857126</label>
+            <label index="saveexit" type="integer">13743945</label>
+            <label index="edit" type="integer">131916066</label>
+            <label index="edit_disabled" type="integer">31408702</label>
+            <label index="add" type="integer">247599607</label>
+            <label index="add_disabled" type="integer">197970513</label>
+            <label index="up" type="integer">54092686</label>
+            <label index="delete" type="integer">254438473</label>
+            <label index="cancel" type="integer">245659783</label>
+            <label index="back" type="integer">5603241</label>
+            <label index="dounhide" type="integer">205596222</label>
+            <label index="dohide" type="integer">103439945</label>
+            <label index="dounhide_disabled" type="integer">234299256</label>
+            <label index="dohide_disabled" type="integer">30204187</label>
+            <label index="dodelete" type="integer">249808777</label>
+            <label index="dodelete_disabled" type="integer">71172640</label>
+            <label index="dodelete_unhidden" type="integer">252833867</label>
+            <label index="generalhidden" type="integer">128769925</label>
+            <label index="hidden" type="integer">55043624</label>
+            <label index="unhidden" type="integer">77133724</label>
+            <label index="isadmin" type="integer">195068504</label>
+            <label index="userauthorities" type="integer">256755546</label>
+            <label index="addEntry" type="integer">159581928</label>
+            <label index="unhideAll" type="integer">12451384</label>
+            <label index="unhideOwn" type="integer">72726305</label>
+            <label index="unhideFixedOwn" type="integer">13307039</label>
+            <label index="editAll" type="integer">109857305</label>
+            <label index="editOwn" type="integer">226512814</label>
+            <label index="deleteEntry" type="integer">36193775</label>
+            <label index="deleteOwn" type="integer">94528820</label>
+            <label index="uploadDeleteImage" type="integer">146673658</label>
+            <label index="uploadImage" type="integer">234724709</label>
+            <label index="deleteImage" type="integer">186208955</label>
+            <label index="seeAllHidden" type="integer">93411700</label>
+            <label index="doreallydelete" type="integer">113475179</label>
+            <label index="entries" type="integer">197217034</label>
+            <label index="BackToResultPage" type="integer">23778105</label>
+            <label index="getSubpart.countError" type="integer">158261240</label>
+            <label index="getSubpart.noMarkers" type="integer">103166729</label>
+            <label index="errors.len" type="integer">47263053</label>
+            <label index="errors.notnull" type="integer">177977443</label>
+            <label index="errors.maildomain" type="integer">19893196</label>
+            <label index="errors.mailname" type="integer">266180264</label>
+            <label index="errors.dateerror" type="integer">102319900</label>
+            <label index="errors.duperror" type="integer">219424735</label>
+            <label index="errors.uniqueerror" type="integer">7454878</label>
+            <label index="errors.secure" type="integer">243061107</label>
+            <label index="errors.account" type="integer">91202047</label>
+            <label index="errors.bic" type="integer">137763680</label>
+            <label index="emptySearch" type="integer">102351020</label>
+            <label index="noUidGiven" type="integer">118145185</label>
+            <label index="recordNotFound" type="integer">183306559</label>
+            <label index="sendMailOk" type="integer">180663567</label>
+            <label index="sendMailError" type="integer">166414065</label>
+            <label index="disabled.I.any" type="integer">206947935</label>
+            <label index="disabled.I.0" type="integer">156184464</label>
+            <label index="disabled.I.1" type="integer">92935153</label>
+            <label index="disabled.I.96" type="integer">211156461</label>
+            <label index="disabled.I.97" type="integer">153160708</label>
+            <label index="disabled.I.98" type="integer">93335629</label>
+            <label index="disabled.I.99" type="integer">128769925</label>
+            <label index="disabled.I.80" type="integer">154173449</label>
+            <label index="disabled.I.81" type="integer">231846718</label>
+            <label index="disabled.I.82" type="integer">82587481</label>
+            <label index="disabled.I.83" type="integer">2802562</label>
+            <label index="disabled.I.112" type="integer">40560614</label>
+            <label index="disabled.I.113" type="integer">68510936</label>
+            <label index="disabled.I.114" type="integer">88391508</label>
+            <label index="fixed.I.any" type="integer">206947935</label>
+            <label index="LGL.endtime" type="integer">167679436</label>
+            <label index="LGL.hidden" type="integer">187640334</label>
+            <label index="LGL.starttime" type="integer">14051517</label>
+            <label index="LGL.fe_group" type="integer">152799121</label>
+            <label index="LGL.hide_at_login" type="integer">226183283</label>
+            <label index="LGL.any_login" type="integer">160946861</label>
+            <label index="LGL.usergroups" type="integer">157574305</label>
+        </languageKey>
+        <languageKey index="es" type="array">
+        </languageKey>
+        <languageKey index="nl" type="array">
+        </languageKey>
+        <languageKey index="cz" type="array">
+        </languageKey>
+        <languageKey index="pl" type="array">
+        </languageKey>
+        <languageKey index="si" type="array">
+        </languageKey>
+        <languageKey index="fi" type="array">
+            <label index="showFromToOfTotal" type="integer">173103218</label>
+            <label index="showNoneOfTotal" type="integer">38352556</label>
+            <label index="save" type="integer">211601612</label>
+            <label index="reload" type="integer">80857126</label>
+            <label index="saveexit" type="integer">13743945</label>
+            <label index="edit" type="integer">131916066</label>
+            <label index="edit_disabled" type="integer">31408702</label>
+            <label index="add" type="integer">247599607</label>
+            <label index="add_disabled" type="integer">197970513</label>
+            <label index="up" type="integer">54092686</label>
+            <label index="delete" type="integer">254438473</label>
+            <label index="cancel" type="integer">245659783</label>
+            <label index="back" type="integer">5603241</label>
+            <label index="dounhide" type="integer">205596222</label>
+            <label index="dohide" type="integer">103439945</label>
+            <label index="dounhide_disabled" type="integer">234299256</label>
+            <label index="dohide_disabled" type="integer">30204187</label>
+            <label index="dodelete" type="integer">249808777</label>
+            <label index="dodelete_disabled" type="integer">71172640</label>
+            <label index="dodelete_unhidden" type="integer">252833867</label>
+            <label index="generalhidden" type="integer">128769925</label>
+            <label index="hidden" type="integer">55043624</label>
+            <label index="unhidden" type="integer">77133724</label>
+            <label index="isadmin" type="integer">195068504</label>
+            <label index="userauthorities" type="integer">256755546</label>
+            <label index="addEntry" type="integer">159581928</label>
+            <label index="unhideAll" type="integer">12451384</label>
+            <label index="unhideOwn" type="integer">72726305</label>
+            <label index="editAll" type="integer">109857305</label>
+            <label index="editOwn" type="integer">226512814</label>
+            <label index="deleteEntry" type="integer">36193775</label>
+            <label index="deleteOwn" type="integer">94528820</label>
+            <label index="uploadDeleteImage" type="integer">146673658</label>
+            <label index="uploadImage" type="integer">234724709</label>
+            <label index="deleteImage" type="integer">186208955</label>
+            <label index="seeAllHidden" type="integer">93411700</label>
+            <label index="doreallydelete" type="integer">113475179</label>
+            <label index="entries" type="integer">197217034</label>
+            <label index="BackToResultPage" type="integer">23778105</label>
+            <label index="getSubpart.countError" type="integer">158261240</label>
+            <label index="getSubpart.noMarkers" type="integer">103166729</label>
+            <label index="errors.len" type="integer">47263053</label>
+            <label index="errors.notnull" type="integer">177977443</label>
+            <label index="errors.maildomain" type="integer">19893196</label>
+            <label index="errors.mailname" type="integer">266180264</label>
+            <label index="errors.dateerror" type="integer">102319900</label>
+            <label index="errors.duperror" type="integer">219424735</label>
+            <label index="errors.uniqueerror" type="integer">7454878</label>
+            <label index="errors.secure" type="integer">243061107</label>
+            <label index="noUidGiven" type="integer">118145185</label>
+        </languageKey>
+        <languageKey index="tr" type="array">
+        </languageKey>
+        <languageKey index="se" type="array">
+        </languageKey>
+        <languageKey index="pt" type="array">
+        </languageKey>
+        <languageKey index="ru" type="array">
+        </languageKey>
+        <languageKey index="ro" type="array">
+        </languageKey>
+        <languageKey index="ch" type="array">
+        </languageKey>
+        <languageKey index="sk" type="array">
+        </languageKey>
+        <languageKey index="lt" type="array">
+        </languageKey>
+        <languageKey index="is" type="array">
+        </languageKey>
+        <languageKey index="hr" type="array">
+        </languageKey>
+        <languageKey index="hu" type="array">
+        </languageKey>
+        <languageKey index="gl" type="array">
+        </languageKey>
+        <languageKey index="th" type="array">
+        </languageKey>
+        <languageKey index="gr" type="array">
+        </languageKey>
+        <languageKey index="hk" type="array">
+        </languageKey>
+        <languageKey index="eu" type="array">
+        </languageKey>
+        <languageKey index="bg" type="array">
+        </languageKey>
+        <languageKey index="br" type="array">
+            <label index="pi_flexform.sheet_general" type="integer">177986581</label>
+            <label index="pi_flexform.sheet_general-mode" type="integer">41664888</label>
+            <label index="pi_flexform.sheet_general-mode2.1" type="integer">150101925</label>
+            <label index="pi_flexform.sheet_general-mode2.2" type="integer">174853077</label>
+            <label index="pi_flexform.sheet_general-mode2.3" type="integer">200813456</label>
+            <label index="pi_flexform.sheet_general-mode2.4" type="integer">14468341</label>
+            <label index="pi_flexform.sheet_general-mode2.30" type="integer">165642997</label>
+            <label index="pi_flexform.sheet_general-mode2.31" type="integer">63425822</label>
+            <label index="pi_flexform.sheet_general-mode2.32" type="integer">121197743</label>
+            <label index="pi_flexform.sheet_general-mode2.99" type="integer">236824211</label>
+            <label index="pi_flexform.sheet_general-debugmode" type="integer">194214981</label>
+            <label index="pi_flexform.sheet_general-editpopup" type="integer">127275702</label>
+            <label index="pi_flexform.sheet_localconf" type="integer">174757693</label>
+            <label index="pi_flexform.sheet_localconf-data" type="integer">113191694</label>
+        </languageKey>
+        <languageKey index="et" type="array">
+        </languageKey>
+        <languageKey index="ar" type="array">
+        </languageKey>
+        <languageKey index="he" type="array">
+        </languageKey>
+        <languageKey index="ua" type="array">
+        </languageKey>
+        <languageKey index="lv" type="array">
+            <label index="showFromToOfTotal" type="integer">173103218</label>
+            <label index="showNoneOfTotal" type="integer">38352556</label>
+            <label index="save" type="integer">211601612</label>
+            <label index="reload" type="integer">80857126</label>
+            <label index="saveexit" type="integer">13743945</label>
+            <label index="edit" type="integer">131916066</label>
+            <label index="edit_disabled" type="integer">31408702</label>
+            <label index="editAsNew" type="integer">194183203</label>
+            <label index="editAsNew_disabled" type="integer">197970513</label>
+            <label index="add" type="integer">247599607</label>
+            <label index="add_disabled" type="integer">197970513</label>
+            <label index="up" type="integer">54092686</label>
+            <label index="delete" type="integer">254438473</label>
+            <label index="cancel" type="integer">245659783</label>
+            <label index="back" type="integer">5603241</label>
+            <label index="dounhide" type="integer">205596222</label>
+            <label index="dohide" type="integer">103439945</label>
+            <label index="dounhide_disabled" type="integer">234299256</label>
+            <label index="dohide_disabled" type="integer">30204187</label>
+            <label index="dodelete" type="integer">249808777</label>
+            <label index="dodelete_disabled" type="integer">71172640</label>
+            <label index="dodelete_unhidden" type="integer">252833867</label>
+            <label index="hidden" type="integer">55043624</label>
+            <label index="unhidden" type="integer">77133724</label>
+            <label index="isadmin" type="integer">195068504</label>
+            <label index="userauthorities" type="integer">256755546</label>
+            <label index="addEntry" type="integer">159581928</label>
+            <label index="unhideAll" type="integer">12451384</label>
+            <label index="unhideOwn" type="integer">72726305</label>
+            <label index="unhideFixedOwn" type="integer">13307039</label>
+            <label index="editAll" type="integer">109857305</label>
+            <label index="editOwn" type="integer">226512814</label>
+            <label index="deleteEntry" type="integer">36193775</label>
+            <label index="deleteOwn" type="integer">94528820</label>
+            <label index="uploadDeleteImage" type="integer">146673658</label>
+            <label index="uploadImage" type="integer">234724709</label>
+            <label index="deleteImage" type="integer">186208955</label>
+            <label index="seeAllHidden" type="integer">93411700</label>
+            <label index="doreallydelete" type="integer">113475179</label>
+            <label index="areyousure" type="integer">1942379</label>
+            <label index="entries" type="integer">197217034</label>
+            <label index="BackToResultPage" type="integer">23778105</label>
+            <label index="getSubpart.countError" type="integer">158261240</label>
+            <label index="getSubpart.noMarkers" type="integer">103166729</label>
+            <label index="errors.len" type="integer">47263053</label>
+            <label index="errors.max" type="integer">254766862</label>
+            <label index="errors.notnull" type="integer">177977443</label>
+            <label index="errors.maildomain" type="integer">19893196</label>
+            <label index="errors.mailname" type="integer">266180264</label>
+            <label index="errors.dateerror" type="integer">102319900</label>
+            <label index="errors.duperror" type="integer">219424735</label>
+            <label index="errors.uniqueerror" type="integer">7454878</label>
+            <label index="errors.secure" type="integer">243061107</label>
+            <label index="errors.account" type="integer">91202047</label>
+            <label index="errors.bic" type="integer">137763680</label>
+            <label index="errors.maxitems" type="integer">214024768</label>
+            <label index="errors.minitems" type="integer">228994132</label>
+            <label index="editmessage.edit" type="integer">63002828</label>
+            <label index="editmessage.create" type="integer">90821199</label>
+            <label index="editmessage.hide" type="integer">131525414</label>
+            <label index="editmessage.unhide" type="integer">106195646</label>
+            <label index="emptySearch" type="integer">102351020</label>
+            <label index="noUidGiven" type="integer">118145185</label>
+            <label index="recordNotFound" type="integer">183306559</label>
+            <label index="sendMailOk" type="integer">180663567</label>
+            <label index="sendMailError" type="integer">166414065</label>
+            <label index="disabled.I.any" type="integer">206947935</label>
+            <label index="disabled.I.0" type="integer">156184464</label>
+            <label index="disabled.I.1" type="integer">92935153</label>
+            <label index="disabled.I.96" type="integer">211156461</label>
+            <label index="disabled.I.97" type="integer">153160708</label>
+            <label index="disabled.I.98" type="integer">93335629</label>
+            <label index="disabled.I.99" type="integer">128769925</label>
+            <label index="disabled.I.80" type="integer">154173449</label>
+            <label index="disabled.I.81" type="integer">231846718</label>
+            <label index="disabled.I.82" type="integer">82587481</label>
+            <label index="disabled.I.83" type="integer">2802562</label>
+            <label index="disabled.I.112" type="integer">40560614</label>
+            <label index="disabled.I.113" type="integer">68510936</label>
+            <label index="disabled.I.114" type="integer">88391508</label>
+            <label index="fixed.I.any" type="integer">206947935</label>
+            <label index="fixed.I.0" type="integer">91553195</label>
+            <label index="fixed.I.1" type="integer">125027517</label>
+            <label index="pi_flexform.sheet_general" type="integer">177986581</label>
+            <label index="pi_flexform.sheet_general-mode" type="integer">41664888</label>
+            <label index="pi_flexform.sheet_general-mode2.1" type="integer">150101925</label>
+            <label index="pi_flexform.sheet_general-mode2.2" type="integer">174853077</label>
+            <label index="pi_flexform.sheet_general-mode2.3" type="integer">200813456</label>
+            <label index="pi_flexform.sheet_general-mode2.4" type="integer">14468341</label>
+            <label index="pi_flexform.sheet_general-mode2.30" type="integer">165642997</label>
+            <label index="pi_flexform.sheet_general-mode2.31" type="integer">63425822</label>
+            <label index="pi_flexform.sheet_general-mode2.32" type="integer">121197743</label>
+            <label index="pi_flexform.sheet_general-mode2.99" type="integer">236824211</label>
+            <label index="pi_flexform.sheet_general-debugmode" type="integer">194214981</label>
+            <label index="pi_flexform.sheet_general-listpage" type="integer">236555930</label>
+            <label index="pi_flexform.sheet_general-editpage" type="integer">126393731</label>
+            <label index="pi_flexform.sheet_general-editpopup" type="integer">127275702</label>
+            <label index="pi_flexform.sheet_localconf" type="integer">174757693</label>
+            <label index="pi_flexform.sheet_localconf-data" type="integer">113191694</label>
+        </languageKey>
+        <languageKey index="jp" type="array">
+        </languageKey>
+        <languageKey index="vn" type="array">
+        </languageKey>
+        <languageKey index="ca" type="array">
+        </languageKey>
+        <languageKey index="ba" type="array">
+        </languageKey>
+        <languageKey index="kr" type="array">
+        </languageKey>
+        <languageKey index="eo" type="array">
+        </languageKey>
+        <languageKey index="my" type="array">
+        </languageKey>
+        <languageKey index="hi" type="array">
+        </languageKey>
+        <languageKey index="fo" type="array">
+        </languageKey>
+        <languageKey index="fa" type="array">
+        </languageKey>
+        <languageKey index="sr" type="array">
+        </languageKey>
+    </orig_hash>
+    <orig_text type="array">
+        <languageKey index="default" type="array">
+        </languageKey>
+        <languageKey index="dk" type="array">
+        </languageKey>
+        <languageKey index="de" type="array">
+        </languageKey>
+        <languageKey index="no" type="array">
+        </languageKey>
+        <languageKey index="it" type="array">
+        </languageKey>
+        <languageKey index="fr" type="array">
+        </languageKey>
+        <languageKey index="es" type="array">
+        </languageKey>
+        <languageKey index="nl" type="array">
+        </languageKey>
+        <languageKey index="cz" type="array">
+        </languageKey>
+        <languageKey index="pl" type="array">
+        </languageKey>
+        <languageKey index="si" type="array">
+        </languageKey>
+        <languageKey index="fi" type="array">
+        </languageKey>
+        <languageKey index="tr" type="array">
+        </languageKey>
+        <languageKey index="se" type="array">
+        </languageKey>
+        <languageKey index="pt" type="array">
+        </languageKey>
+        <languageKey index="ru" type="array">
+        </languageKey>
+        <languageKey index="ro" type="array">
+        </languageKey>
+        <languageKey index="ch" type="array">
+        </languageKey>
+        <languageKey index="sk" type="array">
+        </languageKey>
+        <languageKey index="lt" type="array">
+        </languageKey>
+        <languageKey index="is" type="array">
+        </languageKey>
+        <languageKey index="hr" type="array">
+        </languageKey>
+        <languageKey index="hu" type="array">
+        </languageKey>
+        <languageKey index="gl" type="array">
+        </languageKey>
+        <languageKey index="th" type="array">
+        </languageKey>
+        <languageKey index="gr" type="array">
+        </languageKey>
+        <languageKey index="hk" type="array">
+        </languageKey>
+        <languageKey index="eu" type="array">
+        </languageKey>
+        <languageKey index="bg" type="array">
+        </languageKey>
+        <languageKey index="br" type="array">
+        </languageKey>
+        <languageKey index="et" type="array">
+        </languageKey>
+        <languageKey index="ar" type="array">
+        </languageKey>
+        <languageKey index="he" type="array">
+        </languageKey>
+        <languageKey index="ua" type="array">
+        </languageKey>
+        <languageKey index="lv" type="array">
+        </languageKey>
+        <languageKey index="jp" type="array">
+        </languageKey>
+        <languageKey index="vn" type="array">
+        </languageKey>
+        <languageKey index="ca" type="array">
+        </languageKey>
+        <languageKey index="ba" type="array">
+        </languageKey>
+        <languageKey index="kr" type="array">
+        </languageKey>
+        <languageKey index="eo" type="array">
+        </languageKey>
+        <languageKey index="my" type="array">
+        </languageKey>
+        <languageKey index="hi" type="array">
+        </languageKey>
+        <languageKey index="fo" type="array">
+        </languageKey>
+        <languageKey index="fa" type="array">
+        </languageKey>
+        <languageKey index="sr" type="array">
+        </languageKey>
+    </orig_text>
+</T3locallang>

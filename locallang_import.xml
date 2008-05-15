@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+    <meta type="array">
+        <description>Default Locallang for import</description>
+        <type>module</type>
+        <csh_table></csh_table>
+        <labelContext type="array">
+        </labelContext>
+    </meta>
+    <data type="array">
+        <languageKey index="default" type="array">
+            <label index="import">Import</label>
+            <label index="imp_submit">Upload File</label>
+            <label index="imp_next">Next Step</label>
+            <label index="imp_prev">Back to previous form</label>
+            <label index="imp_error_header">ERROR</label>
+            <label index="imp_error_duplicate">ERROR: List of duplicate IDs</label>
+            <label index="imp_error_incomplete">ERROR: List of incomplete Lines (%d)</label>
+            <label index="imp_warn_incomplete">Data-Line was not complete - fixed</label>
+            <label index="imp_error_separator">ERROR: maybe wron Separator ?</label>
+            <label index="imp_warn_sep_info">For your information: This is the start of your import-file:</label>
+            <label index="imp_descr_info">Info</label>
+            <label index="imp_descr_input">Input</label>
+            <label index="imp_descr_selfile">Select File</label>
+            <label index="imp_descr_fieldorder">Field order in&lt;br /&gt;Import-File&lt;br /&gt;must be</label>
+            <label index="imp_descr_fieldvalues">Fields&lt;br /&gt;to be set&lt;br /&gt;with values</label>
+            <label index="imp_descr_transferlog">Info about transfered file</label>
+            <label index="imp_descr_filename">Filename</label>
+            <label index="imp_descr_filesize">Filesize</label>
+            <label index="imp_descr_filetemp">Temp. Filename</label>
+            <label index="imp_descr_filelines">Lines of Data</label>
+            <label index="imp_descr_fixedvalues">Values with fixes settings (same for all records)</label>
+            <label index="imp_descr_replacefields">Overview about records that will be replaced</label>
+            <label index="imp_descr_replacecount">Records to be replaced</label>
+            <label index="imp_descr_insertcount">Records to be inserted</label>
+            <label index="imp_descr_dberrorcount">Records with error in database</label>
+            <label index="imp_descr_dberrorcount_text">%d Records cannot be replaced, because of errors in the database:</label>
+            <label index="imp_descr_dberrorcount_cnt">(%d Records found for this ID)</label>
+            <label index="imp_descr_import_check">Please check this partial listing of your import-file for matching data</label>
+            <label index="imp_descr_import_errors">List of Records with Errors</label>
+            <label index="imp_descr_action_overview">Overview about Database-Actions</label>
+            <label index="imp_descr_deletelines">Expired records to delete</label>
+            <label index="imp_descr_deleteall">Records to be deleted</label>
+            <label index="imp_descr_savelines">Records to save</label>
+            <label index="imp_descr_insertlines">to insert</label>
+            <label index="imp_descr_replacelines">to replace</label>
+            <label index="imp_descr_warninglines">with warnings</label>
+            <label index="imp_descr_errorlines">Records with Errors</label>
+            <label index="imp_descr_processedlines">Processed lines</label>
+            <label index="imp_descr_errormessages">Errormessages</label>
+            <label index="imp_act_pid">actual pid</label>
+            <label index="imp_act_time">actual timestamp</label>
+            <label index="imp_act_feuser">actual feuser</label>
+            <label index="imp_act_const">CONST</label>
+            <label index="imp_info_pid">The Storage-Page for this Plugin is %d.</label>
+            <label index="imp_info_userid">Your User-ID (UID) is %d (User &quot;%s&quot;).</label>
+            <label index="imp_info_defaultpid">The Default Storage-Page is %d.</label>
+            <label index="imp_info_usergroup">The Default UserGroup is defined as &quot;%s&quot;</label>
+            <label index="imp_warn_mailheader">Warnings:</label>
+            <label index="imp_warn_cutoffstr">%s is cut off to len %d</label>
+            <label index="imp_warn_cutoff">%s is cut off</label>
+            <label index="imp_warn_unknown">%s value unknown (&quot;%s&quot;)</label>
+            <label index="imp_warn_novaliddate">%s is no valid date</label>
+            <label index="imp_warn_novalidtime">%s is no valid time</label>
+            <label index="imp_warn_containsctrl">%s contains Ctrl-Chars</label>
+            <label index="imp_warn_containsx">%s contains</label>
+            <label index="imp_warn_containssep">%s  contained Listseparator</label>
+            <label index="imp_error_mailheader">ERROR-Messages (Overview):</label>
+            <label index="imp_error_details">ERROR-Messages Details:</label>
+            <label index="imp_error_isempty">%s is empty</label>
+            <label index="imp_error_isnotnumeric">%s is not numeric</label>
+            <label index="imp_error_isnull">%s is null</label>
+            <label index="imp_error_isnotunique">%s is not unique</label>
+            <label index="imp_error_isinvalid">%s  is invalid</label>
+            <label index="imp_error_expired">Enddate already expired</label>
+            <label index="imp_error_dberror">Database-Error (Entry more than once in DB)</label>
+            <label index="imp_error_writeerror_sql">Cannot write to sql-source-file</label>
+            <label index="imp_error_writeerror_fname">Error: cannot write &quot;%s&quot;</label>
+            <label index="imp_log_errorloglink">Show &lt;a %s&gt;Logfile with errors&lt;/a&gt; in new Window for printing.</label>
+            <label index="imp_log_result_ok">&lt;b&gt;OK - %d of %d Lines Saved&lt;/b&gt;</label>
+            <label index="imp_log_result_deleted">&lt;b&gt;OK - %d old records have been deleted&lt;/b&gt;</label>
+            <label index="imp_log_result_error">ERROR - %d of %d Lines Saved</label>
+            <label index="imp_finally_import">Please continue to finally import %d records.</label>
+            <label index="imp_finally_deletewarning_own">WARNING: Before import, all %d existing Records of user %d will be deleted.</label>
+            <label index="imp_finally_deletewarning_all">WARNING: Before import, all %d existing Records be deleted.</label>
+        </languageKey>
+        <languageKey index="de" type="array">
+            <label index="import">Import</label>
+            <label index="imp_submit">Datei Importieren</label>
+            <label index="imp_next">Weiter</label>
+            <label index="imp_prev">Zur&amp;uuml;ck</label>
+            <label index="imp_error_header">FEHLER</label>
+            <label index="imp_error_duplicate">FEHLER: Liste doppelter IDs</label>
+            <label index="imp_error_incomplete">FEHLER: Liste unvollst&amp;auml;ndiger Datenzeilen (%d)</label>
+            <label index="imp_warn_incomplete">Datenzeile war nicht komplett - korrigiert.</label>
+            <label index="imp_error_separator">FEHLER: evtl. falsches Trennzeichen ?</label>
+            <label index="imp_warn_sep_info">Zu Ihrer Information: Dies ist der Anfang Ihrer Import-Datei:</label>
+            <label index="imp_descr_info">Info</label>
+            <label index="imp_descr_input">Eingabe</label>
+            <label index="imp_descr_selfile">Dateiauswahl</label>
+            <label index="imp_descr_fieldorder">Felderreihenfolge&lt;br /&gt;in Import-Datei&lt;br /&gt;muss sein</label>
+            <label index="imp_descr_fieldvalues">Felder, die&lt;br /&gt;mit konst. Werten&lt;br /&gt;vorbesetzt werden</label>
+            <label index="imp_descr_transferlog">Protokoll der Daten&amp;uuml;bertragung</label>
+            <label index="imp_descr_filename">Dateiname</label>
+            <label index="imp_descr_filesize">Dateigr&amp;ouml;&amp;szlig;e</label>
+            <label index="imp_descr_filetemp">Temp. Dateiname</label>
+            <label index="imp_descr_filelines">Gelesene Datenzeilen</label>
+            <label index="imp_descr_fixedvalues">Felder mit konst. Werten (f&amp;uuml;r alle Datens&amp;auml;tze gleich)</label>
+            <label index="imp_descr_replacefields">&amp;Uuml;bersicht &amp;uuml;ber zu ersetzende Daten</label>
+            <label index="imp_descr_replacecount">Zu ersetzende Datens&amp;auml;tze</label>
+            <label index="imp_descr_insertcount">Einzuf&amp;uuml;gende Datens&amp;auml;tze</label>
+            <label index="imp_descr_dberrorcount">Datenbankfehler</label>
+            <label index="imp_descr_dberrorcount_text">%d Datens&amp;auml;tze können wegen Fehlern in der Datenbank nicht ersetzt werden:</label>
+            <label index="imp_descr_dberrorcount_cnt">(%d Datens&amp;auml;tze f&amp;uuml;r diese ID gefunden)</label>
+            <label index="imp_descr_import_check">Bitte pr&amp;uuml;fen Sie diesen Auszug aus der geladenen Datei auf passende Feldinhalte</label>
+            <label index="imp_descr_import_errors">Liste der fehlerhaften Datensaetze</label>
+            <label index="imp_descr_action_overview">&amp;uuml;bersicht &amp;uuml;ber die Import-Aktionen</label>
+            <label index="imp_descr_deletelines">Abgelaufende Datens&amp;auml;tze l&amp;ouml;schen</label>
+            <label index="imp_descr_deleteall">Zu l&amp;ouml;schende Datens&amp;auml;tze</label>
+            <label index="imp_descr_savelines">Zu speichernde Datens&amp;auml;tze</label>
+            <label index="imp_descr_insertlines">davon Einzuf&amp;uuml;gende</label>
+            <label index="imp_descr_replacelines">davon zu Ersetzende</label>
+            <label index="imp_descr_warninglines">davon mit Warnung</label>
+            <label index="imp_descr_errorlines">Fehlerhafte Datens&amp;auml;tze</label>
+            <label index="imp_descr_processedlines">Verarbeitete Datens&amp;auml;tze</label>
+            <label index="imp_descr_errormessages">Fehlerbeschreibung</label>
+            <label index="imp_act_pid">Aktuelle PID</label>
+            <label index="imp_act_time">Aktueller Timestamp</label>
+            <label index="imp_act_feuser">Aktuelle Fe-User-ID</label>
+            <label index="imp_act_const">Konst.-Text</label>
+            <label index="imp_info_pid">Die Storage-Page f&amp;uuml;r dieses Plugin ist %d.</label>
+            <label index="imp_info_userid">Daten werden f&amp;uuml;r Fe-User-ID %d (= User &quot;%s&quot;) importiert.</label>
+            <label index="imp_info_defaultpid">Die Default Storage-Page ist %d.</label>
+            <label index="imp_info_usergroup">Die Default User-Gruppe ist definiert als &quot;%s&quot;</label>
+            <label index="imp_warn_mailheader">Warnmeldungen:</label>
+            <label index="imp_warn_cutoffstr">%s wird abgeschnitten auf L&amp;auml;nge %d</label>
+            <label index="imp_warn_cutoff">%s wird abgeschnitten</label>
+            <label index="imp_warn_unknown">%s hat unbekannten Wert (&quot;%s&quot;)</label>
+            <label index="imp_warn_novaliddate">%s ist kein g&amp;uuml;ltiges Datum</label>
+            <label index="imp_warn_novalidtime">%s ist keine g&amp;uuml;ltige Uhrzeit</label>
+            <label index="imp_warn_containsctrl">%s enth&amp;auml;lt Ctrl-Zeichen</label>
+            <label index="imp_warn_containsx">%s enth&amp;auml;lt</label>
+            <label index="imp_warn_containssep">%s  enth&amp;auml;lt Listenseparator</label>
+            <label index="imp_error_mailheader">FEHLER-Meldungen (&amp;Uuml;bersicht):</label>
+            <label index="imp_error_details">FEHLER-Meldungen (Details):</label>
+            <label index="imp_error_isempty">%s ist leer</label>
+            <label index="imp_error_isnotnumeric">%s ist nicht numerisch</label>
+            <label index="imp_error_isnull">%s ist Null</label>
+            <label index="imp_error_isnotunique">%s ist nicht eindeutig (unique)</label>
+            <label index="imp_error_isinvalid">%s  ist ung&amp;uuml;ltig</label>
+            <label index="imp_error_dberror">Datenbankfehler (Schl&amp;uuml;sselwort mehrfach in DB)</label>
+            <label index="imp_error_expired">G&amp;uuml;ltigkeitsende des Datensatzes ist bereits abgelaufen</label>
+            <label index="imp_error_writeerror_sql">Kann sql-source-file nicht schreiben</label>
+            <label index="imp_error_writeerror_fname">FEHLER: kann Datei &quot;%s&quot; nicht schreiben</label>
+            <label index="imp_log_errorloglink">Zeige &lt;a %s&gt;Logfile mit Fehlern&lt;/a&gt; in einem neuen Fenster an.</label>
+            <label index="imp_log_result_ok">&lt;b&gt;OK - %d of %d Zeilen wurden gespeichert&lt;/b&gt;</label>
+            <label index="imp_log_result_deleted">&lt;b&gt;OK - %d alte Eintr&amp;auml;ge wurden gel&amp;ouml;scht&lt;/b&gt;</label>
+            <label index="imp_log_result_error">FEHLER - %d von %d Zeilen wurden gespeichert</label>
+            <label index="imp_finally_import">Fahren Sie fort, um endg&amp;uuml;ltig %d Datens&amp;auml;tze zu importieren..</label>
+            <label index="imp_finally_deletewarning_own">WARNUNG: Vor dem Import werden alle %d vorhanden Datens&amp;auml;tze des Users %d gel&amp;ouml;scht.</label>
+            <label index="imp_finally_deletewarning_all">WARNUNG: Vor dem Import werden alle %d vorhanden Datens&amp;auml;tze gel&amp;ouml;scht.</label>
+        </languageKey>
+    </data>
+    <orig_hash type="array">
+        <languageKey index="default" type="array">
+            <label index="import" type="integer">120417658</label>
+            <label index="imp_submit" type="integer">263945585</label>
+            <label index="imp_next" type="integer">45829307</label>
+            <label index="imp_prev" type="integer">11171762</label>
+            <label index="imp_error_header" type="integer">196201111</label>
+            <label index="imp_error_duplicate" type="integer">181520710</label>
+            <label index="imp_error_incomplete" type="integer">147170135</label>
+            <label index="imp_warn_incomplete" type="integer">67896625</label>
+            <label index="imp_error_separator" type="integer">69725403</label>
+            <label index="imp_warn_sep_info" type="integer">191330370</label>
+            <label index="imp_descr_info" type="integer">67476226</label>
+            <label index="imp_descr_input" type="integer">52695434</label>
+            <label index="imp_descr_selfile" type="integer">27923689</label>
+            <label index="imp_descr_fieldorder" type="integer">187991242</label>
+            <label index="imp_descr_fieldvalues" type="integer">186268138</label>
+            <label index="imp_descr_transferlog" type="integer">44653002</label>
+            <label index="imp_descr_filename" type="integer">20254743</label>
+            <label index="imp_descr_filesize" type="integer">186172059</label>
+            <label index="imp_descr_filetemp" type="integer">91132268</label>
+            <label index="imp_descr_filelines" type="integer">46946678</label>
+            <label index="imp_descr_fixedvalues" type="integer">204155451</label>
+            <label index="imp_descr_replacefields" type="integer">156851519</label>
+            <label index="imp_descr_replacecount" type="integer">67275468</label>
+            <label index="imp_descr_insertcount" type="integer">82495162</label>
+            <label index="imp_descr_dberrorcount" type="integer">219624052</label>
+            <label index="imp_descr_dberrorcount_text" type="integer">110055531</label>
+            <label index="imp_descr_dberrorcount_cnt" type="integer">208841338</label>
+            <label index="imp_descr_import_check" type="integer">176453771</label>
+            <label index="imp_descr_import_errors" type="integer">236995506</label>
+            <label index="imp_descr_action_overview" type="integer">132138958</label>
+            <label index="imp_descr_deletelines" type="integer">79862232</label>
+            <label index="imp_descr_deleteall" type="integer">32185304</label>
+            <label index="imp_descr_savelines" type="integer">24309599</label>
+            <label index="imp_descr_insertlines" type="integer">261745558</label>
+            <label index="imp_descr_replacelines" type="integer">208298240</label>
+            <label index="imp_descr_warninglines" type="integer">207976731</label>
+            <label index="imp_descr_errorlines" type="integer">48708443</label>
+            <label index="imp_descr_processedlines" type="integer">10294897</label>
+            <label index="imp_descr_errormessages" type="integer">61208147</label>
+            <label index="imp_act_pid" type="integer">76891254</label>
+            <label index="imp_act_time" type="integer">159181656</label>
+            <label index="imp_act_feuser" type="integer">123912047</label>
+            <label index="imp_act_const" type="integer">189732160</label>
+            <label index="imp_info_pid" type="integer">66935703</label>
+            <label index="imp_info_userid" type="integer">98360806</label>
+            <label index="imp_info_defaultpid" type="integer">49248953</label>
+            <label index="imp_info_usergroup" type="integer">206560701</label>
+            <label index="imp_warn_mailheader" type="integer">211583815</label>
+            <label index="imp_warn_cutoffstr" type="integer">43161867</label>
+            <label index="imp_warn_cutoff" type="integer">245743155</label>
+            <label index="imp_warn_unknown" type="integer">59230851</label>
+            <label index="imp_warn_novaliddate" type="integer">18618204</label>
+            <label index="imp_warn_novalidtime" type="integer">128116434</label>
+            <label index="imp_warn_containsctrl" type="integer">242667518</label>
+            <label index="imp_warn_containsx" type="integer">224211193</label>
+            <label index="imp_warn_containssep" type="integer">85259185</label>
+            <label index="imp_error_mailheader" type="integer">206963658</label>
+            <label index="imp_error_details" type="integer">213437559</label>
+            <label index="imp_error_isempty" type="integer">241796510</label>
+            <label index="imp_error_isnotnumeric" type="integer">173312407</label>
+            <label index="imp_error_isnull" type="integer">263520820</label>
+            <label index="imp_error_isnotunique" type="integer">11497429</label>
+            <label index="imp_error_isinvalid" type="integer">138085491</label>
+            <label index="imp_error_expired" type="integer">210159949</label>
+            <label index="imp_error_dberror" type="integer">84413452</label>
+            <label index="imp_error_writeerror_sql" type="integer">141260391</label>
+            <label index="imp_error_writeerror_fname" type="integer">79679998</label>
+            <label index="imp_log_errorloglink" type="integer">40322454</label>
+            <label index="imp_log_result_ok" type="integer">182307653</label>
+            <label index="imp_log_result_deleted" type="integer">219348576</label>
+            <label index="imp_log_result_error" type="integer">127346239</label>
+            <label index="imp_finally_import" type="integer">174982706</label>
+            <label index="imp_finally_deletewarning_own" type="integer">121675946</label>
+            <label index="imp_finally_deletewarning_all" type="integer">123352712</label>
+        </languageKey>
+        <languageKey index="de" type="array">
+            <label index="import" type="integer">120417658</label>
+            <label index="imp_submit" type="integer">263945585</label>
+            <label index="imp_next" type="integer">45829307</label>
+            <label index="imp_prev" type="integer">11171762</label>
+            <label index="imp_error_header" type="integer">196201111</label>
+            <label index="imp_error_duplicate" type="integer">181520710</label>
+            <label index="imp_error_incomplete" type="integer">147170135</label>
+            <label index="imp_warn_incomplete" type="integer">67896625</label>
+            <label index="imp_error_separator" type="integer">69725403</label>
+            <label index="imp_warn_sep_info" type="integer">191330370</label>
+            <label index="imp_descr_info" type="integer">67476226</label>
+            <label index="imp_descr_input" type="integer">52695434</label>
+            <label index="imp_descr_selfile" type="integer">27923689</label>
+            <label index="imp_descr_fieldorder" type="integer">187991242</label>
+            <label index="imp_descr_fieldvalues" type="integer">186268138</label>
+            <label index="imp_descr_transferlog" type="integer">44653002</label>
+            <label index="imp_descr_filename" type="integer">20254743</label>
+            <label index="imp_descr_filesize" type="integer">186172059</label>
+            <label index="imp_descr_filetemp" type="integer">91132268</label>
+            <label index="imp_descr_filelines" type="integer">46946678</label>
+            <label index="imp_descr_fixedvalues" type="integer">204155451</label>
+            <label index="imp_descr_replacefields" type="integer">156851519</label>
+            <label index="imp_descr_replacecount" type="integer">67275468</label>
+            <label index="imp_descr_insertcount" type="integer">82495162</label>
+            <label index="imp_descr_dberrorcount" type="integer">219624052</label>
+            <label index="imp_descr_dberrorcount_text" type="integer">110055531</label>
+            <label index="imp_descr_dberrorcount_cnt" type="integer">208841338</label>
+            <label index="imp_descr_import_check" type="integer">176453771</label>
+            <label index="imp_descr_import_errors" type="integer">236995506</label>
+            <label index="imp_descr_action_overview" type="integer">132138958</label>
+            <label index="imp_descr_deletelines" type="integer">79862232</label>
+            <label index="imp_descr_deleteall" type="integer">32185304</label>
+            <label index="imp_descr_savelines" type="integer">24309599</label>
+            <label index="imp_descr_insertlines" type="integer">261745558</label>
+            <label index="imp_descr_replacelines" type="integer">208298240</label>
+            <label index="imp_descr_warninglines" type="integer">207976731</label>
+            <label index="imp_descr_errorlines" type="integer">48708443</label>
+            <label index="imp_descr_processedlines" type="integer">10294897</label>
+            <label index="imp_descr_errormessages" type="integer">61208147</label>
+            <label index="imp_act_pid" type="integer">76891254</label>
+            <label index="imp_act_time" type="integer">159181656</label>
+            <label index="imp_act_feuser" type="integer">123912047</label>
+            <label index="imp_act_const" type="integer">189732160</label>
+            <label index="imp_info_pid" type="integer">66935703</label>
+            <label index="imp_info_userid" type="integer">98360806</label>
+            <label index="imp_info_defaultpid" type="integer">49248953</label>
+            <label index="imp_info_usergroup" type="integer">206560701</label>
+            <label index="imp_warn_mailheader" type="integer">211583815</label>
+            <label index="imp_warn_cutoffstr" type="integer">43161867</label>
+            <label index="imp_warn_cutoff" type="integer">245743155</label>
+            <label index="imp_warn_unknown" type="integer">59230851</label>
+            <label index="imp_warn_novaliddate" type="integer">18618204</label>
+            <label index="imp_warn_novalidtime" type="integer">128116434</label>
+            <label index="imp_warn_containsctrl" type="integer">242667518</label>
+            <label index="imp_warn_containsx" type="integer">224211193</label>
+            <label index="imp_warn_containssep" type="integer">85259185</label>
+            <label index="imp_error_mailheader" type="integer">206963658</label>
+            <label index="imp_error_details" type="integer">213437559</label>
+            <label index="imp_error_isempty" type="integer">241796510</label>
+            <label index="imp_error_isnotnumeric" type="integer">173312407</label>
+            <label index="imp_error_isnull" type="integer">263520820</label>
+            <label index="imp_error_isnotunique" type="integer">11497429</label>
+            <label index="imp_error_isinvalid" type="integer">138085491</label>
+            <label index="imp_error_dberror" type="integer">84413452</label>
+            <label index="imp_error_expired" type="integer">210159949</label>
+            <label index="imp_error_writeerror_sql" type="integer">141260391</label>
+            <label index="imp_error_writeerror_fname" type="integer">79679998</label>
+            <label index="imp_log_errorloglink" type="integer">40322454</label>
+            <label index="imp_log_result_ok" type="integer">182307653</label>
+            <label index="imp_log_result_deleted" type="integer">219348576</label>
+            <label index="imp_log_result_error" type="integer">127346239</label>
+            <label index="imp_finally_import" type="integer">174982706</label>
+            <label index="imp_finally_deletewarning_own" type="integer">121675946</label>
+            <label index="imp_finally_deletewarning_all" type="integer">123352712</label>
+        </languageKey>
+    </orig_hash>
+    <orig_text type="array">
+        <languageKey index="default" type="array">
+        </languageKey>
+        <languageKey index="de" type="array">
+        </languageKey>
+    </orig_text>
+</T3locallang>

@@ -1,0 +1,43 @@
+#Constants
+plugin.tx_sgzlib {
+	hotWrap = <font color=#FF0000><b>|</b></font>
+	warnWrap = <font color=#800000><b>|</b></font>
+	okWrap = <font color=#008000><b>|</b></font>
+
+	alignBigIcon = 
+	alignButton = 
+	#alignBigIcon = align="texttop"
+	#alignButton = align="texttop"
+
+	button.file = EXT:sg_zlib/img/bt_100.gif
+	button.offset = 0,13
+	button.align = center
+	button.fontSize = 12
+	button.fontColor = black
+	button.fontFile = 
+
+	userJsFunc = EXT:sg_zlib/js/user_func.js
+	popupFunc = EXT:sg_zlib/js/popup_func.js
+	searchFunc = EXT:sg_zlib/js/search_func.js
+}
+
+plugin.tx_sgzlib {
+	exporter =  index.php?eID=sg_zlib_export
+
+	browser = index.php?eID=sg_zlib_browse
+	browserParams = &no_cache=1
+}
+
+plugin.tx_sgzlib {
+	db.default.template = EXT:sg_zlib/browser/browsedb.tmpl
+	db.browseFile = EXT:sg_zlib/browser/browsedb.php
+	db.browseClass = sg_browser_db
+
+	fb.default.template = EXT:sg_zlib/browser/browsefile.tmpl
+	fb.browseFile = EXT:sg_zlib/browser/browsefile.php
+	fb.browseClass = sg_browser_file
+
+	plugin.default.template = EXT:sg_zlib/browser/browsedb.tmpl
+	plugin.browseFile = EXT:sg_zlib/browser/browsedb.php
+	plugin.browseClass = sg_browser_db
+}
