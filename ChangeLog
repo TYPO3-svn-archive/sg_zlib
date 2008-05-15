@@ -1,4 +1,9 @@
 
+
+0.1.651	Fixed: search.type=3,* or 3,fieldlist_to_use
+
+0.1.650 ViewDetail basically working
+
 0.1.643	Working on viewDetail
 
 0.1.642	Added: modelbase->allowFrom select list of allowed PIDs

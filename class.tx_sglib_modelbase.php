@@ -331,12 +331,15 @@ class tx_sglib_modelbase extends tx_sglib_data {
 			$q['group'] = '';
 			$q['limit'] = '';
 		} else if (strlen($mode)>=2) {
+			$searchType = explode(',',$this->confObj->mainSearch[$mode.'.']['type']);
 			$q['select'] = $table.'.*';
 			$q['table'] = $table.' LEFT JOIN '.$this->mainTable.' ON '.$this->mainTable.'.'.$this->confObj->references['field'][$table].'='.$table.'.uid  ';
 			$q['where'] = $this->mainTable.'.uid>0 AND '.$where.$this->cObj->enableFields($table);
 			if (is_array($this->searchParams))foreach ($this->searchParams as $key=>$value) {
 				if (strcmp($key,$mode) && $value) {
-					$q['where'] .= ' AND '.$this->mainTable.'.'.$key.'='.$value.' ';
+					if (strcmp($searchType[1],'*')==0 || in_array($key,$searchType)) {
+						$q['where'] .= ' AND '.$this->mainTable.'.'.$key.'='.$value.' ';
+					}
 				}
 			}
 			$q['order'] = $this->createOrder($table);
