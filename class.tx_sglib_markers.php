@@ -83,11 +83,6 @@ class tx_sglib_markers {
 		$this->langObj = $factoryObj->langObj;
 		$this->cObj = $factoryObj->cObj;
 		$this->mainTable = $this->confObj->getTCAname();
-		$this->conf = $this->confObj->get('');
-		foreach ($this->conf[$this->mainTable.'.']['conf.'] as $key=>$value)
-		if (is_array($value)) {
-			$this->mainConf[substr($key,0,-1)] = $value;
-		}
 	}
 
 	/**
@@ -203,15 +198,15 @@ class tx_sglib_markers {
 					$textValue = $value;
 				}
 				$markers['###TEXT_'.strtoupper($key).'###'] = $textValue;
-				if (is_array($this->mainConf[$key]['stdWrap.'])) {
-					$textValue = $this->cObj->stdWrap($textValue,$this->mainConf[$key]['stdWrap.']);
+				if (is_array($this->confObj->mainConf[$key.'.']['stdWrap.'])) {
+					$textValue = $this->cObj->stdWrap($textValue,$this->confObj->mainConf[$key.'.']['stdWrap.']);
 				}
-				if ($tmp=$this->mainConf[$key]['linkIfFileExists']) {
+				if ($tmp=$this->confObj->mainConf[$key.'.']['linkIfFileExists']) {
 					$path = $textValue;
 					$textValue = (is_string($tmp) && $record[$tmp]) ? $record[$tmp] : $textValue;
 					$textValue = (is_array($tmp)) ? $this->cObj->stdWrap($textValue, $tmp) : $textValue;
-					if (file_exists(t3lib_div::getFileAbsFileName($this->mainConf[$key]['uploadfolder'].'/'.$path))) {
-						$myConf = Array('path'=>$this->mainConf[$key]['uploadfolder'].'/', 'labelStdWrap.'=>array('override'=>$textValue));
+					if (file_exists(t3lib_div::getFileAbsFileName($this->confObj->mainConf[$key.'.']['uploadfolder'].'/'.$path))) {
+						$myConf = Array('path'=>$this->confObj->mainConf[$key.'.']['uploadfolder'].'/', 'labelStdWrap.'=>array('override'=>$textValue));
 						$textValue = $this->cObj->filelink($path,$myConf);
 					}
 				}

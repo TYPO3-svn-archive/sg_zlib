@@ -67,7 +67,7 @@
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
-class tx_sglib_config {
+class tx_sglib_config extends ArrayIterator {
 	private static $instance = Array();
 
 	private $factoryObj = NULL;
@@ -421,39 +421,42 @@ class tx_sglib_config {
 		if ($tableName) {
 			if (strcmp($tableName,'*')==0) {
 				foreach ($this->_configTCA($tableName) as $table=>$config) {
-				$this->config[$table] = 'TABLEDEF';
-				$this->config[$table.'.'] = $config;
+					$this[$table] = 'TABLEDEF';
+					$this[$table.'.'] = $config;
 				}
 			} else {
-				$this->config[$tableName] = 'TABLEDEF';
-				$this->config[$tableName.'.'] = $this->_configTCA($tableName);
+				$this[$tableName] = 'TABLEDEF';
+				$this[$tableName.'.'] = $this->_configTCA($tableName);
 			}
 		}
 
 		$confArray = $this->confData;
-		foreach ($this->config as $table=>$config) if (strcmp($config,'TABLEDEF')==0) {
+		foreach ($this as $table=>$config) if (strcmp($config,'TABLEDEF')==0) {
 			// t3lib_div::debug(Array('check for [ignoreTCAsettings] in '=>$table, 'File:Line'=>__FILE__.':'.__LINE__));
 			if ($confArray[$table.'.']['ignoreTCAsettings']) {
-				unset($this->config[$table.'.']);
+				unset($this[$table.'.']);
 			} else if ($confArray[$table.'.']['ctrl.']['ignoreTCAsettings']) {
-				unset($this->config[$table.'.']['ctrl.']);
+				unset($this[$table.'.']['ctrl.']);
 			} else if ($confArray[$table.'.']['conf.']['ignoreTCAsettings']) {
-				unset($this->config[$table.'.']['conf.']);
+				unset($this[$table.'.']['conf.']);
 				unset($confArray[$table.'.']['conf.']['ignoreTCAsettings']);
 			} else {
-				if (is_array($this->config[$table.'.']['conf.'])) foreach ($this->config[$table.'.']['conf.'] as $key=>$value) {
+				if (is_array($this[$table.'.']['conf.'])) foreach ($this[$table.'.']['conf.'] as $key=>$value) {
 					// t3lib_div::debug(Array('check for [ignoreTCAsettings] in '=>'['.$table.'.][conf.]['.$key.']', 'File:Line'=>__FILE__.':'.__LINE__));
 					if ($confArray[$table.'.']['conf.'][$key]['ignoreTCAsettings']) {
-						unset($this->config[$table.'.']['conf.'][$key]);
+						unset($this[$table.'.']['conf.'][$key]);
 					} else if ($confArray[$table.'.']['conf.'][$key]['ignoreTCAitems']) {
-						unset($this->config[$table.'.']['conf.'][$key]['items.']);
+						unset($this[$table.'.']['conf.'][$key]['items.']);
 					}
 				}
 			}
 		}
-		$this->config = t3lib_div::array_merge_recursive_overrule($this->config,(is_array($confArray) ? $confArray : Array()));
-		$this->debugData[] = Array('TCAconfData',Array('config'=>$this->config, 'File:Line'=>__FILE__.':'.__LINE__));
-
+		if (is_array($confArray)) foreach ($confArray as $key=>$value) {
+			$this[$key] = is_array($value) ?
+				(is_array($this[$key]) ? t3lib_div::array_merge_recursive_overrule($this[$key],$value) : $value) :
+				$value;
+		}
+		$this->debugData[] = Array('TCAconfData',Array('$this'=>$this,  'File:Line'=>__FILE__.':'.__LINE__));
 		$this->references = $this->_findAllReferences();
 	}
 
@@ -464,7 +467,7 @@ class tx_sglib_config {
 	 */
 	function getCombined() {
 		$this->_fCount(__FUNCTION__);
-		return ($this->config);
+		return ((array) $this);
 	}
 
 
@@ -483,32 +486,49 @@ class tx_sglib_config {
 	 */
 
 	public function __get($nm) {
-	    if (is_array($this->config[$nm.'.'])) {
-			return ($this->config[$nm.'.']);
+	    if (is_array($this[$nm.'.'])) {
+			return ($this[$nm.'.']);
 		} else {
 			switch ($nm) {
+				case 'full':
+					t3lib_div::debug(Array('confObj->full!!!'=>1, 'File:Line'=>__FILE__.':'.__LINE__));
+					return ((array) $this );
 				case 'main':
-					return (is_array(($this->config[$this->defaultTableName.'.'])) ? ($this->config[$this->defaultTableName.'.']) : Array() );
+					return (is_array(($this[$this->defaultTableName.'.'])) ? ($this[$this->defaultTableName.'.']) : Array() );
 				case 'mainconf':
 				case 'mainConf':
-					return (is_array(($this->config[$this->defaultTableName.'.']['conf.'])) ? 
-							($this->config[$this->defaultTableName.'.']['conf.']) : Array() );
+					return (is_array(($this[$this->defaultTableName.'.']['conf.'])) ? 
+							($this[$this->defaultTableName.'.']['conf.']) : Array() );
 				case 'mainctrl':
 				case 'mainCtrl':
-					return (is_array(($this->config[$this->defaultTableName.'.']['ctrl.'])) ? 
-							($this->config[$this->defaultTableName.'.']['ctrl.']) : Array() );
-					return ($this->config[$this->defaultTableName.'.']['ctrl.']);
+					return (is_array(($this[$this->defaultTableName.'.']['ctrl.'])) ? 
+							($this[$this->defaultTableName.'.']['ctrl.']) : Array() );
+					return ($this[$this->defaultTableName.'.']['ctrl.']);
 				case 'mainsearch':
 				case 'mainSearch':
-					return (is_array(($this->config[$this->defaultTableName.'.']['search.'])) ? 
-							($this->config[$this->defaultTableName.'.']['search.']) : Array() );
+					return (is_array(($this[$this->defaultTableName.'.']['search.'])) ? 
+							($this[$this->defaultTableName.'.']['search.']) : Array() );
 				case 'maintable':
 				case 'mainTable':
 					return ($this->defaultTableName);
 				case 'references':
 					return (is_array($this->references) ? $this->references : ($this->references = $this->_findAllReferences()));
+				case 'dodebug':
+				case 'lang':
+				case 'permit':
+				case 'xajax':
+					return ( array() );
 				default:
-					return ($this->config[$nm]);
+					if (isset($this[$nm]) && !is_array($this[$nm])) {
+					return ($this[$nm]);
+				} else {
+					$error = 'variable "'.$nm.'" not defined in confObj !';
+					if (is_object($this->debugObj)) {
+						$this->debugObj->showError(0,$error,SGZLIB_FATALERROR); 
+					} else {
+						die($error);
+					}
+				}
 			}
 		}
 	}
@@ -521,30 +541,11 @@ class tx_sglib_config {
 	 * @return	string		cObject output
 	 */
 	function TSObj ($name,$conf) {
-		return ( (is_array($conf)) ? 
-			$this->cObj->cObjGetSingle($name,$conf) : 
-		    (strncmp($name,'LLL:',4)) ? $this->cObj->insertData($name) : $this->cObj->getData($name,$this->cObj->data)
-		);
-	}
-
-
-	/**
-	 * Return value from config-array
-	 *
-	 * @param	string		$vars: ArrayKeys e.g. ('conf.cat.value') or ('conf.cat.')
-	 * @return	string		Content.
-	 */
-	function get($name) {
-		$this->_fCount(__FUNCTION__);
-		$retVal = $this->config;
-		$tmp = explode('.',trim($name));
-		for ($i=0;$i<count($tmp)-1;$i++) {
-			$retVal = $retVal[$tmp[$i].'.'];
+		if (is_array($conf)) {
+			return ($this->cObj->cObjGetSingle($name,$conf));
+		} else {
+			return (strncmp($name,'LLL:',4)) ? $this->cObj->insertData($name) : $this->cObj->getData($name,$this->cObj->data);
 		}
-		if ($tmp[$i]) {
-			$retVal = $retVal[$tmp[$i]];
-		}
-		return ($retVal);
 	}
 
 

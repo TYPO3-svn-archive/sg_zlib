@@ -205,9 +205,9 @@ class txsg_base_import extends txsg_base {
 				$this->constText['imp_info_userid'] =
 					sprintf($this->constText['imp_info_userid'],$TSFE->fe_user->user['uid'],$TSFE->fe_user->user['username']);
 				$this->constText['imp_info_defaultpid'] =
-					sprintf($this->constText['imp_info_defaultpid'],$this->confObj->userStorageID);
+					sprintf($this->constText['imp_info_defaultpid'],$this->confObj['userStorageID']);
 				$this->constText['imp_info_usergroup'] =
-					sprintf($this->constText['imp_info_usergroup'],$this->confObj->defaultUsergroup);
+					sprintf($this->constText['imp_info_usergroup'],$this->confObj['defaultUsergroup']);
 
 				$m = Array();
 				for (reset($this->constText);$key=key($this->constText);next($this->constText)) {

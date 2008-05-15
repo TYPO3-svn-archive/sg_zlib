@@ -271,7 +271,7 @@ abstract class tx_sglib_viewbase  {
 			$myConf['parameter'] = $GLOBALS['TSFE']->id;
 			$tmp = $this->paramsObj->getPluginParams();
 			$defParams = Array($this->designator.'[searchmode]'=>1);
-			if (is_array($tmp['search'])) foreach ($tmp['search'] as $key=>$pValue) {
+			if ($this->confObj->mainSearch[$field.'.']['type']==3 && is_array($tmp['search'])) foreach ($tmp['search'] as $key=>$pValue) {
 				$defParams[$this->designator.'[search]['.$key.']'] = $pValue;
 			}
 			//for (reset($myItems);$key=key($myItems);next($myItems)) {

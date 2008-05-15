@@ -172,27 +172,27 @@ class tx_sglib_items {
 		}
 
 		if (intval($em)>=SGZ_SEARCH) {
-			$myItems = $this->_addItemsFromTS($myItems,$this->confObj->get($table.'.conf.'.$field.'.preItems.'));
+			$myItems = $this->_addItemsFromTS($myItems,$this->confObj[$table.'.']['conf.'][$field.'.']['preItems.']);
 		}
-		$myItems = $this->_addItemsFromTCA($myItems,$this->confObj->get($table.'.conf.'.$field.'.items.'));
-		$myItems = $this->_addItemsFromTS($myItems,$this->confObj->get($table.'.conf.'.$field.'.moreItems.'));
+		$myItems = $this->_addItemsFromTCA($myItems,$this->confObj[$table.'.']['conf.'][$field.'.']['items.']);
+		$myItems = $this->_addItemsFromTS($myItems,$this->confObj[$table.'.']['conf.'][$field.'.']['moreItems.']);
 		if (intval($em)>=SGZ_SEARCH) {
-			$myItems = $this->_addItemsFromTS($myItems,$this->confObj->get($table.'.search.'.$field.'.searchItems.'));
+			$myItems = $this->_addItemsFromTS($myItems,$this->confObj[$table.'.']['search.'][$field.'.']['searchItems.']);
 		}
-		$myItems = $this->_addItemsFromFile($myItems,$this->confObj->get($table.'.conf.'.$field.'.itemsFromFile'),$em);
+		$myItems = $this->_addItemsFromFile($myItems,$this->confObj[$table.'.']['conf.'][$field.'.']['itemsFromFile'],$em);
 
-		if (intval($em)>=SGZ_SEARCH && strlen($this->confObj->get($table.'.search.'.$field.'.removeItems'))) {
-			$tmp = t3lib_div::intExplode(',',$this->confObj->get($table.'.search.'.$field.'.removeItems'));
+		if (intval($em)>=SGZ_SEARCH && strlen($this->confObj[$table.'.']['search.'][$field.'.']['removeItems'])) {
+			$tmp = t3lib_div::intExplode(',',$this->confObj[$table.'.']['search.'][$field.'.']['removeItems']);
 			if (count($tmp)) foreach ($tmp as $key=>$value) {
 				unset ($myItems[$value.'.']);
 			}
 		}
 
 
-		$refTable = $this->confObj->get($table.'.conf.'.$field.'.foreign_table');
-		$mySubField = $this->confObj->get($table.'.search.'.$field.'.foreign.subSearch');
-		if (strlen($refTable)<2 && strcmp($this->confObj->get($table.'.conf.'.$field.'.internal_type'),'db')==0) {
-					$refTable = $this->confObj->get($table.'.conf.'.$field.'.allowed');
+		$refTable = $this->confObj[$table.'.']['conf.'][$field.'.']['foreign_table'];
+		$mySubField = $this->confObj[$table.'.']['search.'][$field.'.']['foreign.']['subSearch'];
+		if (strlen($refTable)<2 && strcmp($this->confObj[$table.'.']['conf.'][$field.'.']['internal_type'],'db')==0) {
+					$refTable = $this->confObj[$table.'.']['conf.'][$field.'.']['allowed'];
 		}
 		if (strlen($refTable)>1) {
 			$myClause = Array();
@@ -203,8 +203,8 @@ class tx_sglib_items {
 			}
 			$refTableLangOl = $TCA[$refTable]['ctrl']['lang_ol'];
 
-			$pForeign = $this->confObj->get($table.'.conf.'.$field.'.foreign.');
-			$pSForeign = $this->confObj->get($table.'.search.'.$field.'.foreign.');
+			$pForeign = $this->confObj[$table.'.']['conf.'][$field.'.']['foreign.'];
+			$pSForeign = $this->confObj[$table.'.']['search.'][$field.'.']['foreign.'];
 			if (intval($em)>=SGZ_SEARCH && is_array($pSForeign)) {
 				$pForeign = t3lib_div::array_merge_recursive_overrule($pForeign,$pSForeign);
 				if ($pForeign['where']) {
@@ -277,8 +277,8 @@ class tx_sglib_items {
 			}
 
 			$myPid = $this->confObj->getPidList();
-			if (strlen($this->confObj->get($table.'.conf.'.$field.'.foreign_pid'))) {
-				$myPid = $this->confObj->get($table.'.conf.'.$field.'.foreign_pid');
+			if (strlen($this->confObj[$table.'.']['conf.'][$field.'.']['foreign_pid'])) {
+				$myPid = $this->confObj[$table.'.']['conf.'][$field.'.']['foreign_pid'];
 			}
 			if (intval($myPid)>0 || strlen($myPid)>1) {
 				$tmp = explode(',',$myPid);
@@ -291,14 +291,14 @@ class tx_sglib_items {
 			// check if another relation
 			if (intval($em)==SGZ_TEXT) {
 			} else if (intval($em)<SGZ_SEARCH) {
-				$tmp = $this->confObj->get($table.'.conf.'.$field.'.relation.foreign');
+				$tmp = $this->confObj[$table.'.']['conf.'][$field.'.']['relation.']['foreign'];
 				if (strlen($tmp)>0) {
-					$myClause[] = $tmp.'='.intval($row[$this->confObj->get($table.'.conf.'.$field.'.relation.local')]);
+					$myClause[] = $tmp.'='.intval($row[$this->confObj[$table.'.']['conf.'][$field.'.']['relation.']['local']]);
 				}
 			} else if (intval($em)>=SGZ_SEARCH) {
-				$tmp = $this->confObj->get($table.'.search.'.$field.'.relation.foreign');
+				$tmp = $this->confObj[$table.'.']['search.'][$field.'.']['relation.']['foreign'];
 				if (strlen($tmp)>0) {
-					$myClause[] = $tmp.'='.intval($row[$this->confObj->get($table.'.search.'.$field.'.relation.local')]);
+					$myClause[] = $tmp.'='.intval($row[$this->confObj[$table.'.']['search.'][$field.'.']['relation.']['local']]);
 				}
 			}
 
@@ -376,7 +376,7 @@ class tx_sglib_items {
 						$tmpItems[$myRow['uid'].'.'] = $myRow['myDisplayName'];
 						$mySubs[$myRow['uid'].'.'] = $myRow[$mySubField];
 						$myPidVal[$myRow['uid'].'.'] = $myRow['pid'];
-						if (strcmp($this->confObj->get($table.'.conf.'.$field.'.refType'),'inside')==0) {
+						if (strcmp($this->confObj[$table.'.']['conf.'][$field.'.']['refType'],'inside')==0) {
 							$myRecord[$myRow['uid'].'.'] = $myRow;
 						}
 						$myIcons[$myRow['uid'].'.'] = $myIconField ?
@@ -389,7 +389,7 @@ class tx_sglib_items {
 			}
 		}
 		if (is_array($tmpItems)) {
-			if ($this->confObj->get($table.'.conf.'.$field.'.sortValues')>0) {
+			if ($this->confObj[$table.'.']['conf.'][$field.'.']['sortValues']>0) {
 				natcasesort($tmpItems);
 			}
 			$myItems = array_merge((array)$myItems,$tmpItems);
@@ -397,7 +397,7 @@ class tx_sglib_items {
 		$myItems = $this->_addItemsFromDB($myItems,$table,$field);
 
 		if (intval($em)>=SGZ_SEARCH) {
-			$myItems = $this->_addItemsFromTS($myItems,$this->confObj->get($table.'.conf.'.$field.'.postItems.'));
+			$myItems = $this->_addItemsFromTS($myItems,$this->confObj[$table.'.']['conf.'][$field.'.']['postItems.']);
 		}
 
 		$this->debugObj->debugVal('getitems',$field,Array('$myItems('.$field.')'=>$myItems, 'File:Line'=>__FILE__.':'.__LINE__));
@@ -410,6 +410,7 @@ class tx_sglib_items {
 		$this->debugObj->debugIf('itemlist',Array('itemListEm'=>$this->itemListEm, 'itemListSubs'=>$this->itemListSubs,
 			'itemListIcons'=>$this->itemListIcons, 'itemListRecords'=>$this->itemListRecords,
 			'itemListEm'=>$this->itemListEm, 'File:Line'=>__FILE__.':'.__LINE__));
+
 
 		return ;
 	}
@@ -424,7 +425,8 @@ class tx_sglib_items {
 	 */
 	function getItemList($table,$field,$em) {
 		$table = $table ? $table : $this->lastTable;
-		return ($this->itemListEm[$field][$em]);
+		$tmp = $this->itemListEm[$field][$em];
+		return ($tmp);
 	}
 
 	/**
@@ -578,13 +580,13 @@ class tx_sglib_items {
 		if (!is_array($myItems)) {
 			$myItems = Array();
 		}
-		if (strcmp($this->confObj->get($table.'.conf.'.$field.'.type'),'input')==0 && intval($this->confObj->get($table.'.search.'.$field.'.type'))>1 && intval($em)>=SGZ_SEARCH) {
+		if (strcmp($this->confObj[$table.'.']['conf.'][$field.'.']['type'],'input')==0 && intval($this->confObj[$table.'.']['search.'][$field.'.']['type'])>1 && intval($em)>=SGZ_SEARCH) {
 			$select = $field.', count(*) AS count';
 
-			$dW = $this->confObj->get($table.'.ctrl.defaultWhere');
+			$dW = $this->confObj[$table.'.']['ctrl.']['defaultWhere'];
 			if ($dW) {
 				$query = $this->replaceArray($this->cObj->insertData(
-					str_replace('###val###',trim($this->confObj->get($table.'.ctrl.defaultWhereVal')),
+					str_replace('###val###',trim($this->confObj[$table.'.']['ctrl.']['defaultWhereVal']),
 					   str_replace('###feuser_id###',$this->permitObj->getFeUid(),$dW))
 					) , $this->constObj->getConst());
 			} else {

@@ -125,7 +125,6 @@ class txsg_base extends tslib_pibase {
 		$this->itemsObj = $this->factoryObj->itemsObj;
 
 		$this->conf = $this->confObj->getCombined();
-
 		$this->insertDetails = '';
 		$this->insertUID = 0;
 
@@ -1535,9 +1534,9 @@ class txsg_base extends tslib_pibase {
 								}
 							}
 							$menuMarkers = Array();
-							if ($this->confObj->get('view.','setTitleTagTo')) {
+							if ($this->confObj->view['setTitleTagTo']) {
 								$TSFE->page['title'] = $this->cObj->substituteMarkerArray(
-									$this->confObj->get('view.','setTitleTagTo'), $row+Array('TITLETAG'=>$TSFE->page['title']), '###|###');
+									$this->confObj->view['setTitleTagTo'], $row+Array('TITLETAG'=>$TSFE->page['title']), '###|###');
 								$TSFE->indexedDocTitle = $TSFE->page['title'];
 							}
 							if ($this->PCA['todo']['Edit']>0) {
@@ -1672,7 +1671,7 @@ class txsg_base extends tslib_pibase {
 		$this->felib->myQuery = t3lib_div::getIndpEnv('TYPO3_REQUEST_URL');
 		$GLOBALS['TSFE']->fe_user->setKey('ses',$this->prefixId.'.lastQuery',$this->felib->myQuery);
 
-		$myConf = $this->confObj->get('latest.','list.');
+		$myConf = $this->confObj->latest['list.'];
 		$order = $myConf['order'] ? $myConf['order'] : 'tstamp DESC';
 		$limit = $myConf['limit'] ? $myConf['limit'] : '10';
 		$restrict = $myConf['restrict'];
@@ -1720,7 +1719,7 @@ class txsg_base extends tslib_pibase {
 		$this->felib->myQuery = t3lib_div::getIndpEnv('TYPO3_REQUEST_URL');
 		$GLOBALS['TSFE']->fe_user->setKey('ses',$this->prefixId.'.lastQuery',$this->felib->myQuery);
 
-		$myConf = $this->confObj->get('latest.','list.');
+		$myConf = $this->confObj->latest['list.'];
 		$order = $myConf['order'] ? $myConf['order'] : 'tstamp DESC';
 		$limit = $myConf['limit'] ? $myConf['limit'] : '10';
 
@@ -1756,7 +1755,7 @@ class txsg_base extends tslib_pibase {
 
 		$this->template = $this->templateObj->getTemplate('catMenu',$this->globalMarkers);
 
-		$this->clConf = $this->confObj->get('cat.','menu.');
+		$this->clConf = $this->confObj->cat['menu.'];
 		$catConf = $this->PCA['conf'][$this->clConf['field']];
 		if (!$this->clConf['order']) {
 			$this->clConf['order'] = 'sorting';
@@ -2581,7 +2580,7 @@ class txsg_base extends tslib_pibase {
 	 * @return	[type]		...
 	 */
 	function xajax_process_DemoData ($data) {
-		$encoding = $this->confObj->get('encoding');
+		$encoding = $this->confObj['encoding'];
 		$objResponse = new tx_xajax_response($encoding ? $encoding : 'utf-8');
 		$objResponse->setCharEncoding($encoding ? $encoding : 'utf-8');
 		$response = '--time='.time().'--';

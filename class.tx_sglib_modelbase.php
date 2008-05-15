@@ -141,12 +141,9 @@ class tx_sglib_modelbase extends tx_sglib_data {
 		$this->cObj = $factoryObj->cObj;
 
 		$this->mainTable = $this->confObj->getTCAname();
-		$this->mainConf = $this->confObj->get($this->mainTable.'.');
 		$this->cached = $cached;
 
 		$this->init();
-
-		// t3lib_div::debug(Array('$designator'=>$designator, '$cached'=>$this->cached, '$mainTable'=>$this->mainTable, '$mainConf'=>$this->mainConf, 'File:Line'=>__FILE__.':'.__LINE__));
 
 	}
 
@@ -355,17 +352,20 @@ class tx_sglib_modelbase extends tx_sglib_data {
 
 		if (!isset($this->refItems[$myName])) {
 			$data = $this->factoryObj->getData();
-			$tmp = $this->confObj->get($table.'.search.'.$field.'.preItems.');
+			$tmp = $this->confObj[$table.'.']['search.'][$field.'.']['preItems.'];
 			if ($em>=SGZLIB_SEARCHALL && is_array($tmp)) {
 				foreach ($tmp as $key=>$value) {
-					$data[intval($value['id'])] = $value['text'];
+					$xy = $this->cObj->cObjGetSingle($value['text'],$value['text.']) ;
+
+					$text = $this->confObj->TSObj($value['text'],$value['text.']);
+					$data[intval($value['id'])] = Array('title'=>$text, 'short'=>$text, 'text'=>$text, 'uid'=>$value['id']);
 				}
 				// Add PreItems
 			}
 
 		    $data = $this->readTable($this->confObj->references['table'][$field],$data,$myMode);
 
-			$tmp = $this->confObj->get($table.'.search.'.$field.'.preItems.');
+			$tmp = $this->confObj[$table.'.']['search.'][$field.'.']['postItems.'];
 			if ($em>=SGZLIB_SEARCHALL && is_array($tmp)) {
 				// Add PostItems
 				foreach ($tmp as $key=>$value) {
@@ -494,11 +494,11 @@ class tx_sglib_modelbase extends tx_sglib_data {
 		}
 		$descriptions['MAINTABLE'] = $table;
 		$descriptions['uid'] = 'UID';
-		$descriptions['hidden'] = $this->confObj->get('text.hidden');
-		$descriptions['disabled'] = $this->confObj->get('text.disabled');
+		$descriptions['hidden'] = $this->confObj->text['hidden'];
+		$descriptions['disabled'] = $this->confObj->text['disabled'];
 
-		$tmp = $this->confObj->get($table.'.conf.');
-		if (is_array($tmp)) foreach ($tmp as $key=>$fieldConf) {
+		$tmp = $this->confObj->$table;
+		if (is_array($tmp['conf.'])) foreach ($tmp['conf.'] as $key=>$fieldConf) {
 			$fieldName = substr($key,0,-1);
 			$descriptions[$fieldName] = $fieldConf['label'];
 			if (isset($fieldConf['label.'])) {
@@ -611,7 +611,7 @@ class tx_sglib_modelbase extends tx_sglib_data {
 			} else {
 				// Warning : $this->searchParams[$key] may be an array !!!
 				$doit = true;
-				$searchConfKey = $this->confObj->get($table.'.search.'.$key.'.');
+				$searchConfKey = $this->confObj[$table.'.']['search.'][$key.'.'];
 				if (is_array($this->searchParams[$key])) {
 					$tmp = Array();
 					while (list ($sKey, $val) = each ($this->searchParams[$key])) {
@@ -653,8 +653,8 @@ class tx_sglib_modelbase extends tx_sglib_data {
 	 * @return	[type]		...
 	 */
 	function getDbBuildSingleQuery ($table,$key,$text) {
-		$searchConfKey = $this->confObj->get($table.'.search.'.$key.'.');
-		$confKey = $this->confObj->get($table.'.conf.'.$key.'.');
+		$searchConfKey = $this->confObj[$table.'.']['search.'][$key.'.'];
+		$confKey = $this->confObj[$table.'.']['conf.'][$key.'.'];
 
 		$q = Array();
 		$specialMatch = false;
@@ -787,11 +787,11 @@ class tx_sglib_modelbase extends tx_sglib_data {
 		$order = '';
 
 		if (!$table) {
-			$order = ($this->confObj->get('list.listmode.'.$this->listMode.'.order'));
-			$order = $order ? $order : ($this->confObj->get('listmode.'.$this->listMode.'.order'));
+			$order = ($this->confObj->list['listmode.'][$this->listMode.'.']['order']);
+			$order = $order ? $order : ($this->confObj->listmode[$this->listMode.'.']['order']);
 			$order = $order ? $order : ($this->confObj->mainCtrl['defaultOrder']);
 		} else {
-			$ctrl = $this->confObj->get($table.'.ctrl.');
+			$ctrl = $this->confObj[$table.'.']['ctrl.'];
 			if (is_array($ctrl)) {
 				$order = (strcmp(substr($ctrl['default_sortby'],0,9),'ORDER BY ')==0) ? substr($ctrl['default_sortby'],9) : '';
 				$order = ($ctrl['sortby']) ? $ctrl['sortby'] : $order;
@@ -810,8 +810,8 @@ class tx_sglib_modelbase extends tx_sglib_data {
 	protected function createAddSelect() {
 		$addSelect = '';
 
-		$addSelect = ($this->confObj->get('list.listmode.'.$this->listMode.'.addToSelect'));
-		$addSelect = $addSelect ? $addSelect : ($this->confObj->get('listmode.'.$this->listMode.'.addToSelect'));
+		$addSelect = ($this->confObj->list['listmode.'][$this->listMode.'.']['addToSelect']);
+		$addSelect = $addSelect ? $addSelect : ($this->confObj->listmode[$this->listMode.'.']['addToSelect']);
 		$addSelect = $addSelect ? $addSelect : ($this->confObj->mainCtrl['addToSelect']);
 
 		return ($addSelect);
@@ -825,8 +825,8 @@ class tx_sglib_modelbase extends tx_sglib_data {
 	protected function createGroup() {
 		$group = '';
 
-		$group = ($this->confObj->get('list.listmode.'.$this->listMode.'.group'));
-		$group = $group ? $group : ($this->confObj->get('listmode.'.$this->listMode.'.group'));
+		$group = ($this->confObj->list['listmode.'][$this->listMode.'.']['group']);
+		$group = $group ? $group : ($this->confObj->listmode[$this->listMode.'.']['group']);
 		$group = $group ? $group : ($this->confObj->mainCtrl['defaultGroup']);
 
 		return ($group);
@@ -841,7 +841,7 @@ class tx_sglib_modelbase extends tx_sglib_data {
 	protected function getLabelField($table) {
 		$labelField = '';
 
-		$labelField = $this->confObj->get($table.'.ctrl.label');
+		$labelField = $this->confObj[$table.'.']['ctrl.']['label'];
 		$labelField = $labelField ? $labelField : 'uid';
 
 		return ($labelField);

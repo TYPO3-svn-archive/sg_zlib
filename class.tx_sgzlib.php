@@ -941,7 +941,7 @@ class tx_sgzlib {
 		require_once(t3lib_extMgm::extPath("xajax").'class.tx_xajax.php');
 		$this->xajax = t3lib_div::makeInstance("tx_xajax");
 		$this->xajax->decodeUTF8InputOn();
-		$encoding = $this->confObj->encoding;
+		$encoding = $this->confObj['encoding'];
 		$this->xajax->setCharEncoding($encoding ? $encoding : 'utf-8');
 		$this->xajax->setWrapperPrefix($this->xajaxPrefix);
 		$this->xajax->statusMessagesOn();

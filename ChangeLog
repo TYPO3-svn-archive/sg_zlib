@@ -1,4 +1,6 @@
 
+0.1.640	configObj is now an IteratorObject
+
 0.1.639	Import extended by function importPreProcessSummary(); 
 	Now needs at least sg_div version 0.1.539
 
