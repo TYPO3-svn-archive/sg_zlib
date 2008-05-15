@@ -336,7 +336,7 @@ class tx_sglib_permit {
 			for ($i=0; $i<count($chkGroup); $i++) {
 				if (intval($chkGroup[$i])>0) {
 					//if (t3lib_div::inList($this->feUser['user  group'],trim($chkGroup[$i]))) { $retcode = TRUE; }
-					if ( $this->$this->feGroups[intval($chkGroup[$i])]>0  ) { $retcode = TRUE; }
+					if ( $this->feGroups[intval($chkGroup[$i])]>0  ) { $retcode = TRUE; }
 				} else if (strcmp(trim($chkGroup[$i]),'0')!=0) {
 					// check for groupname
 					if (  !isset($this->idOfFeGroupName[ trim($chkGroup[$i]) ])  ) {
@@ -872,7 +872,7 @@ class tx_sglib_permit {
 			}
 		}
 
-		for (reset($this->idOfFeGroupName);$key=key($this->idOfFeGroupName);next($this->idOfFeGroupName)) {
+		if (is_array($this->idOfFeGroupName)) for (reset($this->idOfFeGroupName);$key=key($this->idOfFeGroupName);next($this->idOfFeGroupName)) {
 			$this->groupsIdFe[$this->idOfFeGroupName[$key]] = $key;
 		}
 
