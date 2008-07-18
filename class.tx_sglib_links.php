@@ -57,7 +57,8 @@ class tx_sglib_links {
 	var $noCacheBoolean = false;        // don't make a cHash
 	var $noHashBoolean = false;         // add a no_cache=1 parameter
 	var $overruledParameters = array(); // parameters overruled by $parameters
-	var $parameters = array();		      // parameters of the link
+	var $parameters = array();		    // parameters of the link
+	var $globalParameters = array();    // global parameters of the link (not prefixed)
 	var $designatorString = '';         // parameter array name (prefixId) as controller namespace
 	var $anchorString = '';             // section anchor as url target
 	var $targetString = '';             // tags target attribute
@@ -69,13 +70,13 @@ class tx_sglib_links {
 
 	private function __clone() {}
 
-	protected static function getInstance($designator, tx_sglib_factory $factoryObj) {
+	public static function getInstance($designator, tx_sglib_factory $factoryObj) {
 		if (!isset(self::$instance)) {
 			self::$instance = new tx_sglib_links();
 			self::$instance->factoryObj = $factoryObj;
 			self::$instance->cObject = t3lib_div::makeInstance('tslib_cObj');
-			self::$instance->init($designator);
 		}
+		self::$instance->init($designator);
 		return (self::$instance);
 	}
 
@@ -85,7 +86,7 @@ class tx_sglib_links {
 	 * @param	[type]		$designator
 	 * @return	[type]		...
 	 */
-	protected function init($designator, $destination='') {
+	public function init($designator='', $destination='') {
 		$this->designatorString = $designator;
 		$this->tagAttributes = array();
 		$this->classString = '';
@@ -97,6 +98,7 @@ class tx_sglib_links {
 		$this->noHashBoolean = false;
 		$this->overruledParameters = array();
 		$this->parameters = array();
+		$this->globalParameters = array();
 		$this->anchorString = '';
 		$this->targetString = '';
 		$this->externalTargetString = '_blank';
@@ -257,6 +259,27 @@ class tx_sglib_links {
 	}
 
 	/**
+	 * Set array of new parameters to add to the link url
+	 *
+	 * The parameters will create a common array with the name $this->designatorString.
+	 * <samp>Example: &tx_example[parameterName]=parameterValue</samp>
+	 * tx_example is the designator, parameterName is the key,
+	 * pararmeterValue is the value of one array element.
+	 *
+	 * This parameters overrule parameters in $this->baseParameters.
+	 *
+	 * @param	mixed		parameters
+	 * @return	object		self
+	 */
+	function globalParameters($globalParameters = array()) {
+		if(is_object($globalParameters)) {
+			$globalParameters = $globalParameters->getArrayCopy();
+		}
+		$this->globalParameters = $globalParameters;
+		return $this;
+	}
+
+	/**
 	 * Set the attributes of the tag
 	 *
 	 * This is a general approach to set tag attributes by an array hash.
@@ -369,6 +392,11 @@ class tx_sglib_links {
 		$parameters
 			= t3lib_div::array_merge_recursive_overrule($this->overruledParameters,
 					$this->parameters);
+		foreach((array) $this->globalParameters as $key => $value) {
+			if(!is_array($value)) {   // TODO handle arrays
+				$conf['additionalParams'] .= '&' . rawurlencode($key) . '=' . rawurlencode($value);
+			}
+		}
 		foreach((array) $parameters as $key => $value) {
 			if(!is_array($value)) {   // TODO handle arrays
 				if($this->designatorString) {

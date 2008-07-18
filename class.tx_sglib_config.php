@@ -32,7 +32,7 @@
  *  134:     public function setParentObject($parentCObj)
  *  151:     public function setPluginConfig($pluginSubMode, $pluginMode, $cmdMode, $cached)
  *  165:     protected function _initRecursive($recursive)
- *  181:     public function _findAllReferences()
+ *  181:     protected function _findAllReferences()
  *  214:     protected function getLabelField($table)
  *  231:     private function _fCount ($name=NULL)
  *  254:     function __destruct()
@@ -84,8 +84,10 @@ class tx_sglib_config extends ArrayIterator {
 	private $defaultDesignator;
 	private $cObj;
 
+	public $test= Array();
+
 	protected $pid_list,$pid;
-	protected $references;
+	protected $references = Array();
 	protected $addedJsFunctions;
 
 	// protected function __construct() {}
@@ -179,31 +181,76 @@ class tx_sglib_config extends ArrayIterator {
 	 *
 	 * @return	[type]		...
 	 */
-	public function _findAllReferences() {
-		$references = Array('table'=>array(), 'field'=>array(), 'asName'=>array(), 'join'=>array(), 'joinMain'=>array(), 'label'=>array());
-		foreach ($this->mainConf as $key=>$fieldConf) {
-			$fieldName = substr($key,0,-1);
-			$table = '';
-			if ($fieldConf['allowed'] && strcmp($fieldConf['internal_type'],'db')==0) {
-				$table = $fieldConf['allowed'];
-			} else if ($fieldConf['foreign_table']) {
-				$table = $fieldConf['foreign_table'];
+	protected function _findAllReferences() {
+		foreach ($this as $key=>$value) {
+			if (strcmp($value,'TABLEDEF')==0) {
+				if (!is_array($this->references[$key])) {
+					$this->references[$key] = $this->_findReferencesForTable($key);
+				}
 			}
-			if ($table) {
-				$references['table'][$fieldName] = $table;
-				$references['field'][$table] = $fieldName;
-				$references['asName'][$table] = $fieldName.'#ref';
-				$references['join'][$table] = ' LEFT JOIN '.$table.' ON '.$this->mainTable.'.'.$fieldName.'='.$table.'.uid  ';
-				$references['joinMain'][$table] = ' LEFT JOIN '.$this->mainTable.' ON '.$this->mainTable.'.'.$fieldName.'='.$table.'.uid  ';
-				$references['label'][$table] = $this->getLabelField($table);
+		}
+	}
+
+	/**
+	 * [Describe function...]
+	 *
+	 * @return	[type]		...
+	 */
+	protected function _findReferencesForTable($table) {
+		if (!$table) {
+			$table = $table ? $table : $this->defaultTableName;
+		}
+		$references = Array('table'=>array(), 'field'=>array(), 'asName'=>array(), 'join'=>array(), 'joinMain'=>array(), 'label'=>array());
+		$conf = $this[$table.'.']['conf.'];
+		if (is_array($conf)) foreach ($conf as $key=>$fieldConf) {
+			$fieldName = substr($key,0,-1);
+			$refTable = '';
+			if ($fieldConf['allowed'] && strcmp($fieldConf['internal_type'],'db')==0) {
+				$refTable = $fieldConf['allowed'];
+			} else if ($fieldConf['foreign_table']) {
+				$refTable = $fieldConf['foreign_table'];
+			}
+			if ($refTable) {
+				if (!is_array($this[$refTable.'.'])) {
+					$this->setTCAdata($refTable);
+					$this[$refTable] = 'TABLEDEF';
+					$this[$refTable.'.'] = $this->_configTCA($refTable);
+				}
+				$references['table'][$fieldName] = $refTable;
+				$references['field'][$refTable] = $fieldName;
+				$references['asName'][$refTable] = $fieldName.'#ref';
+				$references['join'][$refTable] = ' LEFT JOIN '.$refTable.' ON '.$this->mainTable.'.'.$fieldName.'='.$refTable.'.uid  ';
+				$references['joinMain'][$refTable] = ' LEFT JOIN '.$this->mainTable.' ON '.$this->mainTable.'.'.$fieldName.'='.$refTable.'.uid  ';
+				$references['label'][$refTable] = $this->getLabelField($refTable);
 			}
 
 			if (strcmp($fieldConf['allowed'],$field[0])==0 || strcmp($fieldConf['foreign_table'],$field[0])==0) {
 				$retVal = ' LEFT JOIN '.$field[0].' ON '.$this->mainTable.'.'.$fieldName.'='.$field[0].'.uid  ';
 			}
 		}
-		//t3lib_div::debug(Array('$references'=>$references, 'File:Line'=>__FILE__.':'.__LINE__));
-		return ($references);
+		// t3lib_div::debug(Array('findReferencesFor Table "'.$table.'"'=>$references, 'File:Line'=>__FILE__.':'.__LINE__));
+		return (count($references['table']) ? $references : Array());
+	}
+
+	public function getReferences ($table, $mode='',$key='') {
+
+//		if (!$this->test[$table]) {
+//			$this->test[$table] = 1;
+//			t3lib_div::debug(Array('$table'=>$table, 'File:Line'=>__FILE__.':'.__LINE__));
+//		}
+//		if (!is_array($this[$table.'.'])) {
+//			t3lib_div::debug(Array('tableDef missing:'=>$table, $table=>$this[$table], 'File:Line'=>__FILE__.':'.__LINE__));
+//		}
+		if (!is_array($this->references[$table])) {
+			$this->references[$table] = $this->_findReferencesForTable($table);
+		}
+		if ($mode && $key) {
+			return ($this->references[$table][$mode][$key]);
+		} else if ($mode) {
+			return ($this->references[$table][$mode]);
+		} else {
+			return ($this->references[$table]);
+		}
 	}
 
 	/**
@@ -215,7 +262,7 @@ class tx_sglib_config extends ArrayIterator {
 	protected function getLabelField($table) {
 		$labelField = '';
 
-		$labelField = $this->mainCtrl['label'];
+		$labelField = $this[$table.'.']['ctrl.']['label'];
 		$labelField = $labelField ? $labelField : 'uid';
 
 		return ($labelField);
@@ -479,7 +526,7 @@ class tx_sglib_config extends ArrayIterator {
 
 		$confArray = $this->getConfData();
 		foreach ($this as $table=>$config) if (strcmp($config,'TABLEDEF')==0) {
-			// t3lib_div::debug(Array('check for [ignoreTCAsettings] in '=>$table, 'File:Line'=>__FILE__.':'.__LINE__));
+			//state?// t3lib_div::debug(Array('check for [ignoreTCAsettings] in '=>$table, 'File:Line'=>__FILE__.':'.__LINE__));
 			if ($confArray[$table.'.']['ignoreTCAsettings']) {
 				unset($this[$table.'.']);
 			} else if ($confArray[$table.'.']['ctrl.']['ignoreTCAsettings']) {
@@ -508,7 +555,7 @@ class tx_sglib_config extends ArrayIterator {
 				$value;
 		}
 		$this->debugData[] = Array('TCAconfData',Array('$this'=>$this,  'File:Line'=>__FILE__.':'.__LINE__));
-		$this->references = $this->_findAllReferences();
+		$this->_findAllReferences();
 	}
 
 	/**
@@ -562,7 +609,7 @@ class tx_sglib_config extends ArrayIterator {
 				case 'mainTable':
 					return ($this->defaultTableName);
 				case 'references':
-					return (is_array($this->references) ? $this->references : ($this->references = $this->_findAllReferences()));
+					return ($this->getReferences($this->mainTable));
 				case 'dodebug':
 				case 'templates':
 				case 'image':
@@ -777,6 +824,35 @@ class tx_sglib_config extends ArrayIterator {
 	}
 
 
+	/**
+	 * [Describe function...]
+	 *
+	 * @param	[type]		$table: ...
+	 * @return	[type]		...
+	 */
+	public function getDescriptions($table='') {
+		$descriptions = Array();
+		if (!$table) {
+			$table = $this->mainTable;
+		}
+		$descriptions['MAINTABLE'] = $table;
+		$descriptions['uid'] = 'UID';
+		$descriptions['hidden'] = $this->text['hidden'];
+		$descriptions['disabled'] = $this->text['disabled'];
+
+		$tmp = $this->$table;
+		if (is_array($tmp['conf.'])) foreach ($tmp['conf.'] as $key=>$fieldConf) {
+			$fieldName = substr($key,0,-1);
+			$descriptions[$fieldName] = $fieldConf['label'];
+			if (isset($fieldConf['label.'])) {
+				$descriptions[$fieldName] = array('name'=>$fieldConf['label'],'conf'=>$fieldConf['label.']);
+			} else {
+				$descriptions[$fieldName] = $fieldConf['label'];
+			}
+		}
+
+		return ($descriptions);
+	}
 
 
 

@@ -232,6 +232,7 @@ class tx_sglib_template {
 	 * @return	[type]		...
 	 */
 	function getSubpart ($tmpl,$name,$default='') {
+		$name = strtoupper($name);
 		$this->_fCount(__FUNCTION__);
 		$retcode = '';
 		$n = @substr_count($tmpl,$name);

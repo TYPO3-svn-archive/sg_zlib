@@ -44,6 +44,10 @@ if(TYPO3_MODE == 'FE') {
 	require_once(t3lib_extMgm::extPath('sg_zlib').'class.tx_sglib_items.php');
 	require_once(t3lib_extMgm::extPath('sg_zlib').'class.tx_sglib_markers.php');
 	require_once(t3lib_extMgm::extPath('sg_zlib').'class.tx_sgzlib.php');
+
+	require_once(t3lib_extMgm::extPath('sg_zlib').'classes/model/class.tx_sgzlib_tcaObject.php');
+	require_once(t3lib_extMgm::extPath('sg_zlib').'classes/model/class.tx_sgzlib_tcaObjectAccessor.php');
+	require_once(t3lib_extMgm::extPath('sg_zlib').'classes/model/class.tx_sgzlib_tcaObjectCollection.php');
 }
 
 ?>

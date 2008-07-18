@@ -1,3 +1,5 @@
+0.2.100	Changed: Reorder of classes
+	Fixed: read missing TCA data
 
 0.1.660	Modified: gmdate instead of strftime
 

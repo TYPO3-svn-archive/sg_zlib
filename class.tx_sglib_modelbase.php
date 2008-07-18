@@ -906,7 +906,6 @@ class tx_sglib_modelbase extends tx_sglib_data {
 				$order = ($ctrl['defaultOrder']) ? $ctrl['defaultOrder'] : $order;
 			}
 		}
-
 		return ($order);
 	}
 
@@ -972,7 +971,7 @@ class tx_sglib_modelbase extends tx_sglib_data {
 		$order = Array();
 		if ($q['where']) {
 			$tmp = t3lib_div::trimExplode(',',$q['order']);
-			foreach ($tmp as $orderPart) {
+			foreach ($tmp as $orderPart) if (trim($orderPart)) {
 				if (strcmp(substr($orderPart,0,1),'(')==0) {
 					$order[] = $orderPart;
 				} else {

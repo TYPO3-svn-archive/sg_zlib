@@ -28,8 +28,8 @@
  *
  *
  *   50: class tx_sglib_items
- *   89:     private function init(tx_sglib_factory $factoryObj)
- *  119:     private function _fCount ($name=NULL)
+ *   89:     protected function init(tx_sglib_factory $factoryObj)
+ *  119:     protected function _fCount ($name=NULL)
  *  142:     function __destruct()
  *  155:     function prepareItems($table,$field,$em,$row)
  *  426:     function getItemList($table,$field,$em)
@@ -37,10 +37,10 @@
  *  457:     function getItemRecord($table,$field,$index=NULL)
  *  474:     function getItemSub($table,$field,$index=NULL)
  *  492:     function getItemCountAdd($table,$field,$index=NULL,$add=0)
- *  509:     private function _addItemsFromTS($myItems,$itemsTS)
- *  530:     private function _addItemsFromTCA($myItems,$itemsTCA)
- *  552:     private function _addItemsFromFile($myItems,$itemsFileName,$em)
- *  579:     private function _addItemsFromDB($myItems,$table,$field)
+ *  509:     protected function _addItemsFromTS($myItems,$itemsTS)
+ *  530:     protected function _addItemsFromTCA($myItems,$itemsTCA)
+ *  552:     protected function _addItemsFromFile($myItems,$itemsFileName,$em)
+ *  579:     protected function _addItemsFromDB($myItems,$table,$field)
  *  627:     function getItemText($mode,$lnr,$field,$myItems,$key,$PCA=Array(),$key1='',$key2='textFormat',$key3='cntWrap')
  *
  * TOTAL FUNCTIONS: 14
@@ -48,25 +48,27 @@
  *
  */
 class tx_sglib_items {
-	private static $instance = Array();
+	protected static $instance = Array();
 
-	private $factoryObj = NULL;
-	private $confObj;
-	private $debugObj;
-	private $cObj;
-	private $constObj;
-	private $permitObj;
-	private $defaultDesignator;
-	private $emTable=Array();
-	private $lastEm = 0;
-	private $lastTable = '';
+	protected $factoryObj = NULL;
+	protected $confObj;
+	protected $debugObj;
+	protected $cObj;
+	protected $constObj;
+	protected $permitObj;
+	protected $defaultDesignator;
+	protected $emTable=Array();
+	protected $lastEm = 0;
+	protected $lastTable = '';
 
-	private $itemListEm=Array();
-	private $itemListIcons;
-	private $itemListPids;
-	private $itemListSubs;
-	private $itemListRecords;
-	private $itemListCounts;
+	protected $itemListEm=Array();
+	protected $itemListIcons;
+	protected $itemListPids;
+	protected $itemListSubs;
+	protected $itemListRecords;
+	protected $itemListCounts;
+
+	protected $referenceObjects = Array();
 
 	protected function __construct() {}
 
@@ -86,7 +88,7 @@ class tx_sglib_items {
 	 * @param	[type]		$tx_sglib_config $confObj, tx_sglib_debug $debugObj, tx_sglib_const $constObj, tx_sglib_lang $langObj, tx_sglib_permit $permitObj: ...
 	 * @return	[type]		...
 	 */
-	private function init(tx_sglib_factory $factoryObj) {
+	protected function init(tx_sglib_factory $factoryObj) {
 		$this->_fCount(__FUNCTION__);
 		$this->factoryObj = $factoryObj;
 		$this->confObj = $factoryObj->confObj;
@@ -116,7 +118,7 @@ class tx_sglib_items {
 	 * @param	[type]		$name: ...
 	 * @return	[type]		...
 	 */
-	private function _fCount ($name=NULL) {
+	protected function _fCount ($name=NULL) {
 		static $callCount = NULL;
 		if (!isset($callCount)) {
 			$callCount = Array();
@@ -506,7 +508,7 @@ class tx_sglib_items {
 	 * @param	[type]		$itemsTS: ...
 	 * @return	[type]		...
 	 */
-	private function _addItemsFromTS($myItems,$itemsTS) {
+	protected function _addItemsFromTS($myItems,$itemsTS) {
 		if (!is_array($myItems)) {
 			$myItems = Array();
 		}
@@ -527,7 +529,7 @@ class tx_sglib_items {
 	 * @param	[type]		$itemsTCA: ...
 	 * @return	[type]		...
 	 */
-	private function _addItemsFromTCA($myItems,$itemsTCA) {
+	protected function _addItemsFromTCA($myItems,$itemsTCA) {
 		if (!is_array($myItems)) {
 			$myItems = Array();
 		}
@@ -549,7 +551,7 @@ class tx_sglib_items {
 	 * @param	[type]		$em: ...
 	 * @return	[type]		...
 	 */
-	private function _addItemsFromFile($myItems,$itemsFileName,$em) {
+	protected function _addItemsFromFile($myItems,$itemsFileName,$em) {
 		if (!is_array($myItems)) {
 			$myItems = Array();
 		}
@@ -576,7 +578,7 @@ class tx_sglib_items {
 	 * @param	[type]		$field: ...
 	 * @return	[type]		...
 	 */
-	private function _addItemsFromDB($myItems,$table,$field) {
+	protected function _addItemsFromDB($myItems,$table,$field) {
 		if (!is_array($myItems)) {
 			$myItems = Array();
 		}
@@ -646,6 +648,41 @@ class tx_sglib_items {
 		}
 
 		return ($text);
+	}
+
+
+
+
+	public function getReferenceValue($value, $fieldName, $table) {
+		$returnValue = $value;
+		// referenceObjects
+		$refTable = $this->confObj->getReferences($table,'table',$fieldName);
+		if (is_null($this->referenceObjects[$refTable])) {
+			$refCollection = new tx_sgzlib_tcaObjectCollection ($refTable);
+			$refCollection->loadItemsByUid();
+			$refTableObject = $this->referenceObjects[$refTable] = $refCollection;
+			// t3lib_div::debug(Array('$refCollection'=>$this->referenceObjects, 'File:Line'=>__FILE__.':'.__LINE__));
+		}
+
+
+		if (!is_null($this->referenceObjects[$refTable]) && intval($value)) {
+			$labelField = $this->confObj->getReferences($table,'label',$refTable);
+			$returnValue = $this->referenceObjects[$refTable]->offsetGet(intval($value))->$labelField;
+			$data = $this->referenceObjects[$refTable]->offsetGet(intval($value))->_values;
+			if (!$returnValue) {
+				//t3lib_div::debug(Array('$value'=>$value, '$labelField'=>$labelField, '$refTable'=>$refTable, 'File:Line'=>__FILE__.':'.__LINE__));
+			}
+			if ($fieldName=="state") {
+				//state?// t3lib_div::debug(Array('refs/'.$fieldName=>$this->confObj->getReferences($table), '$labelField'=>$labelField, '$value'=>$value, '$returnValue'=>$returnValue, 'File:Line'=>__FILE__.':'.__LINE__));
+			}
+		} else if (strlen($value)>0 && strcmp($value,'0')) {
+			$returnValue = 'REF('.$refTable.')='.$value.'!!!';
+		} else {
+			$returnValue = '';
+		}
+		//$test = $this->confObj->getReferences($table);
+		//t3lib_div::debug(Array('$test'=>$test, 'File:Line'=>__FILE__.':'.__LINE__));
+		return ($returnValue);
 	}
 
 }

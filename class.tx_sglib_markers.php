@@ -48,6 +48,7 @@ class tx_sglib_markers {
 	protected $confObj;
 	protected $debugObj;
 	protected $langObj;
+	protected $itemsObj;
 	protected $defaultDesignator;
 	protected $model;
 
@@ -81,6 +82,7 @@ class tx_sglib_markers {
 		$this->defaultDesignator = $this->confObj->getDesignator();
 		$this->debugObj = $factoryObj->debugObj;
 		$this->langObj = $factoryObj->langObj;
+		$this->itemsObj = $factoryObj->itemsObj;
 		$this->mainTable = $this->confObj->getTCAname();
 	}
 
@@ -145,8 +147,8 @@ class tx_sglib_markers {
 	 * @param	[type]		$val: ...
 	 * @return	[type]		...
 	 */
-    public function __set($nm, $val)
-    {
+	public function __set($nm, $val)
+	{
 		switch ($nm) {
 			case 'model':
 				$this->model = $val;
@@ -156,7 +158,7 @@ class tx_sglib_markers {
 				$this->debugObj->showError(0,$error,0,'','',1);
 				break;
 		}
-    }
+	}
 
 	/**
 	 * [Describe function...]
@@ -166,7 +168,7 @@ class tx_sglib_markers {
 	 * @return	[type]		...
 	 */
 	public function getDescriptions($table='', $markers=array()) {
-		$tmp = $this->model->getDescriptions($table);
+		$tmp = $this->confObj->getDescriptions($table);
 		if (is_array($tmp) && count($tmp)) foreach ($tmp as $key=>$value) {
 			if (is_array($value)) {
 				$markers['###DESCR_'.strtoupper($key).'###'] = $this->confObj->TSobj($value['name'],$value['conf']);
@@ -240,6 +242,73 @@ class tx_sglib_markers {
 		return ($markers);
 	}
 
+	/**
+	 * [Describe function...]
+	 *
+	 * @param	[type]		$record: ...
+	 * @param	[type]		$table: ...
+	 * @param	[type]		$markers: ...
+	 * @return	[type]		...
+	 */
+	public function getMarkers($record, $table='', $markers=array()) {
+		$table = $table ? $table : $this->mainTable;
+
+		if (is_array($record)) {
+			foreach ($record as $fieldName=>$value) {
+				$this->addMarkersForField($value, $fieldName, $table, $markers);
+			}
+		} else {
+		}
+
+		return ($markers);
+	}
+
+	/**
+	 * Adds markers for one data-field
+	 * 
+	 * For every field, several markers are created:
+	 * DATA_xxx contais the original Data from the Model
+	 * TEXT_xxx contains a textual view of the data (means: references replaced to text)
+	 * FORM_xxx contains the form-field for entering Data                    @TODO
+	 * AUTO_xxx contains Text/Form, depending on the actual Mode of the view @TODO
+	 * 
+	 *
+	 * @param	[type]		$fieldName: ...
+	 * @param	[type]		$value: ...
+	 * @param	[type]		$markers: ...
+	 * @return	[type]		...
+	 */
+	public function addMarkersForField($value, $fieldName, $table, &$markers) {
+		$markers['###DATA_'.strtoupper($fieldName).'###'] = $textValue = $value;
+		if ($this->confObj->getReferences($table,'table',$fieldName)) {
+			$textValue = $this->itemsObj->getReferenceValue($value, $fieldName, $table); //'REF:'.$value;
+		}
+		$textValue = $this->processValueType ($textValue, $fieldName, $table);
+		$markers['###TEXT_'.strtoupper($fieldName).'###'] = $textValue;
+	}
+
+	public function processValueType($value, $fieldName, $table) {
+		$textValue = $value;
+
+		$type =  strtolower($this->confObj[$table.'.']['conf.'][$fieldName.'.']['type']);
+//		if ($em>=SGZ_SEARCH && isset($PCA['search'][$field]['formtype'])) {
+//			$myType = strtolower($PCA['search'][$field]['formtype']);
+//		}
+		
+		switch($type)	{
+			case 'date':
+				$textValue = $value ? date('d.m.Y',$value) : '';
+					break;
+			default:
+				// $item = '[#ERROR#--getSingleField_SW('.$table.'.'.$field.', Type="'.$myType.'")=UNKNOWN--#]';
+				// $item .= t3lib_div::view_array(Array('File:Line='=>__FILE__.':'.__LINE__ ,'Backtrace='=>debug_backtrace()));
+				$textValue = $value;
+			break;
+		}
+
+
+		return ($textValue);
+	}
 }
 
 

@@ -877,7 +877,7 @@ class txsg_base extends tslib_pibase {
 						$xm = $this->getEditButtons (0,$row,$this->PCA,$rowMarkers['###TEXT_LISTTITLE###']);
 						if (is_array($xm)) { $rowMarkers = array_merge($rowMarkers,$xm); }
 
-						if (!$this->permitObj->allowed('admin') && $row[$this->PCA['ctrl']['crfeuser_id']]!=$this->felib->user['uid'] && intval($row[$this->PCA['ctrl']['crfeuser_id']]) ) {
+						if (!$this->permitObj->allowed('admin') && $row[$this->PCA['ctrl']['crfeuser_id']]!=$this->permitObj->feUser['uid'] && intval($row[$this->PCA['ctrl']['crfeuser_id']]) ) {
 								$this->myListEntry = $this->listEntryNO;
 						} else {
 								$this->myListEntry = $this->listEntryOwn;
@@ -1277,8 +1277,8 @@ class txsg_base extends tslib_pibase {
 					$pre = Array('###datetime###'=>date('d.m.Y H:i',time()), '###date###'=>date('d.m.Y',time()),
 						'###date7###'=>date('d.m.Y',time()+604800), '###date14###'=>date('d.m.Y',time()+1209600),
 						'###date1m###'=>date('d.m.Y',time()+2592000), '###date2m###'=>date('d.m.Y',time()+5184000));
-					for (reset($this->felib->user);$key=key($this->felib->user);next($this->felib->user)) {
-						$pre['###feuser_'.$key.'###'] = $this->felib->user[$key];
+					for (reset($this->permitObj->feUser);$key=key($this->permitObj->feUser);next($this->permitObj->feUser)) {
+						$pre['###feuser_'.$key.'###'] = $this->permitObj->feUser[$key];
 					}
 					if (count($this->PCA['conf'])>0) {
 						for(reset($this->PCA['conf']);$key=key($this->PCA['conf']);next($this->PCA['conf'])) {
@@ -1510,7 +1510,7 @@ class txsg_base extends tslib_pibase {
 								($this->cObj->substituteMarkerArray($this->tmplSingle, $this->rowHeaders), $this->markers);
 						} else {
 							if (!$this->permitObj->allowed('admin') &&
-									$row[$this->PCA['ctrl']['crfeuser_id']]!=$this->felib->user['uid'] &&
+									$row[$this->PCA['ctrl']['crfeuser_id']]!=$this->permitObj->feUser['uid'] &&
 									intval($row[$this->PCA['ctrl']['crfeuser_id']]) ) {
 								$this->template = $this->felib->lCObj->substituteSubpart ($this->template,'###OWNERONLY###','');
 								$this->rowHeaders['<!-- ###NONOWNERONLY### -->'] = '';

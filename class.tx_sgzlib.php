@@ -3110,18 +3110,18 @@ class tx_sgzlib {
 			} else if (strcmp($key,$PCA['ctrl']['enablecolumns']['disabled'])==0) {
 			} else if (strncmp($key,'restrict_',9)==0) {
 				if (strlen($piVarSearch[$key])>0) {
-					$q['restrict'] = $dbName.'.'.substr($key,9).' IN ('.$piVarSearch[$key].')';
+					$q['restrict'] = $dbName.'.'.substr($key,9).' IN ('.$GLOBALS['TYPO3_DB']->quoteStr($piVarSearch[$key],$dbName).')';
 				} else {
 					$q['restrict'] = '1=2 ';
 				}
 			} else if (strcmp($key,'idlist')==0) {
 				if (strlen($piVarSearch[$key])>0) {
-					$q['idlist'] = $dbName.'.uid IN ('.$piVarSearch[$key].')';
+					$q['idlist'] = $dbName.'.uid IN ('.$GLOBALS['TYPO3_DB']->quoteStr($piVarSearch[$key],$dbName).')';
 				} else {
 					$q['idlist'] = '1=2 ';
 				}
 			} else if (strcmp($key,'abc')==0) {
-				$myRange = $piVarSearch[$key];
+				$myRange = $GLOBALS['TYPO3_DB']->quoteStr($piVarSearch[$key],$dbName);
 				$myTextRange = '';
 				if (strcmp(subStr($myRange,0,1),"0")==0) {
 					$myTextRange = '0-9';

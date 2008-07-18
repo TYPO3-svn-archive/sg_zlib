@@ -89,6 +89,7 @@ class txsg_cached_base extends tslib_pibase {
 		$this->debugObj = $this->factoryObj->debugObj;
 		$this->constObj = $this->factoryObj->constObj;
 		$this->paramsObj = $this->factoryObj->paramsObj;
+		$this->templateObj = $this->factoryObj->templateObj;
 
 		$this->conf = $this->confObj->getCombined();
 		$this->myPage = $this->pi_getPageLink($TSFE->id,'','');
