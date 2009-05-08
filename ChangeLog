@@ -1,5 +1,5 @@
 
-0.2.791	Changed: give some hints, if access-denied in eid_downloader.
+0.2.791	Changed: give some hints, if access-denied in eid_downloader. 
 
 0.2.790	confObj->get() now also finds sub-arrays
 	templateObj new function getMarkersWithWrap
