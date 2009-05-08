@@ -19,6 +19,8 @@
             <label index="imp_warn_incomplete">Data-Line was not complete - fixed</label>
             <label index="imp_error_separator">ERROR: maybe wron Separator ?</label>
             <label index="imp_warn_sep_info">For your information: This is the start of your import-file:</label>
+            <label index="imp_encodingtext">If file ist not encoded as "%s", please select CharSet: </label>
+            <label index="imp_dontrecode">[Don't recode]</label>
             <label index="imp_descr_info">Info</label>
             <label index="imp_descr_input">Input</label>
             <label index="imp_descr_selfile">Select File</label>
@@ -29,6 +31,7 @@
             <label index="imp_descr_filesize">Filesize</label>
             <label index="imp_descr_filetemp">Temp. Filename</label>
             <label index="imp_descr_filelines">Lines of Data</label>
+            <label index="imp_descr_mediazip">Zip-File with Media</label>
             <label index="imp_descr_fixedvalues">Values with fixes settings (same for all records)</label>
             <label index="imp_descr_replacefields">Overview about records that will be replaced</label>
             <label index="imp_descr_replacecount">Records to be replaced</label>
@@ -65,6 +68,8 @@
             <label index="imp_warn_containsctrl">%s contains Ctrl-Chars</label>
             <label index="imp_warn_containsx">%s contains</label>
             <label index="imp_warn_containssep">%s  contained Listseparator</label>
+            <label index="imp_warn_mediamissing">Mediafile missing</label>
+            <label index="imp_error_mediamissing">ERROR: Mediafile missing</label>
             <label index="imp_error_mailheader">ERROR-Messages (Overview):</label>
             <label index="imp_error_details">ERROR-Messages Details:</label>
             <label index="imp_error_isempty">%s is empty</label>
@@ -76,13 +81,16 @@
             <label index="imp_error_dberror">Database-Error (Entry more than once in DB)</label>
             <label index="imp_error_writeerror_sql">Cannot write to sql-source-file</label>
             <label index="imp_error_writeerror_fname">Error: cannot write &quot;%s&quot;</label>
+            <label index="imp_error_exceedquota">Error: quota exceeded</label>
             <label index="imp_log_errorloglink">Show &lt;a %s&gt;Logfile with errors&lt;/a&gt; in new Window for printing.</label>
-            <label index="imp_log_result_ok">&lt;b&gt;OK - %d of %d Lines Saved&lt;/b&gt;</label>
+            <label index="imp_log_result_ok">&lt;b&gt;OK - %d of %d Lines processed&lt;/b&gt;</label>
             <label index="imp_log_result_deleted">&lt;b&gt;OK - %d old records have been deleted&lt;/b&gt;</label>
-            <label index="imp_log_result_error">ERROR - %d of %d Lines Saved</label>
+            <label index="imp_log_result_error">ERROR - %d of %d Lines processed</label>
+            <label index="imp_log_details">%d %s-Commands</label>
             <label index="imp_finally_import">Please continue to finally import %d records.</label>
             <label index="imp_finally_deletewarning_own">WARNING: Before import, all %d existing Records of user %d will be deleted.</label>
             <label index="imp_finally_deletewarning_all">WARNING: Before import, all %d existing Records be deleted.</label>
+            <label index="imp_finally_deletequota">WARNING: Before import, all %d Records be deleted due to quota limitation.</label>
         </languageKey>
         <languageKey index="de" type="array">
             <label index="import">Import</label>
@@ -95,6 +103,8 @@
             <label index="imp_warn_incomplete">Datenzeile war nicht komplett - korrigiert.</label>
             <label index="imp_error_separator">FEHLER: evtl. falsches Trennzeichen ?</label>
             <label index="imp_warn_sep_info">Zu Ihrer Information: Dies ist der Anfang Ihrer Import-Datei:</label>
+            <label index="imp_encodingtext">Falls Datei nicht "%s" codiert, CharSet wählen: </label>
+            <label index="imp_dontrecode">[Nicht umkodieren]</label>
             <label index="imp_descr_info">Info</label>
             <label index="imp_descr_input">Eingabe</label>
             <label index="imp_descr_selfile">Dateiauswahl</label>
@@ -105,6 +115,7 @@
             <label index="imp_descr_filesize">Dateigr&amp;ouml;&amp;szlig;e</label>
             <label index="imp_descr_filetemp">Temp. Dateiname</label>
             <label index="imp_descr_filelines">Gelesene Datenzeilen</label>
+            <label index="imp_descr_mediazip">Zip-File mit Medien</label>
             <label index="imp_descr_fixedvalues">Felder mit konst. Werten (f&amp;uuml;r alle Datens&amp;auml;tze gleich)</label>
             <label index="imp_descr_replacefields">&amp;Uuml;bersicht &amp;uuml;ber zu ersetzende Daten</label>
             <label index="imp_descr_replacecount">Zu ersetzende Datens&amp;auml;tze</label>
@@ -141,6 +152,8 @@
             <label index="imp_warn_containsctrl">%s enth&amp;auml;lt Ctrl-Zeichen</label>
             <label index="imp_warn_containsx">%s enth&amp;auml;lt</label>
             <label index="imp_warn_containssep">%s  enth&amp;auml;lt Listenseparator</label>
+            <label index="imp_warn_mediamissing">Mediendatei fehlt</label>
+            <label index="imp_error_mediamissing">FEHLER: Mediendatei fehlt</label>
             <label index="imp_error_mailheader">FEHLER-Meldungen (&amp;Uuml;bersicht):</label>
             <label index="imp_error_details">FEHLER-Meldungen (Details):</label>
             <label index="imp_error_isempty">%s ist leer</label>
@@ -152,13 +165,16 @@
             <label index="imp_error_expired">G&amp;uuml;ltigkeitsende des Datensatzes ist bereits abgelaufen</label>
             <label index="imp_error_writeerror_sql">Kann sql-source-file nicht schreiben</label>
             <label index="imp_error_writeerror_fname">FEHLER: kann Datei &quot;%s&quot; nicht schreiben</label>
+            <label index="imp_error_exceedquota">Error: quota exceeded</label>
             <label index="imp_log_errorloglink">Zeige &lt;a %s&gt;Logfile mit Fehlern&lt;/a&gt; in einem neuen Fenster an.</label>
-            <label index="imp_log_result_ok">&lt;b&gt;OK - %d of %d Zeilen wurden gespeichert&lt;/b&gt;</label>
+            <label index="imp_log_result_ok">&lt;b&gt;OK - %d of %d Zeilen wurden verarbeitet&lt;/b&gt;</label>
             <label index="imp_log_result_deleted">&lt;b&gt;OK - %d alte Eintr&amp;auml;ge wurden gel&amp;ouml;scht&lt;/b&gt;</label>
-            <label index="imp_log_result_error">FEHLER - %d von %d Zeilen wurden gespeichert</label>
+            <label index="imp_log_result_error">FEHLER - %d von %d Zeilen wurden verarbeitet</label>
+            <label index="imp_log_details">%d %s-Befehle</label>
             <label index="imp_finally_import">Fahren Sie fort, um endg&amp;uuml;ltig %d Datens&amp;auml;tze zu importieren..</label>
             <label index="imp_finally_deletewarning_own">WARNUNG: Vor dem Import werden alle %d vorhanden Datens&amp;auml;tze des Users %d gel&amp;ouml;scht.</label>
             <label index="imp_finally_deletewarning_all">WARNUNG: Vor dem Import werden alle %d vorhanden Datens&amp;auml;tze gel&amp;ouml;scht.</label>
+            <label index="imp_finally_deletequota">WARNUNG: Vor dem Import werden %d vorhandene Datens&amp;auml;tze gel&amp;ouml;scht, damit das Kontingent nicht &amp;uuml;berschritten wird.</label>
         </languageKey>
     </data>
     <orig_hash type="array">
@@ -236,6 +252,7 @@
             <label index="imp_log_result_error" type="integer">127346239</label>
             <label index="imp_finally_import" type="integer">174982706</label>
             <label index="imp_finally_deletewarning_own" type="integer">121675946</label>
+            <label index="imp_finally_deletewarning_all" type="integer">123352712</label>
             <label index="imp_finally_deletewarning_all" type="integer">123352712</label>
         </languageKey>
         <languageKey index="de" type="array">

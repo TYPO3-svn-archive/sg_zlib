@@ -27,19 +27,22 @@
  *
  *
  *
- *   46: class tx_sglib_params
- *   75:     private function init(tx_sglib_factory $factoryObj)
- *   94:     private function _fCount ($name=NULL)
- *  117:     function __destruct()
- *  126:     function getPluginParams()
- *  135:     function getSearchmode()
- *  144:     function getSearch()
- *  153:     function getUid()
- *  162:     function getListMode()
- *  182:     function getListResultsPerPage()
- *  196:     function getListActivePage()
+ *   49: class tx_sglib_params
+ *   71:     public static function getInstance($designator, tx_sglib_factory $factoryObj)
+ *   85:     private function init(tx_sglib_factory $factoryObj)
+ *  105:     public function updateParams ($params)
+ *  115:     private function _fCount ($name=NULL)
+ *  138:     function __destruct()
+ *  147:     function getPluginParams()
+ *  155:     function getPluginFiles()
+ *  164:     function getSearchmode()
+ *  173:     function getSearch()
+ *  182:     function getUid()
+ *  192:     function getListMode()
+ *  212:     function getListResultsPerPage()
+ *  226:     function getListActivePage()
  *
- * TOTAL FUNCTIONS: 10
+ * TOTAL FUNCTIONS: 13
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -51,6 +54,7 @@ class tx_sglib_params {
 	private $debugObj;
 	private $defaultDesignator;
 	private $params;
+	private $fileParams;
 
 	private $conf=Array();
 
@@ -58,6 +62,12 @@ class tx_sglib_params {
 
 	private function __clone() {}
 
+	/**
+	 * [Describe function...]
+	 *
+	 * @param	[type]		$designator, tx_sglib_factory $factoryObj: ...
+	 * @return	[type]		...
+	 */
 	public static function getInstance($designator, tx_sglib_factory $factoryObj) {
 		if (!isset(self::$instance[$designator])) {
 			self::$instance[$designator] = new tx_sglib_params();
@@ -81,8 +91,19 @@ class tx_sglib_params {
 
 		if ($this->defaultDesignator)	{
 			$this->params = t3lib_div::GParrayMerged($this->defaultDesignator);
+			$this->fileParams = (array) $_FILES[$this->defaultDesignator];
+			$this->uid = t3lib_div::_GP('uid');
 		}
+	}
 
+	/**
+	 * [Describe function...]
+	 *
+	 * @param	[type]		$params: ...
+	 * @return	[type]		...
+	 */
+	public function updateParams ($params) {
+			$this->params = $params;
 	}
 
 	/**
@@ -126,6 +147,14 @@ class tx_sglib_params {
 	function getPluginParams() {
 		return ($this->params);
 	}
+	/**
+	 * [Describe function...]
+	 *
+	 * @return	[type]		...
+	 */
+	function getPluginFiles() {
+		return ($this->fileParams);
+	}
 
 	/**
 	 * [Describe function...]
@@ -151,7 +180,8 @@ class tx_sglib_params {
 	 * @return	[type]		...
 	 */
 	function getUid() {
-		return intval($this->params['uid']);
+		$uid = (intval($this->params['uid'])) ? intval($this->params['uid']) : $this->uid;
+		return ($uid);
 	}
 
 	/**
@@ -194,7 +224,7 @@ class tx_sglib_params {
 	 * @return	[type]		...
 	 */
 	function getListActivePage() {
-		$retVal = isset($this->params['pg']) ? $this->params['pg'] : t3lib_div::GPvar('pg');
+		$retVal = isset($this->params['pg']) ? $this->params['pg'] : t3lib_div::_GP('pg');
 		$retVal = $retVal<2 ? 1 : $retVal;
 		return ($retVal);
 	}

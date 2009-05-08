@@ -51,7 +51,7 @@
  * 2226:     function DoInfo()
  * 2269:     function DoServiceLinks()
  * 2282:     function getMoreMenuMarkers($row,$PCA)
- * 2295:     function getMoreMarkers($row,$PCA)
+ * 2295:     function getMoreMarkers($row)
  * 2308:     function getAckMarkers($row,$PCA)
  * 2319:     function checkAck()
  * 2332:     function getListSummaryMarkers($r,$PCA)
@@ -86,6 +86,13 @@ class txsg_base extends tslib_pibase {
 	var $winName = 'Zz';
 	var $pi_checkCHash = TRUE;
 	var $pi_USER_INT_obj;
+	var $globalMarkers = Array();
+
+	//todo: check why this is used ...
+	var $additionalJS_initial = '';
+	var $additionalJS_pre = Array();
+	var $additionalJS_submit = Array();
+	var $additionalJS_post = Array();
 
 	var $factoryObj;
 	var $confObj;
@@ -106,7 +113,7 @@ class txsg_base extends tslib_pibase {
 	 * @return	[type]		...
 	 */
 	function main($content,$conf)	{
-		GLOBAL $TSFE, $TYPO3_LOADED_EXT;
+		GLOBAL $TSFE;
 
 		$this->pTime = Array();
 		list($usec, $sec) = explode(' ',microtime()); $s = (((float)$usec + (float)$sec) * 1000);
@@ -130,6 +137,12 @@ class txsg_base extends tslib_pibase {
 		$this->pi_USER_INT_obj = 1;
 		$this->pi_setPiVarDefaults();
 		$this->pi_loadLL();
+
+		if (is_array($this->piVars['search'])) {
+			foreach ($this->piVars['search'] as $key=>$var) if (is_string($var)) {
+				$this->piVars['search'][$key] = htmlspecialchars($var);
+			}
+		}
 
 		$this->myPage = $this->pi_getPageLink($TSFE->id,'','');
 		if (!strstr($this->myPage,'?')) {
@@ -175,6 +188,7 @@ class txsg_base extends tslib_pibase {
 			$TSFE->set_no_cache();
 		}
 
+
 		$this->PCA = $this->felib->getPCA($this->mainTable,$this->prefixId,$this->pid_list,$this->conf,$this->piVars,Array(),$dbg);
 		$this->dbg = $this->felib->dbg;
 		$this->disableField = (is_array($this->PCA['ctrl']['enablecolumns'])) ? $this->PCA['ctrl']['enablecolumns']['disabled'] : '';
@@ -185,13 +199,12 @@ class txsg_base extends tslib_pibase {
 
 		$confXajax = $this->confObj->xajax;
 		if ($confXajax['try'] || $confXajax['force']) {
-			if (isset($TYPO3_LOADED_EXT['xajax']))   {
+			if (t3lib_extMgm::isLoaded('xajax'))   {
 				$this->felib->prepareXajax($this->prefixId);
 				$ret = $this->registerAjaxFunctions ();
 				$ret = $this->preprocessAjax();
 				$this->debugObj->debugIf('xajax',Array('xaJax(debug)'=>'('.$this->felib->xajax->bDebug.')', 'prefixId='=>$this->prefixId, 'registerAjaxFunctions'=>$ret, 'File:Line'=>__FILE__.':'.__LINE__));
 			} else if ($confXajax['force']) {
-				//t3lib_div::debug(Array('$TYPO3_LOADED_EXT'=>$TYPO3_LOADED_EXT, 'File:Line'=>__FILE__.':'.__LINE__));
 				die ('--- ERROR: xaJax missing or not loaded ! ---');
 			}
 		}
@@ -223,6 +236,8 @@ class txsg_base extends tslib_pibase {
 		if (strcmp($this->conf['CMD'],'singleView')==0) {
 			$pluginMode = 300;
 			$this->PCA['todo']['Uid'] = $this->cObj->data['uid'];
+		} else if (strcmp($this->conf['CMD'],'singleViewTS')==0) {
+			$pluginMode = 310;
 		} else if (strcmp($this->conf['CMD'],'listView')==0) {
 			$pluginMode = 200;
 		} else if (strcmp($this->conf['CMD'],'searchListView')==0) {
@@ -269,7 +284,7 @@ class txsg_base extends tslib_pibase {
 			$cm['###SELECTBLOCK###'] = $this->DoSearch($pluginMode);
 			$this->pTime[] = 'search='.intval($this->divObj->getMicroDur($s));
 		}
-		if (intval($pluginMode)==0 || $pluginMode==3 || $pluginMode==31 || $pluginMode==32 || $pluginMode==300 ||
+		if (intval($pluginMode)==0 || $pluginMode==3 || $pluginMode==31 || $pluginMode==32 || $pluginMode==300 || $pluginMode==310 ||
 			($this->conf['detailsInList']==1 && (intval($pluginMode)==2 || $pluginMode==200)) ) {
 			$this->felib->returnFromDetails = $GLOBALS['TSFE']->fe_user->getKey('ses',$this->prefixId.'.returnFromDetails');
 			$s = $this->divObj->getMicroSec();
@@ -280,12 +295,12 @@ class txsg_base extends tslib_pibase {
 					$this->PCA['templateSingle'] = $this->PCA['templateSingleRecord'];
 				}
 			} else {
-				$uid = intval(t3lib_div::GPvar('uid'));
+				$uid = intval(t3lib_div::_GP('uid'));
 				if (!$uid) {
 					$uid = intval($this->piVars['uid']);
 					$this->PCA['todo']['Uid'] = $uid;
 				}
-				$pUid = t3lib_div::GPvar('pUid');
+				$pUid = t3lib_div::_GP('pUid');
 				if ($uid==0 && (strcmp($pUid,'0')==0 || intval($pUid) ) ) {
 					$idList = explode(',',$this->PCA['todo']['LastIdList']);
 					$pUid = ($pUid>=count($idList)? count($idList)-1 : $pUid);
@@ -298,7 +313,7 @@ class txsg_base extends tslib_pibase {
 					$this->PCA['todo']['Uid'] = $uid;
 				}
 
-				$title = $GLOBALS['TYPO3_DB']->quoteStr(urldecode(trim(t3lib_div::GPvar('title'))),$this->mainTable);
+				$title = $GLOBALS['TYPO3_DB']->quoteStr(urldecode(trim(t3lib_div::_GP('title'))),$this->mainTable);
 				if (strlen($title)>0 && $uid==0) {
 					$this->uniqueTitleField = trim($this->conf['uniqueTitleField']) ? trim($this->conf['uniqueTitleField']) : 'word';
 					$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid',$this->mainTable,$this->uniqueTitleField.' LIKE '.QT.$title.QT,'','','0,1');
@@ -342,6 +357,7 @@ class txsg_base extends tslib_pibase {
 				$content .= $cm['###LISTBLOCK###'];
 			break;
 			case 300:
+			case 310:
 			case 3:
 				$content .= $cm['###DETAILBLOCK###'];
 			break;
@@ -400,8 +416,8 @@ class txsg_base extends tslib_pibase {
 			'BlockTemplate='=>$blockTmpl,
 			'content'=>strlen($content),
 			);
-		$this->debugObj->debugIf('pluginMode',Array('$pluginMode'=>$pluginMode, 'L='=>t3lib_div::GPvar('L'), 'strlen()'=>$dbgS, 'File:Line'=>__FILE__.':'.__LINE__));
-		$this->debugObj->debugIf('pluginModeFull',Array('$pluginMode'=>$pluginMode, 'L='=>t3lib_div::GPvar('L'), '$cm'=>$cm, 'BlockTemplate='=>$blockTmpl, 'content'=>$content, 'File:Line'=>__FILE__.':'.__LINE__));
+		$this->debugObj->debugIf('pluginMode',Array('$pluginMode'=>$pluginMode, 'L='=>t3lib_div::_GP('L'), 'strlen()'=>$dbgS, 'File:Line'=>__FILE__.':'.__LINE__));
+		$this->debugObj->debugIf('pluginModeFull',Array('$pluginMode'=>$pluginMode, 'L='=>t3lib_div::_GP('L'), '$cm'=>$cm, 'BlockTemplate='=>$blockTmpl, 'content'=>$content, 'File:Line'=>__FILE__.':'.__LINE__));
 
 		if ($blockTmpl) {
 			if (!intval($this->PCA['todo']['Uid']) && !intval($this->PCA['todo']['New']) && !intval($this->PCA['todo']['Reload']) ) {
@@ -527,13 +543,13 @@ class txsg_base extends tslib_pibase {
 		$wrapHiddenSF = t3lib_div::trimExplode('|',$this->conf['search.']['wrapHiddenSearchFields']);
 
 		if (!intval($this->conf['search.']['disableReloadForm'])) {
-			$formText = '<form name="reload'.$this->felib->sMode.'" id="reload'.$this->felib->sMode.'">'.$wrapHiddenRL[0].CRLF.
-						//'<input type="hidden" name="no_cache" value="1">'.
-						'<input type="hidden" name="id" value="'.$TSFE->id.'">'.CRLF.
-						(($TSFE->type>0) ?'<input type="hidden" name="type" value="'.$TSFE->type.'">':'').CRLF.
-						(t3lib_div::GPvar('L') ? '<input type="hidden" name="L" value="'.t3lib_div::GPvar('L').'">':'').
-						(t3lib_div::GPvar('rTL') ? '<input type="hidden" name="rTL" value="1">':'').
-						'<input type="hidden" name="doReload" value="'.($this->felib->getTypolinkURL($TSFE->id,'', 0)).'">'.CRLF.
+			$formText = '<form action="index.php" name="reload'.$this->felib->sMode.'" id="reload'.$this->felib->sMode.'">'.$wrapHiddenRL[0].CRLF.
+						//'<input type="hidden" name="no_cache" value="1" />'.
+						'<input type="hidden" name="id" value="'.$TSFE->id.'" />'.CRLF.
+						(($TSFE->type>0) ?'<input type="hidden" name="type" value="'.$TSFE->type.'" />':'').CRLF.
+						(t3lib_div::_GP('L') ? '<input type="hidden" name="L" value="'.t3lib_div::_GP('L').'" />':'').
+						(t3lib_div::_GP('rTL') ? '<input type="hidden" name="rTL" value="1" />':'').
+						'<input type="hidden" name="doReload" value="'.($this->felib->getTypolinkURL($TSFE->id,'', 0)).'" />'.CRLF.
 					$wrapHiddenRL[1].'</form>'.CRLF;
 		}
 		if (!intval($this->conf['search.']['disableFormTag'])) {
@@ -542,14 +558,14 @@ class txsg_base extends tslib_pibase {
 			$formText .='<form name="search'.$this->felib->sMode.'" id="search'.$this->felib->sMode.'" action="index.php"'.
 				($this->PCA['class']['formSearch'] ?  ' class="'.$this->PCA['class']['formSearch'].'"' : '').
 				'>'.CRLF; // better with realurl and so on
-			$formText .= '<input type="hidden" name="'.$this->prefixId.'[searchformname]" value="'.$this->felib->sMode.'">'.CRLF;
+			$formText .= '<input type="hidden" name="'.$this->prefixId.'[searchformname]" value="'.$this->felib->sMode.'" />'.CRLF;
 		}
-		$formText .= $wrapHiddenSF[0].'<input type="hidden" name="id" value="'.($this->listPage ? $this->listPage:$TSFE->id).'">'.
-				(($TSFE->type>0) ?'<input type="hidden" name="type" value="'.$TSFE->type.'">':'').CRLF.
-				//'<input type="hidden" name="no_cache" value="1">'.CRLF.
-				(t3lib_div::GPvar('L') ? '<input type="hidden" name="L" value="'.t3lib_div::GPvar('L').'">':'').
-				(t3lib_div::GPvar('rTL') ? '<input type="hidden" name="rTL" value="1">':'').
-				'<input type="hidden" name="'.$this->prefixId.'[searchmode]" value="1">'.$wrapHiddenSF[1].CRLF.
+		$formText .= $wrapHiddenSF[0].'<input type="hidden" name="id" value="'.($this->listPage ? $this->listPage:$TSFE->id).'" />'.
+				(($TSFE->type>0) ?'<input type="hidden" name="type" value="'.$TSFE->type.'" />':'').CRLF.
+				//'<input type="hidden" name="no_cache" value="1" />'.CRLF.
+				(t3lib_div::_GP('L') ? '<input type="hidden" name="L" value="'.t3lib_div::_GP('L').'" />':'').
+				(t3lib_div::_GP('rTL') ? '<input type="hidden" name="rTL" value="1" />':'').
+				'<input type="hidden" name="'.$this->prefixId.'[searchmode]" value="1" />'.$wrapHiddenSF[1].CRLF.
 				$this->cObj->substituteMarkerArray($this->searchTmpl,$m);
 		if (!intval($this->conf['search.']['disableFormTag'])) {
 					$formText .= CRLF.'</form>'.CRLF;
@@ -622,7 +638,7 @@ class txsg_base extends tslib_pibase {
 				$u = $this->felib->myparseURL($this->felib->myQuery);
 				$TSFE->fe_user->setKey('ses',$this->prefixId.'.lastParams',$u['plist']);
 				$tmp = intval($this->piVars['pg']);
-				$this->activePageInList = ($tmp>0) ? $tmp-1 : intval(t3lib_div::GPvar('pg'));
+				$this->activePageInList = ($tmp>0) ? $tmp-1 : intval(t3lib_div::_GP('pg'));
 				if (strpos($this->felib->myQuery,'?')<1) { $this->felib->myQuery .= '?'; }
 			}
 
@@ -717,7 +733,7 @@ class txsg_base extends tslib_pibase {
 			// get last set from from session
 			$tmp = intval($TSFE->fe_user->getKey('ses',$this->prefixId.'.piVars.resPP'));
 			$this->felib->confMaxPP = ($tmp>2 && $tmp<500) ? $tmp : intval($this->conf['list.']['maxPerPage']);
-			$tmp = t3lib_div::intExplode(',',t3lib_div::GPvar('resPP'),2);
+			$tmp = t3lib_div::intExplode(',',t3lib_div::_GP('resPP'),2);
 			if (count($tmp)==2) {
 				$this->felib->confMaxPP = $tmp[1];
 				$oldPg = $qa['pg'];
@@ -728,8 +744,8 @@ class txsg_base extends tslib_pibase {
 					$this->felib->confMaxPP = $tmp[0];
 					$TSFE->fe_user->setKey('ses',$this->prefixId.'.piVars.resPP',$this->felib->confMaxPP);
 				}
-			} else if (intval(t3lib_div::GPvar('resTmpPP'))>2) {
-				$this->felib->confMaxPP = intval(t3lib_div::GPvar('resTmpPP'));
+			} else if (intval(t3lib_div::_GP('resTmpPP'))>2) {
+				$this->felib->confMaxPP = intval(t3lib_div::_GP('resTmpPP'));
 			}
 
 			$qa['maxPP'] = $this->felib->confMaxPP;
@@ -740,6 +756,7 @@ class txsg_base extends tslib_pibase {
 			$qa['doTotalList'] = $this->doTotalList;
 			$qa['doGetMaxList'] = (intval($this->conf['doGetMaxList'])>9 ? intval($this->conf['doGetMaxList']) : 10000);
 			$r = $this->felib->getDbList ($qa,$this->debugObj->isDebug('getDbList')); // Debug=0
+			$qa['foundRecords'] = $r['total'];
 
 			$TSFE->fe_user->setKey('ses',$this->prefixId.'.lastIdList',implode(',',$this->felib->lastResultList));
 			$this->globalMarkers['###TOTAL_RESULTS###'] = $r['total'];
@@ -769,10 +786,16 @@ class txsg_base extends tslib_pibase {
 			$this->headerEntry = $this->templateObj->getConfSubpart($this->template,$ehName,$this->PCA);
 			$this->markers['###ENTRY###'] = $this->cObj->substituteMarkerArray($this->headerEntry,$this->rowHeaders);
 
+			$qa['prefixId'] = $this->prefixId;
+			$qa['mainTable'] = $this->mainTable;
+			$this->markers['###EXPORT###'] = '';
+			$this->markers['###DELETE###'] = '';
+			$this->markers['###UNDODELETE###'] = $this->felib->getUndoDeleteSection($this->mainTable,$this->PCA,$this->piVars['search'],$qa,$r);
 			if ($r['total']>0 || !$this->conf['search.']['emptyResultAsSubpart']) { // Only if something is found
-				$this->markers['###EXPORT###'] = '';
 				if ($r['total']>0) {
 					$this->markers['###EXPORT###'] = $this->felib->getDbExportSection
+								($this->mainTable,$this->PCA,$this->piVars['search'],$qa,$r);
+					$this->markers['###DELETE###'] = $this->felib->getDeleteSection
 								($this->mainTable,$this->PCA,$this->piVars['search'],$qa,$r);
 				}
 
@@ -1058,17 +1081,26 @@ class txsg_base extends tslib_pibase {
 				$rowToSave['uid'] = $this->PCA['todo']['Uid'] ;
 			}
 			if ($this->felib->checkDbRowForSave($this->mainTable,$rowToSave,$this->PCA,$errorMarkers)) {
+				$this->PCA['todo']['New'] = 0;
 				// $content .= 'Dont save, - errors!<br />';
 				$this->PCA['todo']['Edit'] = 1;
 				$this->PCA['todo']['Save'] = 1;
+				if (!$rowToSave['uid']) {
+					$this->PCA['todo']['New'] = 1;
+				}
 				$rowToSave = is_array($this->piVars['data']) ? $this->piVars['data'] : Array();
+				$this->piVars['data'] = $rowToSave;
 			} else {
 				// Seems that record ist ok for writing to database
 				// But check again with private function:
+				$this->PCA['todo']['New'] = 0;
 				if ($this->localCheckDbRowForSave($this->mainTable,$rowToSave,$this->PCA,$errorMarkers)) {
 					// $content .= 'Dont save, - errors!<br />';
 					$this->PCA['todo']['Edit'] = 1;
 					$this->PCA['todo']['Save'] = 1;
+					if (!$rowToSave['uid']) {
+						$this->PCA['todo']['New'] = 1;
+					}
 					$this->piVars['data'] = $rowToSave;
 				} else {
 					$doAckCheck = (intval($GLOBALS['HTTP_POST_VARS'][$this->prefixId.'_acknowledge'])==753 ||
@@ -1122,7 +1154,6 @@ class txsg_base extends tslib_pibase {
 					}
 				}
 			}
-			$this->PCA['todo']['New'] = 0;
 		} else if ($this->PCA['todo']['Reload']>0) {
 			$this->PCA['todo']['Edit'] = 1;
 			$this->PCA['todo']['Save'] = 1;
@@ -1145,9 +1176,12 @@ class txsg_base extends tslib_pibase {
 				$this->template = $this->felib->lCObj->substituteSubpart ($this->template,'###EDITMODEONLY###','');
 		}
 
+		$content .= $this->postProcessToDo($this->PCA['todo'],$rowToSave);
+
 		// Now - show/create/edit record
 		$this->PCA['todo']['NotFound'] = 0;
 		if (intval($this->PCA['todo']['Uid'])==0 && intval($this->PCA['todo']['Save'])==0 && intval($this->PCA['todo']['New'])==0) {
+			$this->rowHeaders = $this->felib->getDbHeaders($this->mainTable,$this->PCA,Array(),$this->felib->isdebug('headerMarkers'));
 			$this->tmplNoUid = $this->templateObj->getSubpart($this->template,'###NO_UID_GIVEN###');
 			if (strlen($this->tmplNoUid)<3) {
 				$this->tmplNoUid = 'ERROR - no Record selected !!<br />';
@@ -1157,13 +1191,13 @@ class txsg_base extends tslib_pibase {
 			$markers = $this->getAckMarkers($rowToSave,$this->PCA);
 			$markers['###ACKMESSAGE###'] =
 				intval($GLOBALS['HTTP_POST_VARS'][$this->prefixId.'_acknowledge']) ? $this->ackMessage : '';
-			$hiddenData = '<input type="hidden" name="id" value="'.$TSFE->id.'">'.CRLF;
-			$hiddenData .= '<input type="hidden" name="type" value="'.$TSFE->type.'">'.CRLF;
+			$hiddenData = '<input type="hidden" name="id" value="'.$TSFE->id.'" />'.CRLF;
+			$hiddenData .= '<input type="hidden" name="type" value="'.$TSFE->type.'" />'.CRLF;
 			for (reset($rowToSave);$key=key($rowToSave);next($rowToSave)) {
-				$hiddenData .= '<input type="hidden" name="'.$this->prefixId.'[data]['.$key.']" value="'.$rowToSave[$key].'">';
+				$hiddenData .= '<input type="hidden" name="'.$this->prefixId.'[data]['.$key.']" value="'.$rowToSave[$key].'" />';
 			}
 			if (intval($this->piVars['uid'])!=0) {
-				$hiddenData .= '<input type="hidden" name="'.$this->prefixId.'[uid]" value="'.$this->piVars['uid'].'">';
+				$hiddenData .= '<input type="hidden" name="'.$this->prefixId.'[uid]" value="'.$this->piVars['uid'].'" />';
 			}
 			$markers = $this->felib->getDbHeaders($this->mainTable,$this->PCA,$markers,$this->debugObj->isDebug('headerMarkers'));
 			$markers = $this->getLocalHeaders($this->mainTable,$this->PCA,$markers,$this->debugObj->isDebug('headerMarkers'));
@@ -1197,8 +1231,8 @@ class txsg_base extends tslib_pibase {
 			}
 			$markers['###SUBMIT###'] = $mySubmitButton;
 			$markers['###DOSAVE###'] = '<form name="ack_submit_'.$this->prefixId.'" method="POST">'.$hiddenData.
-				'<input type="hidden" name="dS" value="1">'.
-				'<input type="hidden" name="'.$this->prefixId.'_acknowledge" value="753">'.
+				'<input type="hidden" name="dS" value="1" />'.
+				'<input type="hidden" name="'.$this->prefixId.'_acknowledge" value="753" />'.
 				($doSaveTmpl ? $this->cObj->substituteMarkerArray($doSaveTmpl,$markers) : $markers['###SUBMIT###']).
 				'</form>';
 
@@ -1213,7 +1247,7 @@ class txsg_base extends tslib_pibase {
 				$this->debugObj->isDebug('markers'));
 			$markers = $this->getLocalDbRow($this->mainTable,0,$rowToSave,$this->PCA, $markers, SGZ_TEXT,
 				$this->debugObj->isDebug('markers'),5);
-			$xm = $this->getMoreMarkers($rowToSave,$this->PCA);
+			$xm = $this->getMoreMarkers($rowToSave,$markers);
 			if (is_array($xm)) {
 				$markers = array_merge($markers,$xm);
 			}
@@ -1237,6 +1271,7 @@ class txsg_base extends tslib_pibase {
 				$this->template = $this->felib->lCObj->substituteSubpart ($this->template,'###NEWRECORDSONLY###','');
 				$this->rowHeaders['<!-- ###NONEWRECORDSONLY### -->'] = '';
 			}
+
 
 			if ($this->PCA['todo']['New'] && $this->PCA['todo']['Edit']) {
 				// check if new is allowed !!!
@@ -1292,6 +1327,9 @@ class txsg_base extends tslib_pibase {
 					if (is_array($preset)) {
 						$row = array_merge($row,$preset);
 					}
+					if (is_array($rowToSave)) {
+						$row = array_merge($row,$rowToSave);
+					}
 
 					if ($this->PCA['ctrl']['crfeuser_id']) {
 						$row[$this->PCA['ctrl']['crfeuser_id']] = $this->permitObj->getFeUid();
@@ -1330,7 +1368,7 @@ class txsg_base extends tslib_pibase {
 					   intval($this->PCA['todo']['Reload'])>0 ||
 						($this->PCA['todo']['Save'] && $this->PCA['todo']['Edit'])
 						){
-				//$content .= 'Edit/view Record '.$this->PCA['todo']['Uid'].' <br />';
+			//$content .= 'Edit/view Record '.$this->PCA['todo']['Uid'].' <br />';
 				$row = Array();
 				if (intval($this->PCA['todo']['Uid'])>0 && intval($this->PCA['todo']['Reload'])==0 &&
 						!$this->PCA['todo']['Save'] && !$this->PCA['todo']['Edit'] &&
@@ -1552,7 +1590,7 @@ class txsg_base extends tslib_pibase {
 									$this->debugObj->isDebug('markers'),3);
 								$rowMarkers['###BUTTON_UPDATE###'] = $menuMarkers['###BUTTON_UPDATE###'];
 								//t3lib_div::debug(Array('$rowMarkers'=>$rowMarkers, 'File:Line'=>__FILE__.':'.__LINE__));
-								$xm = $this->getMoreMarkers($row,$this->PCA);
+								$xm = $this->getMoreMarkers($row,$rowMarkers);
 								if (is_array($xm)) {
 									$rowMarkers = array_merge($rowMarkers,$xm);
 								}
@@ -1590,7 +1628,7 @@ class txsg_base extends tslib_pibase {
 										$this->debugObj->isDebug('markers'));
 								$rowMarkers = $this->getLocalDbRow($this->mainTable,0,$row,$this->PCA, $rowMarkers, SGZ_TEXT,
 										$this->debugObj->isDebug('markers'),2);
-								$xm = $this->getMoreMarkers($row,$this->PCA);
+								$xm = $this->getMoreMarkers($row,$rowMarkers);
 								if (is_array($xm)) {
 									$rowMarkers = array_merge($rowMarkers,$xm);
 								}
@@ -1625,21 +1663,36 @@ class txsg_base extends tslib_pibase {
 							} else {
 								$this->tmplSingle = $this->templateObj->getConfSubpartArray($this->template,$this->singleName,$this->PCA);
 
+								//RTE
+								$content .= $this->additionalJS_initial.'
+									<script type="text/javascript">'. implode(chr(10), $this->additionalJS_pre).'
+									</script>';
+								
 								$content .= '<form name="sg_editform" method="POST" action="'.$this->myPage;
 								$content .= '&type='.$TSFE->type;
 								if (intval($row['uid'])) {
 									$content .= '&uid='.urlencode($row['uid']);
 								}
-								$content .= '">';
-								$content .= '<input type="hidden" name="dS" value="'.($this->PCA['todo']['Edit']>0 ? 1:0).'">';
-								$content .= '<input type="hidden" name="dE" value="0">';
-								$content .= '<input type="hidden" name="rTL" value="'.(t3lib_div::GPvar('rTL') ? 1:0).'">';
-								$content .= '<input type="hidden" name="dR" value="0">';
-								$content .= '<input type="hidden" name="'.$this->prefixId.'[uid]" value="'.$row['uid'].'">';
+								$content .= '"';
+								$JS_submit = implode(';', $this->additionalJS_submit);
+								if ($JS_submit) {
+									$content .= ' onsubmit="'.$JS_submit.'"';
+								}
+								$content .= '>';
+								$content .= '<input type="hidden" name="dS" value="'.($this->PCA['todo']['Edit']>0 ? 1:0).'" />';
+								$content .= '<input type="hidden" name="dE" value="0" />';
+								$content .= '<input type="hidden" name="rTL" value="'.(t3lib_div::_GP('rTL') ? 1:0).'" />';
+								$content .= '<input type="hidden" name="dR" value="0" />';
+								$content .= '<input type="hidden" name="'.$this->prefixId.'[uid]" value="'.$row['uid'].'" />';
 
 								$tmp = $this->templateObj->getSubpartFromArray($this->tmplSingle,$this->PCA,$row);
 								$content .= $this->cObj->substituteMarkerArray($tmp, $this->markers);
 								$content .= '</form>';
+
+								//RTE
+								$content .= '
+									<script type="text/javascript">'. implode(chr(10), $this->additionalJS_post).'
+									</script>';
 							}
 
 						//t3lib_div::debug(Array('$row[description]'=>$row['description'], 'marker='=>$this->markers['###TEXT_DESCRIPTION###'], '$content'=>$content,  'File:Line'=>__FILE__.':'.__LINE__));
@@ -1800,9 +1853,9 @@ class txsg_base extends tslib_pibase {
 		$this->clConf['tablesMain'] = $this->mainTable.' LEFT JOIN '.$this->clConf['MM'].' ON '.$this->clConf['MM'].'.uid_local='.$this->mainTable.'.uid';
 		$this->clConf['whereMain'] = $this->cObj->enableFields($this->mainTable);
 		$this->clConf['groupMain'] = $this->clConf['MM'].'.uid_foreign';
+		$query2 = '1=1 '.$this->clConf['whereMain'];
 		$this->clConf['catCount'] = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
-			$this->clConf['selectMain'],$this->clConf['tablesMain'],'1=1 '.$this->clConf['whereMain'],$this->clConf['groupMain'],'','1000','myCat');
-
+			$this->clConf['selectMain'],$this->clConf['tablesMain'],$query2,$this->clConf['groupMain'],'','1000','myCat');
 		$content .= $this->listCatMenu($idList,1);
 
 		return ($content);
@@ -1816,6 +1869,7 @@ class txsg_base extends tslib_pibase {
 	 * @return	[type]		...
 	 */
 	function listCatMenu(&$idList,$level) {
+		$myCObj = clone($this->cObj);
 		if (count($idList)) {
 			if ($this->clConf['level.'][$level.'.']['template']) {
 				$template = $this->clConf['level.'][$level.'.']['template'];
@@ -1834,7 +1888,8 @@ class txsg_base extends tslib_pibase {
 
 
 			for (reset($idList);$key=key($idList);next($idList)) {
-				$idList[$key]['myCntEntries'] = intval($this->clConf['catCount.'][$key.'.']['cnt']);
+				$idList[$key]['myCntEntries'] = intval($this->clConf['catCount'][$key]['cnt']);
+
 				$idList[$key]['subcats'] = Array();
 				$idList[$key]['mySearch'] .= '&'.$this->prefixId.'[searchmode]=1&'.$this->prefixId.'[search]['.$this->clConf['field'].']['.$key.']='.$key;
 				$subContent = '';
@@ -1858,6 +1913,12 @@ class txsg_base extends tslib_pibase {
 				}
 
 				$idList[$key]['myHasSubEntries'] = $hasSubEntries;
+				$idList[$key]['myIcon']='';
+				if ($this->clConf['myIcon']) {
+					$myCObj->data = $idList[$key];
+					$idList[$key]['myIcon'] = $myCObj->cObjGetSIngle($this->clConf['myIcon'],$this->clConf['myIcon.']);
+				}
+
 				$idList[$key]['myLink']='';
 
 				if ($idList[$key]['myHasEntries']) {
@@ -1865,8 +1926,11 @@ class txsg_base extends tslib_pibase {
 				} else if ($this->clConf['linkIfSubcats'] && $hasSubEntries) {
 					$idList[$key]['myLink']=$this->cObj->substituteMarkerArray($link,$idList[$key],'###|###');
 				}
-				if (!$this->clConf['hideEmpty'] || ($idList[$key]['myCntEntries']>0 AND ($hasSubEntries>0 || $idList[$key]['myHasEntries']>0))) {
+				if (!$this->clConf['hideEmpty'] || ( $idList[$key]['myCntEntries']>0 AND ($hasSubEntries>0 || $idList[$key]['myHasEntries']>0))) {
 					$content .= $wrapItemAndSub[0].$wrap[0].$this->cObj->substituteMarkerArray($template,$idList[$key],'###|###').$wrap[1].$subContent.$wrapItemAndSub[1];
+					//t3lib_div::debug(Array($key=>$idList[$key]['myHasEntries'].'/'.$hasSubEntries.'='.$idList[$key]['myCntEntries'], 'File:Line'=>__FILE__.':'.__LINE__));
+				} else {
+					//t3lib_div::debug(Array($key.' (empty)'=>$idList[$key]['myHasEntries'].'/'.$hasSubEntries.'='.$idList[$key]['myCntEntries'], 'File:Line'=>__FILE__.':'.__LINE__));
 				}
 			}
 			$content .= $wrapAll[1];
@@ -1924,7 +1988,7 @@ class txsg_base extends tslib_pibase {
 				$access = true;
 				$pcaCtrl = $this->PCA['ctrl'];
 				$myTime = time();
-				if (!$pcaCtrl['crfeuser_id'] || !$this->permitObj->getFeUid() || ($row[$pcaCtrl['crfeuser_id']]!=$this->permitObj->getFeUid() && !$this->permitObj->allowed('admin'))) {
+				if (!$pcaCtrl['crfeuser_id'] || !$this->permitObj->getFeUid() || ($row[$pcaCtrl['crfeuser_id']]!=$this->permitObj->getFeUid() && !$this->permitObj->allowed('admin') && !$this->permitObj->allowed('editAllHidden'))) {
 					if ( ($pcaCtrl['enablecolumns']['starttime'] && $row[$pcaCtrl['enablecolumns']['starttime']]>$myTime) ||
 						 ($pcaCtrl['enablecolumns']['endtime'] && $row[$pcaCtrl['enablecolumns']['endtime']]>86400 && $row[$pcaCtrl['enablecolumns']['endtime']]<$myTime) ||
 						 ($pcaCtrl['enablecolumns']['disabled'] && $row[$pcaCtrl['enablecolumns']['disabled']])
@@ -2284,7 +2348,7 @@ class txsg_base extends tslib_pibase {
 	 * @param	[type]		$PCA: definition-array for table
 	 * @return	[array]		markers
 	 */
-	function getMoreMarkers($row,$PCA) {
+	function getMoreMarkers($row,$markers) {
 		$xm = Array();
 		return ($xm);
 	}
@@ -2418,6 +2482,20 @@ class txsg_base extends tslib_pibase {
 
 
 	/**
+	 * [Hook after all processing (save/reload etc.) is done]
+	 *
+	 * @param	[type]		$todo
+	 * @param	[type]		$row: row of data
+	 * @return	[text]		content
+	 */
+	function postProcessToDo ($todo,$row) {
+		$content = "";
+		return ($content);
+	}
+
+
+
+	/**
 	 * [Prepare $row directly after load before processing]
 	 *
 	 * @param	[type]		$dbName: name of table
@@ -2449,25 +2527,33 @@ class txsg_base extends tslib_pibase {
 	 *
 	 * @return	[type]		...
 	 */
-	function getQuotas () {
+	function getQuotas ($conf=NULL, $user=NULL) {
 		GLOBAL $TSFE;
 
+		if (is_null($conf)) {
+			$conf = $this->PCA['quota'];
+		}
+		if (is_null($user)) {
+			$user = $TSFE->fe_user;
+		}
+
 		$this->quota = Array();
-		if (is_array($this->PCA['quota'])) {
-			for (reset($this->PCA['quota']);$key=key($this->PCA['quota']);next($this->PCA['quota'])) {
-				$this->quota[$key] = $this->PCA['quota'][$key];
-				$lst = t3lib_div::trimExplode('||',$this->PCA['quota'][$key]['maxCount'],2);
+		if (is_array($conf)) {
+			for (reset($conf);$key=key($conf);next($conf)) {
+				$myKey = str_replace('.','',$key);
+				$this->quota[$myKey] = $conf[$key];
+				$lst = t3lib_div::trimExplode('||',$conf[$key]['maxCount'],2);
 				$myMax = 0;
 				if (count($lst) && $lst[0]) for ($i=0;$i<count($lst);$i++) {
 					$tmp = t3lib_div::trimExplode(':',$lst[$i],2);
 					if (strcmp($tmp[0],'TSconfig')==0) {
-						$this->TSconf = $TSFE->fe_user->getUserTSconf();
+						$this->TSconf = $user->getUserTSconf();
 						$myMax = intval($this->TSconf['plugin.'][$this->prefixId.'.'][$tmp[1]]);
 					} else if (strcmp($tmp[0],'group')==0) {
 						$gr = t3lib_div::trimExplode('=',$tmp[1],2);
-						$myMax = (in_array($gr[0],$TSFE->fe_user->groupData['title'])) ? intval($gr[1]) : 0;
+						$myMax = (in_array($gr[0],$user->groupData['title'])) ? intval($gr[1]) : 0;
 					} else if (strcmp($tmp[0],'user')==0) {
-						$myMax = $TSFE->fe_user ? intval($TSFE->fe_user->user[$tmp[1]]) : 0;
+						$myMax = $user ? intval($user->user[$tmp[1]]) : 0;
 					} else if (strcmp($tmp[0],'const')==0 || strcmp($tmp[0],'set')==0) {
 						$myMax = intval($tmp[1]) ;
 					} else {
@@ -2477,10 +2563,11 @@ class txsg_base extends tslib_pibase {
 						break;
 					}
 				}
-				$this->quota[$key]['maxCount'] = $myMax;
+				$this->quota[$myKey]['maxCount'] = $myMax;
 			}
 			$this->debugObj->debugIf('quota',Array('$this->quota'=>$this->quota,	'File:Line'=>__FILE__.':'.__LINE__));
 		}
+		return ($this->quota);
 	}
 
 	/**
@@ -2618,7 +2705,7 @@ class txsg_base extends tslib_pibase {
 }
 
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sg_zlib/class.txsg_base.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sg_zlib/class.txsg_base.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sg_zlib/classes/base/class.txsg_base.php'])	{
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sg_zlib/classes/base/class.txsg_base.php']);
 }
 ?>

@@ -59,6 +59,10 @@
             <label index="doreallydelete">Do you really want to delete this entry</label>
             <label index="areyousure">Are you sure ?</label>
             <label index="entries">Entries</label>
+            <label index="areyousure">Are you sure</label>
+            <label index="list.export">Export ###cnt### Entries !</label>
+            <label index="list.delete">Delete ###cnt### Entries !</label>
+            <label index="list.undelete">Undelete latest !</label>
             <label index="BackToResultPage">Back to resultpage -&amp;gt;</label>
             <label index="return_to_result">Return to searchresult</label>
             <label index="return_to">Return to %s</label>
@@ -198,6 +202,10 @@
             <label index="doreallydelete">Wollen Sie diesen Datensatz wirklich l&amp;ouml;schen</label>
             <label index="areyousure">Sind Sie sicher ?</label>
             <label index="entries">Eintr&amp;auml;ge</label>
+            <label index="areyousure">Sind Sie sicher ?</label>
+            <label index="list.export">Exportiere ###cnt### Einträge !</label>
+            <label index="list.delete">Löschen ###cnt### Einträge !</label>
+            <label index="list.undelete">Letztes Löschen rückgängig</label>
             <label index="BackToResultPage">Zur&amp;uuml;ck zur Ergebnisseite -&amp;gt;</label>
             <label index="return_to_result">Zur&amp;uuml;ck zum Suchergebnis</label>
             <label index="return_to">Zur&amp;uuml;ck zu %s</label>

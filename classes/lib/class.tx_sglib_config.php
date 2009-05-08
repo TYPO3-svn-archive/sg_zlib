@@ -27,45 +27,54 @@
  *
  *
  *
- *   72: class tx_sglib_config extends ArrayIterator
- *  110:     private function init($designator, tx_sglib_factory $factoryObj, $conf)
- *  134:     public function setParentObject($parentCObj)
- *  151:     public function setPluginConfig($pluginSubMode, $pluginMode, $cmdMode, $cached)
- *  165:     protected function _initRecursive($recursive)
- *  181:     protected function _findAllReferences()
- *  214:     protected function getLabelField($table)
- *  231:     private function _fCount ($name=NULL)
- *  254:     function __destruct()
+ *   81: class tx_sglib_config extends ArrayIterator
+ *  113:     public static function getInstance($designator, tx_sglib_factory $factoryObj, $conf)
+ *  129:     private function init($designator, tx_sglib_factory $factoryObj, $conf)
+ *  153:     public function setParentObject($parentCObj)
+ *  170:     public function setPluginConfig($pluginSubMode, $pluginMode, $cmdMode, $cached)
+ *  184:     protected function _initRecursive($recursive)
+ *  200:     protected function _findAllReferences()
+ *  216:     protected function _findReferencesForTable($table)
+ *  260:     public function getReferences ($table, $mode='',$key='')
+ *  287:     protected function getLabelField($table)
+ *  304:     private function _fCount ($name=NULL)
+ *  327:     function __destruct()
  *
  *              SECTION: Functions
- *  273:     function setDesignator($string)
- *  283:     function getDesignator()
- *  293:     function getPid()
- *  303:     function getPidList()
- *  316:     function setTCAname($tableName)
- *  326:     function getTCAname()
- *  337:     function setTCAdata($tableName='')
- *  380:     function getTCAdata($tableName='')
- *  391:     function setPreConfData($name, array $conf)
- *  404:     function setConfData(array $conf)
- *  418:     function setLocalConf($localConf=NULL)
- *  440:     function getConfData()
- *  464:     function combineTCAandConf($tableName='')
- *  514:     function getCombined()
+ *  346:     function setDesignator($string)
+ *  356:     function getDesignator()
+ *  366:     function getPid()
+ *  376:     function getPidList()
+ *  389:     function setTCAname($tableName)
+ *  399:     function getTCAname()
+ *  410:     function setTCAdata($tableName='')
+ *  453:     function getTCAdata($tableName='')
+ *  464:     function setPreConfData($name, array $conf)
+ *  477:     function setConfData(array $conf)
+ *  491:     function setLocalConf($localConf=NULL)
+ *  513:     function getConfData()
+ *  537:     function combineTCAandConf($tableName='')
+ *  591:     function getCombined()
  *
  *              SECTION: Getters
- *  533:     public function __get($nm)
- *  593:     function TSObj ($name,$conf)
- *  613:     function getFFvalue($fieldName,$sheet='sDEF',$lang='lDEF',$value='vDEF')
- *  627:     function setDebugObj ($debugObj)
+ *  610:     public function __get($nm)
+ *  674:     public function get($name)
+ *  698:     function TSObj ($name,$conf)
+ *  717:     function TSConfObj ($conf,$name)
+ *  738:     function getFFvalue($fieldName,$sheet='sDEF',$lang='lDEF',$value='vDEF')
+ *  752:     function setDebugObj ($debugObj)
+ *
+ *              SECTION: JS Functions
+ *  772:     function addJs ($name)
  *
  *              SECTION: Local helpers
- *  649:     public function initFlexForm($field='pi_flexform')
- *  666:     private function _getFFvalueFromSheetArray($sheetArray,$fieldNameArr,$value)
- *  697:     private function _configTCA ($tableName='',$config=NULL)
- *  719:     private function _getDotArray($myValue)
+ *  810:     public function initFlexForm($field='pi_flexform')
+ *  827:     private function _getFFvalueFromSheetArray($sheetArray,$fieldNameArr,$value)
+ *  858:     private function _configTCA ($tableName='',$config=NULL)
+ *  880:     private function _getDotArray($myValue)
+ *  904:     public function getDescriptions($table='')
  *
- * TOTAL FUNCTIONS: 30
+ * TOTAL FUNCTIONS: 37
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -94,6 +103,13 @@ class tx_sglib_config extends ArrayIterator {
 
 	private function __clone() {}
 
+	/**
+	 * Get Singleton of this class
+	 *
+	 * @param	[type]		$designator, tx_sglib_factory $factoryObj: ...
+	 * @param	[type]		$conf: ...
+	 * @return	[type]		...
+	 */
 	public static function getInstance($designator, tx_sglib_factory $factoryObj, $conf) {
 		if (!isset(self::$instance[$designator])) {
 			self::$instance[$designator] = new tx_sglib_config();
@@ -103,7 +119,7 @@ class tx_sglib_config extends ArrayIterator {
 	}
 
 	/**
-	 * [Describe function...]
+	 * Initialize
 	 *
 	 * @param	[type]		$designator: ...
 	 * @param	[type]		$factoryCObj: ...
@@ -129,7 +145,7 @@ class tx_sglib_config extends ArrayIterator {
 	}
 
 	/**
-	 * [Describe function...]
+	 * Set or update parentObject
 	 *
 	 * @param	[type]		$parentCObj: ...
 	 * @return	[type]		...
@@ -194,6 +210,7 @@ class tx_sglib_config extends ArrayIterator {
 	/**
 	 * [Describe function...]
 	 *
+	 * @param	[type]		$table: ...
 	 * @return	[type]		...
 	 */
 	protected function _findReferencesForTable($table) {
@@ -232,6 +249,14 @@ class tx_sglib_config extends ArrayIterator {
 		return (count($references['table']) ? $references : Array());
 	}
 
+	/**
+	 * [Describe function...]
+	 *
+	 * @param	[type]		$table: ...
+	 * @param	[type]		$mode: ...
+	 * @param	[type]		$key: ...
+	 * @return	[type]		...
+	 */
 	public function getReferences ($table, $mode='',$key='') {
 
 //		if (!$this->test[$table]) {
@@ -624,8 +649,10 @@ class tx_sglib_config extends ArrayIterator {
 				case 'view':
 					return ( (array)$this[$nm] );
 				default:
-					if (isset($this[$nm]) && !is_array($this[$nm])) {
+				if (isset($this[$nm]) && !is_array($this[$nm])) {
 					return ($this[$nm]);
+				} else if (isset($this[$nm.'.']) && is_array($this[$nm.'.'])){
+					return ($this[$nm.'.']);
 				} else {
 					$error = 'variable "'.$nm.'" not defined in confObj !';
 					if (is_object($this->debugObj)) {
@@ -639,6 +666,33 @@ class tx_sglib_config extends ArrayIterator {
 	}
 
 	/**
+	 * [Describe function...]
+	 *
+	 * @param	[type]		$name: ...
+	 * @return	[type]		...
+	 */
+	public function get($name) {
+		if (trim($name)) {
+			$parts = explode ('.',$name);
+			$findVal = $this;
+			for ($i=0;$i<count($parts);$i++) {
+				if ($i==count($parts)-1) {
+					if (strcmp(substr($name,-1),'.')==0) {
+						return ($findVal);
+					} else {
+						return ($findVal[$parts[$i]]);
+					}
+				} else {
+					$findVal = $findVal[$parts[$i].'.'];
+				}
+			}
+		} else {
+			return '';
+		}
+
+	}
+
+	/**
 	 * Renders singleObject; if $conf is not an array then $name is returned via getData (if LLL:) or via insertData
 	 *
 	 * @param	string		The content object name, eg. "TEXT" or "USER" or "IMAGE"
@@ -646,12 +700,32 @@ class tx_sglib_config extends ArrayIterator {
 	 * @return	string		cObject output
 	 */
 	function TSObj ($name,$conf) {
+		$this->_fCount(__FUNCTION__);
 		if (is_array($conf)) {
 			return ($this->cObj->cObjGetSingle($name,$conf));
 		} if (strncmp($name,'EXT:',4)==0) {
 			return (substr(t3lib_div::getFileAbsFileName($name),strlen(PATH_site)));
 		} else {
 			return (strncmp($name,'LLL:',4)) ? $this->cObj->insertData($name) : $this->cObj->getData($name,$this->cObj->data);
+		}
+	}
+
+
+	/**
+	 * Renders singleObject; if $conf is not an array then $name is returned via getData (if LLL:) or via insertData
+	 *
+	 * @param	array		The array with all TypoScript properties, containing TS for $name
+	 * @param	string		The name of the TS Object or TS value
+	 * @return	string		cObject output
+	 */
+	function TSConfObj ($conf,$name) {
+		$this->_fCount(__FUNCTION__);
+		if (is_array($conf[$name.'.'])) {
+			return ($this->cObj->cObjGetSingle($conf[$name],$conf[$name.'.']));
+		} if (strncmp($conf[$name],'EXT:',4)==0) {
+			return (substr(t3lib_div::getFileAbsFileName($conf[$name]),strlen(PATH_site)));
+		} else {
+			return (strncmp($conf[$name],'LLL:',4)) ? $this->cObj->insertData($conf[$name]) : $this->cObj->getData($conf[$name],$this->cObj->data);
 		}
 	}
 
@@ -696,6 +770,7 @@ class tx_sglib_config extends ArrayIterator {
 	 ******************************************************************************/
 
 	/**
+	 * @param	[type]		$name: ...
 	 * @return	[type]		...
 	 */
 	function addJs ($name) {

@@ -154,6 +154,7 @@ class tx_sglib_lang {
 	 * @return	[type]		...
 	 */
 	function setLocalLangFile($fileName) {
+		$this->localLangFile = $fileName;
 		$this->_fCount(__FUNCTION__);
 		$fileLL = $GLOBALS['TSFE']->tmpl->getFileName($fileName);
 		if (!$this->LOCAL_LANG_loaded && is_file($fileLL)) {
@@ -224,15 +225,18 @@ class tx_sglib_lang {
 	 * @return	[type]		...
 	 */
 	function getLL($key,$alt='',$hsc=FALSE)	{
+		if ($this->localLangFile) {
+			return ($this->getLLL('LLL:'.$this->localLangFile.':'.$key,$alt));
+		}
 		$this->_fCount(__FUNCTION__);
 		if (isset($this->LOCAL_LANG[$this->llKey][$key]))	{
 			$word = $this->LOCAL_LANG[$this->llKey][$key];
 		} elseif (isset($this->LOCAL_LANG['default'][$key]))	{
 			$word = $this->LOCAL_LANG['default'][$key];
 		} else {
-			$word = $this->alt;
+			$word = $alt;
 		}
-
+		// if ($alt=="hidden") t3lib_div::debug(Array('$word'=>$word, '1'=>$this->LOCAL_LANG, 'File:Line'=>__FILE__.':'.__LINE__));
 		if ($hsc)	$word = htmlspecialchars($word);
 		return $word;
 	}

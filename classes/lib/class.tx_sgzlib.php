@@ -162,6 +162,9 @@ class tx_sgzlib {
 	var $scriptRelPath='class.tx_sgzlib.php';
 	var $extKey='sg_zlib';
 
+	var $debugField = '-';
+	var $debugMMField = '-';
+
 	var $conf = Array();
 	var $xajax;
 	var $xajaxFieldWrap = Array();
@@ -198,6 +201,9 @@ class tx_sgzlib {
 	var $langObj;
 	var $itemsObj;
 	var $divObj;
+	var $dateObj;
+
+	var $designator;
 
 	/**
 	 * ****************************************************************************
@@ -241,13 +247,22 @@ class tx_sgzlib {
 	 * @return	[type]		...
 	 */
 	function init($designator, tx_sglib_factory $factoryObj)	{
-
+		$this->designator = $designator;
 		$this->_fCount(__FUNCTION__);
+		$this->dateObj = tx_sgdate::getInstance();
 		$this->factoryObj = $factoryObj;
 		$this->confObj = $factoryObj->confObj;
 		$this->conf = $this->confObj->getConfData();
 		$this->debugObj = $factoryObj->debugObj;
 		$this->divObj = $factoryObj->divObj;
+
+		if (strlen($this->confObj['debugField'])>1) {
+			$this->debugField = $this->confObj['debugField'];
+		}
+		if (strlen($this->confObj['debugMMField'])>1) {
+			$this->debugMMField = $this->confObj['debugMMField'];
+		}
+
 
 		$this->myQuery = t3lib_div::getIndpEnv('TYPO3_REQUEST_URL');
 
@@ -273,6 +288,12 @@ class tx_sgzlib {
 			$this->exporter = $this->conf['exporter'];
 		} else {
 			$this->exporter = $GLOBALS['TSFE']->tmpl->getFileName($this->conf['exporter']);
+		}
+
+		if (substr($this->conf['deleter'],0,5)=='index') {
+			$this->deleter = $this->conf['deleter'];
+		} else {
+			$this->deleter = $GLOBALS['TSFE']->tmpl->getFileName($this->conf['deleter']);
 		}
 
 		$this->typolink_conf = $this->conf['typolink.'];
@@ -817,6 +838,8 @@ class tx_sgzlib {
 		$PCA['listmode'] = $this->mergeTsArray(Array(),$pluginConf[$dbTable.'.']['listmode.']);
 		$PCA['search'] = $this->mergeTsArray(Array(),$pluginConf[$dbTable.'.']['search.']);
 		$PCA['export'] = $this->mergeTsArray(Array(),$pluginConf[$dbTable.'.']['export.']);
+		$PCA['deleteList'] =$this->mergeTsArray(Array(),$pluginConf[$dbTable.'.']['deleteList.']);
+		$PCA['undeleteList'] = $this->mergeTsArray(Array(),$pluginConf[$dbTable.'.']['undeleteList.']);
 		$PCA['quota'] = $this->mergeTsArray(Array(),$pluginConf['quota.']);
 		$PCA['autoInsert'] = $this->mergeTsArray(Array(),$pluginConf['autoInsert.'],1);
 		$PCA['autoInsert']['params'] = $PCA['autoInsert']['params.']; unset ($PCA['autoInsert']['params.']);
@@ -1172,14 +1195,14 @@ class tx_sgzlib {
 			default:
 			if ($myMode=='datetime') {
 				$myDate =  ($this->dateTimeStringToTime($row[$field])>10000) ?
-					$row[$field] : ($row[$field] > 80000 ? $this->formatDateTime($row[$field]) : '') ;
+					$row[$field] : ($row[$field] > 80000 ? $this->dateObj->formatDateTime($row[$field]) : '') ;
 				$item = (intval($row[$field])==0) ? '' : $myDate;
 			} else if ($myMode=='date') {
 				$myDate =  ($this->dateStringToTime($row[$field])>10000) ?
-					$row[$field] : ($row[$field] > 80000 ? $this->formatDate($row[$field]) : '') ;
+					$row[$field] : ($row[$field] > 80000 ? $this->dateObj->formatDate($row[$field]) : '') ;
 				$item = (intval($row[$field])==0) ? '' : $myDate;
 			} else if ($myMode=='time') {
-				$myTime =  ($this->timeStringToTime($row[$field]) ? $row[$field] : $this->formatTime($row[$field]-3600) )  ;
+				$myTime =  ($this->timeStringToTime($row[$field]) ? $row[$field] : $this->dateObj->formatTime($row[$field]-3600) )  ;
 				$item = (intval($row[$field])==0) ? '' : $myTime;
 			} else {
 				if ($tmp=$PCA['conf'][$field]['numFormat']) {
@@ -1273,6 +1296,7 @@ class tx_sgzlib {
 						}
 					}
 					$item = $this->divObj->myNl2br($row[$field],($PCA['conf'][$field]['stdWrapName']) ? chr(10) : '');
+					// t3lib_div::debug(Array('$row[$field]'=>$row[$field], '$item'=>$item, 'File:Line'=>__FILE__.':'.__LINE__));
 					if (!$item) {
 						$ifEmpty = $PCA['conf'][$field]['ifempty'];
 						$item = $ifEmpty;
@@ -1446,7 +1470,7 @@ class tx_sgzlib {
 			$onc = '';
 			if (strcmp($PCA['search'][$field]['mode'],'selectmulti')==0) {
 				$onc = 'onchange="javascript:sgSelectMultiChange('.QT.$PCA['name'].QT.','.QT.$field.QT.','.QT.$this->sMode.QT.')" ';
-				$item = '<input type="hidden" name="'.$PCA['name'].'[search]['.$field.']" value="'.$row[$field].'">';
+				$item = '<input type="hidden" name="'.$PCA['name'].'[search]['.$field.']" value="'.$row[$field].'" />';
 				$item .= '<select name="'.$PCA['name'].'[searchmulti]['.$field.']" '.$onc.$classname.' multiple="multiple">';
 				$set = false;
 				$lnr = 0;
@@ -1492,7 +1516,7 @@ class tx_sgzlib {
 //				$group = 'uid_foreign';
 //				$myTable = $myConf['MM'];
 //				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($select,$myTable,$query,$group);
-				$this->debugval('getitemdetails',$field,Array('$select'=>$select, '$table(MM)'=>$myConf['MM'], '$query'=>$query, '$group'=>$group,
+				$this->debugObj->debugval('getitemdetails',$field,Array('$select'=>$select, '$table(MM)'=>$myConf['MM'], '$query'=>$query, '$group'=>$group,
 					'numRows='=>$GLOBALS['TYPO3_DB']->sql_num_rows($res), 'File:Line'=>__FILE__.':'.__LINE__));
 			} else {
 				$query = '1=1 '.(($PCA['search'][$field]['hiddenAlso']) ? ' AND deleted=0 ' : $this->lCObj->enableFields($table));
@@ -1639,7 +1663,10 @@ class tx_sgzlib {
 				}
 			}
 		}
-
+		if (strcmp($field,$this->debugField)==0) {
+			t3lib_div::debug(Array('$field'=>$field, '$row[$field]'=>$row[$field], '$item'=>$item, 'File:Line'=>__FILE__.':'.__LINE__));
+			$item = '[[['.$item.']]]';
+		}
 		return (strlen($item)>0 ? $item : $this->conf['nbspForSelect']);
 	}
 
@@ -2246,12 +2273,16 @@ class tx_sgzlib {
 					$imglist[$i] = $imgPath;
 					$conf = $PCA['image'][$size]['conf'];
 					$conf['file'] = $imglist[$i];
+					$tmpData = $this->lCObj->data;
+					$this->lCObj->data = $row;
 					$tmpImg = $this->lCObj->IMAGE($conf);
+					$this->lCObj->data = $tmpData;
 					if ($PCA['image'][$size]['linkToOriginal']) {
 						$tmpImg = '<a href="/'.$origImgPath.'" target="_blank">'.$tmpImg.'</a>';
 					}
 					$tmpImg = str_replace('###uid###',$row['uid'],$imgWrap[0].$tmpImg.$imgWrap[1]);
 					$tmpCap = strlen($cpt[($mode==2 ? $i+1 : $i)])>0 ? $capWrap[0].$cpt[($mode==2 ? $i+1 : $i)].$capWrap[1] : '';
+					$tmpImg = str_replace('###cap###',strlen($cpt[($mode==2 ? $i+1 : $i)])>0 ? $cpt[($mode==2 ? $i+1 : $i)] : '',$tmpImg);
 					$tmpUrl = '';
 					$lineUrl = $url[($mode==2 ? $i+1 : $i)];
 					$u = $this->myParseUrl($lineUrl);
@@ -3031,8 +3062,55 @@ class tx_sgzlib {
 			}
 			$ex .= '</select>';
 		}
-		$ex .= '<input type="hidden" name="qa" value="'.urlencode(serialize($qa)).'">';
+		$ex .= '<input type="hidden" name="qa" value="'.urlencode(serialize($qa)).'" />';
 
+		$md5 = $this->getMd5Link($qa);
+
+		$bText = $this->langObj->getLLL($PCA['export']['submit']['label']);
+		$bText = str_replace ('###cnt###',$r['total'],($bText ? $bText : $this->langObj->getLLL('LLL:EXT:sg_zlib/locallang.xml:list.export')));
+		$bCode = $this->constObj->getButton('export',$bText);
+		$ex .=  ('<a href="'.$this->emptyUrl.'" onclick="exportDataParaSg('.QT.$this->exporter.QT.','.QT.urlencode($md5).QT.'); return false;">'.$bCode.'</a>');
+
+		$ex .= '</form>';
+
+		return ($ex);
+	}
+
+	function getDeleteSection ($dbName,$PCA,$piVarSearch=Array(),$qa=Array(),$r=Array()) {
+		$contentPart = '';
+		$qa['deleteMode'] = 'delete';
+		$md5 = $this->getMd5Link($qa);
+	
+		if ($this->permitObj->allowed('deleteList')) {
+			$bText = $this->langObj->getLLL($PCA['delete']['submit']['label']);
+			$bText = str_replace ('###cnt###',$r['total'],($bText ? $bText : $this->langObj->getLLL('LLL:EXT:sg_zlib/locallang.xml:list.delete')));
+			$bCode = $this->constObj->getButton('delete',$bText);
+			$jsAlert = $this->getJsAlert($PCA['deleteList']['jsAlert'],$md5,'delete');
+
+			$contentPart = '<a href="'.$this->emptyUrl.'" '.$jsAlert.'>'.$bCode.'</a>';
+		}
+		
+		return ($contentPart);
+	}
+
+	function getUndoDeleteSection ($dbName,$PCA,$piVarSearch=Array(),$qa=Array(),$r=Array()) {
+		$contentPart = '';
+		$qa['deleteMode'] = 'undelete';
+		$md5 = $this->getMd5Link($qa);
+	
+		if ($this->permitObj->allowed('deleteList')) {
+			$bText = $this->langObj->getLLL($PCA['undoDelete']['submit']['label']);
+			$bText = str_replace ('###cnt###',$r['total'],($bText ? $bText : $this->langObj->getLLL('LLL:EXT:sg_zlib/locallang.xml:list.undelete')));
+			$bCode = $this->constObj->getButton('undelete',$bText);
+			$jsAlert = $this->getJsAlert($PCA['undoDelete']['jsAlert'],$md5,'undelete');
+
+			$contentPart = '<a href="'.$this->emptyUrl.'" '.$jsAlert.'>'.$bCode.'</a>';
+		}
+	
+		return ($contentPart);
+	}
+
+	function getMd5Link($qa) {
 		$data = serialize($qa);
 		$md5 = substr(md5($data),0,20);
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('md5hash', 'cache_md5params', 'md5hash='.$GLOBALS['TYPO3_DB']->fullQuoteStr($md5, 'cache_md5params'));
@@ -3045,16 +3123,20 @@ class tx_sgzlib {
 			);
 			$GLOBALS['TYPO3_DB']->exec_INSERTquery('cache_md5params', $insertFields);
 		}
+		return ($md5);
+	}
 
+	function getJsAlert ($jsConf,$md5,$mode) {
+		$jsAlert = '';
 
-		$bText = 'Export '.$r['total'].' items !';
-		$ex .=  ('<a href="'.$this->emptyUrl.'" onclick="exportDataParaSg('.
-				QT.$this->exporter.QT.','.QT.urlencode($md5).QT.');'.
-				' return false;">'.$this->constObj->getButton('export',$this->langObj->getLLL($PCA['export']['submit']['label'])).$bText.'</a>');
-
-		$ex .= '</form>';
-
-		return ($ex);
+		if (!$jsConf['suppress']) {
+			$msg = $this->langObj->getLLL($jsConf['label']);
+			$msg = $msg ? $msg : $this->langObj->getLLL('LLL:EXT:sg_zlib/locallang.xml:areyousure');
+			
+			$jsAlert = 'onclick="deleteDataParaSg('.QT.$this->deleter.QT.','.QT.urlencode($md5).QT.','.QT.$msg.QT.','.QT.urlencode($mode).QT.'); return(false);"';
+		}
+		// t3lib_div::debug(Array('$jsAlert'=>$jsAlert, 'File:Line'=>__FILE__.':'.__LINE__));
+		return ($jsAlert);
 	}
 
 	/**
@@ -3188,7 +3270,7 @@ class tx_sgzlib {
 						$q['searches_'.$key] = '( '.implode(' OR ',$tmp).' )';
 					}
 				} else {
-					$text = $GLOBALS['TYPO3_DB']->quoteStr(urldecode(trim($piVarSearch[$key])),$dbName);
+					$text = $GLOBALS['TYPO3_DB']->quoteStr(trim($piVarSearch[$key]),$dbName);
 					if (intval($def['searchZero'])>0) {
 						if (strcmp($text,'-1')==0) { $doit=FALSE; }
 					} else {
@@ -3614,11 +3696,14 @@ class tx_sgzlib {
 				$new = Array();
 //				$res = $this->doSelect ('uid_foreign',$this->confObj->mainConf[$key.'.']['MM'],'uid_local='.intval($row['uid']),'','',500,'',0);
 				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery
-						('uid_foreign',$this->confObj->mainConf[$key.'.']['MM'],'uid_local='.intval($row['uid']),'','','0,1000');
+						('uid_foreign',$this->confObj->mainConf[$key.'.']['MM'],'uid_local='.intval($row['uid']),'','sorting','0,1000');
 				if ($res) {
 					while ($s = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 						$new[] = $s['uid_foreign'];
 					}
+				}
+				if (strcmp($key,$this->debugMMField)==0) {
+					t3lib_div::debug(Array('READ MM $key'=>$key, '$row[$key] was'=>$row[$key], '$row[$key]='=>implode (',',$new), 'File:Line'=>__FILE__.':'.__LINE__));
 				}
 				$row[$key] = implode (',',$new);
 				$this->debugObj->debugIf('MM',Array('MM Relation in'=>$key, '$old'=>$old, '$new'=>$row[$key], 'File:Line'=>__FILE__.':'.__LINE__));
@@ -3788,6 +3873,18 @@ class tx_sgzlib {
 
 					$row[$field] = str_replace("\n",',',str_replace("\r",',',str_replace("\r\n",',',
 							str_replace(",\r",',',str_replace(",\n",',',str_replace(','."\r\n",',',$row[$field]))))));
+					
+					$tmp = t3lib_div::trimExplode("\n",$row[$field]);
+					$tmp = $tmp[0];
+					$m['###FILE_'.strtoupper($field).'###'] = '';
+					$m['###FILEREL_'.strtoupper($field).'###'] = '';
+					$m['###FILEABS_'.strtoupper($field).'###'] = '';
+					if (strlen($tmp)) {
+						$path = $PCA['conf'][$field]['uploadfolder'];
+						$path = ((substr($path,-1)=='/') ? $path : $path.'/');
+						$m['###FILE_'.strtoupper($field).'###'] = $path.$tmp;
+						// t3lib_div::debug(Array('$path'=>$path, '$tmp'=>$tmp, 'Rel='=>$m['###FILEREL_'.strtoupper($field).'###'], 'Abs='=>$m['###FILEABS_'.strtoupper($field).'###'], 'File:Line'=>__FILE__.':'.__LINE__));
+					}
 
 					$single = (intval($fieldConf['maxitems'])==1);
 					$autoSort = (intval($fieldConf['autoSort'])==1);
@@ -3830,7 +3927,7 @@ class tx_sgzlib {
 							$m['###TEXT_'.strtoupper($field).'###'] = $viewInForm ? $this->getFileLinks ($dbName,$field,$row,$PCA) : '';
 						}
 					} else {
-					if ($tmpListMode=='webimg') {
+						if ($tmpListMode=='webimg') {
 							$cpt = $cap ? (isset($this->confObj->mainConf[$cap.'.']) ? t3lib_div::trimExplode("\n",$row[$cap]):Array($cap)):Array();
 							$url = $link ? t3lib_div::trimExplode("\n",$row[$link]) : Array();
 							if (!$link && is_array($fieldConf['typoLink'])) {
@@ -4352,6 +4449,10 @@ class tx_sgzlib {
 	 */
 	function saveRowToDb ($dbName,&$myPiVars,&$PCA) {
 		$content = '';
+
+		$PCA['todo']['Created'] = 0;
+		$PCA['todo']['Saved'] = 0;
+
 		$mySaveVars = Array();
 		$myMM = Array();
 		$iAmEditor = FALSE;
@@ -4456,6 +4557,7 @@ class tx_sgzlib {
 				//}
 				//$PCA['todo']['Edit'] = 0;
 				$PCA['todo']['Save'] = 0;
+				$PCA['todo']['Saved'] = 1;
 
 				$this->writelog('SGZLIB: table "'.$dbName.'" Record "'.$myPiVars['uid'].
 					'" changed  (F'.$this->permitObj->getFeUid().'/B'.$this->permitObj->getBeUid().')',2);
@@ -4517,6 +4619,7 @@ class tx_sgzlib {
 				$PCA['todo']['Edit'] = 0;
 				$PCA['todo']['Save'] = 0;
 				$PCA['todo']['Uid'] = $tmpUid;
+				$PCA['todo']['Created'] = 1;
 
 				$this->writelog('SGZLIB: table "'.$dbName.'" NEW Record "'.$PCA['todo']['Uid'].
 					'" created  (F'.$this->permitObj->getFeUid().'/B'.$this->permitObj->getBeUid().')',2);
@@ -4541,17 +4644,26 @@ class tx_sgzlib {
 						'DELETE FROM'=>'', 'table'=>$myMM[$key], 'where'=>$where,
 						'File:Line'=>__FILE__.':'.__LINE__));
 				}
+				if (strcmp($key,$this->debugMMField)==0) {
+					t3lib_div::debug(Array('DELETE MM $key'=>$key, '$myMM[$key]'=>$myMM[$key], '$where'=>$where, 'File:Line'=>__FILE__.':'.__LINE__));
+				}
 
 				// then save all ids
 				$tmp = t3lib_div::intExplode (',',$mySaveVars[$key]);
+				if (strcmp($key,$this->debugMMField)==0) {
+					t3lib_div::debug(Array('INSERT MM $key'=>$key, '$mySaveVars[$key]'=>$mySaveVars[$key], '$tmp'=>$tmp, 'File:Line'=>__FILE__.':'.__LINE__));
+				}
 				if (count($tmp)>1 || $tmp[0]!=0) {
 					for ($i=0;$i<count($tmp);$i++) {
-						$values = Array('uid_local'=>$myUid, 'uid_foreign'=>$tmp[$i]);
+						$values = Array('uid_local'=>$myUid, 'uid_foreign'=>$tmp[$i], 'sorting'=>$i);
 						$res = $GLOBALS['TYPO3_DB']->exec_INSERTquery($myMM[$key],$values);
 						if ($GLOBALS['TYPO3_DB']->sql_error()) {
 							t3lib_div::debug(Array('ERROR'=>$GLOBALS['TYPO3_DB']->sql_error(),
 								'DELETE FROM'=>'', 'table'=>$myMM[$key], 'values'=>$values,
 								'File:Line'=>__FILE__.':'.__LINE__));
+						}
+						if (strcmp($key,$this->debugMMField)==0) {
+							t3lib_div::debug(Array('$myMM[$key]'=>$myMM[$key], '$values'=>$values, 'File:Line'=>__FILE__.':'.__LINE__));
 						}
 					}
 				}
@@ -5371,7 +5483,8 @@ class tx_sgzlib {
 			'maxSize'=>$maxsize,
 			'maxItems'=>intval($PCA['conf'][$field]['maxitems']),
 			'listmode'=>$listmode, 'imageallow'=>$mode,
-			'noAutoClose'=>(intval($PCA['conf'][$field]['noAutoClose'])) );
+			'noAutoClose'=>(intval($PCA['conf'][$field]['noAutoClose'])) ,
+			'rename'=>$PCA['conf'][$field]['fileRename'] );
 		if ($bn=='set') {
 			$params['replace'] = 1;
 		}
@@ -5705,14 +5818,40 @@ class tx_sgzlib {
 	 * @param	[type]		$concat: ...
 	 * @return	[type]		...
 	 */
-	function getImportFile ($filename,$mincount,$delim="\t",$concat=1) {
+	function getImportFile ($filename,$mincount,$delim="\t",$concat=1,$recode='') {
+		if (!file_exists($filename)) {
+			t3lib_div::debug(Array('ERROR'=> '"'.$filename.'" does not exist!', 'File:Line'=>__FILE__.':'.__LINE__));
+		} else {
+			// t3lib_div::debug(Array('File'=> '"'.$filename.'"', 'Size'=>filesize($filename), 'File:Line'=>__FILE__.':'.__LINE__));
+		}
 		$this->impErrors = Array();
-
+		$recodes = t3lib_div::trimExplode(',',$recode);
+		$cs = t3lib_div::makeInstance('t3lib_cs');
+		
+		if (1==0) t3lib_div::debug(Array('t3lib_cs_convMethod'=>$GLOBALS['TYPO3_CONF_VARS']['SYS']['t3lib_cs_convMethod'], 
+			'function_exists(recode_string)'=>function_exists('recode_string'),
+			'function_exists(mb_convert_encoding)'=>function_exists(mb_convert_encoding),
+			'function_exists(iconv)'=>function_exists(iconv),
+			'$recodes'=>$recodes,
+			'$TSFE->renderCharset'=>$GLOBALS['TSFE']->renderCharset,
+			'File:Line'=>__FILE__.':'.__LINE__));
+		
 		$fArray = Array();
 		$lines = file ($filename);
 		$lCnt = count($lines);
+		// t3lib_div::debug(Array('$lCnt'=>$lCnt, '$lines'=>$lines, 'File:Line'=>__FILE__.':'.__LINE__));
+		if ($lCnt==1) { // check if file is in MAC-Format
+			$tmp = explode("\r",$lines[0]);
+			if (count($tmp)>1) {
+				$lines = $tmp;
+				$lCnt = count($lines);
+				// t3lib_div::debug(Array('WARNING'=>'MAC CRs used.', '$lCnt'=>$lCnt, '$lines'=>$lines, 'File:Line'=>__FILE__.':'.__LINE__));
+			}
+		}
+
 		for ($i=0;$i<$lCnt;$i++) if(trim($lines[($i)])) {
 			$theLine = str_replace("\n",'',str_replace("\r",'',$lines[($i)]));
+			// t3lib_div::debug(Array('$i'=>$i, 'File:Line'=>__FILE__.':'.__LINE__));
 			if ($concat>0) {
 				while (substr_count($theLine,$delim)<($mincount-1) && $i<$lCnt ) {
 					$this->impErrors['L-'.$i] = '('.substr_count($lines[$i],$delim).') '.$lines[$i];
@@ -5720,16 +5859,26 @@ class tx_sgzlib {
 					$i++;
 				}
 				if (trim($theLine)) {
+					if ($recodes[0] && $recodes[1]) {
+						$theLine = $cs->conv($theLine,$recodes[0],$recodes[1]);
+					}
 					$fArray[] = $theLine;
 				}
 			} else if (intval($concat)==0 && substr_count($theLine,$delim)<($mincount-1)) {
-					$this->impErrors['L-'.$i] = '('.substr_count($lines[$i],$delim).') '.$lines[$i];
+					if ($recodes[0] && $recodes[1]) {
+						$theLine = $cs->conv($theLine,$recodes[0],$recodes[1]);
+					}
+					$this->impErrors['L-'.$i] = '('.substr_count($theLine,$delim).') '.$theLine;
 			} else {
 				if (trim($theLine)) {
+					if ($recodes[0] && $recodes[1]) {
+						$theLine = $cs->conv($theLine,$recodes[0],$recodes[1]);
+					}
 					$fArray[] = $theLine;
 				}
 			}
 		}
+		// t3lib_div::debug(Array('$fArray'=>$fArray, '$this->impErrors'=>$this->impErrors,  'File:Line'=>__FILE__.':'.__LINE__));
 		return ($fArray);
 	}
 
@@ -5779,6 +5928,12 @@ class tx_sgzlib {
 		return ($retcode);
 	}
 
+
+	function getImageDownloadLink() {
+		$url = '';
+
+		return ($url);
+	}
 
 }
 

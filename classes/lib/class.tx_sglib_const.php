@@ -55,6 +55,7 @@ class tx_sglib_const {
 	private static $instance = Array();
 
 	private $factoryObj = NULL;
+	private $cObj;
 	private $confObj;
 	private $debugObj;
 	private $defaultDesignator;
@@ -93,6 +94,7 @@ class tx_sglib_const {
 		$this->conf = (array) $this->confObj->constants;
 		$this->debugObj->debugIf('constConf',Array('conf(constants.)'=>$this->conf, 'File:Line'=>__FILE__.':'.__LINE__));
 		$this->langObj = $factoryObj->langObj;
+		$this->cObj = $factoryObj->cObj;
 
 		$this->_initWraps($this->conf['wraps.']);
 		$this->_initConst($this->conf['const.']);
@@ -139,11 +141,15 @@ class tx_sglib_const {
 	 * @param	[type]		$conf: ...
 	 * @return	[type]		...
 	 */
-	private function _initWraps($conf) {
+	private function _initWraps($conf,$preText='') {
 		$this->_fCount(__FUNCTION__);
-		if (is_array($conf)) foreach ($conf as $key=>$value) if(substr($key,-1)!='.') {
-			$tmp = $this->confObj->TSobj($value,$conf[$key.'.']);
-			$this->wraps[$key] = explode ('|', $tmp ,2);
+		if (is_array($conf)) foreach ($conf as $key=>$value) {
+			if(substr($key,-1)!='.') {
+				$tmp = $this->confObj->TSobj($value,$conf[$key.'.']);
+				$this->wraps[$preText.$key] = explode ('|', $tmp ,2);
+			} else {
+				$this->_initWraps ($value,$key);
+			}
 		}
 		$this->debugObj->debugIf('constConf',Array('constants/wraps'=>$this->wraps, 'File:Line'=>__FILE__.':'.__LINE__));
 	}
@@ -171,9 +177,7 @@ class tx_sglib_const {
 
 		$this->_initMoreConst();
 
-		if (is_array($conf)) foreach ($conf as $key=>$value) if(substr($key,-1)!='.') {
-			$this->const[$key] = $this->confObj->TSObj($conf[$key],$conf[$key.'.']);
-		}
+		$this->_initTsConst($conf);
 		//t3lib_div::debug(Array('$this->const'=>$this->const, 'File:Line'=>__FILE__.':'.__LINE__));
 
 		$this->debugObj->debugIf('constConf',Array('constants/const'=>$this->const, 'File:Line'=>__FILE__.':'.__LINE__));
@@ -208,7 +212,7 @@ class tx_sglib_const {
 		$this->const['beuser_username'] = $this->user['username'];
 		$this->const['beuser_realname'] = $this->user['realname'];
 
-		$this->user = Array();
+		$this->user = Array('uid'=>0, 'username'=>'--unknown--');
 		if (is_object($GLOBALS['TSFE']->fe_user)) {
 			if (is_array($GLOBALS['TSFE']->fe_user->user)) {
 				$this->user = $GLOBALS['TSFE']->fe_user->user;
@@ -218,6 +222,16 @@ class tx_sglib_const {
 		$this->const['feuser_username'] = $this->user['username'];
 		$this->const['feuser_name'] = $this->user['name'];
 		$this->const['feuser_firstname'] = $this->user['firstname'];
+		$this->const['feuser_lastname'] = $this->user['lastname'];
+		$this->const['feuser_readableusername'] = $this->user['username'];
+		if ($this->user['lastname']){
+			$this->const['feuser_readableusername'] = $this->user['lastname'];
+			if ($this->user['firstname']){
+				$this->const['feuser_readableusername'] .= ', '.$this->user['firstname'];
+			}
+		} else if ($this->user['name']){
+			$this->const['feuser_readableusername'] = $this->user['name'];
+		}
 		$this->const['feuser_email'] = $this->user['email'];
 		$this->const['feuser_address'] = $this->user['address'];
 		$this->const['feuser_company'] = $this->user['company'];
@@ -225,7 +239,7 @@ class tx_sglib_const {
 		$this->const['feuser_city'] = $this->user['city'];
 		$this->const['feuser_country'] = $this->user['country'];
 
-		$this->const['gpvar_uid'] = intval(t3lib_div::GPvar('uid'));
+		$this->const['gpvar_uid'] = intval(t3lib_div::_GP('uid'));
 	}
 
 	/**
@@ -234,10 +248,32 @@ class tx_sglib_const {
 	 * @param	[type]		$conf: ...
 	 * @return	[type]		...
 	 */
-	private function _initIcons($conf) {
+	private function _initTsConst($conf,$preText='') {
 		$this->_fCount(__FUNCTION__);
-		if (is_array($conf)) foreach ($conf as $key=>$value) if(substr($key,-1)!='.') {
-			$this->icons[$key] = $this->confObj->TSobj($value,$conf[$key.'.']);
+		if (is_array($conf)) foreach ($conf as $key=>$value) {
+			if(substr($key,-1)!='.') {
+				$this->const[$preText.$key] = $this->confObj->TSObj($conf[$key],$conf[$key.'.']);
+			} else {
+				$this->_initTsConst ($value,$key);
+			}
+		}
+		$this->debugObj->debugIf('constConf',Array('constants/wraps'=>$this->wraps, 'File:Line'=>__FILE__.':'.__LINE__));
+	}
+
+	/**
+	 * [Describe function...]
+	 *
+	 * @param	[type]		$conf: ...
+	 * @return	[type]		...
+	 */
+	private function _initIcons($conf,$preText='') {
+		$this->_fCount(__FUNCTION__);
+		if (is_array($conf)) foreach ($conf as $key=>$value) {
+			if(substr($key,-1)!='.') {
+				$this->icons[$preText.$key] = $this->confObj->TSobj($value,$conf[$key.'.']);
+			} else {
+				$this->_initIcons ($value,$key);
+			}
 		}
 		$this->debugObj->debugIf('constConf',Array('constants/icons'=>$this->icons, 'File:Line'=>__FILE__.':'.__LINE__));
 	}
@@ -347,6 +383,7 @@ class tx_sglib_const {
 			foreach ($this->const as $key=>$value) {
 				$markers[$this->defaultDesignator]['###CONST_'.strtoupper($key).'###'] = $this->langObj->getLLL($value);
 			}
+			//t3lib_div::debug(Array('$markers'=>$markers, 'File:Line'=>__FILE__.':'.__LINE__));
 		}
 		return ($markers[$this->defaultDesignator]);
 	}
@@ -385,8 +422,9 @@ class tx_sglib_const {
 					$myType = $this->conf['buttons.'][$name];
 					$myConf = $this->conf['buttons.'][$name.'.'];
 
+					$buttonCode = (strlen($defaultText)>0) ? $defaultText : '[['.$name.']]';
 					$buttons[$this->defaultDesignator][$name] = (strlen($defaultText)>0) ? $defaultText : '[['.$name.']]';
-					$this->factoryObj->cObj->setCurrentVal($buttons[$name]);
+					$this->factoryObj->cObj->setCurrentVal($buttonCode);
 					if (strlen($myType)>0) {
 						$buttons[$this->defaultDesignator][$name] = $this->confObj->TSobj($myType,$myConf);
 					}
@@ -428,6 +466,36 @@ class tx_sglib_const {
 		$this->_fCount(__FUNCTION__);
 		return ($this->conf['buttons.'][$name.'.']);
 	}
+
+
+	/**
+	 * Renders singleObject; if $conf is not an array then $name is returned via getData (if LLL:) or via insertData
+	 *
+	 * @param	string		The content object name, eg. "TEXT" or "USER" or "IMAGE"
+	 * @param	array		The array with TypoScript properties for the content object
+	 * @return	string		cObject output
+	 */
+	function TSConstObj ($name,$conf) {
+		$this->_fCount(__FUNCTION__);
+		$content = $this->cObj->substituteMarkerArray($this->confObj->TSObj ($name,$conf), $this->getMarkers());
+		return ($content);
+	}
+
+
+	/**
+	 * Renders singleObject; if $conf is not an array then $name is returned via getData (if LLL:) or via insertData
+	 *
+	 * @param	array		The array with all TypoScript properties, containing TS for $name
+	 * @param	string		The name of the TS Object or TS value
+	 * @return	string		cObject output
+	 */
+	function TSConstConfObj ($conf,$name) {
+		$this->_fCount(__FUNCTION__);
+		$content = $this->cObj->substituteMarkerArray($this->confObj->TSConfObj ($conf,$name), $this->getMarkers());
+		return ($content);
+	}
+
+
 
 }
 

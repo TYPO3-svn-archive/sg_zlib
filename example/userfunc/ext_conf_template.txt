@@ -1,0 +1,2 @@
+# cat=basic; type=user[EXT:sg_zlib/classes/userfunc/class.tx_userfunction_constedit.php:&tx_userfunction_constedit->page]; label=Select a page.
+page =

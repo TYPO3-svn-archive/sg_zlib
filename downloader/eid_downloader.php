@@ -193,7 +193,7 @@ class sg_downloader {
 	 */
 	function main ($content, $conf) {
 		$content = '';
-		if (intval($GLOBALS['TSFE']->fe_user->user['uid'])==intval($this->params['feUser'])) {
+		if (intval($this->params['feUser'])==0 || intval($GLOBALS['TSFE']->fe_user->user['uid'])==intval($this->params['feUser'])) {
 			if (!$this->params['mime']) {
 				$this->params['mime'] = 'text';
 			}
@@ -215,7 +215,7 @@ class sg_downloader {
 
 
 		} else {
-			$content .= 'ERROR: Access Denied!';
+			$content .= 'ERROR: Access Denied! '.intval($this->params['feUser']).'-'.intval($GLOBALS['TSFE']->fe_user->user['uid']);
 		}
 
 		return ($content);

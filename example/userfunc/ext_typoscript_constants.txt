@@ -1,0 +1,10 @@
+#Constants:
+
+plugin.tx_myxyplugin_pi1 {
+
+	# cat=plugin.my_xyplugin/IDs/1; type=user[EXT:sg_zlib/classes/userfunc/class.tx_userfunction_constedit.php:&tx_userfunction_constedit->page]; label= ListPage: Page-ID of ListPage where list of records is displayed
+	PIDlistDisplay = 
+	# cat=plugin.my_xyplugin/IDs/1; type=user[EXT:sg_zlib/classes/userfunc/class.tx_userfunction_constedit.php:&tx_userfunction_constedit->feUserList]; label= Default FeUser: FeUser-ID of a Frontend-User
+	defaultFeUser = 
+
+}

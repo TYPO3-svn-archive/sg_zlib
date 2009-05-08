@@ -1,3 +1,100 @@
+
+0.2.791	Changed: give some hints, if access-denied in eid_downloader.
+
+0.2.790	confObj->get() now also finds sub-arrays
+	templateObj new function getMarkersWithWrap
+
+0.2.784	Modified getWraps, getConst and getIcon to allow dot-separated subKeys
+
+0.2.783	Added missing /> to input-tags
+
+0.2.782	New: paramsObj now returns global uid if plugin(uid) is not set in getUid();
+
+0.2.781	New: ###cap### is possible as alttext or titletext in image-configuration
+
+0.2.780	New: classes for rekursive category trees in classes/trees
+
+0.2.770	New: allow.EditAllHidden
+
+0.2.761	Bugfix: browse_db
+
+0.2.755	New: browse_db; new restriction via mm-files
+
+0.2.754	Fix: new records had empty required fileds -> complete record was empty
+
+0.2.753	Fix: bug with langObj->getLL //more to do !
+
+0.2.752	Changed: paramsObj hast now updateParams
+
+0.2.751	New: Markers ###SEARCHPARAMS_...
+
+0.2.750	Fix: Problems with search
+
+0.2.710	Changed: Added import-settings: skipFirstRow, RemoveFieldQoutes, and field.key.preprocess
+	Fix: fixed nonexisting crop-function
+
+0.2.700	Changed: substitutes deprecated t3lib_div::GPvar by t3lib_div::_GP
+
+0.2.670	Changed: some labels for import-class
+
+0.2.660	Fix: in markers Obj
+
+0.2.659	Fix: globalMarkers in base_import was not set to array
+
+0.2.658 New: ###CONST_-Markers are now also available in Subaprt NO_UID_GIVEN
+
+0.2.657 New: Debug-Output for getItems: dodebug.debugField
+	New: Debug-Output for MM-Items: dodebug.debugMMField
+	Bugfix: Manual Sorting in MM-Fields is OK now
+
+0.2.656	Bugfix: Browsefile.php did not check correctly
+
+0.2.655	Fix: Deleteing on Import now works on correct table
+
+0.2.652	New: confObj->get()
+
+0.2.651	New: On Fileupload, there are .fileRename Properties 'info' and 'datetime' implemented
+
+0.2.650	New: Delete Records that are listed; permit.allow.deleteList
+	New: MediZip now also works for ImageLists
+	New: Import.deleteAll=all/own/query/queryALL
+	New: ImportQuota is working
+	Fix: Import Steps 2 and 4 now use the unique-feature correctly
+	New: CMD=singleViewTS
+
+0.2.561	Change: Import now can produce select-fields even for pid
+
+0.2.560	New: class.tx_userfunction_constedit.php
+	Bugfix: for Typo3 4.1.7
+
+0.2.550	Changed: Moved classes to classes-directory
+
+0.2.500 Changed Directory-Structur for classes/lib and classes/essentials
+
+0.2.330 New: catMenu basically working 
+
+0.2.326	New: cObj->IMAGE now get data-row; this enables typolinsk for Images
+
+0.2.325	Bugfix: catCount for catMenu
+	New: myIcon for catMenu
+
+0.2.323	Bugfix: Mediazip didn't find exisiting media
+
+0.2.322 New: Markers ###FILE_..###
+
+0.2.321 New: Experimental RTE for FE
+
+0.2.320	Changed: Import template now uses TS to display field lists
+
+0.2.311	New function: Import Media Files
+
+0.2.310	New functions: confObj->TCAConfObj, constObj->TCAConstObj + TCAConstConfObj
+
+0.2.300	Introduced sg_div/tx_sgdate
+
+0.2.101	Bugfix: If save of new record fails, todo[new] is still true now
+	Added: postProcessToDo($todo)
+
 0.2.100	Changed: Reorder of classes
 	Fixed: read missing TCA data
 

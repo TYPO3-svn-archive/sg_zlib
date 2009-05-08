@@ -23,7 +23,7 @@
 ***************************************************************/
 
 require_once(PATH_tslib.'class.tslib_pibase.php');
-require_once(t3lib_extMgm::extPath('sg_zlib').'class.tx_sglib_modelbase.php');
+require_once(t3lib_extMgm::extPath('sg_zlib').'classes/model/class.tx_sglib_modelbase.php');
 
  	define ('SGZLIB_TEXT', 0);
 	define ('SGZLIB_FORM', 1);
@@ -144,6 +144,9 @@ class txsg_cached_base extends tslib_pibase {
 				catch (tx_sglib_templateexception $e) {
 					$content = $e;
 				}
+				catch (tx_sglib_exception $e) {
+					$content = $e;
+				}
 			} else {
 				$content = '<br /><b>ERROR: pluginSubMode "'.$this->conf['pluginSubMode'].'" is not (yet) defined !</b><br /><br />';
 			}
@@ -158,8 +161,8 @@ class txsg_cached_base extends tslib_pibase {
 
 
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sg_zlib/class.txsg_cached.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sg_zlib/class.txsg_cached.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sg_zlib/classes/cachedbase/class.txsg_cached.php'])	{
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sg_zlib/classes/cachedbase/class.txsg_cached.php']);
 }
 
 ?>

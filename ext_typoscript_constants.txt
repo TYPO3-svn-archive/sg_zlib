@@ -23,6 +23,7 @@ plugin.tx_sgzlib {
 
 plugin.tx_sgzlib {
 	exporter =  index.php?eID=sg_zlib_export
+	deleter =  index.php?eID=sg_zlib_delete
 
 	browser = index.php?eID=sg_zlib_browse
 	browserParams = &no_cache=1

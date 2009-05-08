@@ -60,7 +60,7 @@
  *
  */
 
-require_once(t3lib_extMgm::extPath('sg_zlib').'class.tx_sglib_viewbase.php');
+require_once(t3lib_extMgm::extPath('sg_zlib').'classes/view/class.tx_sglib_viewbase.php');
 
 class tx_sglib_viewdetails extends tx_sglib_viewbase  {
 	private $flagEmptyResultAsSubpart = '';

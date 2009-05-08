@@ -384,7 +384,18 @@ function exportDataParaSg(exPath,params) {
 	winparams = "height=440,width=400,status=1,menubar=0,resizable=1,scrollbars=1";
 	browserWin = window.open(url,"Typo3SgFeExport",winparams);
 	browserWin.focus();
+	return "";
+}
 
+function deleteDataParaSg(delPath,params,message,mode) {
+	//alert ("deleteData\n\n"+"delPath="+delPath+"\n"+"params="+params+"\n");
+	var doit=confirm(message);
+	if (doit) {
+		var url = delPath+"&PARASG="+params;
+		winparams = "height=200,width=540,status=1,menubar=0,resizable=1,scrollbars=1";
+		browserWin = window.open(url,"Typo3SgFeDl",winparams);
+		browserWin.focus();
+	}
 	return "";
 }
 

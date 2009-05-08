@@ -46,7 +46,7 @@
  */
 
 
-require_once(t3lib_extMgm::extPath('sg_zlib').'class.tx_sglib_viewbase.php');
+require_once(t3lib_extMgm::extPath('sg_zlib').'classes/view/class.tx_sglib_viewbase.php');
 
 class tx_sglib_viewsearchform extends tx_sglib_viewbase  {
 	private $flagEmptyResultAsSubpart = '';
@@ -97,8 +97,8 @@ class tx_sglib_viewsearchform extends tx_sglib_viewbase  {
 			'<input type="hidden" name="'.$this->designator.'[searchformname]" value="txsg_search">'."\r\n".
 			'<input type="hidden" name="id" value="'.($this->listPage ? $this->listPage : $TSFE->id).'">'."\r\n".
 				(($TSFE->type>0) ? '<input type="hidden" name="type" value="'.$TSFE->type.'">'."\r\n":'').
-				(t3lib_div::GPvar('L') ? '<input type="hidden" name="L" value="'.t3lib_div::GPvar('L').'">'."\r\n":'').
-				(t3lib_div::GPvar('rTL') ? '<input type="hidden" name="rTL" value="1">'."\r\n":'').
+				(t3lib_div::_GP('L') ? '<input type="hidden" name="L" value="'.t3lib_div::_GP('L').'">'."\r\n":'').
+				(t3lib_div::_GP('rTL') ? '<input type="hidden" name="rTL" value="1">'."\r\n":'').
 				'<input type="hidden" name="'.$this->designator.'[searchmode]" value="1">'."\r\n";
 		$this->markers['###FORM_END###']  = '</form>'."\r\n";
 

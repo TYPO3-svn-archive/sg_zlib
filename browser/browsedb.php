@@ -4,7 +4,7 @@ class sg_browser_db extends sg_browserbase {
 
 	function init ($conf) {
 		parent::init($conf);
-		$this->pluginMode = t3lib_div::GPvar('plugin');
+		$this->pluginMode = t3lib_div::_GP('plugin');
 	}
 
 	/**
@@ -42,7 +42,7 @@ class sg_browser_db extends sg_browserbase {
 
 		t3lib_div::loadTCA($myTable);
 		$myTCA = $TCA[$myTable];
-		//t3lib_div::debug(Array('$conf'=>$conf, 'params'=>$this->params, 'File:Line'=>__FILE__.':'.__LINE__));
+		// t3lib_div::debug(Array('$conf'=>$conf, 'params'=>$this->params, 'File:Line'=>__FILE__.':'.__LINE__));
 
 		$this->levelString = ($this->params['levelString']) ? $this->params['levelString'] : '&nbsp; &nbsp;' ;
 
@@ -68,7 +68,10 @@ class sg_browser_db extends sg_browserbase {
 		$content = ''; //'...Hier MESSAGE-Marker! ...<br />';
 		//$content .= '<a href="#" onclick="return setElement('.QT.$ext.QT.','.QT.$vn.QT.','.QT.$entry.QT.');">Set to '.$entry.'</a><br /><br />';
 
-		$query = 'SELECT *,'.$myShow.' AS myDisplayName FROM '.$myTable.' WHERE ';
+		// TODO: MM-Relations
+		$query = $this->getMainQuery($myShow,$myTable,$this->conf);
+
+
 		$myClause = Array('deleted=0');
 
 		if (is_array($myTCA['ctrl']['enablecolumns']) && isset($myTCA['ctrl']['enablecolumns']['disabled'])) {
@@ -115,7 +118,7 @@ class sg_browser_db extends sg_browserbase {
 		$this->lineTmpl = (strlen($conf['lineTemplate'])<3) ? '###dblink###<br />' : $conf['lineTemplate'];
 
 		$query .= implode(' AND ',$myClause);
-		$sorting = 'ORDER BY '.$sorting.'  ;';
+		$sorting = 'GROUP BY '.$myTable.'.uid ORDER BY '.$myTable.'.'.$sorting.'  ;';
 
 		if ($this->params['parent']) {
 			$content = $this->getRecursiveEntries ($query,$sorting,$this->params['parent'],$this->params['subtree']);
@@ -212,21 +215,21 @@ class sg_browser_db extends sg_browserbase {
 		if ($doLink) {
 			if ($this->pluginMode) {
 				$doInsert = $this->substituteMarkerArray($this->myInsert,$row,'###|###',0);
-				$onc = 'return setAutoInsert('.QT.$doInsert.QT.',0);';
+				$onc = 'setAutoInsert('.QT.$doInsert.QT.',0); return (false);';
 				$mx['###db_a###'] = '<a href="" onclick="'.$onc.'">';
-				$onc = 'return setAutoInsert('.QT.$doInsert.QT.',1);';
+				$onc = 'setAutoInsert('.QT.$doInsert.QT.',1); return (false);';
 				$tmp = '<a href="" onclick="'.$onc.'">';
 			} else {
 				if (strcmp($this->params['refType'],'title')==0) {
-					$mx['###db_a###'] = '<a href="#" onclick="return setIdTextElement('.
-						QT.$this->ext.QT.','.QT.$this->vn.QT.','.QT.$valToShow.QT.','.QT.$valToShow.QT.',0);">';
-					$tmp = '<a href="#" onclick="return setIdTextElement('.
-						QT.$this->ext.QT.','.QT.$this->vn.QT.','.QT.$valToShow.QT.','.QT.$valToShow.QT.',1);">';
+					$mx['###db_a###'] = '<a href="#" onclick="setIdTextElement('.
+						QT.$this->ext.QT.','.QT.$this->vn.QT.','.QT.addslashes($valToShow).QT.','.QT.$valToShow.QT.',0); return (false);">';
+					$tmp = '<a href="#" onclick="setIdTextElement('.
+						QT.$this->ext.QT.','.QT.$this->vn.QT.','.QT.addslashes($valToShow).QT.','.QT.$valToShow.QT.',1);" return (false);>';
 				} else {
-					$mx['###db_a###'] = '<a href="#" onclick="return setIdTextElement('.
-						QT.$this->ext.QT.','.QT.$this->vn.QT.','.QT.$valToShow.QT.','.QT.$row['uid'].QT.',0);">';
-					$tmp = '<a href="#" onclick="return setIdTextElement('.
-						QT.$this->ext.QT.','.QT.$this->vn.QT.','.QT.$valToShow.QT.','.QT.$row['uid'].QT.',1);">';
+					$mx['###db_a###'] = '<a href="#" onclick="setIdTextElement('.
+						QT.$this->ext.QT.','.QT.$this->vn.QT.','.QT.addslashes($valToShow).QT.','.QT.$row['uid'].QT.',0); return (false);">';
+					$tmp = '<a href="#" onclick="setIdTextElement('.
+						QT.$this->ext.QT.','.QT.$this->vn.QT.','.QT.addslashes($valToShow).QT.','.QT.$row['uid'].QT.',1); return (false);">';
 				}
 			}
 			if ($this->conf['showAddButton'] && intval($this->params['maxItems'])!=1) {
@@ -240,6 +243,34 @@ class sg_browser_db extends sg_browserbase {
 		$mx['###dblink###'] = $mx['###db_a###'].$valToShow.($doLink ? '</a>' : '');
 		$content = $this->substituteMarkerArray($this->lineTmpl,$mx);
 		return ($content);
+	}
+
+
+	function getMainQuery ($myShow,$myTable,$conf) {
+		$query = 'SELECT *,'.$myShow.' AS myDisplayName FROM '.$myTable.' WHERE ';
+
+		if (is_array($conf['MM.'])) {
+			if ($conf['MM.']['table'] && $conf['MM.']['select'] && $conf['MM.']['myIds'] && is_array($conf['MM.']['select.'])) {
+
+				$query = 'SELECT '.$myTable.'.*,'.$myShow.' AS myDisplayName '.
+							'FROM '.$myTable.', '.$conf['MM.']['table'].' '.
+							' WHERE '.$conf['MM.']['table'].'.'.$conf['MM.']['myIds'].'='.$myTable.'.uid AND ';
+				if ($conf['MM.']['select.']['userField']) {
+					if (is_object($GLOBALS['TSFE']->fe_user)) {
+						if (is_array($GLOBALS['TSFE']->fe_user->user)) {
+							$feUser = $GLOBALS['TSFE']->fe_user->user;
+							$tmp = $feUser[$conf['MM.']['select.']['userField']];
+							if ($tmp) {
+								$query .=  $conf['MM.']['table'].'.'.$conf['MM.']['select'].' IN ('.$tmp.') AND ';
+							}
+						}
+					}
+				}
+				// t3lib_div::debug(Array('$tmp'=>$tmp, '$conf[MM.]'=>$conf['MM.'], '$query'=>$query, 'File:Line'=>__FILE__.':'.__LINE__));
+			}
+		}
+
+		return ($query);
 	}
 }
 

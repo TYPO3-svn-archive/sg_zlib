@@ -81,7 +81,7 @@
  *
  */
 
-require_once(t3lib_extMgm::extPath('sg_zlib').'class.tx_sglib_viewbase.php');
+require_once(t3lib_extMgm::extPath('sg_zlib').'classes/view/class.tx_sglib_viewbase.php');
 
 class tx_sglib_viewlist extends tx_sglib_viewbase  {
 	protected $flagEmptyResultAsSubpart = '';
@@ -298,7 +298,7 @@ class tx_sglib_viewlist extends tx_sglib_viewbase  {
 		$content = '';
 
 		$tmpl = $this->cObj->substituteMarkerArray($this->subparts['line'],$this->markers,'###TEXT_|###',1);
-		$lineMarkers = $this->markersObj->getRefValues($record);
+		$lineMarkers = $this->getRefValues($record);
 		if (is_array($this->registeredFunctions['processSingleDataRow']))
 			foreach ($this->registeredFunctions['processSingleDataRow'] as $theFunction) {
 			// t3lib_div::debug(Array('$theFunction'=>$theFunction, 'File:Line'=>__FILE__.':'.__LINE__));
@@ -322,6 +322,15 @@ class tx_sglib_viewlist extends tx_sglib_viewbase  {
 		$content .= $output."\n";
 
 		return ($content);
+	}
+
+	/**
+	 * [Describe function...]
+	 *
+	 * @return	[type]		...
+	 */
+	protected function getRefValues($record) {
+		return ($this->markersObj->getRefValues($record));
 	}
 
 	/**

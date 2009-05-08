@@ -70,6 +70,7 @@ plugin.tx_sgzlib {
   popupFunc = {$plugin.tx_sgzlib.popupFunc}
   searchFunc = {$plugin.tx_sgzlib.searchFunc}
   exporter = {$plugin.tx_sgzlib.exporter}
+  deleter = {$plugin.tx_sgzlib.deleter}
 
   browser = {$plugin.tx_sgzlib.browser}
   browserParams = {$plugin.tx_sgzlib.browserParams}
@@ -139,6 +140,14 @@ plugin.tx_sgzlib {
 	}
   }
  
+
+  deleteList.purgeBefore = 99
+  deleteList.simulate = 1
+  deleteList.dodebug = 0
+  deleteList.template = EXT:sg_zlib/eid/delete.tmpl
+  undoDeleteList.simulate = 1
+  undoDeleteList.dodebug = 0
+  undoDeleteList.template = EXT:sg_zlib/eid/undodelete.tmpl
 
   plugin {
     browseFile = {$plugin.tx_sgzlib.plugin.browseFile}

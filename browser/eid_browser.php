@@ -144,13 +144,13 @@ $TSFE->getConfigArray();
 class sg_browserbase {
 
 	function init ($conf) {
-		$this->brMode = t3lib_div::GPvar('mode');
-		$this->brSet = strlen(t3lib_div::GPvar('set'))>0 ? t3lib_div::GPvar('set') : 'default';
-		$this->ext = t3lib_div::GPvar('ext');
-		$this->vn = t3lib_div::GPvar('vn');
+		$this->brMode = t3lib_div::_GP('mode');
+		$this->brSet = strlen(t3lib_div::_GP('set'))>0 ? t3lib_div::_GP('set') : 'default';
+		$this->ext = t3lib_div::_GP('ext');
+		$this->vn = t3lib_div::_GP('vn');
 		$this->myDataName = $ext.'[data]['.$vn.']';
-		$this->params = unserialize(urldecode(t3lib_div::GPvar('params')));
-		$this->owner = t3lib_div::GPvar('own');
+		$this->params = unserialize(urldecode(t3lib_div::_GP('params')));
+		$this->owner = t3lib_div::_GP('own');
 		$this->baseDir = t3lib_div::getIndpEnv('TYPO3_DOCUMENT_ROOT'); //$GLOBALS['_SERVER']['DOCUMENT_ROOT'];
 		$this->tp = $GLOBALS['TSFE']->tmpl->getFileName($conf['template']);
 
@@ -165,10 +165,13 @@ class sg_browserbase {
 
 		function setIdTextElement(myExtension,myName,myText,myId,nac)	{	//
 			if (window.opener && window.opener.addItem)	{
+				// alert ("Adding ID "+myId);
 				window.opener.addIdTextItem(myExtension,myName,'.intval($this->params['replace']).',myText,myId);
 				window.opener.focus();
 				if (nac==0)
-				{ close(); }
+					{ close(); }
+				else
+					{ parent.focus(); }
 			} else {
 				alert("Error - reference to main window is not set properly!");
 			}
@@ -179,7 +182,9 @@ class sg_browserbase {
 				window.opener.addItem(myExtension,myName,'.intval($this->params['replace']).',myText);
 				window.opener.focus();
 				if (nac==0)
-				{ close(); }
+					{ close(); }
+				else
+					{ parent.focus(); }
 			} else {
 				alert("Error - reference to main window is not set properly!");
 			}
@@ -188,9 +193,11 @@ class sg_browserbase {
 		function setAutoInsert(insText,nac)	{	//
 			if (window.opener)	{
 				window.opener.insertText (insText+"|","ERROR - nothing selected");
-				window.opener.focus();
+				// window.opener.focus();
 				if (nac==0)
-				{ close(); }
+					{ close(); }
+				else
+					{ parent.focus(); }
 			} else {
 				alert("Error - reference to main window is not set properly!");
 			}
@@ -238,7 +245,7 @@ class sg_browserbase {
 // ***********************************************************************************************************************************
 
 
-$conf = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sgzlib.'][t3lib_div::GPvar('mode').'.'];
+$conf = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sgzlib.'][t3lib_div::_GP('mode').'.'];
 $br = $GLOBALS['TSFE']->tmpl->getFileName($conf['browseFile']);
 //t3lib_div::debug(Array('$br'=>$br, '$conf'=>$conf, 'File:Line'=>__FILE__.':'.__LINE__));
 $dbg = Array();
@@ -251,7 +258,7 @@ if ($br) {
 } else {
 	$brClass = t3lib_div::makeInstance('sg_browserbase');
 }
-$brSet = strlen(t3lib_div::GPvar('set'))>0 ? t3lib_div::GPvar('set') : 'default';
+$brSet = strlen(t3lib_div::_GP('set'))>0 ? t3lib_div::_GP('set') : 'default';
 $tmp = $conf[$brSet.'.'] ? $conf[$brSet.'.'] : Array();
 $conf = t3lib_div::array_merge_recursive_overrule(is_array($conf['default.'])?$conf['default.']:Array(),$tmp);
 

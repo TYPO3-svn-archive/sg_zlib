@@ -1,0 +1,317 @@
+a:2:{s:4:"meta";a:3:{s:5:"title";s:0:"";s:5:"descr";s:0:"";s:7:"options";a:2:{s:10:"usageCount";N;s:19:"includeCodeAbstract";N;}}s:5:"files";a:3:{s:14:"MD5_46a3fda13b";a:4:{s:8:"filename";s:37:"classes/lib/class.tx_sglib_config.php";s:8:"filesize";i:28688;s:6:"header";N;s:3:"DAT";a:38:{i:1;a:8:{s:6:"header";s:45:"class tx_sglib_config extends ArrayIterator {";s:5:"class";i:1;s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:2208:"
+
+[CLASS/FUNCTION INDEX of SCRIPT]
+
+
+
+  81: class tx_sglib_config extends ArrayIterator
+ 113:     public static function getInstance($designator, tx_sglib_factory $factoryObj, $conf)
+ 129:     private function init($designator, tx_sglib_factory $factoryObj, $conf)
+ 153:     public function setParentObject($parentCObj)
+ 170:     public function setPluginConfig($pluginSubMode, $pluginMode, $cmdMode, $cached)
+ 184:     protected function _initRecursive($recursive)
+ 200:     protected function _findAllReferences()
+ 216:     protected function _findReferencesForTable($table)
+ 260:     public function getReferences ($table, $mode='',$key='')
+ 287:     protected function getLabelField($table)
+ 304:     private function _fCount ($name=NULL)
+ 327:     function __destruct()
+
+             SECTION: Functions
+ 346:     function setDesignator($string)
+ 356:     function getDesignator()
+ 366:     function getPid()
+ 376:     function getPidList()
+ 389:     function setTCAname($tableName)
+ 399:     function getTCAname()
+ 410:     function setTCAdata($tableName='')
+ 453:     function getTCAdata($tableName='')
+ 464:     function setPreConfData($name, array $conf)
+ 477:     function setConfData(array $conf)
+ 491:     function setLocalConf($localConf=NULL)
+ 513:     function getConfData()
+ 537:     function combineTCAandConf($tableName='')
+ 591:     function getCombined()
+
+             SECTION: Getters
+ 610:     public function __get($nm)
+ 674:     public function get($name)
+ 698:     function TSObj ($name,$conf)
+ 717:     function TSConfObj ($conf,$name)
+ 738:     function getFFvalue($fieldName,$sheet='sDEF',$lang='lDEF',$value='vDEF')
+ 752:     function setDebugObj ($debugObj)
+
+             SECTION: JS Functions
+ 772:     function addJs ($name)
+
+             SECTION: Local helpers
+ 810:     public function initFlexForm($field='pi_flexform')
+ 827:     private function _getFFvalueFromSheetArray($sheetArray,$fieldNameArr,$value)
+ 858:     private function _configTCA ($tableName='',$config=NULL)
+ 880:     private function _getDotArray($myValue)
+ 904:     public function getDescriptions($table='')
+
+TOTAL FUNCTIONS: 37
+(This index is automatically created/updated by the extension "extdeveval")
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:537;s:13:"content_lines";i:24;s:6:"atLine";i:79;}i:3;a:7:{s:6:"header";s:86:"public static function getInstance($designator, tx_sglib_factory $factoryObj, $conf) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:46:"$designator, tx_sglib_factory $factoryObj: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:10:"$conf: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:225;s:13:"content_lines";i:7;s:6:"atLine";i:111;}i:5;a:7:{s:6:"header";s:73:"private function init($designator, tx_sglib_factory $factoryObj, $conf) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:16:"$designator: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:17:"$factoryCObj: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:10:"$conf: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:740;s:13:"content_lines";i:17;s:6:"atLine";i:127;}i:7;a:7:{s:6:"header";s:46:"public function setParentObject($parentCObj) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:16:"$parentCObj: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:215;s:13:"content_lines";i:7;s:6:"atLine";i:151;}i:9;a:7:{s:6:"header";s:81:"public function setPluginConfig($pluginSubMode, $pluginMode, $cmdMode, $cached) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:4:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:19:"$pluginSubMode: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:16:"$pluginMode: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:13:"$cmdMode: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:12:"$cached: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:278;s:13:"content_lines";i:7;s:6:"atLine";i:168;}i:11;a:7:{s:6:"header";s:47:"protected function _initRecursive($recursive)	{";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:66:"
+
+Extends the internal pid_list by the levels given by $recursive
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:15:"$recursive: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:334;s:13:"content_lines";i:10;s:6:"atLine";i:182;}i:13;a:7:{s:6:"header";s:41:"protected function _findAllReferences() {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:210;s:13:"content_lines";i:9;s:6:"atLine";i:198;}i:15;a:7:{s:6:"header";s:52:"protected function _findReferencesForTable($table) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1671;s:13:"content_lines";i:35;s:6:"atLine";i:214;}i:17;a:7:{s:6:"header";s:58:"public function getReferences ($table, $mode='',$key='') {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:10:"$mode: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:9:"$key: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:640;s:13:"content_lines";i:20;s:6:"atLine";i:258;}i:19;a:7:{s:6:"header";s:42:"protected function getLabelField($table) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:157;s:13:"content_lines";i:10;s:6:"atLine";i:285;}i:21;a:7:{s:6:"header";s:39:"private function _fCount ($name=NULL) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:345;s:13:"content_lines";i:17;s:6:"atLine";i:302;}i:23;a:7:{s:6:"header";s:23:"function __destruct() {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:315;s:13:"content_lines";i:10;s:6:"atLine";i:325;}i:25;a:8:{s:6:"header";s:33:"function setDesignator($string) {";s:11:"parentClass";s:15:"tx_sglib_config";s:11:"sectionText";a:1:{i:0;s:9:"Functions";}s:4:"cDat";a:3:{s:4:"text";s:123:"
+
+Set the default designator.
+
+Usefull for classes of the library tx_lib that are not inherited but directly instantiated.
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"string";i:1;s:10:"designator";}}s:6:"return";a:2:{i:0;s:4:"void";i:1;s:0:"";}}s:7:"content";s:0:"";s:12:"content_size";i:75;s:13:"content_lines";i:4;s:6:"atLine";i:344;}i:27;a:7:{s:6:"header";s:26:"function getDesignator() {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:33:"
+
+Return the default designator.
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:18:"default designator";}}s:7:"content";s:0:"";s:12:"content_size";i:120;s:13:"content_lines";i:4;s:6:"atLine";i:354;}i:29;a:7:{s:6:"header";s:19:"function getPid() {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+Return the default PID
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:18:"default designator";}}s:7:"content";s:0:"";s:12:"content_size";i:106;s:13:"content_lines";i:4;s:6:"atLine";i:364;}i:31;a:7:{s:6:"header";s:23:"function getPidList() {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:22:"
+
+Return the Pid-List
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:18:"default designator";}}s:7:"content";s:0:"";s:12:"content_size";i:113;s:13:"content_lines";i:6;s:6:"atLine";i:374;}i:33;a:7:{s:6:"header";s:33:"function setTCAname($tableName) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:31:"
+
+Set active default-tablename
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:29:"$tableName: name of mainTable";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:4:"void";}}s:7:"content";s:0:"";s:12:"content_size";i:77;s:13:"content_lines";i:4;s:6:"atLine";i:387;}i:35;a:7:{s:6:"header";s:23:"function getTCAname() {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:31:"
+
+Get active default-tablename
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:17:"name of mainTable";}}s:7:"content";s:0:"";s:12:"content_size";i:72;s:13:"content_lines";i:4;s:6:"atLine";i:397;}i:37;a:7:{s:6:"header";s:36:"function setTCAdata($tableName='') {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:52:"
+
+Get settings from TCA for table (or defaultTable)
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$tableName";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:4:"void";}}s:7:"content";s:0:"";s:12:"content_size";i:1454;s:13:"content_lines";i:36;s:6:"atLine";i:408;}i:39;a:7:{s:6:"header";s:36:"function getTCAdata($tableName='') {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$tableName";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:10:"TCA-Config";}}s:7:"content";s:0:"";s:12:"content_size";i:79;s:13:"content_lines";i:4;s:6:"atLine";i:451;}i:41;a:7:{s:6:"header";s:45:"function setPreConfData($name, array $conf) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:36:"
+
+Merge this with existing confData
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:5:"array";i:1;s:24:"Array with configuration";}}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:4:"void";}}s:7:"content";s:0:"";s:12:"content_size";i:184;s:13:"content_lines";i:5;s:6:"atLine";i:462;}i:43;a:7:{s:6:"header";s:35:"function setConfData(array $conf) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:5:"array";i:1;s:32:"Array with plugins configuration";}i:1;a:2:{i:0;s:6:"string";i:1;s:71:"LocalConf that overwrites $conf; if empty will be searchted in flexform";}}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:4:"void";}}s:7:"content";s:0:"";s:12:"content_size";i:173;s:13:"content_lines";i:6;s:6:"atLine";i:475;}i:45;a:7:{s:6:"header";s:40:"function setLocalConf($localConf=NULL) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:5:"array";i:1;s:32:"Array with plugins configuration";}i:1;a:2:{i:0;s:6:"string";i:1;s:71:"LocalConf that overwrites $conf; if empty will be searchted in flexform";}}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:4:"void";}}s:7:"content";s:0:"";s:12:"content_size";i:479;s:13:"content_lines";i:16;s:6:"atLine";i:489;}i:47;a:7:{s:6:"header";s:24:"function getConfData() {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:18:"
+
+Return confData
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:9:"Conf-Data";}}s:7:"content";s:0:"";s:12:"content_size";i:492;s:13:"content_lines";i:17;s:6:"atLine";i:511;}i:49;a:7:{s:6:"header";s:43:"function combineTCAandConf($tableName='') {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:34:"
+
+Combine TCA-Data with Conf-Data
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:15:"$tableName: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:4:"void";}}s:7:"content";s:0:"";s:12:"content_size";i:2081;s:13:"content_lines";i:48;s:6:"atLine";i:535;}i:51;a:7:{s:6:"header";s:24:"function getCombined() {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:37:"
+
+Return combined TCA- and Conf-Data
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:27:"combined TCA- and Conf-Data";}}s:7:"content";s:0:"";s:12:"content_size";i:249;s:13:"content_lines";i:12;s:6:"atLine";i:589;}i:53;a:8:{s:6:"header";s:28:"public function __get($nm) {";s:11:"parentClass";s:15:"tx_sglib_config";s:11:"sectionText";a:1:{i:0;s:7:"Getters";}s:4:"cDat";a:3:{s:4:"text";s:33:"
+
+Return value from config-array
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"string";i:1;s:17:"$name of $confVar";}}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:8:"Content.";}}s:7:"content";s:0:"";s:12:"content_size";i:1810;s:13:"content_lines";i:57;s:6:"atLine";i:608;}i:55;a:7:{s:6:"header";s:28:"public function get($name) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:281;s:13:"content_lines";i:16;s:6:"atLine";i:672;}i:57;a:7:{s:6:"header";s:30:"function TSObj ($name,$conf) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:112:"
+
+Renders singleObject; if $conf is not an array then $name is returned via getData (if LLL:) or via insertData
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"string";i:1;s:56:"The content object name, eg. "TEXT" or "USER" or "IMAGE"";}i:1;a:2:{i:0;s:5:"array";i:1;s:59:"The array with TypoScript properties for the content object";}}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:14:"cObject output";}}s:7:"content";s:0:"";s:12:"content_size";i:363;s:13:"content_lines";i:11;s:6:"atLine";i:696;}i:59;a:7:{s:6:"header";s:34:"function TSConfObj ($conf,$name) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:112:"
+
+Renders singleObject; if $conf is not an array then $name is returned via getData (if LLL:) or via insertData
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:5:"array";i:1;s:65:"The array with all TypoScript properties, containing TS for $name";}i:1;a:2:{i:0;s:6:"string";i:1;s:37:"The name of the TS Object or TS value";}}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:14:"cObject output";}}s:7:"content";s:0:"";s:12:"content_size";i:427;s:13:"content_lines";i:11;s:6:"atLine";i:715;}i:61;a:7:{s:6:"header";s:74:"function getFFvalue($fieldName,$sheet='sDEF',$lang='lDEF',$value='vDEF')	{";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:58:"
+
+Return value from somewhere inside a FlexForm structure
+";s:5:"param";a:4:{i:0;a:2:{i:0;s:6:"string";i:1;s:143:"Field name to extract. Can be given like "test/el/2/test/el/field_templateObject" where each part will dig a level deeper in the FlexForm data.";}i:1;a:2:{i:0;s:6:"string";i:1;s:25:"Sheet pointer, eg. "sDEF"";}i:2;a:2:{i:0;s:6:"string";i:1;s:28:"Language pointer, eg. "lDEF"";}i:3;a:2:{i:0;s:6:"string";i:1;s:25:"Value pointer, eg. "vDEF"";}}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:12:"The content.";}}s:7:"content";s:0:"";s:12:"content_size";i:257;s:13:"content_lines";i:7;s:6:"atLine";i:736;}i:63;a:7:{s:6:"header";s:34:"function setDebugObj ($debugObj) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:14:"$debugObj: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:417;s:13:"content_lines";i:15;s:6:"atLine";i:750;}i:65;a:8:{s:6:"header";s:24:"function addJs ($name) {";s:11:"parentClass";s:15:"tx_sglib_config";s:11:"sectionText";a:1:{i:0;s:12:"JS Functions";}s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1037;s:13:"content_lines";i:31;s:6:"atLine";i:770;}i:67;a:8:{s:6:"header";s:52:"public function initFlexForm($field='pi_flexform')	{";s:11:"parentClass";s:15:"tx_sglib_config";s:11:"sectionText";a:1:{i:0;s:13:"Local helpers";}s:4:"cDat";a:3:{s:4:"text";s:79:"
+
+Converts $this->cObj->data['pi_flexform'] from XML string to flexForm array.
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"string";i:1;s:21:"Field name to convert";}}s:6:"return";a:2:{i:0;s:4:"void";i:1;s:0:"";}}s:7:"content";s:0:"";s:12:"content_size";i:248;s:13:"content_lines";i:6;s:6:"atLine";i:808;}i:69;a:7:{s:6:"header";s:78:"private function _getFFvalueFromSheetArray($sheetArray,$fieldNameArr,$value)	{";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:6:{s:4:"text";s:72:"
+
+Returns part of $sheetArray pointed to by the keys in $fieldNameArray
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:5:"array";i:1;s:50:"Multidimensiona array, typically FlexForm contents";}i:1;a:2:{i:0;s:5:"array";i:1;s:331:"Array where each value points to a key in the FlexForms content - the input array will have the value returned pointed to by these keys. All integer keys will not take their integer counterparts, but rather traverse the current position in the array an return element number X (whether this is right behavior is not settled yet...)";}i:2;a:2:{i:0;s:6:"string";i:1;s:59:"Value for outermost key, typ. "vDEF" depending on language.";}}s:6:"return";a:2:{i:0;s:5:"mixed";i:1;s:23:"The value, typ. string.";}s:6:"access";s:7:"private";s:5:"other";a:1:{i:0;s:20:"@see pi_getFFvalue()";}s:11:"other_index";a:1:{s:4:"@see";a:1:{i:0;s:16:"pi_getFFvalue() ";}}}s:7:"content";s:0:"";s:12:"content_size";i:404;s:13:"content_lines";i:23;s:6:"atLine";i:825;}i:71;a:7:{s:6:"header";s:58:"private function _configTCA ($tableName='',$config=NULL) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:79:"
+
+TCA-Table, converted with dots, stored as static to avoid duplicate creation
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"string";i:1;s:9:"Tablename";}i:1;a:2:{i:0;s:5:"array";i:1;s:57:"If set, then set configTable; if NULL, return configTable";}}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:10:"configData";}}s:7:"content";s:0:"";s:12:"content_size";i:320;s:13:"content_lines";i:15;s:6:"atLine";i:856;}i:73;a:4:{s:6:"header";s:41:"private function _getDotArray($myValue) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:70:"
+
+Converts Array to Array, where key of subarrays are followed by '.'
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:5:"mixed";i:1;s:22:"Array/Value to convert";}}s:6:"return";a:2:{i:0;s:4:"void";i:1;s:0:"";}}s:6:"atLine";i:878;}i:75;a:7:{s:6:"header";s:44:"public function getDescriptions($table='') {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:694;s:13:"content_lines";i:30;s:6:"atLine";i:902;}}}s:14:"MD5_979907dabc";a:4:{s:8:"filename";s:36:"classes/lib/class.tx_sglib_const.php";s:8:"filesize";i:14644;s:6:"header";N;s:3:"DAT";a:22:{i:1;a:8:{s:6:"header";s:22:"class tx_sglib_const {";s:5:"class";i:1;s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:961:"
+
+[CLASS/FUNCTION INDEX of SCRIPT]
+
+
+
+  54: class tx_sglib_const
+  87:     private function init(tx_sglib_factory $factoryObj)
+ 109:     private function _fCount ($name=NULL)
+ 132:     function __destruct()
+ 142:     private function _initWraps($conf)
+ 157:     private function _initConst($conf)
+ 182:     private function _initMoreConst()
+ 232:     private function _initIcons($conf)
+ 246:     private function _initButtons($conf)
+ 259:     function getWrap ($name=NULL,$part='')
+ 278:     function getConst ($name=NULL)
+ 293:     function getIcon ($name)
+ 308:     function isIconTypeText ($name)
+ 323:     function getIconResource ($name)
+ 337:     function getMarkers()
+ 357:     function getButton($name,$defaultText='',$asResource=FALSE)
+ 400:     function buttonExists($name)
+ 411:     function getButtonType($name)
+ 422:     function getButtonConf($name)
+
+TOTAL FUNCTIONS: 18
+(This index is automatically created/updated by the extension "extdeveval")
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:359;s:13:"content_lines";i:19;s:6:"atLine";i:52;}i:3;a:6:{s:6:"header";s:79:"public static function getInstance($designator, tx_sglib_factory $factoryObj) {";s:11:"parentClass";s:14:"tx_sglib_const";s:7:"content";s:0:"";s:12:"content_size";i:204;s:13:"content_lines";i:7;s:6:"atLine";i:78;}i:5;a:7:{s:6:"header";s:53:"private function init(tx_sglib_factory $factoryObj) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:16:"$factoryObj: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:642;s:13:"content_lines";i:16;s:6:"atLine";i:92;}i:7;a:7:{s:6:"header";s:39:"private function _fCount ($name=NULL) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:345;s:13:"content_lines";i:17;s:6:"atLine";i:115;}i:9;a:7:{s:6:"header";s:23:"function __destruct() {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:124;s:13:"content_lines";i:3;s:6:"atLine";i:138;}i:11;a:7:{s:6:"header";s:36:"private function _initWraps($conf) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$conf: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:344;s:13:"content_lines";i:8;s:6:"atLine";i:148;}i:13;a:7:{s:6:"header";s:36:"private function _initConst($conf) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$conf: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1077;s:13:"content_lines";i:24;s:6:"atLine";i:163;}i:15;a:7:{s:6:"header";s:35:"private function _initMoreConst() {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:2260;s:13:"content_lines";i:53;s:6:"atLine";i:193;}i:17;a:7:{s:6:"header";s:36:"private function _initIcons($conf) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$conf: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:310;s:13:"content_lines";i:7;s:6:"atLine";i:253;}i:19;a:7:{s:6:"header";s:38:"private function _initButtons($conf) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$conf: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:158;s:13:"content_lines";i:5;s:6:"atLine";i:267;}i:21;a:7:{s:6:"header";s:40:"function getWrap ($name=NULL,$part='') {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:10:"$part: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:262;s:13:"content_lines";i:12;s:6:"atLine";i:280;}i:23;a:7:{s:6:"header";s:32:"function getConst ($name=NULL) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:196;s:13:"content_lines";i:8;s:6:"atLine";i:299;}i:25;a:7:{s:6:"header";s:26:"function getIcon ($name) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:158;s:13:"content_lines";i:8;s:6:"atLine";i:314;}i:27;a:7:{s:6:"header";s:33:"function isIconTypeText ($name) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:165;s:13:"content_lines";i:8;s:6:"atLine";i:329;}i:29;a:7:{s:6:"header";s:34:"function getIconResource ($name) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:208;s:13:"content_lines";i:8;s:6:"atLine";i:344;}i:31;a:7:{s:6:"header";s:23:"function getMarkers() {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:467;s:13:"content_lines";i:12;s:6:"atLine";i:358;}i:33;a:7:{s:6:"header";s:61:"function getButton($name,$defaultText='',$asResource=FALSE) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:17:"$defaultText: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:16:"$asResource: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1585;s:13:"content_lines";i:37;s:6:"atLine";i:379;}i:35;a:7:{s:6:"header";s:30:"function buttonExists($name) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:90;s:13:"content_lines";i:4;s:6:"atLine";i:423;}i:37;a:7:{s:6:"header";s:31:"function getButtonType($name) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:80;s:13:"content_lines";i:4;s:6:"atLine";i:434;}i:39;a:7:{s:6:"header";s:31:"function getButtonConf($name) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:85;s:13:"content_lines";i:5;s:6:"atLine";i:445;}i:41;a:4:{s:6:"header";s:35:"function TSConstObj ($name,$conf) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:112:"
+
+Renders singleObject; if $conf is not an array then $name is returned via getData (if LLL:) or via insertData
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"string";i:1;s:56:"The content object name, eg. "TEXT" or "USER" or "IMAGE"";}i:1;a:2:{i:0;s:5:"array";i:1;s:59:"The array with TypoScript properties for the content object";}}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:14:"cObject output";}}s:6:"atLine";i:458;}i:43;a:7:{s:6:"header";s:39:"function TSConstConfObj ($conf,$name) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:112:"
+
+Renders singleObject; if $conf is not an array then $name is returned via getData (if LLL:) or via insertData
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:5:"array";i:1;s:65:"The array with all TypoScript properties, containing TS for $name";}i:1;a:2:{i:0;s:6:"string";i:1;s:37:"The name of the TS Object or TS value";}}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:14:"cObject output";}}s:7:"content";s:0:"";s:12:"content_size";i:176;s:13:"content_lines";i:10;s:6:"atLine";i:472;}}}s:14:"MD5_c6fa5e4f2d";a:4:{s:8:"filename";s:37:"classes/lib/class.tx_sglib_params.php";s:8:"filesize";i:5702;s:6:"header";N;s:3:"DAT";a:14:{i:1;a:8:{s:6:"header";s:23:"class tx_sglib_params {";s:5:"class";i:1;s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:724:"
+
+[CLASS/FUNCTION INDEX of SCRIPT]
+
+
+
+  49: class tx_sglib_params
+  71:     public static function getInstance($designator, tx_sglib_factory $factoryObj)
+  85:     private function init(tx_sglib_factory $factoryObj)
+ 105:     public function updateParams ($params)
+ 115:     private function _fCount ($name=NULL)
+ 138:     function __destruct()
+ 147:     function getPluginParams()
+ 155:     function getPluginFiles()
+ 164:     function getSearchmode()
+ 173:     function getSearch()
+ 182:     function getUid()
+ 192:     function getListMode()
+ 212:     function getListResultsPerPage()
+ 226:     function getListActivePage()
+
+TOTAL FUNCTIONS: 13
+(This index is automatically created/updated by the extension "extdeveval")
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:272;s:13:"content_lines";i:15;s:6:"atLine";i:47;}i:3;a:7:{s:6:"header";s:79:"public static function getInstance($designator, tx_sglib_factory $factoryObj) {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:46:"$designator, tx_sglib_factory $factoryObj: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:205;s:13:"content_lines";i:7;s:6:"atLine";i:69;}i:5;a:7:{s:6:"header";s:53:"private function init(tx_sglib_factory $factoryObj) {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:56:"$tx_sglib_config $confObj, tx_sglib_debug $debugObj: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:433;s:13:"content_lines";i:13;s:6:"atLine";i:83;}i:7;a:7:{s:6:"header";s:40:"public function updateParams ($params) {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:12:"$params: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:33;s:13:"content_lines";i:3;s:6:"atLine";i:103;}i:9;a:7:{s:6:"header";s:39:"private function _fCount ($name=NULL) {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:345;s:13:"content_lines";i:17;s:6:"atLine";i:113;}i:11;a:7:{s:6:"header";s:23:"function __destruct() {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:124;s:13:"content_lines";i:3;s:6:"atLine";i:136;}i:13;a:7:{s:6:"header";s:28:"function getPluginParams() {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:30;s:13:"content_lines";i:2;s:6:"atLine";i:145;}i:15;a:7:{s:6:"header";s:27:"function getPluginFiles() {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:35;s:13:"content_lines";i:3;s:6:"atLine";i:153;}i:17;a:7:{s:6:"header";s:26:"function getSearchmode() {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:45;s:13:"content_lines";i:3;s:6:"atLine";i:162;}i:19;a:7:{s:6:"header";s:22:"function getSearch() {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:41;s:13:"content_lines";i:3;s:6:"atLine";i:171;}i:21;a:7:{s:6:"header";s:19:"function getUid() {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:107;s:13:"content_lines";i:4;s:6:"atLine";i:180;}i:23;a:7:{s:6:"header";s:24:"function getListMode() {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:386;s:13:"content_lines";i:14;s:6:"atLine";i:190;}i:25;a:4:{s:6:"header";s:34:"function getListResultsPerPage() {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:6:"atLine";i:210;}i:27;a:7:{s:6:"header";s:30:"function getListActivePage() {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:154;s:13:"content_lines";i:10;s:6:"atLine";i:224;}}}}}

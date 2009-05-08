@@ -112,9 +112,21 @@ plugin.tx_sgzlib {
 
 		export < plugin.tx_sgzlib.tmp.button
 		export.file.20.text.current = 1
-		#export.file.10.file = EXT:sg_zlib/img/bt_160.gif
+		export.file.10.file = EXT:sg_zlib/img/bt_160.gif
 		export.file.20.text = EXPORT !
 		export.alttext = Export Items !
+
+		delete < .export
+		delete.file.20.text.current = 1
+		#delete.file.10.file = EXT:sg_zlib/img/bt_160.gif
+		delete.file.20.text = DELETE !
+		delete.alttext = Delete Items !
+
+		undelete < .export
+		undelete.file.20.text.current = 1
+		#undelete.file.10.file = EXT:sg_zlib/img/bt_160.gif
+		undelete.file.20.text = UNDELETE !
+		undelete.alttext = Undelete Items !
 
 		docancel < plugin.tx_sgzlib.tmp.button
 		docancel.file.20.text.current = 0

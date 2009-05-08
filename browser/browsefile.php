@@ -40,8 +40,13 @@ class sg_browser_file extends sg_browserbase {
 	 * @return	[type]		...
 	 */
 	function main ($content, $conf) {
-		GLOBAL $HTTP_POST_FILES;
+		GLOBAL $_FILES;
 		GLOBAL $TCA;
+
+		if (false) {
+			$this->params['noAutoClose'] = 1;
+			t3lib_div::debug(Array('$conf'=>$conf, '$params'=>$this->params, 'File:Line'=>__FILE__.':'.__LINE__));
+		}
 
 		$myMaxSize = (intval($this->params['maxSize'])>1) ? intval($this->params['maxSize']) : 500;
 
@@ -53,8 +58,8 @@ class sg_browser_file extends sg_browserbase {
 		//t3lib_div::debug(Array('folder'=>$this->folder, 'params'=>$this->params, '$brClass'=>$brClass, '$this->bparams'=>$this->bparams, '$this->accept'=>$this->accept, 'File:Line'=>__FILE__.':'.__LINE__));
 
 		$cntFilesUpload = 1;
-		if (intval(t3lib_div::GPvar('mFU'))>0) {
-			$cntFilesUpload = intval(t3lib_div::GPvar('mFU'));
+		if (intval(t3lib_div::_GP('mFU'))>0) {
+			$cntFilesUpload = intval(t3lib_div::_GP('mFU'));
 		}
 
 		$myShowMax = intval($conf['showMax'])>0 ? intval($conf['showMax']) : 10;
@@ -74,16 +79,16 @@ class sg_browser_file extends sg_browserbase {
 		}
 
 		$errCount = 0;
-		$doUpload = t3lib_div::GPvar('doUpload');
-		$fl = $HTTP_POST_FILES['fileList'];
+		$doUpload = t3lib_div::_GP('doUpload');
+		$fl = $_FILES['fileList'];
 		if ($this->params['imageallow']!=2 && $doUpload>0 && is_array($fl) && is_array($fl['name'])) {
 			for ($i=0;$i<count($fl['name']);$i++) {
 				if (strlen($fl['name'][$i])>0) {
 					//echo 'Upload Protokoll:<br />';
-					//echo 'FileName = '.$HTTP_POST_FILES['myFile']['name'].'<br />';
-					//echo 'FileType = '.$HTTP_POST_FILES['myFile']['type'].'<br />';
-					//echo 'FileSize = '.$HTTP_POST_FILES['myFile']['size'].'<br />';
-					//echo 'TempName = '.$HTTP_POST_FILES['myFile']['tmp_name'].'<br />';
+					//echo 'FileName = '.$_FILES['myFile']['name'].'<br />';
+					//echo 'FileType = '.$_FILES['myFile']['type'].'<br />';
+					//echo 'FileSize = '.$_FILES['myFile']['size'].'<br />';
+					//echo 'TempName = '.$_FILES['myFile']['tmp_name'].'<br />';
 
 					if (is_uploaded_file($fl['tmp_name'][$i])) {
 						$myFilesize = filesize($fl['tmp_name'][$i]);
@@ -102,21 +107,13 @@ class sg_browser_file extends sg_browserbase {
 							$message .= $this->extError;
 							$errCount++;
 						} else {
-							$fl['name'][$i] = str_replace(' ','_',$fl['name'][$i]);
-							$toName = $this->folder.$this->params['own'].$fl['name'][$i];
-							$res = move_uploaded_file($fl['tmp_name'][$i], $toName);
-							if ($res) {
-								chmod ($toName,0664);
-								$message .= 'File "'.$fl['name'][$i].'" was uploaded<br />';
-								$message .= '<script type="text/javascript">'.$crlf;
-								//$message .= 'document.write ("set to value = '.$this->params['owr'].$fl['name'][$i].'<br>");'.$crlf;
-								$message .= 'setElement("'.$this->ext.'","'.$this->vn.'","'.$this->params['own'].$fl['name'][$i].'",'.
-									(($i+1)==count($fl['name']) && $errCount==0 ? intval($this->params['noAutoClose']) : 1).')'.$crlf;
-								$message .= '</script>'.$crlf;
-							} else {
-								$message .= 'Upload Error : '.$fl['error'][$i].'<br />';
-								$errCount++;
-							}
+							// now finally copy temp-file
+							$fromName = $fl['tmp_name'][$i];
+							$origName = str_replace(' ','_',$fl['name'][$i]);
+							$toPath = $this->folder;
+							$toName = $origName;
+
+							$message = $this->doRenameFile($origName, $fromName, $toPath, $toName, $this->params, $errCount, (($i+1)==count($fl['name']))  );
 						}
 					} else {
 						$message .= 'Upload File Error : '.$fl['error'][$i].'<br />';
@@ -126,8 +123,8 @@ class sg_browser_file extends sg_browserbase {
 		}
 
 
-		$doDelete = t3lib_div::GPvar('doDelete');
-		$myFiles = t3lib_div::GPvar('myFiles');
+		$doDelete = t3lib_div::_GP('doDelete');
+		$myFiles = t3lib_div::_GP('myFiles');
 
 		$doContinue = TRUE;
 		if ($doDelete==1 && count($myFiles)>0) {
@@ -261,7 +258,7 @@ class sg_browser_file extends sg_browserbase {
 		$this->extError = 'No files without extension allowed !<br />';
 		if ($extension && strlen($extension)>1) {
 			if (strcmp($this->bparams,'*')) {
-				if (strpos(','.strtolower($this->bparams).',', strtolower($extension))>0) {
+				if (strpos(',,'.strtolower($this->bparams).',', strtolower($extension))>0) {
 					$ok = true;
 				} else {
 					$this->extError = '.... Invalid Extension: only '.$this->bparams.' allowed !!<br />';
@@ -270,7 +267,7 @@ class sg_browser_file extends sg_browserbase {
 				$ok = true;
 			}
 
-			if (strpos(',php,php3,php4,php5,inc,', strtolower($extension))>0) {
+			if (strpos(',php,php3,php4,php5,php6,inc,', strtolower($extension))>0) {
 				$ok = false;
 				$this->extError = '.... Invalid Extension: *.php and *.inc are NOT allowed !!<br />';
 			}
@@ -279,9 +276,53 @@ class sg_browser_file extends sg_browserbase {
 		return ($ok);
 	}
 
+	function doRenameFile($origName, $fromName, $toPath, $toName, $params, &$errCount, $isLast) {
+		$message = '';
+ 		$rParams = t3lib_div::trimExplode(',',$params['rename']);
+		//$params['own'];
+		$fileAlreadyExists = file_exists ($toPath.$params['own'].$toName);
+		t3lib_div::debug(Array('$toPath.$params[own].$toName'=>$toPath.$params['own'].$toName, '$fileAlreadyExists'=>$fileAlreadyExists, '$rParams'=>$rParams, 'File:Line'=>__FILE__.':'.__LINE__));
+
+		$info = '';
+		if (strcmp($rParams[0],'info')==0) {
+			if ($fileAlreadyExists) {
+				$info = '- existing file replaced!';
+			} else {
+				$info = '- new file!';
+			}
+		} else if (strcmp($rParams[0],'datetime')==0) {
+			// rParams[1]: a|1->append p|0->prepend; rParams[2]: 1->allways, 0->onlyIfExisting
+			$datetime = date($rParams[3] ? $rParams[3] : 'ymdHis',time());
+			if ($rParams[2] || $fileAlreadyExists) {
+				if (strncmp($rParams[1],'a',1)==0 || intval($rParams[1])>0) {
+					$toName = $toName.'-'.$datetime;
+					$info = '- file renamed to "'.$toName.'"';
+				} else {
+					$toName = $datetime.'-'.$toName;
+					$info = '- file renamed to "'.$toName.'"';
+				}
+			}
+		}
+
+		$res = move_uploaded_file($fromName, $toPath.$params['own'].$toName);
+		if ($res) {
+			chmod ($toPath.$params['own'].$toName,0664);
+			$message .= 'File "'.$origName.'" was uploaded '.$info.'<br />';
+			$message .= '<script type="text/javascript">'."\r\n";
+			//$message .= 'document.write ("set to value = '.$this->params['owr'].$origName.'<br>");'."\r\n";
+			$message .= 'setElement("'.$this->ext.'","'.$this->vn.'","'.$params['own'].$toName.'",'.($isLast && $errCount==0 ? intval($params['noAutoClose']) : 1).')'."\r\n";
+			$message .= '</script>'."\r\n";
+		} else {
+			$message .= 'Upload Error : '.$fl['error'][$i].'<br />';
+			$errCount++;
+		}
+
+		return ($message);
+	}
+
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sg_zfelib/browser/browsefile.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sg_zfelib/browser/browsefile.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sg_zlib/browser/browsefile.php'])	{
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sg_zlib/browser/browsefile.php']);
 }
 ?>

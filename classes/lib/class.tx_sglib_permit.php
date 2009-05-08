@@ -539,12 +539,15 @@ class tx_sglib_permit {
 					$editMode = $myBeEdit;
 					$this->allow['admin'] = TRUE;
 					$this->allow['seeAllHidden'] = TRUE;
+					$this->allow['editAllHidden'] = TRUE;
 					$this->allow['addEntry'] = TRUE;
 					$this->allow['uploadImage'] = TRUE;
 					$this->allow['unhideAll'] = TRUE;
 					$this->allow['editAll'] = TRUE;
 					$this->allow['deleteEntry'] = TRUE;
 					$this->allow['deleteImage'] = TRUE;
+					$this->allow['deleteList'] = TRUE;
+					$this->allow['import'] = TRUE;
 					$this->allow['editOnlyHidden'] = FALSE;
 					$this->txtUserProps = $this->constObj->getWrap('hot',$this->langObj->get('isadmin'));
 					$this->beEditor = 2;
@@ -555,6 +558,7 @@ class tx_sglib_permit {
 
 					$addEntry = $this->checkBeUserIn($myBeAllow['addEntry.']['user'],$myBeAllow['addEntry.']['group']);
 					$seeAllHidden = 1;//$this->checkBeUserIn($myBeAllow['seeAllHidden.']['user'],$myBeAllow['seeAllHidden.']['group']);
+					$editAllHidden = 1;//$this->checkBeUserIn($myBeAllow['seeAllHidden.']['user'],$myBeAllow['seeAllHidden.']['group']);
 					$uploadImage = $this->checkBeUserIn($myBeAllow['uploadImage.']['user'],$myBeAllow['uploadImage.']['group']);
 					$unhideAll = $this->checkBeUserIn($myBeAllow['unhideAll.']['user'],$myBeAllow['unhideAll.']['group']);
 					$unhideOwn = $this->checkBeUserIn($myBeAllow['unhideOwn.']['user'],$myBeAllow['unhideOwn.']['group']);
@@ -565,10 +569,17 @@ class tx_sglib_permit {
 					$deleteOwn = ($editOwn || $editAll) &&
 						$this->checkBeUserIn($myBeAllow['deleteOwn.']['user'],$myBeAllow['deleteOwn.']['group']);
 					$deleteImage = $this->checkBeUserIn($myBeAllow['deleteImage.']['user'],$myBeAllow['deleteImage.']['group']);
+					$deleteList = $this->checkBeUserIn($myBeAllow['deleteList.']['user'],$myBeAllow['deleteList.']['group']);
+					$allowImport = $this->checkBeUserIn($myBeAllow['import.']['user'],$myBeAllow['import.']['group']);
 
 					if ($seeAllHidden) {
 						$this->allow['seeAllHidden'] = TRUE;
 						$this->txtUserProps .= $this->langObj->get('seeAllHidden');
+					}
+
+					if ($editAllHidden) {
+						$this->allow['editAllHidden'] = TRUE;
+						$this->txtUserProps .= $this->langObj->get('editAllHidden');
 					}
 
 					if ($addEntry) {
@@ -621,6 +632,14 @@ class tx_sglib_permit {
 						if ($uploadImage) { $this->txtUserProps .= $this->langObj->get('uploadImage'); }
 						if ($deleteImage) { $this->txtUserProps .= $this->langObj->get('deleteImage'); }
 					}
+					if ($deleteList) {
+						$editMode = $myBeEdit;
+						$this->allow['deleteList'] = TRUE;
+					}
+					if ($allowImport) {
+						$editMode = $myBeEdit;
+						$this->allow['import'] = TRUE;
+					}
 				$this->beEditor = $editMode;
 
 				}
@@ -639,12 +658,15 @@ class tx_sglib_permit {
 					$editMode = $myEdit;
 					$this->allow['admin'] = TRUE;
 					$this->allow['seeAllHidden'] = TRUE;
+					$this->allow['editAllHidden'] = TRUE;
 					$this->allow['addEntry'] = TRUE;
 					$this->allow['uploadImage'] = TRUE;
 					$this->allow['unhideAll'] = TRUE;
 					$this->allow['editAll'] = TRUE;
 					$this->allow['deleteEntry'] = TRUE;
 					$this->allow['deleteImage'] = TRUE;
+					$this->allow['deleteList'] = TRUE;
+					$this->allow['import'] = TRUE;
 					$this->allow['editOnlyHidden'] = FALSE;
 					$this->txtUserProps = $this->constObj->getWrap('hot',$this->langObj->get('isadmin'));
 				} else if ($myEdit==1) {
@@ -675,6 +697,7 @@ class tx_sglib_permit {
 
 					$addEntry = $this->checkFeUserIn($myAllow['addEntry.']['user'],$myAllow['addEntry.']['group']);
 					$seeAllHidden = $this->checkFeUserIn($myAllow['seeAllHidden.']['user'],$myAllow['seeAllHidden.']['group']);
+					$editAllHidden = $this->checkFeUserIn($myAllow['editAllHidden.']['user'],$myAllow['editAllHidden.']['group']);
 					$uploadImage = $this->checkFeUserIn($myAllow['uploadImage.']['user'],$myAllow['uploadImage.']['group']);
 					$unhideAll = $this->checkFeUserIn($myAllow['unhideAll.']['user'],$myAllow['unhideAll.']['group']);
 					$unhideOwn = $this->checkFeUserIn($myAllow['unhideOwn.']['user'],$myAllow['unhideOwn.']['group']);
@@ -685,11 +708,18 @@ class tx_sglib_permit {
 					$deleteEntry = $editAll && $this->checkFeUserIn($myAllow['deleteEntry.']['user'],$myAllow['deleteEntry.']['group']);
 					$deleteOwn = ($editOwn || $editAll) && $this->checkFeUserIn($myAllow['deleteOwn.']['user'],$myAllow['deleteOwn.']['group']);
 					$deleteImage = $this->checkFeUserIn($myAllow['deleteImage.']['user'],$myAllow['deleteImage.']['group']);
+					$deleteList = $this->checkFeUserIn($myAllow['deleteList.']['user'],$myAllow['deleteList.']['group']);
+					$allowImport = $this->checkFeUserIn($myAllow['import.']['user'],$myAllow['import.']['group']);
 
 					if ($seeAllHidden && !$this->allow['seeAllHidden']) {
 						$editMode = $myEdit;
 						$this->allow['seeAllHidden'] = TRUE;
 						$this->txtUserProps .= $this->langObj->get('seeAllHidden');
+					}
+					if ($editAllHidden && !$this->allow['editAllHidden']) {
+						$editMode = $myEdit;
+						$this->allow['editAllHidden'] = TRUE;
+						$this->txtUserProps .= $this->langObj->get('editAllHidden');
 					}
 
 					if ($addEntry && !$this->allow['addEntry']) {
@@ -751,6 +781,14 @@ class tx_sglib_permit {
 					if ($deleteImage) {
 						$editMode = $myEdit;
 						$this->allow['deleteImage'] = TRUE;
+					}
+					if ($deleteList) {
+						$editMode = $myEdit;
+						$this->allow['deleteList'] = TRUE;
+					}
+					if ($allowImport) {
+						$editMode = $myEdit;
+						$this->allow['import'] = TRUE;
 					}
 
 					if ($this->allow['userlistUserfield']) {
@@ -876,7 +914,7 @@ class tx_sglib_permit {
 			$this->groupsIdFe[$this->idOfFeGroupName[$key]] = $key;
 		}
 
-		for (reset($this->groupsIdFe);$key=key($this->groupsIdFe);next($this->groupsIdFe)) {
+		if (count($this->groupsIdFe)>0) for (reset($this->groupsIdFe);$key=key($this->groupsIdFe);next($this->groupsIdFe)) {
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid,username,usergroup','fe_users',
 							'deleted=0 AND usergroup '."REGEXP '^$key$|,$key,|^$key,|,$key$'");
 			if ($res) {

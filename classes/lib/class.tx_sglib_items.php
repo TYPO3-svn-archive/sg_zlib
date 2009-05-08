@@ -97,6 +97,7 @@ class tx_sglib_items {
 		$this->constObj = $factoryObj->constObj;
 		$this->langObj = $factoryObj->langObj;
 		$this->permitObj = $factoryObj->permitObj;
+		$this->cObj = $factoryObj->cObj;
 
 		$this->emTable = Array (
 			SGZ_TEXT=>SGZ_TEXT,
@@ -217,7 +218,7 @@ class tx_sglib_items {
 				}
 			} else if (intval($em)<SGZ_SEARCH && is_array($pForeign)) {
 				if ($pForeign['where']) {
-					$pForeign['where'] = $this->lCObj->substituteMarkerArray($pForeign['where'], $row, '###|###');
+					$pForeign['where'] = $this->cObj->substituteMarkerArray($pForeign['where'], $row, '###|###');
 					if (strpos($pForeign['where'],'###')>0) {
 						$pForeign['where'] = $pForeign['whereDefault'];
 					}

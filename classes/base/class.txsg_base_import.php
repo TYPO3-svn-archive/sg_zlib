@@ -39,9 +39,9 @@
  *
  */
 
-require_once(t3lib_extMgm::extPath('sg_zlib').'class.txsg_base.php');
-
+require_once(t3lib_extMgm::extPath('sg_zlib').'classes/base/class.txsg_base.php');
 class txsg_base_import extends txsg_base {
+	var $globalMarkers = Array();
 
 	/*********************************************************************************
 	**
@@ -58,10 +58,11 @@ class txsg_base_import extends txsg_base {
 	 */
 	function DoImport()	{
 		GLOBAL $TSFE, $_FILES;
+		$importError = '';
 
+		
 		$basePathLocal = t3lib_extMgm::extPath('sg_zlib').'locallang_import.php';
 		$basePathExt = t3lib_extMgm::extPath($this->extKey).dirname($this->scriptRelPath).'/locallang_import.php';
-
 		$tempLOCAL_LANG = t3lib_div::readLLfile($basePathExt,$this->LLkey);
 		$this->LOCAL_LANG = t3lib_div::array_merge_recursive_overrule
 			(is_array($this->LOCAL_LANG) ? $this->LOCAL_LANG : array(),$tempLOCAL_LANG);
@@ -69,6 +70,13 @@ class txsg_base_import extends txsg_base {
 		$this->constText = $this->langObj->getLangArray($basePathLocal,$basePathExt);
 		// t3lib_div::debug(Array('$this->constText'=>$this->constText, 'File:Line'=>__FILE__.':'.__LINE__));
 
+
+
+
+
+
+
+		// Here again similar to old version
 		$TSFE->set_no_cache();
 
 		$preset = Array(0, 0,0,0,0,0,0,0,0,0);
@@ -77,24 +85,33 @@ class txsg_base_import extends txsg_base {
 
 		$importName = 'u'.$TSFE->fe_user->user['uid'].'_'.(strlen($this->importName)>1 ? $this->importName : 'z_import');
 
-		$importState = intval(t3lib_div::GPvar('impSt'));
-		$fileType = intval(t3lib_div::GPvar('filetype'));
+		$importState = intval(t3lib_div::_GP('impSt'));
+		$fileType = intval(t3lib_div::_GP('filetype'));
 		$myTime = time();
 		$this->myTime = $myTime;
 		$this->myMaxTime = $myTime + 365 * 24 * 3600;
 		$minImportFields = 2;
 
 		$cfImport = $this->confObj->import; //(isset($this->conf['import.']) ? $this->conf['import.'] : Array() );
+		$cfImportGlobal = $cfImport['global.'];
+		unset ($cfImport['global.']);
+
+		if (!$this->permitObj->allowed['import'] && $cfImportGlobal['denyMessage']) {
+			return ($cfImportGlobal['denyMessage']);
+		}
 
 		$myTypes = Array();
 		$myLabels = Array();
 		$myTables = Array();
 		if (is_array($cfImport))  {
 			for (reset($cfImport);$key=key($cfImport);next($cfImport)) {
-				$myTypes[] = str_replace('.','',$key);
-				// $myLabels[] = $cfImport[$key]['label'];
-				$myLabels[] = $this->cObj->stdWrap($cfImport[$key]['label'],$cfImport[$key]['label.']);
-				$myTables[] = $cfImport[$key]['table'] ? $cfImport[$key]['table'] : str_replace('.','',$key);
+				$table = $cfImport[$key]['table'] ? $cfImport[$key]['table'] : str_replace('.','',$key);
+				if (strcmp('be_',substr($table,0,3)) && strcmp('cache',substr($table,0,5))) {
+					$myTypes[] = str_replace('.','',$key);
+					// $myLabels[] = $cfImport[$key]['label'];
+					$myLabels[] = $this->cObj->stdWrap($cfImport[$key]['label'],$cfImport[$key]['label.']);
+					$myTables[] = $table;
+				}
 			}
 		} else {
 			$content = "<br />ERROR: No Imports defined in TS ! <br />";
@@ -118,6 +135,7 @@ class txsg_base_import extends txsg_base {
 			}
 		} else if ($importState==2 && (!is_array($_FILES) || strlen($_FILES['datei']['name'])<1 ) ) {
 			$importState = 1;
+			$importError = $this->constText['imp_error_nofile'];
 		}
 
 		if ($importState<0) {
@@ -126,18 +144,25 @@ class txsg_base_import extends txsg_base {
 
 			$myFile = $myTables[($fileType-1)];
 			$cfImport = $cfImport[$myTypes[($fileType-1)].'.'];
-			$workOnTable = $cfImport['table'] ? $cfImport['table'] : $this->mainTable;
-
+			$this->workOnTable = $cfImport['table'] ? $cfImport['table'] : $this->mainTable;
 
 			$importTmpl =  $this->templateObj->getTemplate(($cfImport['useTemplate']) ? $cfImport['useTemplate'] : 'import',$this->globalMarkers);
+
 			$this->PCA = $this->felib->getPCA($myFile,$this->prefixId,$this->pid,$this->conf,$this->localConf);
 			//t3lib_div::debug(Array('$myFile'=>$myFile, '$cfImport'=>$cfImport, '$this->pid'=>$this->pid, 'File:Line'=>__FILE__.':'.__LINE__));
+
+			$this->headerLine = $this->cObj->getSubpart($importTmpl,'###PART_HEADLINE###');
+			$this->headerField = $this->cObj->getSubpart($this->headerLine,'###PART_FIELD###');
+			$this->listLine = $this->cObj->getSubpart($importTmpl,'###PART_LISTLINE###');
+			$this->listField = $this->cObj->getSubpart($this->listLine,'###PART_FIELD###');
 
 			$settings = isset($cfImport['settings.']) ? $cfImport['settings.'] : '';
 			$fields = isset($cfImport) ? $cfImport['fields.'] : '';
 			for (reset($fields);$key=key($fields);next($fields)) {
 				$fields[$key]['id'] = explode(',',$fields[$key]['id']);
 			}
+
+			$this->columnRef = $settings['columns.'];
 
 			$totalStates = 5;
 			$activeState = $importState;
@@ -173,6 +198,8 @@ class txsg_base_import extends txsg_base {
 				for (reset($fields);$key=key($fields);next($fields)) {
 					$mHeaders['###'.str_replace('.','',$key).'###'] = str_replace('.','',$key);
 				}
+
+				$mHeaders['###headline###'] = $this->getHeadLine();
 
 				$impIdx = Array();
 				$imports = Array();
@@ -216,9 +243,11 @@ class txsg_base_import extends txsg_base {
 				$m['###ERROR_HEADER###'] = $this->constObj->getWrap('hot',$this->constText['imp_error_header']);
 				$m['###ERROR_MESSAGE###'] = '';
 				$m['###COUNT_DBERROR###'] = 0;
-				$m['###COUNT_INSERT###'] = 0;
+				$m['###COUNT_INSERT###'] = $this->countInsert = 0;
 				$m['###COUNT_REPLACE###'] = 0;
 				$m['###LIST_DBERROR###'] = '';
+
+				$this->getCrFeUser_id ($cfImport,t3lib_div::_GP('import'));
 
 				if ($importState==1) {
 					$errors = FALSE;
@@ -226,17 +255,18 @@ class txsg_base_import extends txsg_base {
 
 					$m['###PARTNUMBER###'] = $this->cObj->stdWrap($settings['part1'],$settings['part1.']);
 					$m['###ACTION###'] = $this->pi_getPageLink($GLOBALS["TSFE"]->id);
-					$m['###HIDDENDATA###'] = '<input type="hidden" name="id" value="'.$GLOBALS["TSFE"]->id.'">'.
-							'<input type="hidden" name="import[tstamp]" value="'.time().'">'.
-							'<input type="hidden" name="import[pid]" value="'.$this->pid.'">'.
-							'<input type="hidden" name="import[feuser]" value="'.$this->permitObj->getFeUid().'">'.
-							'<input type="hidden" name="impSt" value="2">'.
-							'<input type="hidden" name="MAX_FILE_SIZE" value="20000000">'.
-							'<input type="hidden" name="filetype" value="'.$fileType.'">'.
+					$m['###HIDDENDATA###'] = '<input type="hidden" name="id" value="'.$GLOBALS["TSFE"]->id.'" />'.
+							'<input type="hidden" name="import[tstamp]" value="'.time().'" />'.
+							'<input type="hidden" name="import[pid]" value="'.$this->pid.'" />'.
+							'<input type="hidden" name="import[feuser]" value="'.$this->permitObj->getFeUid().'" />'.
+							'<input type="hidden" name="impSt" value="2" />'.
+							'<input type="hidden" name="MAX_FILE_SIZE" value="50000000" />'.
+							'<input type="hidden" name="filetype" value="'.$fileType.'" />'.
 							'';
 
 					$m['###INPUT###'] = '';
-					$m['###FILE###'] = '<input name="datei" type="file" size=50 maxlength=20000000 accept="text/*">';
+					$m['###FILE###'] = (($importError) ? $this->constObj->getWrap('hot',$importError).'<br />' : '').
+						'<input name="datei" type="file" size="50" maxlength="60000000" accept="text/*" />';
 					$m['###FILEINFO###'] = str_replace('###COUNT###',$minImportFields,
 							$this->cObj->stdWrap($settings['fieldCountText'],$settings['fieldCountText.']));
 
@@ -248,7 +278,7 @@ class txsg_base_import extends txsg_base {
 									$this->cObj->stdWrap($settings['separator.'][$key]['text'],$settings['separator.'][$key]['text.'])
 									.'</option>';
 							}
-							$m['###FILESEPARATOR###'] .= '</select';
+							$m['###FILESEPARATOR###'] .= '</select>';
 						} else {
 							reset($settings['separator.']);
 							$key = key($settings['separator.']);
@@ -260,26 +290,82 @@ class txsg_base_import extends txsg_base {
 						$m['###FILESEPARATOR###'] = '<input type="hidden" value="tab" />[TAB]';
 					}
 
-					$m['###SUBMIT###'] = '<input type="submit" value="'.$this->constText['imp_submit'].'">';
+					$dbCharSet = $settings['encodingTo'] ? $settings['encodingTo'] : 'utf-8'; // wrong!! $GLOBALS['TYPO3_DB']->default_charset;
+					if ($settings['encodingText']) {
+						$tmpFileEncoding = '<br />'.$this->constObj->TSConstObj($settings['encodingText'],$settings['encodingText.']);
+					} else {
+						$tmpFileEncoding = '<br />'.$this->constText['imp_encodingtext'];
+					}
+					$m['###FILEENCODING###'] = sprintf ($tmpFileEncoding,$dbCharSet);
+					$m['###FILEENCODING###'] .= '<select name="import[encoding]" />'.CRLF;
+					$defaultText = $this->constObj->TSConstObj($settings['encodingDefault'],$settings['encodingDefault.']);
+					$defaultText = sprintf ($defaultText ? $defaultText : $this->constText['imp_dontrecode'], $dbCharSet);
+					$presetEncoding = $settings['encodingPreset'];
+					$m['###FILEENCODING###'] .= '<option value="">'.$defaultText.'</option>'.CRLF;
+					if ($settings['encodingFullList']) {
+						$cs = t3lib_div::makeInstance('t3lib_cs');
+						$charsetList = Array('windows-1252'=>'windows-1252', 'utf-8'=>'utf-8','-'=>'-');
+						$charsetList = array_merge($charsetList,$cs->synonyms);
+						if (is_array($charsetList)) foreach ($charsetList as $key=>$params)  {
+							$selected = ($presetEncoding && strcmp($presetEncoding,$key)==0) ? ' selected="selected"' : '' ;
+							$m['###FILEENCODING###'] .= '<option value="'.$key.','.$dbCharSet.'"'.$selected.'>'.$key.'</option>'.CRLF;
+						}
+					} else {
+						if (is_array($settings['encoding.'])) foreach ($settings['encoding.'] as $key=>$params) {
+							$encoding = $params['value'];
+							$selected = ($presetEncoding && strcmp($presetEncoding,$encoding)==0) ? ' selected="selected"' : '' ;
+							$name = $this->constObj->TSConstObj($params['name'],$params['name.']);
+							$name = $name ? $name : $encoding;
+							$m['###FILEENCODING###'] .= '<option value="'.$encoding.','.$dbCharSet.'"'.$selected.'>'.$name.'</option>'.CRLF;
+						}
+					}
+					$m['###FILEENCODING###'] .= '</select>'.CRLF;
+
+					if (is_array($settings['media.']) && $settings['media.']['upload']) {
+							$m['###MEDIAFILE###'] .= '<hr />Mediafile (*.zip):<br />';
+							$m['###MEDIAFILE###'] .= '<input name="mediazip" type="file" size="50" maxlength="50000000" accept="application/zip" />';
+					} else {
+						$m['###MEDIAFILE###'] = '';
+					}
+
+					$m['###SUBMIT###'] = '<input type="submit" value="'.$this->constText['imp_submit'].'" />';
 
 
 					$m['###STATE###'] = $activeState;
 					$m['###MAXSTATE###'] = $totalStates;
 
-					if (intval($settings['pid.']['value'])>(-5) || is_array($settings['input.'])) {
+					if (intval($settings['pid.']['value'])>(-5) || is_array($settings['input.']) || $cfImport['settings.']['deleteAll']) {
 						$m['###INPUT###'] = '<table border=0 cellspacing=0 cellpadding=1>';
+						$hiddenPid = '';
 
+						$tmpPid = (intval($settings['pid.']['value'])>=0 ? intval($settings['pid.']['value']):intval($this->pid));
 						if (intval($settings['pid.']['value'])>(-5)) {
-						$m['###INPUT###'] .= '<tr><td>'.$settings['pid.']['label'].': &nbsp;</td>';
-							$m['###INPUT###'] .= '<td><input type="text" name="import[pid]" value="'.
-											(intval($settings['pid.']['value'])>=0 ? intval($settings['pid.']['value']):intval($this->pid)).'"></td></tr>';
+							$m['###INPUT###'] .= '<tr><td>'.$settings['pid.']['label'].': &nbsp;</td>';
+							$m['###INPUT###'] .= '<td>'.$this->getPidInputField ('pid',$settings['pid.'],$tmpPid).'</td></tr>';
+						} else {
+							$hiddenPid = '<input type="hidden" name="import[pid]" value="'.$tmpPid.'" />';
 						}
 						if (is_array($settings['input.'])) {
 							for (reset($settings['input.']);$key=key($settings['input.']);next($settings['input.'])) {
 								$m['###INPUT###'] .= '<tr><td>'.$settings['input.'][$key]['label'].': &nbsp;</td>';
-								$m['###INPUT###'] .= '<td><input type="text" name="import[input]['.$key.']" value="'.
-									( intval($settings['input.'][$key]['value'])>=0 ? $settings['input.'][$key]['value'] : $preset[intval($key)] )
-									.'"></td></tr>';
+								$m['###INPUT###'] .= '<td>'.$hiddenPid.$this->getUserInputField ($key,$settings['input.'][$key],$preset[intval($key)]).'</td></tr>';
+								$hiddenPid = '';
+							}
+						}
+						if ($cfImport['settings.']['deleteAll']) {
+							$m['###INPUT###'] .= '<tr><td>Delete ? &nbsp;</td>';
+							if (strncmp(strtolower($cfImport['settings.']['deleteAll']),'query',5)==0) {
+								$m['###INPUT###'] .= '<td><select name="deleteAll">';
+								$m['###INPUT###'] .= '<option value="">-nothing-</option>';
+								if ($this->felib->allow['admin'] && strcmp(strtolower($cfImport['settings.']['deleteAll']),'queryall')==0) {
+									$m['###INPUT###'] .= '<option value="all">Absolutely ALL records will be deleted before import</option>';
+								}
+								$m['###INPUT###'] .= '<option value="own">ALL records of given FeUser will be deleted before import</option>';
+								$m['###INPUT###'] .= '</select></td></tr>';
+							} else if (strcmp(strtolower($cfImport['settings.']['deleteAll']),'all')==0) {
+								$m['###INPUT###'] .= '<td><input type="hidden" name="deleteAll" value="all" />Absolutely ALL records will be deleted before import</td></tr>';
+							} else if (strcmp(strtolower($cfImport['settings.']['deleteAll']),'own')==0) {
+								$m['###INPUT###'] .= '<td><input type="hidden" name="deleteAll" value="own" />ALL records of given FeUser will be deleted before import</td></tr>';
 							}
 						}
 						$m['###INPUT###'] .= '</table>';
@@ -359,12 +445,17 @@ class txsg_base_import extends txsg_base {
 				} else if ($importState==2) { // ##################################################################################
 					$errors = FALSE;
 					$sp = $this->templateObj->getSubpart($importTmpl,'###PART2###');
-					$import = t3lib_div::GPvar('import');
+					$import = t3lib_div::_GP('import');
+					$this->deleteAll = t3lib_div::_GP('deleteAll');
+
+					$this->deleteAllMode = (strcmp($this->deleteAll,'own')==0 || strcmp($this->deleteAll,'all')==0);
+					$this->debugObj->debugIf('importDelete',Array('$this->deleteAll'=>$this->deleteAll, 'crfeuser_id'=>$this->crfeuser_id, 'File:Line'=>__FILE__.':'.__LINE__));
 					$m['###PARTNUMBER###'] = $this->cObj->stdWrap($settings['part2'],$settings['part2.']);
 					$m['###ACTION###'] = $this->pi_getPageLink($GLOBALS["TSFE"]->id);
-					$m['###HIDDENDATA###'] = '<input type="hidden" name="id" value="'.$GLOBALS["TSFE"]->id.'">'.
-							'<input type="hidden" name="filetype" value="'.$fileType.'">'.
-							'<input type="hidden" name="moreimport" value="'.urlencode(serialize($import)).'">'.
+					$m['###HIDDENDATA###'] = '<input type="hidden" name="id" value="'.$GLOBALS["TSFE"]->id.'" />'.
+							'<input type="hidden" name="filetype" value="'.$fileType.'" />'.
+							'<input type="hidden" name="deleteAll" value="'.$this->deleteAll.'" />'.
+							'<input type="hidden" name="moreimport" value="'.urlencode(serialize($import)).'" />'.
 							'';
 					$m['###STATE###'] = $activeState;
 					$m['###MAXSTATE###'] = $totalStates;
@@ -399,19 +490,31 @@ class txsg_base_import extends txsg_base {
 						$m['###STATUS_FILESIZE###'] ="<font color=#008000>OK</font>";
 					}
 
+					
 					$m['###TEXT_FILETEMP###'] = $_FILES['datei']['tmp_name'];
+					if (file_exists($_FILES['datei']['tmp_name'])) {
+						$tmpFileSize = @filesize ($_FILES['datei']['tmp_name']);
+						$m['###TEXT_FILETEMP###'] .= ' - Size = '.intval((floor($tmpFileSize+512)/1024)).'kBytes<br />=&gt; "'.$importName.'.txt"';
+					} else {
+						$tmpFileSize = 0;
+						$m['###TEXT_FILETEMP###'] .= ' - Missing !';
+					}
 					$m['###STATUS_FILETEMP###'] = 'OK';
 
 					$m['###TEXT_FILELINES###'] = '';
 					$m['###STATUS_FILELINES###'] = '';
 
-					if (is_uploaded_file($_FILES['datei']['tmp_name'])) {
+					if (is_uploaded_file($_FILES['datei']['tmp_name']) && $tmpFileSize>0) {
 						move_uploaded_file($_FILES['datei']['tmp_name'], 'typo3temp/'.$importName.'.txt');
+						$uploadedFileSize = @filesize('typo3temp/'.$importName.'.txt');
+						if ($uploadedFileSize!=$tmpFileSize) {
+									$m['###STATUS_FILENAME###'] .= ' ('.intval((floor($uploadedFileSize+512)/1024)).'!='.intval((floor($tmpFileSize+512)/1024)).' kBytes)';
+						}
 
 						//$aLines = file ('typo3temp/'.$importName.'.txt');
 						$concat = $settings['concat'];
-						$aLines = $this->felib->getImportFile('typo3temp/'.$importName.'.txt',
-							$minImportFields,$separator,$concat);
+						$recode = $import['encoding'] ? $import['encoding'] :$settings['recode'];
+						$aLines = $this->felib->getImportFile('typo3temp/'.$importName.'.txt',$minImportFields,$separator,$concat,$recode);
 
 						$maxLineWarn = intval($settings['maxLineWarn']) ? intval($settings['maxLineWarn']) : 20000;
 						$minLineWarn = intval($settings['minLineWarn']) ? intval($settings['minLineWarn']) : 5;
@@ -482,46 +585,58 @@ class txsg_base_import extends txsg_base {
 						$maxC = count ($aLines);
 						for ($i=0;$i<$maxC;$i++) {
 							$tPar = explode($separator, $aLines[$i]);
+							if ($settings['removeFieldQuotes']) {
+								$tPar = $this->stripAllQuotes($tPar);
+							}
 
 							$myData = Array();
 							$mData = Array('###id###'=>($i+1).'.');
 							for (reset($fields);$key=key($fields);next($fields)) {
 								$xKey = str_replace('.','',$key);
 								if (count($fields[$key]['id'])>0 && intval($fields[$key]['id'][0])>0) {
-									$myVal = $this->newsGetImportFields ($fields,$key,$xKey,$tPar,$myData,$mData);
+									$myVal = $this->newsGetImportFields ($fields,$key,$xKey,$tPar,$myData,$mData,$fields[$key]['preprocess']);
 								} else {
 									$myData[str_replace('.','',$key)] = $fields[$key];
 								}
 							}
 
-							if (is_array($dupFields)) {
-								$tmp = Array();
-								$tmp2 = Array();
-								for ($k=0;$k<count($dupFields);$k++) {
-									$d = $myData[$dupFields[$k]];
-									if (is_array($d)) {
-										$tmp[] = $dupFields[$k];
-									} else {
-										$tmp[] = $dupFields[$k].'='.$d;
-										$tmp2[] = QT.$d.QT;
+							if (!$i && $settings['skipFirstRow']) {
+								$mData['###listline###'] = $this->getHeadLine($mData);
+								$ct .= $this->cObj->substituteMarkerArray($listLine, $mData);
+							} else {
+
+								if (is_array($dupFields)) {
+									$tmp = Array();
+									$tmp2 = Array();
+									for ($k=0;$k<count($dupFields);$k++) {
+										$d = $myData[$dupFields[$k]];
+										if (is_array($d)) {
+											$tmp[] = $dupFields[$k];
+										} else {
+											$tmp[] = $dupFields[$k].'='.$d;
+											$tmp2[] = QT.$d.QT;
+										}
+									}
+									$tmp2Implode = implode ('',$tmp2);
+									if (strlen($tmp2Implode)>2) {
+										$dupCheck[] = implode (' / ',$tmp);
+										$dupCheck2[] = $tmp2Implode;
 									}
 								}
-								$tmp2Implode = implode ('',$tmp2);
-								if (strlen($tmp2Implode)>2) {
-									$dupCheck[] = implode (' / ',$tmp);
-									$dupCheck2[] = $tmp2Implode;
+
+								$mData['###listline###'] = $this->getListLine($mData);
+
+								if ($i<7 || $i>$maxC-8) {
+									$ct .= $this->cObj->substituteMarkerArray($listLine, $mData);
 								}
-							}
 
-							$ct .= $this->cObj->substituteMarkerArray($listLine, $mData);
-
-							if ($maxC>19 && $i==6) {
-								$i = $maxC - 8;
-								$ct .= $this->cObj->substituteMarkerArray($headLine, $mHeaders);
+								if ($maxC>19 && $i==6) {
+									$ct .= $this->cObj->substituteMarkerArray($headLine, $mHeaders);
+								}
 							}
 						}
 
-						if (count($dupCheck)>0) {
+						if (count($dupCheck)>0 && !$this->deleteAllMode) {
 							$dups = Array();
 							for ($k=0;$k<count($dupCheck);$k++) {
 								$dups[$dupCheck[$k]]++;
@@ -547,7 +662,7 @@ class txsg_base_import extends txsg_base {
 									if (strcmp($tmp[$k],'pid')==0) {
 										$where[] = 'pid='.intval($import['pid']);
 									} else if (strcmp($tmp[$k],'crfeuser_id')==0) {
-										$where[] = 'crfeuser_id='.intval($import['feuser']);
+										$where[] = 'crfeuser_id='.intval($this->crfeuser_id);
 									}
 								}
 							}
@@ -555,7 +670,7 @@ class txsg_base_import extends txsg_base {
 							$select = 'count(*) as cnt, uid, concat('.implode(',',$dupFields).') as dupcheck';
 							$where = implode (' AND ',$where);
 							$group = 'concat('.implode(',',$dupFields).')';
-							$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($select,$workOnTable,$where,$group,'','');
+							$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($select,$this->workOnTable,$where,$group,'','');
 							$dupErrors = Array();
 							$replaceCount = 0;
 							$m['###LIST_DBERROR###'] = '';
@@ -576,20 +691,26 @@ class txsg_base_import extends txsg_base {
 							$m['###COUNT_DBERROR###'] = count($dupErrors)<1 ? 0 :
 								$this->constObj->getWrap('hot',sprintf($this->constText['imp_descr_dberrorcount_text'],count($dupErrors)));
 						}
-						$m['###COUNT_INSERT###'] = $m['###TEXT_FILELINES###'] - $replaceCount - count($dupErrors);
+						$m['###COUNT_INSERT###'] = $this->countInsert = $m['###TEXT_FILELINES###'] - $replaceCount - count($dupErrors);
 						$m['###COUNT_REPLACE###'] = $replaceCount;
 
 						$o2File = fopen ('typo3temp/'.$importName.'_pre.txt','wb');
 						if($o2File) {
 							for ($i=0;$i<$maxC;$i++) {
-								fwrite ($o2File,$aLines[$i].CRLF);
+								if (!$i && $settings['skipFirstRow']) {
+								} else {
+									fwrite ($o2File,$aLines[$i].CRLF);
+								}
 							}
 							fclose ($o2File);
 						}
 						$o2File = fopen ('typo3temp/'.$importName.'_repl.txt','wb');
 						if($o2File) {
 							for ($i=0;$i<$maxC;$i++) {
-								fwrite ($o2File,$aLines[$i].CRLF);
+								if (!$i && $settings['skipFirstRow']) {
+								} else {
+									fwrite ($o2File,$aLines[$i].CRLF);
+								}
 							}
 							fclose ($o2File);
 						}
@@ -600,6 +721,60 @@ class txsg_base_import extends txsg_base {
 						$m['###STATUS_FILELINES###'] = 'ERROR !!';
 						$errors = TRUE;
 					}
+
+							
+					$m['###TEXT_MEDIAZIP###'] = '-none-';
+					$m['###STATUS_MEDIAZIP###'] = '-';
+					if (is_array($_FILES['mediazip']) && strlen($_FILES['mediazip']['name'])) {
+						$m['###TEXT_MEDIAZIP###'] = $_FILES['mediazip']['name'].'<br />';
+						if (strcmp($_FILES['mediazip']['type'],'application/zip')==0 || strcasecmp(substr($_FILES['mediazip']['name'],-4),'.zip')==0) {
+							$mediaDestPath = t3lib_div::getFileAbsFileName($settings['media.']['tempPath'],1);
+							if (strlen($mediaDestPath)>5 && substr($mediaDestPath,0,1)=='/') {
+								t3lib_div::mkdir($mediaDestPath);
+								$zip = new ZipArchive;
+								$countOfFilesInSubDirs = 0;
+								if ($zip->open($_FILES['mediazip']['tmp_name']) === TRUE) {
+									$m['###TEXT_MEDIAZIP###'] .= 'Filesize = '.floor(($_FILES['mediazip']['size']+512)/1024).'kBytes<br />';
+									$m['###TEXT_MEDIAZIP###'] .= 'Files = '.$zip->numFiles.'<br />';
+									$myCount = 0;
+									for ($i=0; $i<$zip->numFiles;$i++) {
+										$fileInfo = $zip->statIndex($i);
+										$slashPos = strrpos(' '.$fileInfo['name'],'/');
+										if ($slashPos===FALSE) {
+											$myCount++;
+											$zip->extractTo($mediaDestPath,array($fileInfo['name']));
+											t3lib_div::fixPermissions($mediaDestPath.'/'.$fileInfo['name']);
+											$this->debugObj->debugIf('mediazip',Array('Found FileInfo'=>$fileInfo, 'copied to'=>$mediaDestPath,'File:Line'=>__FILE__.':'.__LINE__));
+										} else  {
+											$myCount++;
+											$countOfFilesInSubDirs++;
+											$name = substr($fileInfo['name'],$slashPos);
+											$zip->extractTo($mediaDestPath,$fileInfo['name']);
+											rename($mediaDestPath.'/'.$fileInfo['name'], $mediaDestPath.'/'.$name);
+											t3lib_div::fixPermissions($mediaDestPath.'/'.$name);
+											$this->debugObj->debugIf('mediazip',Array('Found FileInfo'=>$fileInfo, 'MOVED to'=>$mediaDestPath.'/'.$name,'File:Line'=>__FILE__.':'.__LINE__));
+										}
+									}
+									if ($myCount!=$zip->numFiles) {
+										$m['###TEXT_MEDIAZIP###'] .= $this->constObj->getWrap('hot','WARNING: '.($zip->numFiles-$myCount).' Subdirs / Files in SubDirs ignored!');
+									}
+									if ($countOfFilesInSubDirs) {
+										$m['###TEXT_MEDIAZIP###'] .= $this->constObj->getWrap('hot','WARNING: Zip contained '.$countOfFilesInSubDirs.' Files in Subdirectories! ');
+									}
+									$zip->close();
+									$m['###STATUS_MEDIAZIP###'] = 'OK';
+								} else {
+									$m['###STATUS_MEDIAZIP###'] = $this->constObj->getWrap('hot','FAILED');
+								} 
+							} else {
+								$m['###STATUS_MEDIAZIP###'] = $this->constObj->getWrap('hot','TempPath Error!!');
+							}
+						} else {
+							$m['###STATUS_MEDIAZIP###'] = $this->constObj->getWrap('hot','ERROR');
+							$m['###TEXT_MEDIAZIP###'] .= $this->constObj->getWrap('hot','Error: Must be *.zip');
+						}
+					}
+
 
 					$sepError = false;
 					if (count($this->felib->impErrors) && count($aLines)>1) {
@@ -662,24 +837,35 @@ class txsg_base_import extends txsg_base {
 					}
 
 					if ($errors) {
-						$m['###SUBMIT###'] = '<input type="hidden" name="impSt" value="1">'.
-							'<input type="submit" value="'.$this->constText['imp_prev'].'">';
+						$m['###SUBMIT###'] = '<input type="hidden" name="impSt" value="1" />'.
+							'<input type="submit" value="'.$this->constText['imp_prev'].'" />';
 					} else {
-						$m['###SUBMIT###'] = '<input type="hidden" name="impSt" value="3">'.
-							'<input type="submit" value="'.$this->constText['imp_next'].'">';
+						$m['###SUBMIT###'] = '<input type="hidden" name="impSt" value="3" />'.
+							'<input type="submit" value="'.$this->constText['imp_next'].'" />';
 					}
+
+					$m['###FEUSER_INFO###'] = $this->getFeUserInfo($cfImport);
 
 					$content .= $this->cObj->substituteMarkerArray($sp,$m);
 				} else if ($importState==3) { // ##################################################################################
+						$import = unserialize(urldecode(t3lib_div::_GP('moreimport')));
+						$this->getCrFeUser_id ($cfImport,$import);
 						$content .= '<form action="'.$this->pi_getPageLink($GLOBALS["TSFE"]->id).
 							'" enctype="multipart/form-data" method="post">';
-						$content .= '<input type="hidden" name="id" value="'.$GLOBALS["TSFE"]->id.'">';
+						$content .= '<input type="hidden" name="id" value="'.$GLOBALS["TSFE"]->id.'" />';
 						$content .= str_replace('###STATE###',$activeState,str_replace('###MAXSTATE###',$totalStates,
 							$this->cObj->stdWrap($settings['part3'],$settings['part3.'])));
-						$content .= '<input type="hidden" name="filetype" value="'.$fileType.'">';
-						$import = unserialize(urldecode(t3lib_div::GPvar('moreimport')));
+						$content .= '<input type="hidden" name="filetype" value="'.$fileType.'" />';
+						$this->deleteAll = t3lib_div::_GP('deleteAll');
+						$this->deleteAllMode = (strcmp($this->deleteAll,'own')==0 || strcmp($this->deleteAll,'all')==0);
+						$this->debugObj->debugIf('importDelete',Array('$this->deleteAll'=>$this->deleteAll, 'crfeuser_id'=>$this->crfeuser_id, 'File:Line'=>__FILE__.':'.__LINE__));
 						$this->importPid = $import['pid'];
-						$content .= '<input type="hidden" name="moreimport" value="'.urlencode(serialize($import)).'">';
+						$quotaParams = t3lib_div::_GP('quota');
+						$this->debugObj->debugIf('quota',Array('$quotaParams'=>$quotaParams, 'crfeuser_id'=>$this->crfeuser_id, 'File:Line'=>__FILE__.':'.__LINE__));
+						$content .= '<input type="hidden" name="moreimport" value="'.urlencode(serialize($import)).'" />'.
+									'<input type="hidden" name="deleteAll" value="'.$this->deleteAll.'" />'.							
+									'<input type="hidden" name="quota[maxCount]" value="'.intval($quotaParams['maxCount']).'" />'.
+									'<input type="hidden" name="quota[exceed]" value="'.intval($quotaParams['exceed']).'" />';
 						$separator = "\t";
 						if (strlen($import['separator'])>0) {
 							if (strcmp($import['separator'],'tab')==0) {
@@ -691,7 +877,8 @@ class txsg_base_import extends txsg_base {
 							}
 						}
 
-						$aLines = $this->felib->getImportFile('typo3temp/'.$importName.'_pre.txt',$minImportFields,$separator);
+						$recode = $import['encoding'] ? $import['encoding'] :$settings['recode'];
+						$aLines = $this->felib->getImportFile('typo3temp/'.$importName.'_pre.txt',$minImportFields,$separator,1,'');
 						$maxC = count($aLines);
 
 						if (is_array($cfImport['global.'])) {
@@ -814,8 +1001,8 @@ class txsg_base_import extends txsg_base {
 							fclose ($o2File);
 						}
 
-						$content .= '<br /><input type="hidden" name="impSt" value="4">';
-						$content .= '<input type="submit" value="Weiter">';
+						$content .= '<br /><input type="hidden" name="impSt" value="4" />';
+						$content .= '<input type="submit" value="Weiter" />';
 						$content .= '</form>';
 				} else if ($importState==4) { // ##################################################################################
 					$fatalErrors =  FALSE;
@@ -824,8 +1011,8 @@ class txsg_base_import extends txsg_base {
 					$detailsInfo = '';
 					$pnConf = $cfImport['notify.'];
 					if (is_array($pnConf)) {
-						$detailsFormat = $pnConf['detailsLine'];
-						$detailsInfo = $pnConf['detailsInfo'];
+						$detailsFormat = $this->constObj->TSConstConfObj($pnConf,'detailsLine');
+						$detailsInfo = $this->constObj->TSConstConfObj($pnConf,'detailsInfo');
 					}
 
 					$sp = $this->templateObj->getSubpart($importTmpl,'###PART4SUMMARY###');
@@ -833,13 +1020,28 @@ class txsg_base_import extends txsg_base {
 					$fepBlock = $this->templateObj->getSubpart($importTmpl,'###PART4LISTLINE###');
 					$fepHeader = $this->templateObj->getSubpart($importTmpl,'###PART4HEADERLINE###');
 					$fep = '';
-					$import = unserialize(urldecode(t3lib_div::GPvar('moreimport')));
+					$import = unserialize(urldecode(t3lib_div::_GP('moreimport')));
+					$this->getCrFeUser_id ($cfImport,$import);
+					$this->deleteAll = t3lib_div::_GP('deleteAll');
+					$this->deleteAllMode = (strcmp($this->deleteAll,'own')==0 || strcmp($this->deleteAll,'all')==0);
+					$this->debugObj->debugIf('importDelete',Array('$this->deleteAll'=>$this->deleteAll, 'crfeuser_id'=>$this->crfeuser_id, 'File:Line'=>__FILE__.':'.__LINE__));
+					$quotaParams = t3lib_div::_GP('quota');
+					$maxDirect = ($quotaParams['maxCount']-$quotaParams['ownedRecords'])<1 ? 0 : $quotaParams['maxCount']-$quotaParams['ownedRecords'];
+					if ($settings['quota']) {
+						$query = $this->workOnTable.'.deleted=0 AND '.$this->workOnTable.'.crfeuser_id='.$this->crfeuser_id;
+						$this->oldRecordList =  $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('uid',$this->workOnTable,$query,'uid','crdate',$quotaParams['maxCount']); 
+					}
+					$this->oldRecordList = (array) $this->oldRecordList;
+					$this->debugObj->debugIf('quota',Array('$quotaParams'=>$quotaParams, 'crfeuser_id'=>$this->crfeuser_id, 'File:Line'=>__FILE__.':'.__LINE__));
 					$this->importPid = $import['pid'];
 					$m['###PARTNUMBER###'] = $this->cObj->stdWrap($settings['part4'],$settings['part4.']);
 					$m['###ACTION###'] = $this->pi_getPageLink($GLOBALS["TSFE"]->id);
-					$m['###HIDDENDATA###'] = '<input type="hidden" name="id" value="'.$GLOBALS["TSFE"]->id.'">'.
-							'<input type="hidden" name="filetype" value="'.$fileType.'">'.
-							'<input type="hidden" name="moreimport" value="'.urlencode(serialize($import)).'">'.
+					$m['###HIDDENDATA###'] = '<input type="hidden" name="id" value="'.$GLOBALS["TSFE"]->id.'" />'.
+							'<input type="hidden" name="filetype" value="'.$fileType.'" />'.
+							'<input type="hidden" name="deleteAll" value="'.$this->deleteAll.'" />'.
+							'<input type="hidden" name="quota[maxCount]" value="'.intval($quotaParams['maxCount']).'" />'.
+							'<input type="hidden" name="quota[exceed]" value="'.intval($quotaParams['exceed']).'" />'.
+							'<input type="hidden" name="moreimport" value="'.urlencode(serialize($import)).'" />'.
 							'';
 					$m['###STATE###'] = $activeState;
 					$m['###MAXSTATE###'] = $totalStates;
@@ -865,6 +1067,7 @@ class txsg_base_import extends txsg_base {
 						$cntNotArchived = 0;
 						$cntSaved = 0;
 						$cntInsert = 0;
+						$cntDeleteForQuota = 0;
 						$cntATag = 0;
 						$nfSC = Array();
 						$errors = Array('e'=>Array(), 'w'=>Array());
@@ -879,19 +1082,20 @@ class txsg_base_import extends txsg_base {
 									if (strcmp($tmp[$k],'pid')==0) {
 										$globalWhere .= ' AND pid='.intval($import['pid']);
 									} else if (strcmp($tmp[$k],'crfeuser_id')==0) {
-										$globalWhere .= ' AND crfeuser_id='.intval($import['feuser']);
+										$globalWhere .= ' AND crfeuser_id='.intval($this->crfeuser_id);
 									}
 								}
 							}
-							$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($select,$workOnTable,$where.$globalWhere,'','','');
+							$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($select,$this->workOnTable,$where.$globalWhere,'','','');
 							$m['###COUNT_DELETE###'] = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
-							$tmp = 'UPDATE '.$workOnTable.' SET deleted=1 WHERE '.$where;
+							$tmp = 'UPDATE '.$this->workOnTable.' SET deleted=1 WHERE '.$where;
 							//t3lib_div::debug(Array('$tmp'=>$tmp, 'File:Line'=>__FILE__.':'.__LINE__));
 							fwrite ($of,'# '.$tmp.";\r\n");
 						}
 
 						// $aLines = file ('typo3temp/'.$importName.'.txt');
-						$aLines = $this->felib->getImportFile('typo3temp/'.$importName.'_repl.txt',$minImportFields,$separator);
+						$recode = $import['encoding'] ? $import['encoding'] :$settings['recode'];
+						$aLines = $this->felib->getImportFile('typo3temp/'.$importName.'_repl.txt',	$minImportFields,$separator,1,'');
 
 						//t3lib_div::debug(Array('count($aLines)'=>count($aLines), 'File:Line'=>__FILE__.':'.__LINE__));
 						// CHECK for replacing data
@@ -909,9 +1113,9 @@ class txsg_base_import extends txsg_base {
 								for (reset($fields);$key=key($fields);next($fields)) {
 									$xKey = str_replace('.','',$key);
 									if (count($fields[$key]['id'])>0 && intval($fields[$key]['id'][0])>0) {
-										$myVal = $this->newsGetImportFields ($fields,$key,$xKey,$tPar,$myData,$mData);
+										$myVal = $this->newsGetImportFields ($fields,$key,$xKey,$tPar,$myData,$mData,$fields[$key]['preprocess']);
 									} else {
-										$myData[str_replace('.','',$key)] = $fields[$key];
+										$myData[str_replace('.','',$key)] = $this->doFieldPreprocess($fields[$key],$fields[$key]['preprocess']);
 									}
 								}
 								$tmp = Array();
@@ -940,7 +1144,7 @@ class txsg_base_import extends txsg_base {
 									if (strcmp($tmp[$k],'pid')==0) {
 										$where[] = 'pid='.intval($import['pid']);
 									} else if (strcmp($tmp[$k],'crfeuser_id')==0) {
-										$where[] = 'crfeuser_id='.intval($import['feuser']);
+										$where[] = 'crfeuser_id='.intval($this->crfeuser_id);
 									}
 								}
 							}
@@ -948,7 +1152,7 @@ class txsg_base_import extends txsg_base {
 							$select = 'count(*) as cnt, uid, concat('.implode(',',$dupFields).') as dupcheck';
 							$where = implode (' AND ',$where);
 							$group = 'concat('.implode(',',$dupFields).')';
-							$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($select,$workOnTable,$where,$group,'','');
+							$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($select,$this->workOnTable,$where,$group,'','');
 							$replaceCount = 0;
 							$dupLines = 0;
 							$m['###LIST_DBERROR###'] = '';
@@ -964,7 +1168,7 @@ class txsg_base_import extends txsg_base {
 								}
 							}
 							$m['###COUNT_REPLACE###'] = $replaceCount;
-							$m['###COUNT_INSERT###'] = count($myReplaces)-$replaceCount-$dupLines;
+							$m['###COUNT_INSERT###'] = $this->countInsert = count($myReplaces)-$replaceCount-$dupLines;
 						}
 
 						// read foreign tables
@@ -1043,7 +1247,7 @@ class txsg_base_import extends txsg_base {
 								$xKey = str_replace('.','',$key);
 								$myVal = '';
 								if (count($fields[$key]['id'])>0 && intval($fields[$key]['id'][0])>0) {
-									$myVal = $this->newsGetImportFields ($fields,$key,$xKey,$tPar,$myData,$mData);
+									$myVal = $this->newsGetImportFields ($fields,$key,$xKey,$tPar,$myData,$mData,$fields[$key]['preprocess']);
 								} else {
 									if (isset($fields[$key]['set'])) {
 
@@ -1082,6 +1286,12 @@ class txsg_base_import extends txsg_base {
 											$tmpStr = sprintf($this->constText['imp_warn_cutoff'],$xKey);
 											$errors['w'][$tmpStr]++;
 									}
+								}
+
+								
+								$myVal = $this->doFieldPreprocess($myVal,$fields[$key]['preprocess']);
+								if ($fields[$key]['preprocess']) {
+									$myData[$xKey] = $myVal;
 								}
 
 
@@ -1158,6 +1368,11 @@ class txsg_base_import extends txsg_base {
 														$errors['e'][$tmpStr]++;
 													}
 												}
+											}
+										break;
+										case 'media':
+											if (trim($myVal)) {
+												$myVal = $this->getMediaList($myVal,$myData,$settings,$errText,$errors,$isError,$isWarning);
 											}
 										break;
 										default:
@@ -1262,7 +1477,7 @@ class txsg_base_import extends txsg_base {
 								$doReplace = FALSE;
 								$doNothing = FALSE;
 								$check = 'xz/jksehd jkhjkdsfjktz78d';
-								if (is_array($dupFields)) {
+								if (is_array($dupFields) && !$this->deleteAllMode) {
 									$check = '';
 									for ($k=0;$k<count($dupFields);$k++) {
 										$check .= $myData[$dupFields[$k]];
@@ -1279,6 +1494,7 @@ class txsg_base_import extends txsg_base {
 										$tmpMode = 'DBERROR';
 									}
 								}
+
 								if ($doNothing) {
 									$query = '# NOTHING INTO '.$myFile.' ( '.implode(',',$s).') VALUES ( '.implode(',',$q).');';
 								} else if ($doReplace) {
@@ -1296,37 +1512,64 @@ class txsg_base_import extends txsg_base {
 									$query = 'INSERT INTO '.$myFile.' ( uid,'.implode(',',$s).') VALUES ( NULL,'.implode(',',$q).');';
 								}
 
-								if (fwrite($of, $query."\r\n")) {
-									if (!$doNothing) {
-										$cntSaved++;
-									}
+								$quotaMode = '';
+								if ($tmpMode=='INSERT' && $settings['quota']) {
 
-									// check mm_data
-									for (reset($fields);$key=key($fields);next($fields)) {
-										if (is_array($fields[$key]['mm.'])) {
-											$fgTable = $fields[$key]['mm.']['table'];
-											$fgLocal = $fields[$key]['mm.']['local'];
-											if ($fgTable && $fgLocal) {
-												$fgLocalId = intval($myData[$fgLocal]);
-												$fgForId = explode (',',$myData[str_replace('.','',$key)]);
-											    //t3lib_div::debug(Array('$fgForId='=>$fgForId,'$fgLocalId'=>$fgLocalId ));
-												for ($i4=0;$i4<count($fgForId);$i4++) if (intval($fgForId[$i4]))  {
-													$query = 'INSERT INTO '.$fgTable.' ( uid_local,uid_foreign ) '.
-														'VALUES ( '.$fgLocalId.', '.$fgForId[$i4].' );';
-													fwrite($of, $query."\r\n");
+									if ($settings['quota']) {
+										if ($cntInsert>$maxDirect) {
+											// t3lib_div::debug(Array('$cntInsert'=>$cntInsert, 'File:Line'=>__FILE__.':'.__LINE__));
+											if ($quotaParams['exceed'] && $cntInsert<=$quotaParams['maxCount']) {
+												if (intval($this->oldRecordList[$cntDeleteForQuota]['uid'])) {
+													$query .= "\r\n".'DELETE FROM '.$myFile.' WHERE uid='.intval($this->oldRecordList[$cntDeleteForQuota]['uid']).';';
+													$quotaMode = '    DELETE : uid='.intval($this->oldRecordList[$cntDeleteForQuota]['uid']);
+													// t3lib_div::debug(Array('delete rec '.$cntDeleteForQuota=>$this->oldRecordList[$cntDeleteForQuota], '$query'=>$query, 'File:Line'=>__FILE__.':'.__LINE__));
+													$cntDeleteForQuota++;
 												}
+											} else {
+												$isError = TRUE;
+												$tmpStr = sprintf($this->constText['imp_error_exceedquota'],$xKey);
+												$errText['e'] .= $tmpStr.'<br />';
+												$errors['e'][$tmpStr]++;
 											}
 										}
 									}
 
-								} else {
-									$isError = TRUE;
-									$tmpStr = $this->constText['imp_error_writeerror_sql'];
-									$errText['e'] = $tmpStr.'<br />';
-									$errors['e'][$tmpStr]++;
 								}
 
-							} else {
+								if (!$isError) {
+									if (fwrite($of, $query."\r\n")) {
+										if (!$doNothing) {
+											$cntSaved++;
+										}
+
+										// check mm_data
+										for (reset($fields);$key=key($fields);next($fields)) {
+											if (is_array($fields[$key]['mm.'])) {
+												$fgTable = $fields[$key]['mm.']['table'];
+												$fgLocal = $fields[$key]['mm.']['local'];
+												if ($fgTable && $fgLocal) {
+													$fgLocalId = intval($myData[$fgLocal]);
+													$fgForId = explode (',',$myData[str_replace('.','',$key)]);
+													//t3lib_div::debug(Array('$fgForId='=>$fgForId,'$fgLocalId'=>$fgLocalId ));
+													for ($i4=0;$i4<count($fgForId);$i4++) if (intval($fgForId[$i4]))  {
+														$query = 'INSERT INTO '.$fgTable.' ( uid_local,uid_foreign ) '.
+															'VALUES ( '.$fgLocalId.', '.$fgForId[$i4].' );';
+														fwrite($of, $query."\r\n");
+													}
+												}
+											}
+										}
+
+									} else {
+										$isError = TRUE;
+										$tmpStr = $this->constText['imp_error_writeerror_sql'];
+										$errText['e'] = $tmpStr.'<br />';
+										$errors['e'][$tmpStr]++;
+									}
+								}
+
+							}
+							if ($isError) {
 								$tmpMode = 'ERROR';
 							}
 							if ($isError || $isWarning) {
@@ -1345,6 +1588,7 @@ class txsg_base_import extends txsg_base {
 									$mData['###errormessages###'] .= $this->constObj->getWrap('warn',$errText['w']);
 								}
 
+								$mData['###listline###'] = $this->getListLine($mData);
 								$fep .= $this->cObj->substituteMarkerArray($fepBlock, $mData);
 								$fepLCnt++;
 								if (fmod($ewCount,10.0)<0.005) {
@@ -1355,19 +1599,29 @@ class txsg_base_import extends txsg_base {
 	//						if (intval($tPar[0])>0) { $lastId = substr($tPar[0],0,6); }
 	//						if ($errCount>($cntSaved / 5) + 20) { $i = count($aLines)+10; }
 
+							if ($quotaMode) {
+								$tmp = sprintf ($detailsInfo,($i+1),$quotaMode);
+								$detailsLog .= $tmp.CRLF;
+							}
 							$tmp = sprintf ($detailsInfo,($i+1),$tmpMode);
 							$line = $this->cObj->substituteMarkerArray($detailsFormat, $myData, '###|###');
 							$detailsLog .= str_replace('###detailsline###',$tmp,$line).CRLF;
 						}
 
 						$cntDeleteAll = 0;
-						if (strcmp(strtolower($cfImport['settings.']['deleteAll']),'own')==0) {
-							$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($cfImport['noUid'] ? '*' : 'uid',$workOnTable,'crfeuser_id='.$import['feuser']);
+						$delCommand = strtolower($cfImport['settings.']['deleteAll']);
+						if (strncmp($delCommand,'query',5)==0) {
+							$delCommand = trim($this->deleteAll);
+						}
+
+						if (strcmp($delCommand,'own')==0) {
+							$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($cfImport['noUid'] ? '*' : 'uid',$this->workOnTable,'crfeuser_id='.$this->crfeuser_id);
 							$cntDeleteAll = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
-						} else if (strcmp(strtolower($cfImport['settings.']['deleteAll']),'all')==0) {
-							$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($cfImport['noUid'] ? '*' : 'uid',$workOnTable,'1=1');
+						} else if (strcmp($delCommand,'all')==0) {
+							$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($cfImport['noUid'] ? '*' : 'uid',$this->workOnTable,'1=1');
 							$cntDeleteAll = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
 						}
+						$this->debugObj->debugIf('delCommand',Array('$delCommand'=>$delCommand, 'crfeuser_id'=>$this->crfeuser_id, '$cntDeleteAll'=>$cntDeleteAll, 'File:Line'=>__FILE__.':'.__LINE__));
 						$m['###COUNT_DELETE_ALL###'] = $cntDeleteAll;
 
 
@@ -1389,7 +1643,7 @@ class txsg_base_import extends txsg_base {
 							}
 							$m['###LIST_ERRORS###'] .= '</table>';
 							$m['###MAILLIST_ERRORS###'] .= CRLF;
-						}else {
+						} else {
 							$m['###LIST_ERRORS###'] .= '&nbsp;';
 						}
 						if (count($errors['w'])>0) {
@@ -1453,7 +1707,6 @@ class txsg_base_import extends txsg_base {
 									$importName.'_eregcount.htm">Logfile for Ereg-Replace Counter</a> in new Window.<br />'.$eregCont;
 						}
 
-
 					} else {
 						$content .= sprintf($this->constText['imp_error_writeerror_fname'],
 							'typo3temp/'.$importName.'.sql').'<br />';
@@ -1468,15 +1721,15 @@ class txsg_base_import extends txsg_base {
 
 					if ($fatalErrors) {
 						$m['###SUBMIT###'] = '<input type="hidden" name="impSt" value="'.
-							($settings['skip3'] ? 2 : 3).'">'.
-							'<input type="submit" value="'.$this->constText['imp_prev'].'">';
+							($settings['skip3'] ? 2 : 3).'" />'.
+							'<input type="submit" value="'.$this->constText['imp_prev'].'" />';
 					} else {
-						$m['###SUBMIT###'] = '<input type="hidden" name="impSt" value="5">'.
-							'<input type="submit" value="'.$this->constText['imp_next'].'">';
+						$m['###SUBMIT###'] = '<input type="hidden" name="impSt" value="5" />'.
+							'<input type="submit" value="'.$this->constText['imp_next'].'" />';
 					}
 
 					$m['###BUTTON_SHOWLOG###'] = '';
-					$m['###COUNT_INSERT###'] = $cntInsert;
+					$m['###COUNT_INSERT###'] = $this->countInsert = $cntInsert;
 					$m['###COUNT_REPLACE###'] = $replaceCount;
 					$m['###COUNT_PROCESS###'] = $cntInsert+$replaceCount+$errCount;
 
@@ -1498,13 +1751,17 @@ class txsg_base_import extends txsg_base {
 
 					$m['###SUBMIT_NOTE###'] = sprintf($this->constText['imp_finally_import'],$cntSaved).'<br />';
 					if ($cntDeleteAll) {
-						if (strcmp(strtolower($cfImport['settings.']['deleteAll']),'own')==0) {
+						if (strcmp($delCommand,'own')==0) {
 							$m['###SUBMIT_NOTE###'] .= $this->constObj->getWrap('hot',sprintf($this->constText['imp_finally_deletewarning_own'],
-								$cntDeleteAll,$import['feuser']));
-						} else if (strcmp(strtolower($cfImport['settings.']['deleteAll']),'all')==0) {
+								$cntDeleteAll,$this->crfeuser_id));
+						} else if (strcmp($delCommand,'all')==0) {
 							$m['###SUBMIT_NOTE###'] .= $this->constObj->getWrap('hot',sprintf($this->constText['imp_finally_deletewarning_all'],
 								$cntDeleteAll));
 						}
+					}
+					if ($cntDeleteForQuota) {
+						$m['###SUBMIT_NOTE###'] .= $this->constObj->getWrap('hot',sprintf($this->constText['imp_finally_deletequota'],
+							$cntDeleteForQuota,$this->crfeuser_id));
 					}
 
 					$sp = $this->templateObj->getSubpart($importTmpl,'###PART4###');
@@ -1513,16 +1770,9 @@ class txsg_base_import extends txsg_base {
 					// Now prepare email to admin and importer
 					$pnConf = $cfImport['notify.'];
 					if (is_array($pnConf)) {
-						if (strlen($pnConf['mailbody.'])>1) {
-							$mailbody = $this->cObj->cObjGetSingle($pnConf['mailbody'],$pnConf['mailbody.']);
-						} else if (strlen($pnConf['mailbody'])>1) {
-							$mailbody = $pnConf['mailbody'];
-						}
-
+						$mailbody = $this->constObj->TSConstConfObj($pnConf,'mailbody');
 						$m['###DETAILED_LOG###'] = $detailsLog;
-
 						$mailbody = $this->cObj->substituteMarkerArray($mailbody, $m);
-						$mailbody = $this->cObj->substituteMarkerArray($mailbody, $TSFE->fe_user->user, '###feuser_|###');
 						$mailfile = fopen ('typo3temp/'.$importName.'-maillog.txt','w');
 						if ($mailfile) {
 							fwrite ($mailfile,$mailbody);
@@ -1542,10 +1792,10 @@ class txsg_base_import extends txsg_base {
 					}
 					$content .= '<br />'.$this->importPreProcessSummary();
 
-
-
 				} else if ($importState==5) { // ##################################################################################
-					$saved = 0;
+					$import = unserialize(urldecode(t3lib_div::_GP('moreimport')));
+					$this->getCrFeUser_id ($cfImport,$import);
+					$processed = 0;
 					$content .= str_replace('###STATE###',$activeState,str_replace('###MAXSTATE###',$totalStates,
 						$this->cObj->stdWrap($settings['part5'],$settings['part5.'])));
 					$aLines = file ('typo3temp/'.$importName.'.sql');
@@ -1554,18 +1804,29 @@ class txsg_base_import extends txsg_base {
 					$errCount = 0;
 					$commentCount = 0;
 					$errText = Array();
-					$import = unserialize(urldecode(t3lib_div::GPvar('moreimport')));
+					$import = unserialize(urldecode(t3lib_div::_GP('moreimport')));
+					$this->deleteAll = t3lib_div::_GP('deleteAll');
+					$this->debugObj->debugIf('importDelete',Array('$this->deleteAll'=>$this->deleteAll, 'crfeuser_id'=>$this->crfeuser_id, 'File:Line'=>__FILE__.':'.__LINE__));
+					$quotaParams = t3lib_div::_GP('quota');
+					$this->debugObj->debugIf('quota',Array('$quotaParams'=>$quotaParams, 'crfeuser_id'=>$this->crfeuser_id, 'File:Line'=>__FILE__.':'.__LINE__));
 
-					if (strcmp(strtolower($cfImport['settings.']['deleteAll']),'own')==0) {
-						$res = $GLOBALS['TYPO3_DB']->exec_DELETEquery($workOnTable,'crfeuser_id='.$import['feuser']);
+					$delCommand = strtolower($cfImport['settings.']['deleteAll']);
+					if (strncmp($delCommand,'query',5)==0) {
+						$delCommand = $this->deleteAll;
+					}
+					if (strcmp($delCommand,'own')==0) {
+						$res = $GLOBALS['TYPO3_DB']->exec_DELETEquery($this->workOnTable,'crfeuser_id='.$this->crfeuser_id);
 						$cntDeleted = $GLOBALS['TYPO3_DB']->sql_affected_rows();
-					} else if (strcmp(strtolower($cfImport['settings.']['deleteAll']),'all')==0) {
-						$res = $GLOBALS['TYPO3_DB']->exec_DELETEquery($workOnTable,'1=1');
+					} else if (strcmp($delCommand,'all')==0) {
+						$res = $GLOBALS['TYPO3_DB']->exec_DELETEquery($this->workOnTable,'1=1');
 						$cntDeleted = $GLOBALS['TYPO3_DB']->sql_affected_rows();
 					}
+					$this->debugObj->debugIf('delCommand',Array('$delCommand'=>$delCommand, 'crfeuser_id'=>$this->crfeuser_id, '$cntDeleted'=>$cntDeleted, 'File:Line'=>__FILE__.':'.__LINE__));
 
+					$counter = Array();
 					for ($i=0;$i<count($aLines);$i++) {
 						if (strlen(trim($aLines[$i]))>1 && substr($aLines[$i],0,1)!='#') {
+							$cmd = substr($aLines[$i],0,6);
 							$res = $GLOBALS['TYPO3_DB']->sql(TYPO3_db,$aLines[$i]);
 							//t3lib_div::debug(Array('$aLines['.$i.']'=>$aLines[$i], 'File:Line'=>__FILE__.':'.__LINE__));
 							if ($tmp=$GLOBALS['TYPO3_DB']->sql_error()) {
@@ -1574,7 +1835,8 @@ class txsg_base_import extends txsg_base {
 								$errText[] = Array('Query'=>$aLines[$i], 'Error'=>$tmp);
 								//t3lib_div::debug(Array("Query="=>$query, "Res="=>$res, "Error="=>$tmp ));
 							} else {
-								$saved++;
+								$counter[$cmd]++;
+								$processed++;
 							}
 						} else if (strlen(trim($aLines[$i]))>1 && substr($aLines[$i],0,1)=='#') {
 								$commentCount++;
@@ -1584,13 +1846,19 @@ class txsg_base_import extends txsg_base {
 					// Now email to admin and importer
 					$pnConf = $cfImport['notify.'];
 					if (is_array($pnConf)) {
-						$mailto = str_replace('###feuser_email###',$TSFE->fe_user->user['email'],$pnConf['mailto']);
-						$mailfrom = $pnConf['mailfrom'];
-						$subject = $this->cObj->substituteMarkerArray($pnConf['subject'], $TSFE->fe_user->user, '###feuser_|###');
-						$replyto = (strlen($pnConf['replyto'])>1) ? $pnConf['replyto'] : $mailfrom;
-						$returnpath = (strlen($pnConf['returnpath'])>1) ? $pnConf['returnpath'] : $mailfrom;
+						$mailto = $this->constObj->TSConstConfObj($pnConf,'mailto');
+						$mailfrom = $this->constObj->TSConstConfObj($pnConf,'mailfrom');
+						$subject = $this->constObj->TSConstConfObj($pnConf,'subject');
+						$replyto = $this->constObj->TSConstConfObj($pnConf,'replyto');
+						$returnpath = $this->constObj->TSConstConfObj($pnConf,'returnpath');
+						$replyto = (strlen($replyto)>1) ? $replyto : $mailfrom;
+						$returnpath = (strlen($returnpath)>1) ? $returnpath : $mailfrom;
 						$tmp = file('typo3temp/'.$importName.'-maillog.txt');
 						$mailbody = implode('',$tmp);
+
+						foreach ($counter as $key=>$cnt) {
+							$mailbody .=  "\r\n".sprintf($this->constText['imp_log_details'],$cnt,$key);
+						}
 
 						if (strlen($mailto)>0) {
 							$hd = "From: ".$mailfrom."\r\n"
@@ -1607,12 +1875,16 @@ class txsg_base_import extends txsg_base {
 						$content .= '<font color="#00c000">'.$tmpStr.'</font><br />';
 					}
 
-					if (($saved+$commentCount)==count($aLines)) {
-						$tmpStr = sprintf($this->constText['imp_log_result_ok'],$saved,(count($aLines)-$commentCount));
+					if (($processed+$commentCount)==count($aLines)) {
+						$tmpStr = sprintf($this->constText['imp_log_result_ok'],$processed,(count($aLines)-$commentCount));
 						$content .= '<font color="#00c000">'.$tmpStr.'</font><br />';
 					} else {
-						$tmpStr = sprintf($this->constText['imp_log_result_error'],$saved,(count($aLines)-$commentCount));
+						$tmpStr = sprintf($this->constText['imp_log_result_error'],$processed,(count($aLines)-$commentCount));
 						$content .= $this->constObj->getWrap('warn',$tmpStr.'<br />');
+					}
+
+					foreach ($counter as $key=>$cnt) {
+						$content .=  '<br />'.sprintf($this->constText['imp_log_details'],$cnt,$key);
 					}
 
 					$content .= '<br /><hr />';
@@ -1632,7 +1904,9 @@ class txsg_base_import extends txsg_base {
 			} else {
 				t3lib_div::debug(Array('ERROR'=>'ERROR import.settings or import.fields not defined', '$settings'=>$settings, '$fields'=>$fields, '$show'=>$show, 'File:Line'=>__FILE__.':'.__LINE__));
 			}
-			$content .= '<br /><br />Execution Time = '.(time()-$myTime).'<br />';
+			if ($cfImportGlobal['showExecutionTime']) {
+				$content .= '<br /><br />Execution Time = '.(time()-$myTime).'<br />';
+			}
 
 		}
 
@@ -1734,7 +2008,7 @@ class txsg_base_import extends txsg_base {
 	 * @param	[type]		$mData: ...
 	 * @return	[type]		...
 	 */
-	function newsGetImportFields ($fields,$key,$xKey,$tPar,&$myData,&$mData) {
+	function newsGetImportFields ($fields,$key,$xKey,$tPar,&$myData,&$mData,$preprocess='') {
 		$myVal = '';
 		if (count($fields[$key]['id'])>1) {
 			$implodeWith = ',';
@@ -1751,7 +2025,7 @@ class txsg_base_import extends txsg_base {
 			$tmp2 = array();
 			for ($i2=0;$i2<count($fields[$key]['id']);$i2++) {
 				if ($tPar[intval($fields[$key]['id'][$i2])-1]) {
-					$t1 = $tPar[intval($fields[$key]['id'][$i2])-1];
+					$t1 = tx_sgdiv::stripQuotes($tPar[intval($fields[$key]['id'][$i2])-1]);
 					$t2 = str_replace($implodeWith,$implodeReplace,$t1);
 					if (strcmp($t1,$t2)) {
 						// Warning !!
@@ -1765,18 +2039,49 @@ class txsg_base_import extends txsg_base {
 				}
 			}
 			$myVal = trim(implode($implodeWith.'<font color=red>&lt;&gt;</font>'.'<br />',$tmp2));
+			$myVal = $this->doFieldPreprocess($myVal,$preprocess);
 			$mData['###'.str_replace('.','',$key).'###'] = $myVal ? $myVal : '<font color=#008000><i>[-]</i></font>';
 			$myVal = trim(implode($implodeWith,$tmp));
+			$myVal = $this->doFieldPreprocess($myVal,$preprocess);
 			$myData[str_replace('.','',$key)] = $myVal;
 		} else if (intval($fields[$key]['id'][0])>0) {
 			$myVal = $this->divObj->cropHtmlText(trim($tPar[intval($fields[$key]['id'][0])-1]),$fields[$key]['showcrop']);
+			$myVal = t3lib_div::fixed_lgd_cs(trim($tPar[intval($fields[$key]['id'][0])-1]),$fields[$key]['showcrop']);
+			$myVal = $this->doFieldPreprocess($myVal,$preprocess);
 			$mData['###'.$xKey.'###'] = $myVal ? $myVal : '<font color=#008000><i>[-]</i></font>';
-			$myVal = trim($tPar[intval($fields[$key]['id'][0])-1]);
+			$myVal = tx_sgdiv::stripQuotes(trim($tPar[intval($fields[$key]['id'][0])-1]));
 			$myData[$xKey] = $myVal;
 		} else {
 			$mData['###'.$xKey.'###'] = '<font color=red><i>[??]</i></font>';
 		}
+
+
 		return ($myVal);
+	}
+
+	function doFieldPreprocess ($text,$preprocess) {
+		if (isset($preprocess)) {
+			$preProcessList = t3lib_div::trimExplode(',',$preprocess);
+			if (is_array($preProcessList) && $preProcessList[0]) {
+				//t3lib_div::debug(Array($text=>$preProcessList, 'File:Line'=>__FILE__.':'.__LINE__));
+				foreach ($preProcessList as $doPreProcess) {
+					$process = explode('|',$doPreProcess);
+					switch ($process[0]) {
+						case 'replace':
+							$text = str_ireplace ($process[1],$process[2],$text);
+							break;
+						case 'strtolower':
+							$text = mb_strtolower ($text);
+							break;
+						case 'ucwords':
+							$text = ucwords($text);
+							break;
+					}
+				}
+				//t3lib_div::debug(Array($text=>$preProcessList, 'File:Line'=>__FILE__.':'.__LINE__));
+			}
+		}
+		return ($text);
 	}
 
 	/**
@@ -1798,13 +2103,296 @@ class txsg_base_import extends txsg_base {
 	}
 
 
+	function getPIDInputField ($key,$conf,$preset) {
+							//$m['###INPUT###'] .= '<td><input type="text" name="import[pid]" value="'.
+							//				(intval($settings['pid.']['value'])>=0 ? intval($settings['pid.']['value']):intval($this->pid)).'" /></td></tr>';
+		$content = '<input type="text" name="import[pid]" value="'.$preset.'" />';
+		if ($conf['mode']) {
+			$content = $this->getSelectField ($key,$conf,$preset,$conf['mode']);
+		}
+		return ($content);
+	}
+
+	function getUserInputField ($key,$conf,$preset) {
+		$content = '<input type="text" name="import[input]['.$key.']" value="'.(intval($conf['value'])>=0 ? $conf['value'] : $preset ).'" />';
+		if ($conf['mode']) {
+			$modeConf = t3lib_div::trimExplode('|',$conf['mode']);
+			if (strcmp($modeConf[2],'fe_users')==0) {
+				$preset = $this->felib->feUid;
+			}
+			$content = $this->getSelectField ($key,$conf,$preset,$conf['mode']);
+		}
+		return ($content);
+	}
+
+	function getSelectField ($key,$conf,$preset,$mode) {
+		$modeConf = t3lib_div::trimExplode('|',$mode);
+		// t3lib_div::debug(Array('$modeConf'=>$modeConf, 'File:Line'=>__FILE__.':'.__LINE__));
+		if (strcmp('select',$modeConf[0])==0 && $modeConf[2]) {
+			$query = ($modeConf[3]) ? $modeConf[3] : '1=1';
+			$query .= $this->cObj->enableFields($modeConf[2]);
+			$titleField = ($modeConf[1]) ? $modeConf[1] : $GLOBALS['TCA'][$modeConf[2]]['ctrl']['label'];
+			$orderBy = ($modeConf[4]) ? $modeConf[4] : $GLOBALS['TCA'][$modeConf[2]]['ctrl']['sortby'];
+			$select = 'uid,'.$titleField.' AS myTitle';
+			$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows($select,$modeConf[2],$query,'',$orderBy,'','uid');
+			if (is_array($rows) && count($rows)) {
+				if (intval($key)) {
+					$content = '<select name="import[input]['.$key.']">'.CRLF;
+				} else {
+					$content = '<select name="import[pid]">'.CRLF;
+				}
+				$content .= '<option value="0"></option>';
+				foreach ($rows as $row) {
+					$content .= '<option '.
+						(($row['uid']==$preset) ? 'selected="selected" ' : '').
+						'value="'.$row['uid'].'">'.$row['myTitle'].' (ID='.$row['uid'].')</option>'.CRLF;
+				}
+				$content .= '</select>'.CRLF;
+			}
+		}
+		return ($content);
+	}
+
+	function getHeadLine($row=NULL) {
+		$content = '';
+		
+		if (is_array($this->columnRef)) foreach ($this->columnRef as $cKey=>$column) {
+			$line = '';
+			$c = str_replace('.','',$cKey);
+			if (strlen(trim($column['fields']))) {
+				$tmp = explode(',',$column['fields']);
+				for ($i=0;$i<count($tmp);$i++) {
+					$line .= str_replace(
+						Array('###col###','###num###','###field###'),
+						Array($c,($i+1),(is_array($row) ? $row['###'.$tmp[$i].'###'] : $tmp[$i]) ),
+						$this->headerField);
+				}
+			}
+			if ($line) {
+				$content .= $this->cObj->substituteSubpart($this->headerLine,'###PART_FIELD###',$line);
+			}
+		}
+
+		$content = str_replace('###field###','n.',$this->numColumn).$content;
+
+		return ($content);
+	}
+
+
+	function getListLine($mData) {
+		$content = '';
+		
+		if (is_array($this->columnRef)) foreach ($this->columnRef as $cKey=>$column) {
+			$line = '';
+			$c = str_replace('.','',$cKey);
+			if (strlen(trim($column['fields']))) {
+				$tmp = explode(',',$column['fields']);
+				for ($i=0;$i<count($tmp);$i++) {
+					$line .= str_replace(
+						Array('###col###','###num###','###field###'),
+						Array($c,($i+1),$mData['###'.$tmp[$i].'###']),
+						$this->listField);
+				}
+			}
+			if ($line) {
+				$content .= $this->cObj->substituteSubpart($this->listLine,'###PART_FIELD###',$line);
+			}
+		}
+
+		return ($content);
+	}
+
+
+	function getMediaList($myVal,$myData,$settings,&$errText,&$errors,&$isError,&$isWarning) {
+		$myValList = t3lib_div::trimExplode(',',$myVal);
+		if (is_array($myValList) && trim($myValList[0])) {
+			if (count($myValList)>1) {
+				$this->debugObj->debugIf('mediazip',Array('MediaList'=>$myValList, 'File:Line'=>__FILE__.':'.__LINE__));
+			}
+			for ($i=0;$i<count($myValList);$i++) {
+				$myValList[$i] = $this->getMedia($myValList[$i],$myData,$settings,$errText,$errors,$isError,$isWarning);
+			}
+			$myVal = implode(',',$myValList);
+		} 
+		return ($myVal);
+	}
+
+	function getMedia($myVal,$myData,$settings,&$errText,&$errors,&$isError,&$isWarning) {
+		// static $testcount = 0;
+		$mediaExists = false;
+		$checkForPath = t3lib_div::getFileAbsFilename($settings['media.']['uploadPath']).'/'.$myVal;
+		$checkForIdPath = t3lib_div::getFileAbsFilename($settings['media.']['uploadPath']).'/'.
+			intval($myData['crfeuser_id']).'-'.$myVal;
+
+		//if ($testcount<4) {
+		//	$testcount++;
+		//	t3lib_div::debug(Array('$checkForPath'=>$checkForPath, '$checkForIdPath'=>$checkForIdPath,  'File:Line'=>__FILE__.':'.__LINE__));
+		//}
+		if ($settings['media.']['prependFeUserId'] && file_exists($checkForIdPath)) {
+			$mediaExists = true;
+			$myVal = intval($myData['crfeuser_id']).'-'.$myVal;
+		} else {
+			if (file_exists($checkForPath)) {
+				$mediaExists = true;
+			} else {
+				$checkForPath = t3lib_div::getFileAbsFilename($settings['media.']['tempPath']).'/'.$myVal;
+				if (file_exists($checkForPath)) {
+					$mediaExists = true;
+					if ($settings['media.']['prependFeUserId']) {
+						$copyTo = t3lib_div::getFileAbsFilename($settings['media.']['uploadPath']).'/'.
+							intval($myData['crfeuser_id']).'-'.$myVal;
+						$this->debugObj->debugIf('mediazip',Array('Copy'=>$checkForPath, 'To'=>$copyTo, 'File:Line'=>__FILE__.':'.__LINE__));
+						copy ($checkForPath, $copyTo);
+						$myVal = intval($myData['crfeuser_id']).'-'.$myVal;
+					} else {
+						$copyTo = t3lib_div::getFileAbsFilename($settings['media.']['uploadPath']).'/'.$myVal;
+						$this->debugObj->debugIf('mediazip',Array('Copy'=>$checkForPath, 'To'=>$copyTo, 'File:Line'=>__FILE__.':'.__LINE__));
+						copy ($checkForPath, $copyTo);
+					}
+				}
+			}
+		}
+		if (!$mediaExists) {
+			if ($settings['media.']['errorWhenMissing']) {
+				$tmpStr = $this->constText['imp_error_mediamissing'];
+				$isError = TRUE;
+				$errText['e'] .= $tmpStr.' ("'.$myVal.'")<br />';
+				$errors['e'][$tmpStr]++;
+			} else {
+				$tmpStr = $this->constText['imp_warn_mediamissing'];
+				$isWarning = TRUE;
+				$errText['w'] .= $tmpStr.' ("'.$myVal.'")<br />';
+				$errors['w'][$tmpStr]++;
+			}
+		}
+		return ($myVal);
+	}
+
+
+	function getCrFeUser_id ($conf,$params) {
+		$this->crfeuser_id = 0;
+		$this->crfeuser_feuser = array();
+
+		$whereDefined = '';
+		if ($conf['settings.']['crfeuser_id']) {
+			$whereDefined = $conf['settings.']['crfeuser_id'];
+		} else if ($conf['fields.']['crfeuser_id.']['set']) {
+			$whereDefined = $conf['fields.']['crfeuser_id.']['set'];
+		}
+
+		if (strncmp(strtolower($whereDefined),'input',5)==0) {
+			$this->crfeuser_id = intval($params['input'][intval(substr($whereDefined,5)).'.']);
+		}
+
+		if ($this->crfeuser_id==$GLOBALS['TSFE']->fe_user->user['uid']) {
+			$this->crfeuser_feuser = $GLOBALS['TSFE']->fe_user;
+			//t3lib_div::debug(Array('$this->crfeuser_feuser'=>$this->crfeuser_feuser, 'File:Line'=>__FILE__.':'.__LINE__));
+		} else {
+			$this->crfeuser_feuser = t3lib_div::makeInstance('tslib_feUserAuth');
+			//t3lib_div::debug(Array('$this->crfeuser_feuser'=>$this->crfeuser_feuser, 'File:Line'=>__FILE__.':'.__LINE__));
+
+			$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('*','fe_users','uid='.$this->crfeuser_id);
+			if (is_array($rows) && count($rows)==1){
+				$this->crfeuser_feuser->user = $rows[0];
+				$userTS = implode(chr(10).'[GLOBAL]'.chr(10),(array)$rows[0]['TSconfig']);
+				$parseObj = t3lib_div::makeInstance('t3lib_TSparser');
+				$parseObj->parse($userTS);
+				$this->crfeuser_feuser->userTS = $parseObj->setup;
+				$this->crfeuser_feuser->userTSUpdated=1;
+				if ($rows[0]['usergroup']) {
+					$groups = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('title,uid','fe_groups','uid IN ('.$rows[0]['usergroup'].')','','','','uid');
+					//t3lib_div::debug(Array('$groups'=>$groups, 'File:Line'=>__FILE__.':'.__LINE__));
+					if (is_array($groups) && count($groups)) {
+						$this->crfeuser_feuser->groupData['title'] = Array();
+						$this->crfeuser_feuser->groupData['uid'] = Array();
+						foreach ($groups as $gKey=>$gData) {
+							$this->crfeuser_feuser->groupData['title'][$gKey] = $gData['title'];
+							$this->crfeuser_feuser->groupData['uid'][$gKey] = $gData['uid'];
+						}
+					}
+				}
+			}
+		}
+		//t3lib_div::debug(Array('$this->crfeuser_feuser->user'=>$this->crfeuser_feuser->user, 'File:Line'=>__FILE__.':'.__LINE__));
+		//t3lib_div::debug(Array('$this->crfeuser_feuser->getUserTSconf()'=>$this->crfeuser_feuser->getUserTSconf(), 'File:Line'=>__FILE__.':'.__LINE__));
+		//t3lib_div::debug(Array('$this->crfeuser_feuser->groupData'=>$this->crfeuser_feuser->groupData, 'File:Line'=>__FILE__.':'.__LINE__));
+		//t3lib_div::debug(Array('$this->crfeuser_feuser->groupData'=>$GLOBALS['TSFE']->fe_user->groupData, 'File:Line'=>__FILE__.':'.__LINE__));
+	}
+
+
+	function getFeUserInfo ($conf) {
+		$content = '';
+		if (!$this->crfeuser_id) {
+			$content = $this->constObj->getWrap('hot','WARNING: Active FeUser for this Import is UserID='.$this->crfeuser_id.'<br />');
+		} else if ($conf['settings.']['quota']) {
+			// t3lib_div::debug(Array('$conf'=>$conf, 'File:Line'=>__FILE__.':'.__LINE__));
+			$activeQuota = $this->getQuotas ($conf['settings.']['quota.'],$this->crfeuser_feuser);
+			$maxCount = $activeQuota['import']['maxCount'];
+			// t3lib_div::debug(Array('$maxCount'=>$maxCount, 'File:Line'=>__FILE__.':'.__LINE__));
+			$content .= '<b>Quota Settings for User with ID='.$this->crfeuser_id.': </b><br /><ul>';
+			if ($maxCount==-1) {
+				// no entries at all allowed !
+				$content .= '<li>User is NOT ALLOWED to import ANY records !!!!</li>';
+			} else if ($maxCount>0) {
+				$content .= '<li>User is allowed to import <b>'.$maxCount.'</b> records.</li>';
+			} else {
+				$content .= '<li>User has no quotas. Any number of records is allowed.</li>';
+			}
+
+			$content .= '<li>Import-File has <b>'.$this->countInsert.'</b> records to insert.</li>';
+
+			//$query = '1=1'.$this->cObj->enableFields($this->workOnTable,1);
+			$query = $this->workOnTable.'.deleted=0 AND '.$this->workOnTable.'.crfeuser_id='.$this->crfeuser_id;
+			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid',$this->workOnTable,$query,'uid'); 
+			$ownedRecords = $res ? $GLOBALS['TYPO3_DB']->sql_num_rows($res) : 0;
+
+			if (strcmp($this->deleteAll,'all')==0 || strcmp($this->deleteAll,'own')==0) {
+				$content .= '<li>Database contains '.$ownedRecords.' records, that will be deleted</li>';
+				$content .= '</ul><input type="hidden" name="quota[ownedRecords]" value="0" />';
+			} else {
+				$content .= '<li>Database already contains <b>'.$ownedRecords.'</b> records, owned by this user</li>';
+				$content .= '</ul><input type="hidden" name="quota[ownedRecords]" value="'.$ownedRecords.'" />';
+			}
+
+			if ($this->felib->allow['admin']) {
+				$content .= 'Allow max. <input type="input" size="8" name="quota[maxCount]" value="'.$maxCount.'" /> records to import (0=all).<br /><br />';
+				$content .= '<input type="checkbox" name="quota[exceed]" value="1"/>If imported records would exceed quotas, delete old existing records to stay within quotas. '.
+					'Otherwise only a part of the import-file will be imported, if quotas exceed.<br />';
+			} else {
+				$content .= '<input type="hidden" name="quota[maxCount]" value="'.$maxCount.'" /><br />';
+				if ($maxCount>=$ownedRecords+$this->countInsert) {
+					$content .= 'All records of import-file can be imported without exceeding quotas.<br />';
+				} else if ($maxCount>=$this->countInsert) {
+					$content .= ($maxCount-$ownedRecords)<1 ? '<b>No </b>' : 'Only <b>'.($maxCount-$ownedRecords).'</b> ';
+					$content .= '(of '.$this->countInsert.') records of import-file can be imported.<br />';
+					$content .= '<input type="checkbox" name="quota[exceed]" value="1"/>'.
+						'Delete <b>'.($this->countInsert+$ownedRecords-$maxCount).'</b> oldest existing records to import complete import-file.<br />';
+				} else if ($ownedRecords==0) {
+					$content .= '<b>'.$maxCount.'</b> (of '.$this->countInsert.') records of import-file can be imported.<br />';
+				} else {
+					$content .= '<b>NO</b> (of '.$this->countInsert.') records of import-file can be imported.<br />';
+					$content .= '<input type="checkbox" name="quota[exceed]" value="1"/>'.
+						'Delete all existing <b>'.($ownedRecords).'</b> records to import <b>'.$maxCount.'</b> records from import-file.<br />';
+				}
+			}
+		}
+
+		return ($content);
+	}
+
+	function stripAllQuotes($row) {
+		if (is_array($row)) foreach ($row as $key=>$field) {
+			$row[$key] = tx_sgdiv::stripQuotes($field);
+		}
+		return ($row);
+	}
 
 
 
 }
 
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sg_zlib/class.txsg_base_import.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sg_zlib/class.txsg_base_import.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sg_zlib/classes/base/class.txsg_base_import.php'])	{
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sg_zlib/classes/base/class.txsg_base_import.php']);
 }
 ?>

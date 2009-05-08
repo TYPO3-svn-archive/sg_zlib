@@ -209,8 +209,8 @@ class tx_sglib_markers {
 			$table = $table ? $table : $this->mainTable;
 			foreach ($record as $key=>$value) {
 				$refTable = $this->confObj->references['table'][$key];
-				if ($refTable && ($labelField=$this->confObj->references['label'][$refTable])) {
-					$data = $this->model->refData[$refTable];
+				if ($value && $refTable && ($labelField=$this->confObj->references['label'][$refTable])) {
+					$data = @$this->model->refData[$refTable];
 					$textValue = $data[$value][$labelField];
 				} else {
 					$textValue = $value;

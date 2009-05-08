@@ -167,7 +167,7 @@ class tx_sglib_template {
 	 * @param	[type]		$from: ...
 	 * @return	[type]		...
 	 */
-	function getTemplate ($templateName,$globalMarkers=Array()) {
+	function getTemplate ($templateName,array $globalMarkers=Array()) {
 		static $templates = Array();
 		$this->_fCount(__FUNCTION__);
 
@@ -630,6 +630,45 @@ class tx_sglib_template {
 //		if (!strlen($this->template)) {
 //			throw new tx_sglib_viewexception ('Subpart empty or not found',3,'TemplateFileName="'.$templateFilename.'" SubpartName="'.$subpart.'"');
 //		}
+
+
+	public function getMarkersWithWrap(array &$markers=NULL,$table,$row,$mode='default',$prefix='') {
+		$error = 0;
+
+		if (!isset($markers)) {
+			$markers = array();
+		}
+
+		if (!$this->confObj->get($table)) {
+			return ('1 - Tabledefinition not found');
+		} 
+		$tabledef = $this->confObj->get($table.'.');
+		$conf = $tabledef['conf.'];
+		// t3lib_div::debug(Array('$table'=>$table, '$conf'=>$conf, 'File:Line'=>__FILE__.':'.__LINE__));
+		
+		$defaultGlobalWrap = (is_array($tabledef['defaults.'][$mode.'Wrap.'])) ? $tabledef['defaults.'][$mode.'GlobalWrap.'] : $tabledef['defaults.']['defaultGlobalWrap.'];
+		$defaultWrap = (is_array($tabledef['defaults.'][$mode.'Wrap.'])) ? $tabledef['defaults.'][$mode.'Wrap.'] : $tabledef['defaults.']['defaultWrap.'];
+		// t3lib_div::debug(Array('$defaultGlobalWrap'=>$defaultGlobalWrap, '$defaultWrap'=>$defaultWrap, 'File:Line'=>__FILE__.':'.__LINE__));
+
+		foreach ($row as $key=>$fieldValue) {
+			if (!is_array($fieldValue)) {
+				$myWrap = (is_array($conf[$key.'.'][$mode.'Wrap.'])) ? $conf[$key.'.'][$mode.'Wrap.'] : $conf[$key.'.']['defaultWrap.'];
+				if (!is_array($myWrap)) {
+					$myWrap = $defaultWrap; 
+				}
+				$value = $this->cObj->stdWrap($fieldValue,$myWrap);
+				$value = $this->cObj->stdWrap($value,$defaultGlobalWrap);
+				$markers[strtoupper('###'.$mode.'_'.($prefix ? $prefix.'_' : '').$key.'###')] = $value;
+			} else {
+				if (strcmp(substr($key,-7),'_record')==0 && $fieldValue['TABLE']) {
+					$errorcode = $this->getMarkersWithWrap($markers,$fieldValue['TABLE'],$fieldValue,$mode,$prefix.substr($key,0,-7));
+				}
+			}
+		}
+
+		return ($error);
+	}
+
 
 
 
