@@ -74,6 +74,14 @@ class tx_sglib_items {
 
 	private function __clone() {}
 
+	/**
+	 * Returns a singlton instance of tx_sglib_items
+	 *
+	 * @param	string				Designator
+	 * @param	tx_sglib_factory	FactoryObj
+	 * @return	tx_sglib_items		Instantiated Object
+	 */
+	
 	public static function getInstance($designator, tx_sglib_factory $factoryObj) {
 		if (!isset(self::$instance[$designator])) {
 			self::$instance[$designator] = new tx_sglib_items();
@@ -197,6 +205,7 @@ class tx_sglib_items {
 		if (strlen($refTable)<2 && strcmp($this->confObj[$table.'.']['conf.'][$field.'.']['internal_type'],'db')==0) {
 					$refTable = $this->confObj[$table.'.']['conf.'][$field.'.']['allowed'];
 		}
+		// t3lib_div::debug(Array('$refTable'=>$refTable, 'File:Line'=>__FILE__.':'.__LINE__));
 		if (strlen($refTable)>1) {
 			$myClause = Array();
 			$alt = '';
@@ -228,7 +237,9 @@ class tx_sglib_items {
 			$myLinkField = $TCA[$refTable]['ctrl']['label'];
 			$myLinkAltField = $TCA[$refTable]['ctrl']['label_alt'];
 			$myLinkAltForce = $TCA[$refTable]['ctrl']['label_alt_force'];
-			$mySortField = $myLinkField;;
+
+			$mySortField = $TCA[$refTable]['ctrl']['sortby'] ? $TCA[$refTable]['ctrl']['sortby'] : $TCA[$refTable]['ctrl']['default_sortby'];
+			$mySortField = $mySortField ? $mySortField : $myLinkField;
 			$myIconField = '';
 
 			if (is_array($pForeign)) {
@@ -685,6 +696,18 @@ class tx_sglib_items {
 		//t3lib_div::debug(Array('$test'=>$test, 'File:Line'=>__FILE__.':'.__LINE__));
 		return ($returnValue);
 	}
+
+	/***********************************************************************************************
+	 *
+	 * Magic Methods
+	 *
+	 ***********************************************************************************************/
+
+	public function __call ($name, array $arguments=Array()) {
+		t3lib_div::debug(Array('ERROR'=>'Function "$name" not implemented', 'Class'=>get_class($this), 'File:Line'=>__FILE__.':'.__LINE__));
+		return ('ERROR: method "'.get_class($this).'->'.$name.'(...)" does not exist. ');
+	}
+
 
 }
 

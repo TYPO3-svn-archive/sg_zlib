@@ -1,5 +1,163 @@
 
-0.2.791	Changed: give some hints, if access-denied in eid_downloader. 
+$Id: ChangeLog 1891 2010-03-05 11:16:57Z geithman $
+
+0.3.0	Add: __call() to some lib-classes
+	Add: class.tx_sglib_fileupload.php
+
+0.2.995	Add: class.tx_sglib_validate.php
+
+0.2.994	Add: viewhelper input
+
+0.2.993	Add: option UnHtml=1 for viewhelpers wrap and wrapne
+
+0.2.992	Add: viewhelper imageres
+
+0.2.991	Add: alt+title-tag to viewhelper image
+
+0.2.990	Add: New "lang_lol" mode. Distinct language-fields for translation. e.g. [ctrl][lang_lol] = Array('label'=>'label_lol_',...) 
+
+0.2.985	Add: call parent:getMoreRowParkers in renderTemplate, if exists
+
+0.2.984	Changed: Search in IdLists is working now
+
+0.2.983	Add: parameter 'i' for viewhelper ref; i=1 | i=2- | i=1-5
+
+0.2.982	Modified ViewHelper Link
+
+0.2.981	New: Search for explicit 0-Values is now possible via search for "00".
+
+0.2.980	New: viewHelper REF
+
+0.2.972	Changed: Made getInstance-Parameters of linkObj optional
+
+0.2.971	New: templateObj/getListSubpart now uses full template, if subpart="###SUBPART###" is not set
+
+0.2.970	New: functions in langObj: getLangUid() and getLangOlString($label,$label_ol)
+
+0.2.960	New: added basic CSH-Files
+	t3lib_extMgm::addLLrefForTCAdescr('table...','EXT:sg_zlib/csh/locallang_csh_base.xml');
+	t3lib_extMgm::addLLrefForTCAdescr('cat-table...','EXT:sg_zlib/csh/locallang_csh_catbase.xml');
+
+0.2.955	New: viewhelpers wrap and wrapne (wrap-if-not-empty): ###WRAP:fieldname,stdWrapParams###
+
+0.2.950	New: use tx_sgdiv::_GPmerged(). 
+	Note: GParrayMerged is deprecated since 4.3, _GPmerged is new in 4.3, but does not exist before. To be compatible without log-messages AND old versions, this function was added
+
+0.2.941	Fixed: some XHTML-issues
+	New: Rendering of Export-Button now must be enabled by list.enableExport=1
+	New: Rendering of Delete/Undelete-Buttons now must be enabled by list.enableDelete=1
+
+0.2.940	New: function checkExtendedMedia in import
+	Changed: some files to utf8
+	Changed: deprecated functions
+
+0.2.933	Fix: TEXT_renderer now respects parseFuncRef to render e.g. RTE-Text
+
+0.2.932	Fix: TEXT_renderer now first replaceds id by item, if select--value
+
+0.2.931	Fix: viewhelper for files now alos processes filelists (more than 1 file; reange is selected by i=start-end)
+
+0.2.930	New: Modified confObj to get more detailed reference Data for select/groupp/inline fields. TODO: sorting, title etc.
+	New: Modified modelBase to basically work with any table an to get reference Data rekursive. TODO: Docu, improve
+
+0.2.922	Bugfix: ereg/preg_replace
+	New: extracted init() in cached_base
+	Bugfix: dispatcher with conf.CMD
+	Bugfix: (array), modelbase-modeldefault
+
+0.2.920	New: now need sg_div version 0.3.510
+
+0.2.913	Fix: Bugfix in recursive data for templatesObj->getListSubpart() 
+
+0.2.912	Fix: forgot ? in URL of pageBrwoser; 
+	Change: add activeWrap for Pagebrowser
+
+0.2.911	Fix: Small changes in lib/templates
+
+0.2.910	New: Search for strings now uses regexp to find full words; Wildcards * and ? are allowed
+
+0.2.908	New: New class pageBrowser is now configurable by TS
+
+0.2.907	New: modeldefault class
+
+0.2.906	New: moved zfelib->myParseUrl to tx_sgdiv::parseURL
+
+0.2.905	New: Pagebroser in own class
+
+0.2.903	Fix: mktime remopved dst-paramter (deprecated in php 5.3)
+
+0.2.902	Add: added function feGroupList to userfunc/class.tx_userfunction_constedit.php
+
+0.2.901	Add: FORMSTART now take ffValue 'fieldListPage' into account 
+
+0.2.900	Bugfix: searchObject now respects MM relations
+
+0.2.899	New: in viewbase added $selectsToDefault, $setToFirstIfOnly for selectboxes with only one real element
+	New: in model added restrict for referenceTables
+
+0.2.898	New: added restrictReferenceTables ($table,$restrict) to modelBase
+
+0.2.897	New: added addPluginParams() to paramsObj
+
+0.2.896	Bugfix: removed debug
+	Bugfix: $tables in factory can be array or string
+
+0.2.895	New: external viewhelpers enabled via $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sg_zlib']['viewhelpers'][$type] = $className;
+
+0.2.891	Bugfix: viewhelper_image: i=from-to
+	Bugfix: caching, dispatcher
+
+0.2.890	Bugfix: only 1 level of recursion for lib_template/getListSubpart
+	Add: comment for memory-usage, if [fe][debug] is set
+
+0.2.888 New: viewhelper_search now respects conf and searchconf
+
+0.2.887	Working on lib_search
+
+0.2.886	Changed functions in confObj: isIntField, isFloatField, isStringField
+
+0.2.885	New functions in confObj: isIntField, isFloatField, isStringField
+
+0.2.883	New: dodebug.libsearch
+
+0.2.882 New: tx_sglib_search creates search queries
+
+0.2.881 New: tx_sglib_search resolves search-references (recursive!); normal search is missing
+
+0.2.880	New: viewHelper search works for input, input(from), input(to) and select/check
+
+0.2.875	Bugfix: substituteMarkerArrayCached crached on 4.2.8. Now using substituteSubpart + substituteMarker
+
+0.2.871	Changed: viewHelper getLabel, 
+	Add: list can now contain subparts for _array
+
+0.2.870	New: viewHelper SEARCH
+
+0.2.862 Modified: viewhelpers
+
+0.2.860	Add: viewhelpers
+
+0.2.850	Add: modified json-decoder at classes/tools/class.tx_sglib_json.php
+
+0.2.842	Add: templateObj->getListPart
+
+0.2.841	Bugfix: templateObj
+
+0.2.840	Changed: getUid now has optional parameter
+
+0.2.830	Add: SpecialMarker EMAIL:
+
+0.2.820	Add: conf[dispatcher.execList] to execute more plugins in one call
+
+0.2.810	Links in special Markers are basically working
+
+0.2.800	Basic Function for rendering specialMarkers like IMAGE: and FILE:
+
+0.2.793	New: templateObj now has function getArraysMarker()
+
+0.2.792	Changed: templateObj now uses cObj->start()
+
+0.2.791	Changed: give some hints, if access-denied in eid_downloader.
 
 0.2.790	confObj->get() now also finds sub-arrays
 	templateObj new function getMarkersWithWrap

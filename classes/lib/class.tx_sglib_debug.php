@@ -57,6 +57,14 @@ class tx_sglib_debug {
 
 	private function __clone() {}
 
+	/**
+	 * Returns a singlton instance of tx_sglib_debug
+	 *
+	 * @param	string				Designator
+	 * @param	tx_sglib_factory	FactoryObj
+	 * @return	tx_sglib_debug	Instantiated Object
+	 */
+	
 	public static function getInstance($designator, tx_sglib_factory $factoryObj) {
 		if (!isset(self::$instance[$designator])) {
 			self::$instance[$designator] = new tx_sglib_debug();

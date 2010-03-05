@@ -71,6 +71,13 @@ class tx_sglib_const {
 
 	private function __clone() {}
 
+	/**
+	 * Returns a singlton instance of tx_sglib_const
+	 *
+	 * @param	string				Designator
+	 * @param	tx_sglib_factory	FactoryObj
+	 * @return	tx_sglib_const	Instantiated Object
+	 */
 	public static function getInstance($designator, tx_sglib_factory $factoryObj) {
 		if (!isset(self::$instance[$designator])) {
 			self::$instance[$designator] = new tx_sglib_const();

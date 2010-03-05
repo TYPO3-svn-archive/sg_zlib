@@ -635,7 +635,7 @@ class txsg_base extends tslib_pibase {
 			} else if (intval($this->piVars['searchmode'])!=2) { // because of side-col listings !
 				$this->felib->myQuery = t3lib_div::getIndpEnv('TYPO3_REQUEST_URL');
 				$TSFE->fe_user->setKey('ses',$this->prefixId.'.lastQuery',$this->felib->myQuery);
-				$u = $this->felib->myparseURL($this->felib->myQuery);
+				$u = tx_sgdiv::parseUrl($this->felib->myQuery);
 				$TSFE->fe_user->setKey('ses',$this->prefixId.'.lastParams',$u['plist']);
 				$tmp = intval($this->piVars['pg']);
 				$this->activePageInList = ($tmp>0) ? $tmp-1 : intval(t3lib_div::_GP('pg'));
@@ -757,6 +757,7 @@ class txsg_base extends tslib_pibase {
 			$qa['doGetMaxList'] = (intval($this->conf['doGetMaxList'])>9 ? intval($this->conf['doGetMaxList']) : 10000);
 			$r = $this->felib->getDbList ($qa,$this->debugObj->isDebug('getDbList')); // Debug=0
 			$qa['foundRecords'] = $r['total'];
+			// t3lib_div::debug(Array('$qa'=>$qa, ''=>,  'File:Line'=>__FILE__.':'.__LINE__));
 
 			$TSFE->fe_user->setKey('ses',$this->prefixId.'.lastIdList',implode(',',$this->felib->lastResultList));
 			$this->globalMarkers['###TOTAL_RESULTS###'] = $r['total'];
@@ -790,13 +791,20 @@ class txsg_base extends tslib_pibase {
 			$qa['mainTable'] = $this->mainTable;
 			$this->markers['###EXPORT###'] = '';
 			$this->markers['###DELETE###'] = '';
-			$this->markers['###UNDODELETE###'] = $this->felib->getUndoDeleteSection($this->mainTable,$this->PCA,$this->piVars['search'],$qa,$r);
+			$this->markers['###UNDODELETE###'] = '';
+			if ($this->conf['list.']['enableDelete']) {
+				$this->markers['###UNDODELETE###'] = $this->felib->getUndoDeleteSection($this->mainTable,$this->PCA,$this->piVars['search'],$qa,$r);
+			}
 			if ($r['total']>0 || !$this->conf['search.']['emptyResultAsSubpart']) { // Only if something is found
 				if ($r['total']>0) {
-					$this->markers['###EXPORT###'] = $this->felib->getDbExportSection
+					if ($this->conf['list.']['enableExport']) {
+						$this->markers['###EXPORT###'] = $this->felib->getDbExportSection
 								($this->mainTable,$this->PCA,$this->piVars['search'],$qa,$r);
-					$this->markers['###DELETE###'] = $this->felib->getDeleteSection
+					}
+					if ($this->conf['list.']['enableDelete']) {
+						$this->markers['###DELETE###'] = $this->felib->getDeleteSection
 								($this->mainTable,$this->PCA,$this->piVars['search'],$qa,$r);
+					}
 				}
 
 				$this->listEntry = $this->templateObj->getConfSubpartArray($this->template,$epName,$this->PCA);
@@ -1230,7 +1238,7 @@ class txsg_base extends tslib_pibase {
 				}
 			}
 			$markers['###SUBMIT###'] = $mySubmitButton;
-			$markers['###DOSAVE###'] = '<form name="ack_submit_'.$this->prefixId.'" method="POST">'.$hiddenData.
+			$markers['###DOSAVE###'] = '<form name="ack_submit_'.$this->prefixId.'" method="post">'.$hiddenData.
 				'<input type="hidden" name="dS" value="1" />'.
 				'<input type="hidden" name="'.$this->prefixId.'_acknowledge" value="753" />'.
 				($doSaveTmpl ? $this->cObj->substituteMarkerArray($doSaveTmpl,$markers) : $markers['###SUBMIT###']).
@@ -1603,7 +1611,7 @@ class txsg_base extends tslib_pibase {
 								$xm = $this->getEditButtons (2,$row,$this->PCA);
 								if (is_array($xm)) { $menuMarkers = array_merge($menuMarkers,$xm); }
 
-								$u = $this->felib->myparseURL(t3lib_div::getIndpEnv('TYPO3_REQUEST_URL'));
+								$u = tx_sgdiv::parseUrl(t3lib_div::getIndpEnv('TYPO3_REQUEST_URL'));
 								$u['params'] = $u['plist'];
 								unset ($u['params']['x']);
 								unset ($u['params']['y']);
@@ -1668,10 +1676,10 @@ class txsg_base extends tslib_pibase {
 									<script type="text/javascript">'. implode(chr(10), $this->additionalJS_pre).'
 									</script>';
 								
-								$content .= '<form name="sg_editform" method="POST" action="'.$this->myPage;
-								$content .= '&type='.$TSFE->type;
+								$content .= '<form name="sg_editform" method="post" action="'.$this->myPage;
+								$content .= '&amp;type='.$TSFE->type;
 								if (intval($row['uid'])) {
-									$content .= '&uid='.urlencode($row['uid']);
+									$content .= '&amp;uid='.urlencode($row['uid']);
 								}
 								$content .= '"';
 								$JS_submit = implode(';', $this->additionalJS_submit);

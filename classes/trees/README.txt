@@ -1,3 +1,8 @@
+IMPORTANT !!!!!
+
+Make sure, that field parent in cats-table is NOT NULL and default 0 !!!!!
+
+
 #(1)###################################################################### ext_tables.sql
 #
 # Table structure for recursive cat tables

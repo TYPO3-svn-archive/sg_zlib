@@ -63,6 +63,14 @@ class tx_sglib_template {
 
 	private function __clone() {}
 
+	/**
+	 * Returns a singlton instance of tx_sglib_template
+	 *
+	 * @param	string				Designator
+	 * @param	tx_sglib_factory	FactoryObj
+	 * @return	tx_sglib_template	Instantiated Object
+	 */
+	
 	public static function getInstance($designator, tx_sglib_factory $factoryObj) {
 		if (!isset(self::$instance[$designator])) {
 			self::$instance[$designator] = new tx_sglib_template();
@@ -71,12 +79,6 @@ class tx_sglib_template {
 		return (self::$instance[$designator]);
 	}
 
-	/**
-	 * [Describe function...]
-	 *
-	 * @param	[type]		$tx_sglib_config $confObj, tx_sglib_debug $debugObj, tx_sglib_const $constObj, tx_sglib_lang $langObj, tx_sglib_permit $permitObj: ...
-	 * @return	[type]		...
-	 */
 	private function init(tx_sglib_factory $factoryObj) {
 		$this->_fCount(__FUNCTION__);
 		$this->factoryObj = $factoryObj;
@@ -181,6 +183,10 @@ class tx_sglib_template {
 
 			if (!isset($templates[$this->defaultDesignator][$templateName])) {
 				$template = $this->cObj->cObjGetSingle($this->templateFiles[$templateName],$this->templateFiles[$templateName.'.']);
+				if (strncmp($template,'EXT:',4)==0) {
+					$tmp = file(t3lib_div::getFileAbsFileName($this->cObj->getData('path:'.$template)));
+					$template = implode($tmp);
+				}
 				$template = $this->permitObj->processTemplate($template);
 
 				if (strlen($template)<10) {
@@ -632,14 +638,23 @@ class tx_sglib_template {
 //		}
 
 
-	public function getMarkersWithWrap(array &$markers=NULL,$table,$row,$mode='default',$prefix='') {
+	public function getView () {
+		$content = '';
+
+		return ($content);
+	}
+
+
+	public function getMarkersWithWrap(array &$markers=NULL,$table,array $row,$mode='default',$prefix='') {
 		$error = 0;
+		//t3lib_div::debug(Array('$row'=>$row, 'File:Line'=>__FILE__.':'.__LINE__));
 
 		if (!isset($markers)) {
 			$markers = array();
 		}
 
-		if (!$this->confObj->get($table)) {
+		if (!$this->confObj->get($table.'.')) {
+			t3lib_div::debug(Array('ERROR'=>'Table config not found', '$table'=>$table, 'count(rows)'=>count($rows),  'File:Line'=>__FILE__.':'.__LINE__));
 			return ('1 - Tabledefinition not found');
 		} 
 		$tabledef = $this->confObj->get($table.'.');
@@ -650,8 +665,25 @@ class tx_sglib_template {
 		$defaultWrap = (is_array($tabledef['defaults.'][$mode.'Wrap.'])) ? $tabledef['defaults.'][$mode.'Wrap.'] : $tabledef['defaults.']['defaultWrap.'];
 		// t3lib_div::debug(Array('$defaultGlobalWrap'=>$defaultGlobalWrap, '$defaultWrap'=>$defaultWrap, 'File:Line'=>__FILE__.':'.__LINE__));
 
+		$this->cObj->start($row,$table);
 		foreach ($row as $key=>$fieldValue) {
 			if (!is_array($fieldValue)) {
+
+				if (strcmp($conf[$key.'.']['type'],'text')==0 && $conf[$key.'.']['parseFuncRef']) {
+					$fieldValue = $this->cObj->parseFunc($fieldValue,Array(),'< '.$conf[$key.'.']['parseFuncRef']);
+					// t3lib_div::debug(Array($key=>$fieldValue, 'conf'=>$conf[$key.'.'], 'File:Line'=>__FILE__.':'.__LINE__));
+				}
+
+				if (strcmp($conf[$key.'.']['type'],'select')==0 && is_array($conf[$key.'.']['items.'])) {
+					foreach ($conf[$key.'.']['items.'] as $item) {
+						if ($item[1]==$fieldValue) {
+							$fieldValue = $this->cObj->getData($item[0],$row);
+						}
+					}
+					// t3lib_div::debug(Array('$fieldValue'=>$fieldValue, '$mode'=>$mode, 'File:Line'=>__FILE__.':'.__LINE__));
+				}
+
+
 				$myWrap = (is_array($conf[$key.'.'][$mode.'Wrap.'])) ? $conf[$key.'.'][$mode.'Wrap.'] : $conf[$key.'.']['defaultWrap.'];
 				if (!is_array($myWrap)) {
 					$myWrap = $defaultWrap; 
@@ -661,7 +693,7 @@ class tx_sglib_template {
 				$markers[strtoupper('###'.$mode.'_'.($prefix ? $prefix.'_' : '').$key.'###')] = $value;
 			} else {
 				if (strcmp(substr($key,-7),'_record')==0 && $fieldValue['TABLE']) {
-					$errorcode = $this->getMarkersWithWrap($markers,$fieldValue['TABLE'],$fieldValue,$mode,$prefix.substr($key,0,-7));
+					$errorcode = $this->getMarkersWithWrap($markers,$fieldValue['TABLE'],$fieldValue,$mode,($prefix ? $prefix.'_' : '').substr($key,0,-7));
 				}
 			}
 		}
@@ -669,7 +701,110 @@ class tx_sglib_template {
 		return ($error);
 	}
 
+	public function getListPart(array $rows=NULL, $table, $template, array &$parentMarkers=NULL, $parent=NULL) {
+		// t3lib_div::debug(Array('$table'=>$table, '$table'=>$table, 'count'=>count($rows), 'File:Line'=>__FILE__.':'.__LINE__));
+		return ($this->getListSubpart('',$rows, $table, $template, $parentMarkers, TRUE, $parent));
+	}
 
+	public function getListSubpart($key,array $rows=NULL,$table,$template,array &$parentMarkers=NULL,$goIntoSubArrays=TRUE, $parent=NULL) {
+		//t3lib_div::debug(Array('$key'=>$key, 'count'=>count($rows),  '$table'=>$table, '$template'=>$template, '$parentMarkers'=>$parentMarkers, 'File:Line'=>__FILE__.':'.__LINE__));
+		$content = '';
+		if (trim($key)) {
+			$baseSubpartName = 'SUBPART_'.strtoupper($key);
+			$template = trim($this->cObj->getSubpart ($template,'###'.$baseSubpartName.'###'));
+		} else {
+			$baseSubpartName = 'SUBPART';
+			$test = trim($this->cObj->getSubpart ($template,'###'.$baseSubpartName.'###'));
+			if (strlen($test)<1) {
+				$baseSubpartName = 'SUBPART';
+			} else {
+				$template = $test;
+			}
+		}
+		// t3lib_div::debug(Array('$baseSubpartName'=>$baseSubpartName, '$template'=>$template, 'File:Line'=>__FILE__.':'.__LINE__));
+		if (!is_array($parentMarkers)) {
+			$parentMarkers = Array();
+		}
+
+		$part = Array();
+		$part['empty'] = trim($this->cObj->getSubpart($template,'###'.$baseSubpartName.'_EMPTY###'));
+		$part['top'] = trim($this->cObj->getSubpart($template,'###'.$baseSubpartName.'_TOP###'));
+		$part['content'] = trim($this->cObj->getSubpart($template,'###'.$baseSubpartName.'_CONTENT###'));
+		$part['bottom'] = trim($this->cObj->getSubpart($template,'###'.$baseSubpartName.'_BOTTOM###'));
+		// t3lib_div::debug(Array('$baseSubpartName'=>$baseSubpartName, '$part'=>$part, 'File:Line'=>__FILE__.':'.__LINE__));
+
+		$parentMarkers = $this->factoryObj->markersObj->getDescriptions($table,$parentMarkers,strtoupper($key));
+		$subParts = array('###'.$baseSubpartName.'_EMPTY###'=>'', 
+			'###'.$baseSubpartName.'_TOP###'=>'',
+			'###'.$baseSubpartName.'_CONTENT###'=>'',
+			'###'.$baseSubpartName.'_BOTTOM###'=>'');
+
+		if (is_array($rows) && count($rows)) {
+			$subParts['###'.$baseSubpartName.'_TOP###'] = $this->cObj->substituteMarkerArray($part['top'],$parentMarkers);
+			$specialMarkers = $this->getListOfSpecialMarkers ($part['content']);
+			foreach ($rows as $rowKey=>$row) {
+				$markers = $parentMarkers;
+				if (is_object($parent) && method_exists($parent,'getMoreRowMarkers')) {
+					$parent->getMoreRowMarkers ($row, $markers);
+				}
+				if (is_array($row) && count($row)) {
+					$error = $this->getMarkersWithWrap($markers,$table,$row,'text',$key);
+					$subSubParts = Array();
+					if ($goIntoSubArrays) foreach ($row as $fieldName=>$sField) if(is_array($sField)) {
+						if (strcmp(substr($fieldName,-6),'_array')==0) {
+							$sKey = substr($fieldName,0,-6);
+							$sTable = $this->confObj->references['table'][$sKey];
+							if ($sTable) {
+								$subSubParts['###SUBPART_'.strtoupper($sKey).'###'] =
+									$this->getListSubpart($sKey,$sField,$sTable,$part['content'],$markers,False);
+							}
+						}
+					}
+					if (count($specialMarkers)) {
+						$this->factoryObj->markersObj->renderSpecialMarkers($specialMarkers,$table,$row,$markers);
+					}
+					$subParts['###'.$baseSubpartName.'_CONTENT###'] .= $this->cObj->substituteMarkerArray($part['content'],$markers); //old
+					foreach ($subSubParts as $subKey=>$subSubPart) {
+						$subParts['###'.$baseSubpartName.'_CONTENT###'] = $this->cObj->substituteSubpart($subParts['###'.$baseSubpartName.'_CONTENT###'],$subKey,$subSubPart,0);
+					}
+				}
+
+			}
+			$subParts['###'.$baseSubpartName.'_BOTTOM###'] = $this->cObj->substituteMarkerArray($part['bottom'],$parentMarkers);
+		} else {
+			// t3lib_div::debug(Array('$key'=>$key, 'cnt($rows)'=>'0 !!!', '$table'=>$table, '$template'=>$template, 'File:Line'=>__FILE__.':'.__LINE__));
+			$subParts['###'.$baseSubpartName.'_EMPTY###'] = $this->cObj->substituteMarkerArray($part['empty'],$parentMarkers);
+		}
+		return ($this->cObj->substituteMarkerArrayCached($template,$parentMarkers,$subParts));
+	}
+
+	public function getListOfSpecialMarkers ($template) {
+		$specialMarkers = Array();
+
+		$pattern = '/(###)(?P<MarkerNames>[^#\n\r\f]*:[^#\n\r\f]*)(###)/';
+		$template = str_replace('&#','%%%%amphash%%%%',$template);
+		preg_match_all ($pattern,$template,$myList);
+		if (count($myList['MarkerNames'])) {
+			$specialMarkers = Array();
+			foreach ($myList['MarkerNames'] as $key=>$value) {
+			$specialMarkers[$key] = str_replace('%%%%amphash%%%%','&#',$value);
+			}
+			// t3lib_div::debug(Array('$pattern'=>$pattern, '$specialMarkers'=>$specialMarkers, 'File:Line'=>__FILE__.':'.__LINE__));
+		}
+
+		return ($specialMarkers);
+	}
+
+	/***********************************************************************************************
+	 *
+	 * Magic Methods
+	 *
+	 ***********************************************************************************************/
+
+	public function __call ($name, array $arguments=Array()) {
+		t3lib_div::debug(Array('ERROR'=>'Function "$name" not implemented', 'Class'=>get_class($this), 'File:Line'=>__FILE__.':'.__LINE__));
+		return ('ERROR: method "'.get_class($this).'->'.$name.'(...)" does not exist. ');
+	}
 
 
 }

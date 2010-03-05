@@ -54,7 +54,7 @@ class txsg_cached_base_standard extends txsg_cached_base {
 			$listConf = t3lib_div::array_merge_recursive_overrule($listConf,$tmp);
 		}
 
-		$model = $this->factoryObj->getModel('tx_sglib_modelbase', $this->prefixId, $this->conf['cached']);
+		$model = $this->factoryObj->getModel('tx_sglib_modeldefault', $this->prefixId, $this->conf['cached']);
 		$model->readReferenceTables('*','');
 		$model->showAllIfEmptySearch($listConf['showAllIfEmptySearch']);
 		$model->setSearchMode($this->paramsObj->getSearchmode());
@@ -67,7 +67,7 @@ class txsg_cached_base_standard extends txsg_cached_base {
 		// $model->performSearch();
 		$data = $model->getResult(); // contains performSearch, if not already called manually
 		//t3lib_div::debug($data->getDebugArray(4));
-		//t3lib_div::debug(Array('total='=>$model->getTotalCount(), 'count='=>count($data), 'File:Line'=>__FILE__.':'.__LINE__));
+		// t3lib_div::debug(Array('count='=>count($data), 'File:Line'=>__FILE__.':'.__LINE__));
 
 		$view = $this->factoryObj->getView('tx_sglib_viewlist', $this->prefixId, $model, $this->conf['cached']);
 		$view->showAllIfNoSearch($listConf['showAllIfNoSearch']);

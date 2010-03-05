@@ -24,7 +24,7 @@ $TT->pull();
 // Create $TSFE object (TSFE = TypoScript Front End)
 // Connecting to database
 // ***********************************
-$temp_TSFEclassName=t3lib_div::makeInstanceClassName('tslib_fe');
+$temp_TSFEclassName = 'tslib_fe';
 $TSFE = new $temp_TSFEclassName(
 		$TYPO3_CONF_VARS,
 		t3lib_div::_GP('id'),
@@ -35,7 +35,7 @@ $TSFE = new $temp_TSFEclassName(
 		t3lib_div::_GP('MP'),
 		t3lib_div::_GP('RDCT')
 	);
-$TSFE->connectToMySQL();
+$TSFE->connectToDB();
 if ($TSFE->RDCT)	{$TSFE->sendRedirect();}
 
 // *********

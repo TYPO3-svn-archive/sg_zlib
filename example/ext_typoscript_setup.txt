@@ -124,14 +124,14 @@ plugin.tx_myplugin_pi1 {
 		cat.preItems.empty.text = TEXT
 		cat.preItems.empty.text.value = -Document-Type-
 		cat.preItems.empty.text.lang.en = Please select Document-Type:
-		cat.preItems.empty.text.lang.de = Bitte w‰hlen Sie einen Dokumenten-Typ:
+		cat.preItems.empty.text.lang.de = Bitte w√§hlen Sie einen Dokumenten-Typ:
 
 		app.type = 3
 		app.directLink.default = 0
 		app.preItems.empty.id = 0
 		app.preItems.empty.text = TEXT
 		app.preItems.empty.text.value = -Series/Application-
-		app.preItems.empty.text.lang.de = Bitte w‰hlen Sie eine Typreihe/Applikation:
+		app.preItems.empty.text.lang.de = Bitte w√§hlen Sie eine Typreihe/Applikation:
 		app.preItems.empty.text.lang.en = Please select a Series/Application:
 
 		submit.label = SEARCH !

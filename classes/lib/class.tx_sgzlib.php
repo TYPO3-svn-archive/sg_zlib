@@ -47,7 +47,6 @@
  *  378:     function getTypolinkURL ($myPageID,$myParams='',$allowCaching=0,$myTarget='',$myDbg='')
  *  409:     function getTypolink ($textLink,$myPageID,$myParams='',$allowCaching=0,$myTarget='',$myDbg='')
  *  434:     function clearCache($PCA)
- *  474:     function myParseUrl ($url,$paramsReplace=Array())
  *
  *              SECTION: Some usefull Wraps
  *  553:     function quote ($text,$komma='')
@@ -478,77 +477,6 @@ class tx_sgzlib {
 
 	}
 
-	/**
-	 * [Describe function...]
-	 *
-	 * @param	[type]		$url: ...
-	 * @param	[type]		$paramsReplace: ...
-	 * @return	[type]		...
-	 */
-	function myParseUrl ($url,$paramsReplace=Array()) {
-		if (strcmp($url,'-')==0) {
-			$url = t3lib_div::getIndpEnv('TYPO3_REQUEST_URL');
-		}
-		$u = @parse_url($url);
-
-		$u['orgQuery'] = $u['query'];
-		if ($u['orgQuery'] || count($paramsReplace)>0) {
-			$u['plist'] = Array();
-			$tmp = t3lib_div::trimExplode ('&',urldecode($u['orgQuery']),1);
-			for ($i=0;$i<count($tmp);$i++) {
-				list($k,$v) = explode('=',$tmp[$i]);
-				$u['plist'][$k] = $v;
-			}
-			$u['plist'] = t3lib_div::array_merge($u['plist'],$paramsReplace);
-			$u['query'] = t3lib_div::implodeArrayForUrl('',$u['plist'],'',1,1) ;
-		}
-
-		if (is_array($u)) {
-			$u['mailmode'] = 0;
-			if (is_array($u) && strlen($u['path'])>2 && strlen($u['host'])<3) {
-				$x = explode ('/',$u['path'],2);
-				if (strlen($x[1])>2 && substr_count ($x[0],'.')>0) {
-					$u['host'] = $x[0];	$u['path'] = $x[1];
-				} else if (strcmp(substr($x[0],0,4),'www.')==0) {
-					$u['host'] = $x[0];	$u['path'] = $x[1];
-				} else if (substr_count($x[0],'.')>1 && substr_count ($x[0],'.htm')<1 && substr_count($x[0],'.php')<1 && substr_count($x[0],'.phtm')<1)  {
-					$u['host'] = $x[0];	$u['path'] = $x[1];
-				}
-			}
-			if (strlen($u['scheme'])<3) {
-				if (substr_count($url,'@')!=1) {
-					$u['scheme']='http';
-				} else {
-					if (substr_count($url,'/')>0) {
-						$u['scheme']='http';
-					} else {
-						$u['scheme']='mailto';
-						$u['mailmode'] = 1;
-					}
-				}
-			}
-
-			if (strcmp($u['scheme'],'mailto')==0) {
-				$u['mailmode'] = 1;
-				$u['total'] = $u['scheme'].':'.$u['host'].$u['path'];
-				$u['fullpath'] = $u['scheme'].':'.$u['host'].$u['path'];
-			} else if (strlen($u['host'])<3 && strlen($u['path'])<1) {
-				$u['total'] = '';
-				$u['fullpath'] = '';
-			} else {
-				 if (strlen($u['host'])<3) { $u['host']=t3lib_div::getIndpEnv('HTTP_HOST'); }
-				 $x = (strlen($u['path'])>0 ? $u['path'] : '').(strlen($u['query'])>0 ? '?'.$u['query'] : '') ;
-				 $u['total'] = $u['scheme'].'://'.$u['host'].(strlen($u['port'])>0 ? ':'.$u['port'] :'').(substr($x,0,1)=='/'?'':'/').$x;
-				 $u['fullpath'] = $u['scheme'].'://'.$u['host'].(strlen($u['port'])>0 ? ':'.$u['port'] :'').(substr($x,0,1)=='/'?'':'/').$u['path'];
-			}
-		} else {
-			$u = Array('total'=>$url, 'fullpath'=>$url);
-		}
-
-		//t3lib_div::debug(Array('$u'=>$u, 'File:Line'=>__FILE__.':'.__LINE__));
-		return ($u);
-	}
-
 
 	/******************************************************************************
 	 *
@@ -644,8 +572,8 @@ class tx_sgzlib {
 	 */
 	function sendMail ($mailto,$subject,$mailbody,$hd,$params='') {
 		$this->sendMailMsg = '';
-		$mailbody = $this->lCObj->substituteMarkerArray($mailbody, $GLOBALS['HTTP_SERVER_VARS'], '###SRV_|###');
-		$subject = $this->lCObj->substituteMarkerArray($subject, $GLOBALS['HTTP_SERVER_VARS'], '###SRV_|###');
+		$mailbody = $this->lCObj->substituteMarkerArray($mailbody, (array) $GLOBALS['HTTP_SERVER_VARS'], '###SRV_|###');
+		$subject = $this->lCObj->substituteMarkerArray($subject, (array) $GLOBALS['HTTP_SERVER_VARS'], '###SRV_|###');
 		$ok = mail ($mailto,$subject,$mailbody,$hd); //,$params);
 		if ($ok) {
 			if ($this->conf['log.']['sendMailOk']) {
@@ -891,7 +819,7 @@ class tx_sgzlib {
 		$PCA['conf'] = $this->mergeTsArray($PCA['conf'],$pluginConf[$dbTable.'.']['moreConf.'],2);
 
 		// get 'pluginName'-piVars
-		$PCA['piVars'] = t3lib_div::GParrayMerged($pluginName);
+		$PCA['piVars'] = tx_sgdiv::_GPmerged($pluginName);
 
 		if ($this->dodebug['pca']) {
 			t3lib_div::debug(Array('$PCA'=>$PCA, 'File:Line'=>__FILE__.':'.__LINE__));
@@ -2285,7 +2213,7 @@ class tx_sgzlib {
 					$tmpImg = str_replace('###cap###',strlen($cpt[($mode==2 ? $i+1 : $i)])>0 ? $cpt[($mode==2 ? $i+1 : $i)] : '',$tmpImg);
 					$tmpUrl = '';
 					$lineUrl = $url[($mode==2 ? $i+1 : $i)];
-					$u = $this->myParseUrl($lineUrl);
+					$u = tx_sgdiv::parseUrl($lineUrl);
 					$tmpUrl = $u['total'];
 					$imglist[$i] = str_replace('###img###',$tmpImg,str_replace('###cap###',$tmpCap,
 						str_replace('###url###',$tmpUrl,str_replace('###orgurl###',$lineUrl,
@@ -2459,7 +2387,7 @@ class tx_sgzlib {
 		if (!is_array($pConf)) {
 			$pConf = Array();
 		}
-		$u = $this->myparseURL(strlen($myPage)>1 ? $myPage : $this->myQuery);
+		$u = tx_sgdiv::parseUrl(strlen($myPage)>1 ? $myPage : $this->myQuery);
 		$u['params'] = $u['plist'];
 		unset ($u['params']['x']);
 		unset ($u['params']['y']);
@@ -2650,7 +2578,7 @@ class tx_sgzlib {
 		$m ['###GOTOPAGE###'] = '';
 		if ($pConf['gotoPageAlsoSingle'] || $r['maxpages']>1) {
 			$tmp = $pointer=='uid' ? Array('pUid'=>'', $pointer=>'') : Array($pointer=>'');
-			$u = $this->myParseUrl('-',$tmp);
+			$u = tx_sgdiv::parseUrl('-',$tmp);
 			$tmpName = 'Go!';
 			if ($pConf['gotoPageButton']) {
 				$tmpName = $this->lCObj->cobjGetSingle($pConf['gotoPageButton'],$pConf['gotoPageButton.']);
@@ -2663,7 +2591,7 @@ class tx_sgzlib {
 
 		$m ['###RESULTSPP###'] = '';
 		if ($pConf['userResPP']) {
-			$u = $this->myParseUrl('-',Array('resPP'=>''));
+			$u = tx_sgdiv::parseUrl('-',Array('resPP'=>''));
 			$pp = t3lib_div::intExplode(',',$pConf['userResPP']);
 			$wrap = t3lib_div::trimExplode('|',$pConf['userResPPwrap']);
 			if (count($pp)>0) {
@@ -4174,7 +4102,7 @@ class tx_sgzlib {
 			}
 			//t3lib_div::debug(Array('$row('.$key.')'=>$row[$key], '$myText'=>$myText, '$myUrl'=>$myUrl, 'File:Line'=>__FILE__.':'.__LINE__));
 			// process url
-			$u = $this->myParseUrl($myUrl);
+			$u = tx_sgdiv::parseUrl($myUrl);
 			$myUrl = trim($u['total']);
 			if (strlen($l['url']['fieldname'])>0) {
 				if (! $row[$l['url']['fieldname']]) {
@@ -4715,9 +4643,9 @@ class tx_sgzlib {
 
 		if ($ok1 && checkdate($md[2],$md[1],$md[3])) {
 			if ($hour>=0 && $hour<24) {
-				$out = mktime  ($hour,$minute,$second,$md[2],$md[1],$md[3],0);
+				$out = mktime  ($hour,$minute,$second,$md[2],$md[1],$md[3]);
 			} else {
-				$out = mktime (intval($this->conf['defaultHour']),0,1,$md[2],$md[1],$md[3],0);
+				$out = mktime (intval($this->conf['defaultHour']),0,1,$md[2],$md[1],$md[3]);
 			}
 		} else {
 			$this->lastCheckError = 'Date Error: '.$myDate;
@@ -4783,30 +4711,30 @@ class tx_sgzlib {
 				case '':
 				case '=':
 					$out = '=';
-					$myDate = mktime (0,0,0,$md[2],$md[1],$md[3],0);
-					$query = $myFName.'>='.mktime (0,0,0,$md[2],$md[1],$md[3],0).' AND '.$myFName.'<='.mktime (23,59,59,$md[2],$md[1],$md[3],0);
+					$myDate = mktime (0,0,0,$md[2],$md[1],$md[3]);
+					$query = $myFName.'>='.mktime (0,0,0,$md[2],$md[1],$md[3]).' AND '.$myFName.'<='.mktime (23,59,59,$md[2],$md[1],$md[3]);
 				break;
 				case '=<':
 				case '<=':
 					$out = '<=';
-					$myDate = mktime (23,59,59,$md[2],$md[1],$md[3],0);
-					$query = $myFName.'<='.mktime (23,59,59,$md[2],$md[1],$md[3],0);
+					$myDate = mktime (23,59,59,$md[2],$md[1],$md[3]);
+					$query = $myFName.'<='.mktime (23,59,59,$md[2],$md[1],$md[3]);
 				break;
 				case '=>':
 				case '>=':
 					$out = '>=';
-					$myDate = mktime (0,0,0,$md[2],$md[1],$md[3],0);
-					$query = $myFName.'>='.mktime (0,0,0,$md[2],$md[1],$md[3],0);
+					$myDate = mktime (0,0,0,$md[2],$md[1],$md[3]);
+					$query = $myFName.'>='.mktime (0,0,0,$md[2],$md[1],$md[3]);
 				break;
 				case '>':
 					$out = '>';
-					$myDate = mktime (23,59,59,$md[2],$md[1],$md[3],0);
-					$query = $myFName.'>'.mktime (23,59,59,$md[2],$md[1],$md[3],0);
+					$myDate = mktime (23,59,59,$md[2],$md[1],$md[3]);
+					$query = $myFName.'>'.mktime (23,59,59,$md[2],$md[1],$md[3]);
 				break;
 				case '<':
 					$out = '<';
-					$myDate = mktime (0,0,0,$md[2],$md[1],$md[3],0);
-					$query = $myFName.'<'.mktime (0,0,0,$md[2],$md[1],$md[3],0);
+					$myDate = mktime (0,0,0,$md[2],$md[1],$md[3]);
+					$query = $myFName.'<'.mktime (0,0,0,$md[2],$md[1],$md[3]);
 				break;
 			}
 		} else {
@@ -4818,29 +4746,29 @@ class tx_sgzlib {
 					case '=':
 						$out = '=';
 						$myDate = mktime (0,0,0,$md[1],1,$md[2],0);
-						$query = $myFName.'>='.mktime (0,0,0,$md[1],1,$md[2],0).' AND '.$myFName.'<='.mktime (23,59,59,$md[1]+1,-1,$md[2],0);
+						$query = $myFName.'>='.mktime (0,0,0,$md[1],1,$md[2]).' AND '.$myFName.'<='.mktime (23,59,59,$md[1]+1,-1,$md[2]);
 					break;
 					case '=<':
 					case '<=':
 						$out = '<=';
-						$myDate = mktime (23,59,59,$md[1]+1,-1,$md[2],0);
-						$query = $myFName.'<='.mktime (23,59,59,$md[1]+1,-1,$md[2],0);
+						$myDate = mktime (23,59,59,$md[1]+1,-1,$md[2]);
+						$query = $myFName.'<='.mktime (23,59,59,$md[1]+1,-1,$md[2]);
 					break;
 					case '=>':
 					case '>=':
 						$out = '>=';
-						$myDate = mktime (0,0,0,$md[1],1,$md[2],0);
-						$query = $myFName.'>='.mktime (0,0,0,$md[1],1,$md[2],0);
+						$myDate = mktime (0,0,0,$md[1],1,$md[2]);
+						$query = $myFName.'>='.mktime (0,0,0,$md[1],1,$md[2]);
 					break;
 					case '>':
 						$out = '>';
-						$myDate = mktime (23,59,59,$md[1]+1,-1,$md[2],0);
-						$query = $myFName.'>'.mktime (23,59,59,$md[1]+1,-1,$md[2],0);
+						$myDate = mktime (23,59,59,$md[1]+1,-1,$md[2]);
+						$query = $myFName.'>'.mktime (23,59,59,$md[1]+1,-1,$md[2]);
 					break;
 					case '<':
 						$out = '<';
-						$myDate = mktime (0,0,0,$md[1],1,$md[2],0);
-						$query = $myFName.'<'.mktime (0,0,0,$md[1],1,$md[2],0);
+						$myDate = mktime (0,0,0,$md[1],1,$md[2]);
+						$query = $myFName.'<'.mktime (0,0,0,$md[1],1,$md[2]);
 					break;
 				}
 			} else {
@@ -4851,30 +4779,30 @@ class tx_sgzlib {
 						case '':
 						case '=':
 							$out = '=';
-							$myDate = mktime (0,0,0,1,1,$md[1],0);
-							$query = $myFName.'>='.mktime (0,0,0,1,1,$md[1],0).' AND '.$myFName.'<='.mktime (23,59,59,12,31,$md[1],0);
+							$myDate = mktime (0,0,0,1,1,$md[1]);
+							$query = $myFName.'>='.mktime (0,0,0,1,1,$md[1]).' AND '.$myFName.'<='.mktime (23,59,59,12,31,$md[1]);
 						break;
 						case '=<':
 						case '<=':
 							$out = '<=';
-							$myDate = mktime (23,59,59,12,31,$md[1],0);
-							$query = $myFName.'<='.mktime (23,59,59,12,31,$md[1],0);
+							$myDate = mktime (23,59,59,12,31,$md[1]);
+							$query = $myFName.'<='.mktime (23,59,59,12,31,$md[1]);
 						break;
 						case '=>':
 						case '>=':
 							$out = '>=';
-							$myDate = mktime (0,0,0,1,1,$md[1],0);
-							$query = $myFName.'>='.mktime (0,0,0,1,1,$md[1],0);
+							$myDate = mktime (0,0,0,1,1,$md[1]);
+							$query = $myFName.'>='.mktime (0,0,0,1,1,$md[1]);
 						break;
 						case '>':
 							$out = '>';
-							$myDate = mktime (23,59,59,12,31,$md[1],0);
-							$query = $myFName.'>'.mktime (23,59,59,12,31,$md[1],0);
+							$myDate = mktime (23,59,59,12,31,$md[1]);
+							$query = $myFName.'>'.mktime (23,59,59,12,31,$md[1]);
 						break;
 						case '<':
 							$out = '<';
-							$myDate = mktime (0,0,0,1,1,$md[1]+1,0);
-							$query = $myFName.'<'.mktime (0,0,0,1,1,$md[1]+1,0);
+							$myDate = mktime (0,0,0,1,1,$md[1]+1);
+							$query = $myFName.'<'.mktime (0,0,0,1,1,$md[1]+1);
 						break;
 					}
 				}

@@ -86,7 +86,7 @@ class tx_sglib_config extends ArrayIterator {
 	private $preConf = Array();
 	private $pluginConf = Array();
 	private $localConf = Array();
-	private $flexFormData;
+	public  $flexFormData;
 	private $defaultTableName = '';
 	private $debugObj=NULL;
 	private $debugData = Array();
@@ -99,16 +99,21 @@ class tx_sglib_config extends ArrayIterator {
 	protected $references = Array();
 	protected $addedJsFunctions;
 
+	protected $sqlTypesInt = Array('int', 'tinyint', 'smallint', 'mediumint', 'integer', 'bigint');
+	protected $sqlTypesFloat = Array('float', 'double', 'decimal');
+	protected $sqlTypesString = Array('varchar', 'text', 'char', 'tinytext', 'blob', 'tinyblob', 'mediumtext', 'mediumblob');
+
 	// protected function __construct() {}
 
 	private function __clone() {}
 
 	/**
-	 * Get Singleton of this class
+	 * Returns a singlton instance of tx_sglib_config
 	 *
-	 * @param	[type]		$designator, tx_sglib_factory $factoryObj: ...
-	 * @param	[type]		$conf: ...
-	 * @return	[type]		...
+	 * @param	string				Designator
+	 * @param	tx_sglib_factory	FactoryObj
+	 * @param	array				Configuration
+	 * @return	tx_sglib_config	Instantiated Object
 	 */
 	public static function getInstance($designator, tx_sglib_factory $factoryObj, $conf) {
 		if (!isset(self::$instance[$designator])) {
@@ -119,12 +124,12 @@ class tx_sglib_config extends ArrayIterator {
 	}
 
 	/**
-	 * Initialize
+	 * Initializes the Object
 	 *
-	 * @param	[type]		$designator: ...
-	 * @param	[type]		$factoryCObj: ...
-	 * @param	[type]		$conf: ...
-	 * @return	[type]		...
+	 * @param	string				Designator
+	 * @param	tx_sglib_factory	FactoryObj
+	 * @param	array				Configuration
+	 * @return	void
 	 */
 	private function init($designator, tx_sglib_factory $factoryObj, $conf) {
 		$this->_fCount(__FUNCTION__);
@@ -161,11 +166,11 @@ class tx_sglib_config extends ArrayIterator {
 	/**
 	 * [Describe function...]
 	 *
-	 * @param	[type]		$pluginSubMode: ...
-	 * @param	[type]		$pluginMode: ...
-	 * @param	[type]		$cmdMode: ...
-	 * @param	[type]		$cached: ...
-	 * @return	[type]		...
+	 * @param	string		$pluginSubMode: ...
+	 * @param	string		$pluginMode: ...
+	 * @param	string		$cmdMode: ...
+	 * @param	string		$cached: ...
+	 * @return	void
 	 */
 	public function setPluginConfig($pluginSubMode, $pluginMode, $cmdMode, $cached) {
 		$this['pluginSubMode'] = $this->pluginConf['pluginSubMode'] = $pluginSubMode;
@@ -188,7 +193,7 @@ class tx_sglib_config extends ArrayIterator {
 			while(list(,$val)=each($pid_list_arr))	{
 				$this->pid_list.=$val.",".$this->cObj->getTreeList($val,intval($recursive));
 			}
-			$this->pid_list = ereg_replace(",$","",$this->pid_list);
+			$this->pid_list = preg_replace("/,$/","",$this->pid_list);
 		}
 	}
 
@@ -199,7 +204,7 @@ class tx_sglib_config extends ArrayIterator {
 	 */
 	protected function _findAllReferences() {
 		foreach ($this as $key=>$value) {
-			if (strcmp($value,'TABLEDEF')==0) {
+			if (strcmp((string)$value,'TABLEDEF')==0) {
 				if (!is_array($this->references[$key])) {
 					$this->references[$key] = $this->_findReferencesForTable($key);
 				}
@@ -217,7 +222,7 @@ class tx_sglib_config extends ArrayIterator {
 		if (!$table) {
 			$table = $table ? $table : $this->defaultTableName;
 		}
-		$references = Array('table'=>array(), 'field'=>array(), 'asName'=>array(), 'join'=>array(), 'joinMain'=>array(), 'label'=>array());
+		$references = Array('table'=>array(), 'field'=>array(), 'asName'=>array(), 'join'=>array(), 'joinMain'=>array(), 'label'=>array(), 'type'=>array(), 'max'=>array(), 'foreign_field'=>Array(), 'foreign_sortby'=>Array(), 'MM'=>Array());
 		$conf = $this[$table.'.']['conf.'];
 		if (is_array($conf)) foreach ($conf as $key=>$fieldConf) {
 			$fieldName = substr($key,0,-1);
@@ -239,6 +244,22 @@ class tx_sglib_config extends ArrayIterator {
 				$references['join'][$refTable] = ' LEFT JOIN '.$refTable.' ON '.$this->mainTable.'.'.$fieldName.'='.$refTable.'.uid  ';
 				$references['joinMain'][$refTable] = ' LEFT JOIN '.$this->mainTable.' ON '.$this->mainTable.'.'.$fieldName.'='.$refTable.'.uid  ';
 				$references['label'][$refTable] = $this->getLabelField($refTable);
+				// t3lib_div::debug(Array('$conf'=>$conf, 'File:Line'=>__FILE__.':'.__LINE__));
+				$references['type'][$refTable] = $conf[$fieldName.'.']['type'];
+				$references['max'][$refTable] = intval($conf[$fieldName.'.']['maxitems']);
+				if (!$references['max'][$refTable]) {
+					$references['max'][$refTable] = strcmp($references['type'][$refTable],'inline') ? 1 : 99999;
+				}
+				if ($fieldConf['MM']) {
+					$references['MM'][$refTable] = $fieldConf['MM'];
+				}
+				if ($fieldConf['foreign_field']) {
+					$references['foreign_field'][$refTable] = str_replace ($refTable.'.','',$fieldConf['foreign_field']);
+				}
+				if ($fieldConf['foreign_sortby']) { //TODO get Sorting for a Table
+					$references['foreign_sortby'][$refTable] = str_replace ($refTable.'.','',$fieldConf['foreign_sortby']);
+				}
+				// $references['conf'][$refTable] = $conf[$fieldName.'.'];
 			}
 
 			if (strcmp($fieldConf['allowed'],$field[0])==0 || strcmp($fieldConf['foreign_table'],$field[0])==0) {
@@ -257,7 +278,7 @@ class tx_sglib_config extends ArrayIterator {
 	 * @param	[type]		$key: ...
 	 * @return	[type]		...
 	 */
-	public function getReferences ($table, $mode='',$key='') {
+	public function getReferences ($table='', $mode='',$key='') {
 
 //		if (!$this->test[$table]) {
 //			$this->test[$table] = 1;
@@ -269,14 +290,44 @@ class tx_sglib_config extends ArrayIterator {
 		if (!is_array($this->references[$table])) {
 			$this->references[$table] = $this->_findReferencesForTable($table);
 		}
-		if ($mode && $key) {
+		if ($mode && $key && $table) {
 			return ($this->references[$table][$mode][$key]);
-		} else if ($mode) {
+		} elseif ($mode && $table) {
 			return ($this->references[$table][$mode]);
-		} else {
+		} elseif ($table) {
 			return ($this->references[$table]);
+		} else {
+			return ($this->references);
 		}
 	}
+
+	public function getResultModel ($table, $className='') {
+		return ($this->getModel ($table, $className, 1));
+	}
+
+	public function getModel ($table, $className='', $createSeparate=0) {
+		if ($this->references[$table]['model'] && is_object($this->references[$table]['model'])) {
+			return ($this->references[$table]['model']);
+		} else {
+			$model = NULL;
+			$modelClassName = $table.'_model';
+			if (class_exists($modelClassName)) {
+				$model = tx_sgdiv::makeInstance($modelClassName, $this->defaultDesignator, $this->factoryObj);
+			} elseif ($className && class_exists($className)) {
+				$model = tx_sgdiv::makeInstance($className, $this->defaultDesignator, $this->factoryObj);
+			} else {
+				$model = tx_sgdiv::makeInstance('tx_sglib_modelbase', $this->defaultDesignator, $this->factoryObj, $table, $table);
+			}
+
+			if (!$model) {
+				t3lib_div::debug(Array('ERROR'=>'Could not get model', '$table'=>$table, '$modelClassName'=>$modelClassName, 'File:Line'=>__FILE__.':'.__LINE__));
+			} elseif (!$createSeparate) {
+				$this->references[$table]['model'] = $model;
+			}
+		}
+		return ($model);
+	}
+
 
 	/**
 	 * [Describe function...]
@@ -550,7 +601,7 @@ class tx_sglib_config extends ArrayIterator {
 		}
 
 		$confArray = $this->getConfData();
-		foreach ($this as $table=>$config) if (strcmp($config,'TABLEDEF')==0) {
+		foreach ($this as $table=>$config) if (strcmp((string)$config,'TABLEDEF')==0) {
 			//state?// t3lib_div::debug(Array('check for [ignoreTCAsettings] in '=>$table, 'File:Line'=>__FILE__.':'.__LINE__));
 			if ($confArray[$table.'.']['ignoreTCAsettings']) {
 				unset($this[$table.'.']);
@@ -570,6 +621,42 @@ class tx_sglib_config extends ArrayIterator {
 				}
 			}
 		}
+
+		foreach ($this as $table=>$config) if (strcmp((string)$config,'TABLEDEF')==0) {
+			$query = 'SHOW COLUMNS FROM '.$table.' ;';
+			$res = $GLOBALS['TYPO3_DB']->sql_query($query);
+			//$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($select,$table,$query,$group,$order);
+			if ($res) {
+				while ($defRow = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+					$type = explode('(',$defRow['Type']);
+					$this[$table.'.']['conf.'][$defRow['Field'].'.']['sqlType'] = $type[0];
+					$this[$table.'.']['conf.'][$defRow['Field'].'.']['sqlLen'] = intval($type[1]);
+					if (in_array($type[0], $this->sqlTypesInt)) {
+						$this[$table.'.']['conf.'][$defRow['Field'].'.']['secMode'] = 10;
+					} elseif (in_array($type[0], $this->sqlTypesFloat)) {
+						$this[$table.'.']['conf.'][$defRow['Field'].'.']['secMode'] = 20;
+					} elseif (in_array($type[0], $this->sqlTypesString)) {
+
+						if (strcmp($this[$table.'.']['conf.'][$defRow['Field'].'.']['type'],'select')==0 || strcmp($this[$table.'.']['conf.'][$defRow['Field'].'.']['type'],'group')==0) {
+							$this[$table.'.']['conf.'][$defRow['Field'].'.']['secMode'] = 15;
+						} else {
+							$this[$table.'.']['conf.'][$defRow['Field'].'.']['secMode'] = 30;
+						}
+						// if ($defRow['Field']=="category") t3lib_div::debug(Array('$defRow[Field]'=>$defRow['Field'], '$type[0]'=>$type[0], '$this->sqlTypesString'=>$this->sqlTypesString, 'TCA-fielddtype'=>$this[$table.'.']['conf.'][$defRow['Field'].'.'], 'secmode'=>$this[$table.'.']['conf.'][$defRow['Field'].'.']['secMode'], 'FILE:LINE='=>__FILE__.':'.__LINE__ ));
+
+
+					} else {
+						$this[$table.'.']['conf.'][$defRow['Field'].'.']['secMode'] = 40;
+						t3lib_div::debug(Array($table=>$defRow, 'File:Line'=>__FILE__.':'.__LINE__));
+					}
+
+
+				}
+			} else {
+				t3lib_div::debug(Array('query'=>$query, 'error'=>$GLOBALS['TYPO3_DB']->sql_error() ,'FILE/LINE='=>__FILE__.': '.__LINE__));
+			}
+		}
+
 		if (is_array($confArray)) foreach ($confArray as $key=>$value) {
 			if (is_array($value['moreConf.']) && count($value['moreConf.'])) {
 				$value['conf.'] = t3lib_div::array_merge_recursive_overrule((array) $value['conf.'],$value['moreConf.']) ;
@@ -645,6 +732,7 @@ class tx_sglib_config extends ArrayIterator {
 				case 'details':
 				case 'search':
 				case 'permit':
+				case 'pageBrowser':
 				case 'xajax':
 				case 'view':
 					return ( (array)$this[$nm] );
@@ -658,7 +746,7 @@ class tx_sglib_config extends ArrayIterator {
 					if (is_object($this->debugObj)) {
 						$this->debugObj->showError(0,$error,SGZLIB_FATALERROR);
 					} else {
-						die($error);
+						die($error.t3lib_div::view_array(Array('backtrace'=>debug_backtrace() )));
 					}
 				}
 			}
@@ -762,6 +850,83 @@ class tx_sglib_config extends ArrayIterator {
 		}
 		$this->debugData = Array();
 	}
+
+	public function isIntField($table,$fieldname) {
+		if ($this[$table.'.']['conf.'][$fieldname.'.']['secMode']==10) {
+			return (true);
+		} else {
+			return (false);
+		}
+	}
+
+	public function isFloatField($table,$fieldname) {
+		if ($this[$table.'.']['conf.'][$fieldname.'.']['secMode']==20) {
+			return (true);
+		} else {
+			return (false);
+		}
+		return (false);
+	}
+
+	public function isIntListField($table,$fieldname) {
+		if ($this[$table.'.']['conf.'][$fieldname.'.']['secMode']>=10 && $this[$table.'.']['conf.'][$fieldname.'.']['secMode']<=15) {
+			return (true);
+		} else {
+			return (false);
+		}
+		return (false);
+	}
+
+	public function isNumField($table,$fieldname) {
+		if ($this[$table.'.']['conf.'][$fieldname.'.']['secMode']>=10 && $this[$table.'.']['conf.'][$fieldname.'.']['secMode']<30) {
+			return (true);
+		} else {
+			return (false);
+		}
+		return (false);
+	}
+
+	public function isStringField($table,$fieldname) {
+		if ($this[$table.'.']['conf.'][$fieldname.'.']['secMode']>=30) {
+			return (true);
+		} else {
+			return (false);
+		}
+		return (false);
+	}
+
+	public function secValueSql($table,$fieldname,$value) {
+		$secMode = $this[$table.'.']['conf.'][$fieldname.'.']['secMode'];
+		if ($secMode<10 || $secMode>=30) {
+			// is string
+			return ($GLOBALS['TYPO3_DB']->fullQuoteStr($value, $table));
+		} elseif ($secMode>=20) {
+			// if float
+			return (floatval($value));
+		} else {
+			// is integer
+			if (strcmp($value,'00')==0) {
+				return ('00');
+			} else {
+				return (intval($value));
+			}
+		}
+	}
+
+	public function secValueHtml($table,$fieldname,$value) {
+		$secMode = $this[$table.'.']['conf.'][$fieldname.'.']['secMode'];
+		if ($secMode<10 || $secMode>=30) {
+			// is string
+			return (htmlspecialchars($value));
+		} elseif ($secMode>=20) {
+			// if float
+			return (floatval($value));
+		} else {
+			// is integer
+			return (intval($value));
+		}
+	}
+
 
 	/******************************************************************************
 	 *

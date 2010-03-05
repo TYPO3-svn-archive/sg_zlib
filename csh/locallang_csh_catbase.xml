@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<description>CSH for tx_sgjoblist_maincat table, specifically tailored for the CMS extension.</description>
+		<type>CSH</type>
+		<csh_table>tx_sgjoblist_maincat</csh_table>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="hidden.description">Make whole item visible or invisible to the frontend</label>
+			<label index="title.description">Title of Category</label>
+			<label index="title_lang_ol.description">Translation of Title: Pipe (|) separated list of Translations. 
+
+One Item for each Language other than default. 
+E.g. Languages = "default=Deutsch, English, Francais" then this entry should contain = 
+"english Title|french title"</label>
+			<label index="icon.description">Icon for this Category</label>
+			<label index="listtitle.description">Title of Category</label>
+
+			<label index="parent.description">Parent of this Category. If this is not a main-category, then select here the parent category of this category.</label>
+			<label index="level.description">Shows the level of this category in the tree. Maincategories are on level 0.</label>
+			<label index="maincat.description">List of all parents of this Category</label>
+			<label index="subcat.description">List of als subcategories of this category</label>
+		</languageKey>
+		<languageKey index="de" type="array">
+			<label index="hidden.description">Gesamten Eintrag im Frontend sichtbar/unsichtbar machen</label>
+			<label index="title.description">Titel der Kategorie</label>
+			<label index="title_lang_ol.description">Pipe (|) getrennte Liste von Übersetzungen des Titels. 
+			
+Für jede von der Default-Sprache verschiedene Webseiten-Sprache ein Eintrag. 
+z.B. bei Sprachen = "default=Deutsch, English, Francais" dann Eintrag = 
+"englischer Titel|französischer Titel"</label>
+			<label index="icon.description">Icon für diese Kategorie</label>
+			<label index="listtitle.description">Titel der Kategorie</label>
+
+			<label index="parent.description">Übergeordnete Kategorie: falls diese Kategorie keine Hauptkategorie ist, dann hier die zugehörige übergeordnetet Kategorie auswählen.</label>
+			<label index="level.description">Gibt die Ebene des Kategoriebaums an, in der sich diese Kategorie befindet (Hauptkategorien sind auf Ebene 0).</label>
+			<label index="maincat.description">Liste aller übergeordneten Kategorien dieser Kategorie</label>
+			<label index="subcat.description">Liste aller Unterkategorien dieser Kategorie</label>
+		</languageKey>
+	</data>
+</T3locallang>

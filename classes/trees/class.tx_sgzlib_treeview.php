@@ -120,7 +120,7 @@ class tx_sgzlib_treeview {
 	 * @return	string		the HTML code for the field
 	 */
 	function displayCategoryTree($PA, $fobj)    {
-		// t3lib_div::debug(Array('mainTable'=>$this->mainTable, '$PA'=>$PA, 'File:Line'=>__FILE__.':'.__LINE__));
+		// t3lib_div::debug(Array('mainTable'=>$this->mainTable, 'catTable'=>$this->catTable, '$PA'=>$PA, 'File:Line'=>__FILE__.':'.__LINE__));
 		$table = $PA['table'];
 		$field = $PA['field'];
 		$row = $PA['row'];
@@ -252,6 +252,7 @@ class tx_sgzlib_treeview {
 
 					$treeOrderBy = $confArr['treeOrderBy']?$confArr['treeOrderBy']:'uid';
 					$treeViewObj->table = $config['foreign_table'];
+//					t3lib_div::debug(Array('$SPaddWhere.$catlistWhere'=>$SPaddWhere.$catlistWhere, '$treeOrderBy'=>$treeOrderBy, 'File:Line'=>__FILE__.':'.__LINE__));
 					$treeViewObj->init($SPaddWhere.$catlistWhere,$treeOrderBy);
 					$treeViewObj->backPath = $this->pObj->backPath;
 					$treeViewObj->parentField = $TCA[$config['foreign_table']]['ctrl']['treeParentField'];
@@ -302,7 +303,7 @@ class tx_sgzlib_treeview {
 // 					}
 
 					$treeItemC = count($treeViewObj->ids);
-
+// t3lib_div::debug(Array('$treeItemC'=>$treeItemC, 'File:Line'=>__FILE__.':'.__LINE__));
 					if ($defItems[0]) { // add default items to the tree table. In this case the value [not categorized]
 						$treeItemC += count($defItems);
 						$treeContent .= '<table border="0" cellpadding="0" cellspacing="0"><tr>

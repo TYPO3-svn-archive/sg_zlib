@@ -57,6 +57,7 @@ class tx_sglib_viewsearchform extends tx_sglib_viewbase  {
 	protected $subpartMarkers;
 
 	protected $searchParams;
+	protected $restrict = Array();
 
 	protected $output = NULL;
 
@@ -82,6 +83,19 @@ class tx_sglib_viewsearchform extends tx_sglib_viewbase  {
 		$this->searchParams = is_array($params) ? $params : Array();
 	}
 
+
+	/**
+	 * [Describe function...]
+	 *
+	 * @param	[type]		$params: ...
+	 * @return	[type]		...
+	 */
+	function setRestrictParams($table,$params) {
+		$this->restrict[$table] = array('idList'=>is_array($params) ? $params : tx_sgdiv::explode(',',$params)) ;
+		// t3lib_div::debug(Array('$this->restrict'=>$this->restrict, 'File:Line'=>__FILE__.':'.__LINE__));
+	}
+
+
 	/**
 	 * [Describe function...]
 	 *
@@ -90,9 +104,7 @@ class tx_sglib_viewsearchform extends tx_sglib_viewbase  {
 	function renderOutput() {
 		GLOBAL $TSFE;
 		$this->getTemplate();
-
 		$this->markers = $this->getDbSearchFields ($table, $this->markers);
-
 		$this->markers['###FORM_START###']  = '<form name="txsg_search" id="txsg_search" action="index.php">'."\r\n".
 			'<input type="hidden" name="'.$this->designator.'[searchformname]" value="txsg_search">'."\r\n".
 			'<input type="hidden" name="id" value="'.($this->listPage ? $this->listPage : $TSFE->id).'">'."\r\n".

@@ -78,6 +78,14 @@ class tx_sglib_permit {
 
 	private function __clone() {}
 
+	/**
+	 * Returns a singlton instance of tx_sglib_permit
+	 *
+	 * @param	string				Designator
+	 * @param	tx_sglib_factory	FactoryObj
+	 * @return	tx_sglib_permit	Instantiated Object
+	 */
+	
 	public static function getInstance($designator, tx_sglib_factory $factoryObj) {
 		if (!isset(self::$instance[$designator])) {
 			self::$instance[$designator] = new tx_sglib_permit();
@@ -929,6 +937,17 @@ class tx_sglib_permit {
 		asort ($this->usersIdFe);
 	}
 
+
+	/***********************************************************************************************
+	 *
+	 * Magic Methods
+	 *
+	 ***********************************************************************************************/
+
+	public function __call ($name, array $arguments=Array()) {
+		t3lib_div::debug(Array('ERROR'=>'Function "$name" not implemented', 'Class'=>get_class($this), 'File:Line'=>__FILE__.':'.__LINE__));
+		return ('ERROR: method "'.get_class($this).'->'.$name.'(...)" does not exist. ');
+	}
 
 
 

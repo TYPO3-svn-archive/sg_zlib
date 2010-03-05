@@ -70,7 +70,15 @@ class tx_sglib_links {
 
 	private function __clone() {}
 
-	public static function getInstance($designator, tx_sglib_factory $factoryObj) {
+	/**
+	 * Returns a singlton instance of tx_sglib_links
+	 *
+	 * @param	string				Designator
+	 * @param	tx_sglib_factory	FactoryObj
+	 * @return	tx_sglib_links	Instantiated Object
+	 */
+	
+	public static function getInstance($designator='default', $factoryObj=NULL) {
 		if (!isset(self::$instance)) {
 			self::$instance = new tx_sglib_links();
 			self::$instance->factoryObj = $factoryObj;
@@ -475,6 +483,18 @@ class tx_sglib_links {
 	 * @return	array		the configuration
 	 * @access	private
 	 */
+
+	/***********************************************************************************************
+	 *
+	 * Magic Methods
+	 *
+	 ***********************************************************************************************/
+
+	public function __call ($name, array $arguments=Array()) {
+		t3lib_div::debug(Array('ERROR'=>'Function "$name" not implemented', 'Class'=>get_class($this), 'File:Line'=>__FILE__.':'.__LINE__));
+		return ('ERROR: method "'.get_class($this).'->'.$name.'(...)" does not exist. ');
+	}
+
 
 
 }

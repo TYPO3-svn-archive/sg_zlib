@@ -62,6 +62,14 @@ class tx_sglib_lang {
 
 	private function __clone() {}
 
+	/**
+	 * Returns a singlton instance of tx_sglib_lang
+	 *
+	 * @param	string				Designator
+	 * @param	tx_sglib_factory	FactoryObj
+	 * @return	tx_sglib_lang		Instantiated Object
+	 */
+	
 	public static function getInstance($designator, tx_sglib_factory $factoryObj) {
 		if (!isset(self::$instance[$designator])) {
 			self::$instance[$designator] = new tx_sglib_lang();
@@ -269,23 +277,91 @@ class tx_sglib_lang {
 	 *****************************************************************************/
 
 	/**
-	 * @param	[type]		$text: ...
+	 * @param	[type]		$row: data-row; if langUid is not default, then values will be replaced by their aproppriate language-values
+	 * @param	[type]		$table: tablename of data-row
 	 * @param	[type]		$refTableLangOl: ...
-	 * @param	[type]		$langUid: ...
-	 * @return	[type]		...
+	 * @param	[type]		$refTableLangLol: ...
+	 * @return	[type]		$row: modified data-row
 	 */
-	function replaceLangOverlay(&$row,$table,$refTableLangOl=NULL) {
-		if (!isset($refTableLangOl)) {
-			$refTableLangOl = $GLOBALS['TCA'][$table]['ctrl']['lang_ol'];
-		}
+	function replaceLangOverlayArray(&$rows,$table,$refTableLangOl=NULL,$refTableLangLol=NULL) {
 		$this->_fCount(__FUNCTION__);
-		if (is_array($refTableLangOl) && $this->langUid>0) foreach ($refTableLangOl as $key => $value) {
-			$tmp = t3lib_div::trimExplode('|',$row[$value]);
-			unset ($row[$value]);
-			if (trim($tmp[$this->langUid-1])) {
-				$row[$key] = $tmp[$this->langUid-1];
+		if (is_array($rows)) foreach ($rows as $key=>$row) {
+			$this->replaceLangOverlay(&$rows[$key],$table,$refTableLangOl,$refTableLangLol);
+		}
+	}
+
+	/**
+	 * @param	[type]		$row: data-row; if langUid is not default, then values will be replaced by their aproppriate language-values
+	 * @param	[type]		$table: tablename of data-row
+	 * @param	[type]		$refTableLangOl: ...
+	 * @param	[type]		$refTableLangLol: ...
+	 * @return	[type]		$row: modified data-row
+	 */
+	function replaceLangOverlay(&$row,$table,$refTableLangOl=NULL,$refTableLangLol=NULL,$recursion=0) {
+		$this->_fCount(__FUNCTION__);
+		if ($this->langUid>0) {
+			if (!isset($refTableLangOl)) {
+				$refTableLangOl = $GLOBALS['TCA'][$table]['ctrl']['lang_ol'];
+			}
+			if (!isset($refTableLangLol)) {
+				$refTableLangLol = $GLOBALS['TCA'][$table]['ctrl']['lang_lol'];
+			}
+			
+			if (is_array($refTableLangOl)) foreach ($refTableLangOl as $key => $value) {
+				$tmp = t3lib_div::trimExplode('|',$row[$value]);
+				unset ($row[$value]);
+				if (trim($tmp[$this->langUid-1])) {
+					$row[$key] = $tmp[$this->langUid-1];
+				}
+			}
+			if (is_array($refTableLangLol)) foreach ($refTableLangLol as $key => $value) {
+				if (trim($row[$value.intval($this->langUid)])) {
+					$row[$key] = trim($row[$value.intval($this->langUid)]);
+				}
+			}
+			if ($recursion>0) {
+				foreach ($row as $key=>$field) {
+					if (strcmp(substr($key,-6),'_array')==0 && is_array($field)) {
+						$first = reset($field);
+						if (is_array($first)) {
+							$table = $first['TABLE'];
+							// t3lib_div::debug(Array('table='=>$table,'File:Line'=>__FILE__.':'.__LINE__));
+							foreach ($field as $sKey=>$sField) if (is_array($sField)) {
+								$this->replaceLangOverlay($row[$key][$sKey],$table,$refTableLangOl,$refTableLangLol,$recursion-1);
+							}
+						}
+					} elseif (strcmp(substr($key,-7),'_record')==0 && is_array($field)) {
+						$this->replaceLangOverlay($row[$key],$field['TABLE'],$refTableLangOl,$refTableLangLol,$recursion-1);
+						// t3lib_div::debug(Array('table='=>$field['TABLE'], $key=>$row[$key], 'File:Line'=>__FILE__.':'.__LINE__));
+					}
+				}
 			}
 		}
+	}
+
+
+	public function getLangUid () {
+		return ($this->langUid);
+	}
+
+	public function getLangOlString($label,$label_ol) {
+		if ($this->langUid>0) {
+			$tmp = t3lib_div::trimExplode('|',$label_ol);
+			if (trim($tmp[$this->langUid-1])) {
+				$label = $tmp[$this->langUid-1];
+			}
+		}
+		return ($label);
+	}
+	/***********************************************************************************************
+	 *
+	 * Magic Methods
+	 *
+	 ***********************************************************************************************/
+
+	public function __call ($name, array $arguments=Array()) {
+		t3lib_div::debug(Array('ERROR'=>'Function "$name" not implemented', 'Class'=>get_class($this), 'File:Line'=>__FILE__.':'.__LINE__));
+		return ('ERROR: method "'.get_class($this).'->'.$name.'(...)" does not exist. ');
 	}
 
 

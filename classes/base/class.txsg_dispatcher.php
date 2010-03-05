@@ -39,6 +39,11 @@ class txsg_dispatcher extends tslib_pibase {
 	var $scriptRelPath = 'pi1/class.tx_sgzz_pi1.php';	// Path to this script relative to the extension dir.
 	var $extKey = 'sg_zz';	// The extension key.
 
+	public $conf;
+	protected $myCmdMode;
+	protected $myPluginMode;
+	protected $memAtStart;
+
 	/**
 	 * [Put your description here]
 	 *
@@ -50,48 +55,74 @@ class txsg_dispatcher extends tslib_pibase {
 		// Init FlexForm configuration for plugin:
 		$this->pi_initPIflexForm();
 		$pluginMode = intval($this->pi_getFFvalue($this->cObj->data['pi_flexform'],'fieldModuleMode','sDefault'));
-		$myPluginMode = $pluginMode;
-		$myCmdMode = 0;
+		$this->conf = $conf;
+		$this->myPluginMode = $pluginMode;
+		$this->myCmdMode = 0;
 		$myConf = NULL;
-		//t3lib_div::debug(Array('$conf'=>$conf, 'File:Line'=>__FILE__.':'.__LINE__));
-		if (is_array($conf['dispatcher.'])) {
-			if ($pluginMode && is_array($conf['dispatcher.'][$pluginMode.'.'])) {
-				$myConf = $conf['dispatcher.'][$pluginMode.'.'];
+		// t3lib_div::debug(Array('$this->conf'=>$this->conf, 'File:Line'=>__FILE__.':'.__LINE__));
+		if (is_array($this->conf['dispatcher.'])) {
+			if ($pluginMode && is_array($this->conf['dispatcher.'][$pluginMode.'.'])) {
+				$myConf = $this->conf['dispatcher.'][$pluginMode.'.'];
 			}
-			if (!$myConf && $conf['CMD']) {
-				foreach ($conf['dispatcher.'] as $key=>$value) {
-					if (strcmp($value['cmd'],$conf['CMD'])!=0) {
+			if (!$myConf && $this->conf['CMD']) {
+				foreach ($this->conf['dispatcher.'] as $key=>$value) {
+					if (strcmp($value['cmd'],$this->conf['CMD'])==0) {
 						$myConf = $value;
-						$myCmdMode = 1;
-						$myPluginMode = intval($key);
+						$this->myCmdMode = 1;
+						$this->myPluginMode = intval($key);
 					}
 				}
 			}
 		}
 
+		if ($myConf['execList']) {
+			$dispatcherConf = $this->conf['dispatcher.'];
+			$idList = t3lib_div::trimExplode(',',$myConf['execList']);
+			foreach ($idList as $id) if ($id) {
+				$myConf = $dispatcherConf[$id.'.'];
+				$content .= $this->executeMyConf($myConf);
+			}
+			return ($content);
+		} else {
+			$content = $this->executeMyConf($myConf);
+		}
+		return ($content);
+	}
+
+	protected function executeMyConf(array $myConf) {
+		// t3lib_div::debug(Array('$myConf'=>$myConf, 'File:Line'=>__FILE__.':'.__LINE__));
 		if (is_array($myConf)) {
 			if (!is_array($myConf['conf.'])) {
 				$myConf['conf.'] = Array();
 			}
-			if (!$myConf['conf.']['includeLibs'] && $conf['includeLibs']) {
-				$myConf['conf.']['includeLibs'] = $conf['includeLibs'];
+			if (!$myConf['conf.']['includeLibs'] && $this->conf['includeLibs']) {
+				$myConf['conf.']['includeLibs'] = $this->conf['includeLibs'];
 			}
-			if (!$myConf['conf.']['userFunc'] && $conf['userFunc']) {
-				$myConf['conf.']['userFunc'] = $conf['userFunc'];
+			if (!$myConf['conf.']['userFunc'] && $this->conf['userFunc']) {
+				$myConf['conf.']['userFunc'] = $this->conf['userFunc'];
 			}
-			unset($conf['dispatcher.']);
-			$conf = t3lib_div::array_merge_recursive_overrule($conf,$myConf['conf.']);
-			$conf['pluginMode'] = $myPluginMode;
-			$conf['cmdMode'] = $myCmdMode;
-			$conf['cached'] = (strcmp(substr($myConf['conf'],-4),'_INT')!=0);
-			// t3lib_div::debug(Array('$conf'=>$conf, 'File:Line'=>__FILE__.':'.__LINE__));
-			$tmp .= '<!-- Dispatcher('.$this->prefixId.',Mode='.$myPluginMode.'/'.$myCmdMode.') Rendered at ('.date('H:i:s').') -->'.CRLF;
-			$tmp .= $this->cObj->cObjGetSingle($myConf['conf'],$conf);
-			$content .= $this->pi_wrapInBaseClass($tmp);
+			unset($this->conf['dispatcher.']);
+			// t3lib_div::debug(Array('$myConf[conf.]'=>$myConf['conf.'], 'File:Line'=>__FILE__.':'.__LINE__));
+			$this->conf = t3lib_div::array_merge_recursive_overrule($this->conf,$myConf['conf.']);
+			$this->conf['pluginMode'] = $this->myPluginMode;
+			$this->conf['cmdMode'] = $this->myCmdMode;
+			$this->conf['cached'] = (strcmp(substr($myConf['conf'],-4),'_INT')!=0);
+			// t3lib_div::debug(Array('$this->conf'=>$this->conf, 'File:Line'=>__FILE__.':'.__LINE__));
+			if ($this->conf['CMD'] || $this->conf['noComments']) {
+				$tmp = trim($this->cObj->cObjGetSingle($myConf['conf'],$this->conf));
+			} else {
+				$tmp .= "\n".'<!-- Dispatcher('.$this->prefixId.',Mode='.$this->myPluginMode.'/'.$this->myCmdMode.') '.
+					'Rendered at ('.date('H:i:s').') '.
+					'Cached='.intval($this->conf['cached']).' Mode ('.$myConf['conf'].') -->'.CRLF;
+				$tmp .= $this->cObj->cObjGetSingle($myConf['conf'],$this->conf)."\n".'<!-- DispatcherEnd ('.$this->prefixId.',Mode='.$this->myPluginMode.'/'.$this->myCmdMode.') '.
+					'Rendered at ('.date('H:i:s').') '.
+					'Cached='.intval($this->conf['cached']).' Mode ('.$myConf['conf'].') End -->'."\n";
+			}
+			//$content .= $this->pi_wrapInBaseClass($tmp);
+			$content .= $tmp;
 		} else {
-			$content .= $this->pi_wrapInBaseClass('<br /><b>ERROR: Could not find pluginMode='.$pluginMode.' nor CMD="'.$conf['CMD'].'" </b><br /><br />');
+			$content .= $this->pi_wrapInBaseClass('<br /><b>ERROR: Could not find pluginMode='.$pluginMode.' nor CMD="'.$this->conf['CMD'].'" </b><br /><br />');
 		}
-
 
 		return ($content);
 	}

@@ -35,6 +35,7 @@
  *  223:     protected function getConstObj()
  *  235:     protected function getParamsObj()
  *  247:     protected function getMarkersObj()
+ *  247:     protected function getSearchObj()
  *  259:     protected function getLangObj()
  *  271:     protected function getPermitObj()
  *  283:     protected function getTemplateObj()
@@ -44,7 +45,7 @@
  *  328:     public function getModel($name)
  *  348:     public function getView($name)
  *  367:     function getDesignator()
- *  377:     private function checkForconfObj()
+ *  377:     private function checkForConfObj()
  *
  * TOTAL FUNCTIONS: 17
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -59,17 +60,29 @@ class tx_sglib_factory {
 	protected $constObj = NULL;
 	protected $langObj = NULL;
 	protected $permitObj = NULL;
+	protected $pageBrowser = NULL;
 	protected $paramsObj = NULL;
 	protected $linksObj = NULL;
 	protected $markersObj = NULL;
+	protected $searchObj = NULL;
 	protected $divObj = NULL;
 	protected $myDebugObj = NULL;
+	protected $jsonObj = NULL;
 	protected $designator = 'tx_sglib_factory';
 
 	protected function __construct() {}
 
 	private function __clone() {}
 
+	
+	/**
+	 * Returns a singlton instance of tx_sglib_factory
+	 *
+	 * @param	string				Designator
+	 * @param	tslib_cObj			ParentObj
+	 * @return	tx_sglib_factory	FactoryObject
+	 */
+	
 	public static function getInstance($designator, $parentCObj, $conf) {
 		if (self::$instance[$designator]==null) {
 			self::$instance[$designator] = new tx_sglib_factory();
@@ -100,7 +113,7 @@ class tx_sglib_factory {
 	 * @return	[type]		...
 	 */
 	public function setBaseTables($mainTable, $tables) {
-		if (strcmp($tables,'*')==0) {
+		if (!is_array($tables) && strcmp($tables,'*')==0) {
 			$tables = Array();
 			if (!is_array($GLOBALS['TCA'][$mainTable]['columns'])) {
 				$GLOBALS['TSFE']->includeTCA();
@@ -110,7 +123,7 @@ class tx_sglib_factory {
 				$GLOBALS['TSFE']->includeTCA();
 			}
 			$tmp = $GLOBALS['TCA'][$mainTable];
-			foreach ($tmp['columns'] as $key=>$fieldConf) {
+			if (is_array($tmp['columns'])) foreach ($tmp['columns'] as $key=>$fieldConf) {
 				if ($fieldConf['config']['allowed'] && strcmp($fieldConf['config']['internal_type'],'db')==0) {
 					$tables[] = $fieldConf['config']['allowed'];
 				} else if ($fieldConf['config']['foreign_table']) {
@@ -157,8 +170,12 @@ class tx_sglib_factory {
 				return ($this->getLinksObj());
 			case 'markersObj':
 				return ($this->getMarkersObj());
+			case 'searchObj':
+				return ($this->getSearchObj());
 			case 'langObj':
 				return ($this->getLangObj());
+			case 'pageBrowser':
+				return ($this->getPageBrowser());
 			case 'permitObj':
 				return ($this->getPermitObj());
 			case 'templateObj':
@@ -167,6 +184,8 @@ class tx_sglib_factory {
 				return ($this->getItemsObj());
 			case 'divObj':
 				return ($this->getDivObj());
+			case 'jsonObj':
+				return ($this->getJsonObj());
 			default:
 				$error = 'get("'.$nm.'") failed ... Variable unknown !!';
 				if (is_object($this->debugObj)) {
@@ -214,7 +233,7 @@ class tx_sglib_factory {
 	 * @return	[type]		...
 	 */
 	protected function getDebugObj() {
-		$confObj = $this->checkForconfObj();
+		$confObj = $this->checkForConfObj();
 		return ($this->debugObj);
 	}
 
@@ -271,6 +290,18 @@ class tx_sglib_factory {
 	 *
 	 * @return	[type]		...
 	 */
+	protected function getSearchObj() {
+		if (!isset($this->searchObj)) {
+			$this->searchObj = tx_sglib_search::getInstance($this->designator, $this);
+		}
+		return ($this->searchObj);
+	}
+
+	/**
+	 * [Describe function...]
+	 *
+	 * @return	[type]		...
+	 */
 	protected function getLangObj() {
 		if (!isset($this->langObj)) {
 			$this->langObj = tx_sglib_lang::getInstance($this->designator, $this);
@@ -295,8 +326,20 @@ class tx_sglib_factory {
 	 *
 	 * @return	[type]		...
 	 */
+	protected function getPageBrowser() {
+		if (!isset($this->pageBrowser)) {
+			$this->pageBrowser = tx_sglib_pagebrowser::getInstance($this->designator, $this);
+		}
+		return ($this->pageBrowser);
+	}
+
+	/**
+	 * [Describe function...]
+	 *
+	 * @return	[type]		...
+	 */
 	protected function getTemplateObj() {
-		$confObj = $this->checkForconfObj();
+		$confObj = $this->checkForConfObj();
 		return (tx_sglib_template::getInstance($this->designator, $this));
 	}
 
@@ -306,7 +349,7 @@ class tx_sglib_factory {
 	 * @return	[type]		...
 	 */
 	protected function getItemsObj() {
-		$confObj = $this->checkForconfObj();
+		$confObj = $this->checkForConfObj();
 		return (tx_sglib_items::getInstance($this->designator, $this));
 	}
 
@@ -320,6 +363,18 @@ class tx_sglib_factory {
 			$this->divObj = new tx_sgdiv();
 		}
 		return ($this->divObj);
+	}
+
+	/**
+	 * [Describe function...]
+	 *
+	 * @return	[type]		...
+	 */
+	protected function getJsonObj() {
+		if ($this->jsonObj==null) {
+			$this->jsonObj = new tx_sglib_json();
+		}
+		return ($this->jsonObj);
 	}
 
 	/**
@@ -389,7 +444,7 @@ class tx_sglib_factory {
 	 *
 	 * @return	[type]		...
 	 */
-	private function checkForconfObj() {
+	private function checkForConfObj() {
 		if (!isset($this->confObj)) {
 			$error = 'confObj must be called first ! PrefixId='.$this->designator;
 			$this->myDebugObj->showError(0,$error,SGZLIB_FATALERROR);

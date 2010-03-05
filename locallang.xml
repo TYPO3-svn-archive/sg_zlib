@@ -11,6 +11,14 @@
         <languageKey index="default" type="array">
             <label index="showFromToOfTotal">%1$d to %2$d of %3$d</label>
             <label index="showNoneOfTotal">none of %d</label>
+            <label index="pb_first">First</label>
+            <label index="pb_last">Last</label>
+            <label index="pb_firstpage">First Page</label>
+            <label index="pb_lastpage">Last Page</label>
+            <label index="pb_prevpage">Previous</label>
+            <label index="pb_nextpage">Next</label>
+			<label index="pb_counttext">Items ###fromitem###-###toitem### of ###cnt### on page ###page### of ###maxpages###</label>
+ 			<label index="pb_perPage"> per page</label>
             <label index="save">Save</label>
             <label index="update">Update</label>
             <label index="reload">Reload</label>
@@ -154,6 +162,14 @@
         <languageKey index="de" type="array">
             <label index="showFromToOfTotal">%1$d bis %2$d von %3$d</label>
             <label index="showNoneOfTotal">0 von %d</label>
+            <label index="pb_first">Erste</label>
+            <label index="pb_last">Letzte</label>
+            <label index="pb_firstpage">Erste Seite</label>
+            <label index="pb_lastpage">Letzte Seite</label>
+            <label index="pb_prevpage">Zurück</label>
+            <label index="pb_nextpage">Weiter</label>
+			<label index="pb_perPage"> je Seite</label>
+			<label index="pb_counttext">Einträge ###fromitem###-###toitem### von ###cnt### auf Seite ###page### von ###maxpages###</label>
             <label index="save">Speichern</label>
             <label index="update">Update</label>
             <label index="reload">Reload</label>

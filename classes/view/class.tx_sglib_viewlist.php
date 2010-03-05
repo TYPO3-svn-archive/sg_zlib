@@ -186,7 +186,7 @@ class tx_sglib_viewlist extends tx_sglib_viewbase  {
 			$content .= $this->catlistOutputLine($record);
 		}
 		$content .= $this->segmentCheckFinish();
-		$content .= $this->catlistCheckFinish();
+		$content .= $this->catlistCheckFinish().'<!-- Total Record Count = '.count($data).' -->';
 
 		return ($content);
 	}

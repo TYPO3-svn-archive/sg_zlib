@@ -23,9 +23,9 @@
 ***************************************************************/
 
 require_once(PATH_tslib.'class.tslib_pibase.php');
-require_once(t3lib_extMgm::extPath('sg_zlib').'classes/model/class.tx_sglib_modelbase.php');
+require_once(t3lib_extMgm::extPath('sg_zlib').'classes/model/class.tx_sglib_modeldefault.php');
 
- 	define ('SGZLIB_TEXT', 0);
+	define ('SGZLIB_TEXT', 0);
 	define ('SGZLIB_FORM', 1);
 	define ('SGZLIB_AUTO', 2);
 	define ('SGZLIB_AUTOHIDDEN', 3);
@@ -57,16 +57,32 @@ class txsg_cached_base extends tslib_pibase {
 	var $pi_checkCHash = TRUE;
 	var $pi_USER_INT_obj = 0;
 
-	var $factoryObj;
-	var $confObj;
-	var $debugObj;
-	var $constObj;
-	var $paramsObj;
-	var $templateObj;
-	var $permitObj;
-	var $langObj;
-	var $itemsObj;
-	var $divObj;
+	/**
+	 * @var tx_sglib_factory
+	 */
+	protected $factoryObj;
+	
+	/**
+	 * @var tx_sglib_config
+	 */
+	protected $confObj;
+	/**
+	 * @var tx_sglib_debug
+	 */
+	protected $debugObj;
+	protected $constObj;
+	protected $paramsObj;
+
+	/**
+	 * @var tx_sglib_markers
+	 */
+	protected $markersObj;
+
+	protected $templateObj;
+	protected $permitObj;
+	protected $langObj;
+	protected $itemsObj;
+	protected $divObj;
 
 	/**
 	 * The main method of the PlugIn
@@ -75,14 +91,44 @@ class txsg_cached_base extends tslib_pibase {
 	 * @param	array		$conf: The PlugIn configuration
 	 * @return	The		content that is displayed on the website
 	 */
-	function main($content,$conf)	{
+	public function main($content,$conf)	{
+		$this->memAtStart = memory_get_usage();
 		$content = '';
 		//t3lib_div::debug(Array('$conf'=>$conf, 'File:Line'=>__FILE__.':'.__LINE__));
 
-		$this->factoryObj = tx_sglib_factory::getInstance($this->prefixId, $this->cObj, $conf);
-		$this->factoryObj->setBaseTables($this->mainTable, '*') ;
-		$this->divObj = $this->factoryObj->divObj;
+		$this->init($conf);
 		$ms = $this->divObj->getMicroSec();
+
+		$this->pluginMode = $this->preprocessPluginMode(intval($conf['pluginMode']));
+		$tmp = $this->switchPluginMode($this->pluginMode);
+		if ($GLOBALS['TYPO3_CONF_VARS']['FE']['debug']) {
+			$tmp .= '<!-- '.$this->prefixId.
+					' duration='.intval($this->divObj->getMicrodur($ms)).'ms time='.date('Y-m-d/H:i:s').
+					' memory='.t3lib_div::formatSize(memory_get_usage()-$this->memAtStart).
+					' peak='.t3lib_div::formatSize(memory_get_peak_usage()-$this->memAtStart).
+					' -->'.CRLF;
+		}
+		if (is_array($this->conf['stdWrapAll.'])) {
+			$tmp = $this->cObj->stdWrap($tmp,$this->conf['stdWrapAll.']);
+		}
+
+
+		return ($tmp);
+	}
+
+	public function init ($conf, $cObj=NULL, $prefixId=NULL, $mainTable=NULL) {
+		if (!$cObj)  {
+			$cObj = $this->cObj;
+		}
+		if (!$prefixId)  {
+			$prefixId = $this->prefixId;
+		}
+		if (!$mainTable)  {
+			$mainTable = $this->mainTable;
+		}
+		$this->factoryObj = tx_sglib_factory::getInstance($prefixId, $cObj, $conf);
+		$this->factoryObj->setBaseTables($mainTable, '*') ;
+		$this->divObj = $this->factoryObj->divObj;
 
 		$this->confObj = $this->factoryObj->confObj;
 		$this->confObj->setPluginConfig($conf['pluginSubMode'],$conf['pluginMode'],$conf['cmdMode'],$conf['cached']);
@@ -90,23 +136,14 @@ class txsg_cached_base extends tslib_pibase {
 		$this->constObj = $this->factoryObj->constObj;
 		$this->paramsObj = $this->factoryObj->paramsObj;
 		$this->templateObj = $this->factoryObj->templateObj;
+		$this->markersObj = $this->factoryObj->markersObj;
+		$this->langObj = $this->factoryObj->langObj;
 
 		$this->conf = $this->confObj->getCombined();
 		$this->myPage = $this->pi_getPageLink($TSFE->id,'','');
 		if (!strstr($this->myPage,'?')) {
 			$this->myPage .= '?';
 		}
-
-		$this->pluginMode = $this->preprocessPluginMode(intval($conf['pluginMode']));
-		$tmp = $this->switchPluginMode($this->pluginMode);
-		if (is_array($this->conf['stdWrapAll.'])) {
-			$tmp = $this->cObj->stdWrap($tmp,$this->conf['stdWrapAll.']);
-		}
-
-		$content .= $tmp.CRLF.'<!-- '.$this->prefixId.' duration='.intval($this->divObj->getMicrodur($ms)).'ms time='.date('Y-m-d/H:i:s').' -->'.CRLF;
-
-		return ($content);
-
 	}
 
 

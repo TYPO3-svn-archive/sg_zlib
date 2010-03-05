@@ -1,4 +1,4 @@
-a:2:{s:4:"meta";a:3:{s:5:"title";s:0:"";s:5:"descr";s:0:"";s:7:"options";a:2:{s:10:"usageCount";N;s:19:"includeCodeAbstract";N;}}s:5:"files";a:3:{s:14:"MD5_46a3fda13b";a:4:{s:8:"filename";s:37:"classes/lib/class.tx_sglib_config.php";s:8:"filesize";i:28688;s:6:"header";N;s:3:"DAT";a:38:{i:1;a:8:{s:6:"header";s:45:"class tx_sglib_config extends ArrayIterator {";s:5:"class";i:1;s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:2208:"
+a:2:{s:4:"meta";a:3:{s:5:"title";s:7:"sg_zlib";s:5:"descr";s:0:"";s:7:"options";a:2:{s:10:"usageCount";N;s:19:"includeCodeAbstract";N;}}s:5:"files";a:14:{s:14:"MD5_46a3fda13b";a:4:{s:8:"filename";s:37:"classes/lib/class.tx_sglib_config.php";s:8:"filesize";i:35127;s:6:"header";N;s:3:"DAT";a:47:{i:1;a:8:{s:6:"header";s:45:"class tx_sglib_config extends ArrayIterator {";s:5:"class";i:1;s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:2208:"
 
 [CLASS/FUNCTION INDEX of SCRIPT]
 
@@ -53,118 +53,118 @@ a:2:{s:4:"meta";a:3:{s:5:"title";s:0:"";s:5:"descr";s:0:"";s:7:"options";a:2:{s:
 
 TOTAL FUNCTIONS: 37
 (This index is automatically created/updated by the extension "extdeveval")
-";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:537;s:13:"content_lines";i:24;s:6:"atLine";i:79;}i:3;a:7:{s:6:"header";s:86:"public static function getInstance($designator, tx_sglib_factory $factoryObj, $conf) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:823;s:13:"content_lines";i:28;s:6:"atLine";i:79;}i:3;a:7:{s:6:"header";s:86:"public static function getInstance($designator, tx_sglib_factory $factoryObj, $conf) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:49:"
+
+Returns a singlton instance of tx_sglib_config
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"string";i:1;s:10:"Designator";}i:1;a:2:{i:0;s:16:"tx_sglib_factory";i:1;s:10:"FactoryObj";}i:2;a:2:{i:0;s:5:"array";i:1;s:13:"Configuration";}}s:6:"return";a:2:{i:0;s:15:"tx_sglib_config";i:1;s:19:"Instantiated Object";}}s:7:"content";s:0:"";s:12:"content_size";i:225;s:13:"content_lines";i:7;s:6:"atLine";i:116;}i:5;a:7:{s:6:"header";s:73:"private function init($designator, tx_sglib_factory $factoryObj, $conf) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+Initializes the Object
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"string";i:1;s:10:"Designator";}i:1;a:2:{i:0;s:16:"tx_sglib_factory";i:1;s:10:"FactoryObj";}i:2;a:2:{i:0;s:5:"array";i:1;s:13:"Configuration";}}s:6:"return";a:2:{i:0;s:4:"void";i:1;s:0:"";}}s:7:"content";s:0:"";s:12:"content_size";i:740;s:13:"content_lines";i:17;s:6:"atLine";i:132;}i:7;a:7:{s:6:"header";s:46:"public function setParentObject($parentCObj) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:29:"
+
+Set or update parentObject
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:16:"$parentCObj: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:215;s:13:"content_lines";i:7;s:6:"atLine";i:156;}i:9;a:7:{s:6:"header";s:81:"public function setPluginConfig($pluginSubMode, $pluginMode, $cmdMode, $cached) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:46:"$designator, tx_sglib_factory $factoryObj: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:10:"$conf: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:225;s:13:"content_lines";i:7;s:6:"atLine";i:111;}i:5;a:7:{s:6:"header";s:73:"private function init($designator, tx_sglib_factory $factoryObj, $conf) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
-
-[Describe function...]
-";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:16:"$designator: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:17:"$factoryCObj: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:10:"$conf: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:740;s:13:"content_lines";i:17;s:6:"atLine";i:127;}i:7;a:7:{s:6:"header";s:46:"public function setParentObject($parentCObj) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
-
-[Describe function...]
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:16:"$parentCObj: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:215;s:13:"content_lines";i:7;s:6:"atLine";i:151;}i:9;a:7:{s:6:"header";s:81:"public function setPluginConfig($pluginSubMode, $pluginMode, $cmdMode, $cached) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
-
-[Describe function...]
-";s:5:"param";a:4:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:19:"$pluginSubMode: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:16:"$pluginMode: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:13:"$cmdMode: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:12:"$cached: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:278;s:13:"content_lines";i:7;s:6:"atLine";i:168;}i:11;a:7:{s:6:"header";s:47:"protected function _initRecursive($recursive)	{";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:66:"
+";s:5:"param";a:4:{i:0;a:2:{i:0;s:6:"string";i:1;s:19:"$pluginSubMode: ...";}i:1;a:2:{i:0;s:6:"string";i:1;s:16:"$pluginMode: ...";}i:2;a:2:{i:0;s:6:"string";i:1;s:13:"$cmdMode: ...";}i:3;a:2:{i:0;s:6:"string";i:1;s:12:"$cached: ...";}}s:6:"return";a:2:{i:0;s:4:"void";i:1;s:0:"";}}s:7:"content";s:0:"";s:12:"content_size";i:278;s:13:"content_lines";i:7;s:6:"atLine";i:173;}i:11;a:7:{s:6:"header";s:47:"protected function _initRecursive($recursive)	{";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:66:"
 
 Extends the internal pid_list by the levels given by $recursive
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:15:"$recursive: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:334;s:13:"content_lines";i:10;s:6:"atLine";i:182;}i:13;a:7:{s:6:"header";s:41:"protected function _findAllReferences() {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:15:"$recursive: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:336;s:13:"content_lines";i:10;s:6:"atLine";i:187;}i:13;a:7:{s:6:"header";s:41:"protected function _findAllReferences() {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:210;s:13:"content_lines";i:9;s:6:"atLine";i:198;}i:15;a:7:{s:6:"header";s:52:"protected function _findReferencesForTable($table) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:218;s:13:"content_lines";i:9;s:6:"atLine";i:203;}i:15;a:7:{s:6:"header";s:52:"protected function _findReferencesForTable($table) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1671;s:13:"content_lines";i:35;s:6:"atLine";i:214;}i:17;a:7:{s:6:"header";s:58:"public function getReferences ($table, $mode='',$key='') {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:2638;s:13:"content_lines";i:51;s:6:"atLine";i:219;}i:17;a:7:{s:6:"header";s:61:"public function getReferences ($table='', $mode='',$key='') {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:10:"$mode: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:9:"$key: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:640;s:13:"content_lines";i:20;s:6:"atLine";i:258;}i:19;a:7:{s:6:"header";s:42:"protected function getLabelField($table) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:10:"$mode: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:9:"$key: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:712;s:13:"content_lines";i:22;s:6:"atLine";i:279;}i:19;a:6:{s:6:"header";s:56:"public function getResultModel ($table, $className='') {";s:11:"parentClass";s:15:"tx_sglib_config";s:7:"content";s:0:"";s:12:"content_size";i:57;s:13:"content_lines";i:3;s:6:"atLine";i:309;}i:21;a:6:{s:6:"header";s:69:"public function getModel ($table, $className='', $createSeparate=0) {";s:11:"parentClass";s:15:"tx_sglib_config";s:7:"content";s:0:"";s:12:"content_size";i:919;s:13:"content_lines";i:23;s:6:"atLine";i:321;}i:23;a:7:{s:6:"header";s:42:"protected function getLabelField($table) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:157;s:13:"content_lines";i:10;s:6:"atLine";i:285;}i:21;a:7:{s:6:"header";s:39:"private function _fCount ($name=NULL) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:157;s:13:"content_lines";i:10;s:6:"atLine";i:351;}i:25;a:7:{s:6:"header";s:39:"private function _fCount ($name=NULL) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:345;s:13:"content_lines";i:17;s:6:"atLine";i:302;}i:23;a:7:{s:6:"header";s:23:"function __destruct() {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:345;s:13:"content_lines";i:17;s:6:"atLine";i:368;}i:27;a:7:{s:6:"header";s:23:"function __destruct() {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:315;s:13:"content_lines";i:10;s:6:"atLine";i:325;}i:25;a:8:{s:6:"header";s:33:"function setDesignator($string) {";s:11:"parentClass";s:15:"tx_sglib_config";s:11:"sectionText";a:1:{i:0;s:9:"Functions";}s:4:"cDat";a:3:{s:4:"text";s:123:"
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:315;s:13:"content_lines";i:10;s:6:"atLine";i:391;}i:29;a:8:{s:6:"header";s:33:"function setDesignator($string) {";s:11:"parentClass";s:15:"tx_sglib_config";s:11:"sectionText";a:1:{i:0;s:9:"Functions";}s:4:"cDat";a:3:{s:4:"text";s:123:"
 
 Set the default designator.
 
 Usefull for classes of the library tx_lib that are not inherited but directly instantiated.
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"string";i:1;s:10:"designator";}}s:6:"return";a:2:{i:0;s:4:"void";i:1;s:0:"";}}s:7:"content";s:0:"";s:12:"content_size";i:75;s:13:"content_lines";i:4;s:6:"atLine";i:344;}i:27;a:7:{s:6:"header";s:26:"function getDesignator() {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:33:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"string";i:1;s:10:"designator";}}s:6:"return";a:2:{i:0;s:4:"void";i:1;s:0:"";}}s:7:"content";s:0:"";s:12:"content_size";i:75;s:13:"content_lines";i:4;s:6:"atLine";i:410;}i:31;a:7:{s:6:"header";s:26:"function getDesignator() {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:33:"
 
 Return the default designator.
-";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:18:"default designator";}}s:7:"content";s:0:"";s:12:"content_size";i:120;s:13:"content_lines";i:4;s:6:"atLine";i:354;}i:29;a:7:{s:6:"header";s:19:"function getPid() {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:18:"default designator";}}s:7:"content";s:0:"";s:12:"content_size";i:120;s:13:"content_lines";i:4;s:6:"atLine";i:420;}i:33;a:7:{s:6:"header";s:19:"function getPid() {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 Return the default PID
-";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:18:"default designator";}}s:7:"content";s:0:"";s:12:"content_size";i:106;s:13:"content_lines";i:4;s:6:"atLine";i:364;}i:31;a:7:{s:6:"header";s:23:"function getPidList() {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:22:"
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:18:"default designator";}}s:7:"content";s:0:"";s:12:"content_size";i:106;s:13:"content_lines";i:4;s:6:"atLine";i:430;}i:35;a:7:{s:6:"header";s:23:"function getPidList() {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:22:"
 
 Return the Pid-List
-";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:18:"default designator";}}s:7:"content";s:0:"";s:12:"content_size";i:113;s:13:"content_lines";i:6;s:6:"atLine";i:374;}i:33;a:7:{s:6:"header";s:33:"function setTCAname($tableName) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:31:"
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:18:"default designator";}}s:7:"content";s:0:"";s:12:"content_size";i:113;s:13:"content_lines";i:6;s:6:"atLine";i:440;}i:37;a:7:{s:6:"header";s:33:"function setTCAname($tableName) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:31:"
 
 Set active default-tablename
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:29:"$tableName: name of mainTable";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:4:"void";}}s:7:"content";s:0:"";s:12:"content_size";i:77;s:13:"content_lines";i:4;s:6:"atLine";i:387;}i:35;a:7:{s:6:"header";s:23:"function getTCAname() {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:31:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:29:"$tableName: name of mainTable";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:4:"void";}}s:7:"content";s:0:"";s:12:"content_size";i:77;s:13:"content_lines";i:4;s:6:"atLine";i:453;}i:39;a:7:{s:6:"header";s:23:"function getTCAname() {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:31:"
 
 Get active default-tablename
-";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:17:"name of mainTable";}}s:7:"content";s:0:"";s:12:"content_size";i:72;s:13:"content_lines";i:4;s:6:"atLine";i:397;}i:37;a:7:{s:6:"header";s:36:"function setTCAdata($tableName='') {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:52:"
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:17:"name of mainTable";}}s:7:"content";s:0:"";s:12:"content_size";i:72;s:13:"content_lines";i:4;s:6:"atLine";i:463;}i:41;a:7:{s:6:"header";s:36:"function setTCAdata($tableName='') {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:52:"
 
 Get settings from TCA for table (or defaultTable)
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$tableName";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:4:"void";}}s:7:"content";s:0:"";s:12:"content_size";i:1454;s:13:"content_lines";i:36;s:6:"atLine";i:408;}i:39;a:7:{s:6:"header";s:36:"function getTCAdata($tableName='') {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$tableName";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:4:"void";}}s:7:"content";s:0:"";s:12:"content_size";i:1454;s:13:"content_lines";i:36;s:6:"atLine";i:474;}i:43;a:7:{s:6:"header";s:36:"function getTCAdata($tableName='') {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$tableName";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:10:"TCA-Config";}}s:7:"content";s:0:"";s:12:"content_size";i:79;s:13:"content_lines";i:4;s:6:"atLine";i:451;}i:41;a:7:{s:6:"header";s:45:"function setPreConfData($name, array $conf) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:36:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$tableName";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:10:"TCA-Config";}}s:7:"content";s:0:"";s:12:"content_size";i:79;s:13:"content_lines";i:4;s:6:"atLine";i:517;}i:45;a:7:{s:6:"header";s:45:"function setPreConfData($name, array $conf) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:36:"
 
 Merge this with existing confData
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:5:"array";i:1;s:24:"Array with configuration";}}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:4:"void";}}s:7:"content";s:0:"";s:12:"content_size";i:184;s:13:"content_lines";i:5;s:6:"atLine";i:462;}i:43;a:7:{s:6:"header";s:35:"function setConfData(array $conf) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:5:"array";i:1;s:24:"Array with configuration";}}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:4:"void";}}s:7:"content";s:0:"";s:12:"content_size";i:184;s:13:"content_lines";i:5;s:6:"atLine";i:528;}i:47;a:7:{s:6:"header";s:35:"function setConfData(array $conf) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:2:{i:0;a:2:{i:0;s:5:"array";i:1;s:32:"Array with plugins configuration";}i:1;a:2:{i:0;s:6:"string";i:1;s:71:"LocalConf that overwrites $conf; if empty will be searchted in flexform";}}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:4:"void";}}s:7:"content";s:0:"";s:12:"content_size";i:173;s:13:"content_lines";i:6;s:6:"atLine";i:475;}i:45;a:7:{s:6:"header";s:40:"function setLocalConf($localConf=NULL) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:5:"array";i:1;s:32:"Array with plugins configuration";}i:1;a:2:{i:0;s:6:"string";i:1;s:71:"LocalConf that overwrites $conf; if empty will be searchted in flexform";}}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:4:"void";}}s:7:"content";s:0:"";s:12:"content_size";i:173;s:13:"content_lines";i:6;s:6:"atLine";i:541;}i:49;a:7:{s:6:"header";s:40:"function setLocalConf($localConf=NULL) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:2:{i:0;a:2:{i:0;s:5:"array";i:1;s:32:"Array with plugins configuration";}i:1;a:2:{i:0;s:6:"string";i:1;s:71:"LocalConf that overwrites $conf; if empty will be searchted in flexform";}}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:4:"void";}}s:7:"content";s:0:"";s:12:"content_size";i:479;s:13:"content_lines";i:16;s:6:"atLine";i:489;}i:47;a:7:{s:6:"header";s:24:"function getConfData() {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:18:"
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:5:"array";i:1;s:32:"Array with plugins configuration";}i:1;a:2:{i:0;s:6:"string";i:1;s:71:"LocalConf that overwrites $conf; if empty will be searchted in flexform";}}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:4:"void";}}s:7:"content";s:0:"";s:12:"content_size";i:479;s:13:"content_lines";i:16;s:6:"atLine";i:555;}i:51;a:7:{s:6:"header";s:24:"function getConfData() {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:18:"
 
 Return confData
-";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:9:"Conf-Data";}}s:7:"content";s:0:"";s:12:"content_size";i:492;s:13:"content_lines";i:17;s:6:"atLine";i:511;}i:49;a:7:{s:6:"header";s:43:"function combineTCAandConf($tableName='') {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:34:"
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:9:"Conf-Data";}}s:7:"content";s:0:"";s:12:"content_size";i:492;s:13:"content_lines";i:17;s:6:"atLine";i:577;}i:53;a:7:{s:6:"header";s:43:"function combineTCAandConf($tableName='') {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:34:"
 
 Combine TCA-Data with Conf-Data
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:15:"$tableName: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:4:"void";}}s:7:"content";s:0:"";s:12:"content_size";i:2081;s:13:"content_lines";i:48;s:6:"atLine";i:535;}i:51;a:7:{s:6:"header";s:24:"function getCombined() {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:37:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:15:"$tableName: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:4:"void";}}s:7:"content";s:0:"";s:12:"content_size";i:3987;s:13:"content_lines";i:84;s:6:"atLine";i:601;}i:55;a:7:{s:6:"header";s:24:"function getCombined() {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:37:"
 
 Return combined TCA- and Conf-Data
-";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:27:"combined TCA- and Conf-Data";}}s:7:"content";s:0:"";s:12:"content_size";i:249;s:13:"content_lines";i:12;s:6:"atLine";i:589;}i:53;a:8:{s:6:"header";s:28:"public function __get($nm) {";s:11:"parentClass";s:15:"tx_sglib_config";s:11:"sectionText";a:1:{i:0;s:7:"Getters";}s:4:"cDat";a:3:{s:4:"text";s:33:"
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:27:"combined TCA- and Conf-Data";}}s:7:"content";s:0:"";s:12:"content_size";i:249;s:13:"content_lines";i:12;s:6:"atLine";i:691;}i:57;a:8:{s:6:"header";s:28:"public function __get($nm) {";s:11:"parentClass";s:15:"tx_sglib_config";s:11:"sectionText";a:1:{i:0;s:7:"Getters";}s:4:"cDat";a:3:{s:4:"text";s:33:"
 
 Return value from config-array
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"string";i:1;s:17:"$name of $confVar";}}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:8:"Content.";}}s:7:"content";s:0:"";s:12:"content_size";i:1810;s:13:"content_lines";i:57;s:6:"atLine";i:608;}i:55;a:7:{s:6:"header";s:28:"public function get($name) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"string";i:1;s:17:"$name of $confVar";}}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:8:"Content.";}}s:7:"content";s:0:"";s:12:"content_size";i:1896;s:13:"content_lines";i:58;s:6:"atLine";i:710;}i:59;a:7:{s:6:"header";s:28:"public function get($name) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:281;s:13:"content_lines";i:16;s:6:"atLine";i:672;}i:57;a:7:{s:6:"header";s:30:"function TSObj ($name,$conf) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:112:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:372;s:13:"content_lines";i:20;s:6:"atLine";i:775;}i:61;a:7:{s:6:"header";s:30:"function TSObj ($name,$conf) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:112:"
 
 Renders singleObject; if $conf is not an array then $name is returned via getData (if LLL:) or via insertData
-";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"string";i:1;s:56:"The content object name, eg. "TEXT" or "USER" or "IMAGE"";}i:1;a:2:{i:0;s:5:"array";i:1;s:59:"The array with TypoScript properties for the content object";}}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:14:"cObject output";}}s:7:"content";s:0:"";s:12:"content_size";i:363;s:13:"content_lines";i:11;s:6:"atLine";i:696;}i:59;a:7:{s:6:"header";s:34:"function TSConfObj ($conf,$name) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:112:"
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"string";i:1;s:56:"The content object name, eg. "TEXT" or "USER" or "IMAGE"";}i:1;a:2:{i:0;s:5:"array";i:1;s:59:"The array with TypoScript properties for the content object";}}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:14:"cObject output";}}s:7:"content";s:0:"";s:12:"content_size";i:363;s:13:"content_lines";i:11;s:6:"atLine";i:803;}i:63;a:7:{s:6:"header";s:34:"function TSConfObj ($conf,$name) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:112:"
 
 Renders singleObject; if $conf is not an array then $name is returned via getData (if LLL:) or via insertData
-";s:5:"param";a:2:{i:0;a:2:{i:0;s:5:"array";i:1;s:65:"The array with all TypoScript properties, containing TS for $name";}i:1;a:2:{i:0;s:6:"string";i:1;s:37:"The name of the TS Object or TS value";}}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:14:"cObject output";}}s:7:"content";s:0:"";s:12:"content_size";i:427;s:13:"content_lines";i:11;s:6:"atLine";i:715;}i:61;a:7:{s:6:"header";s:74:"function getFFvalue($fieldName,$sheet='sDEF',$lang='lDEF',$value='vDEF')	{";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:58:"
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:5:"array";i:1;s:65:"The array with all TypoScript properties, containing TS for $name";}i:1;a:2:{i:0;s:6:"string";i:1;s:37:"The name of the TS Object or TS value";}}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:14:"cObject output";}}s:7:"content";s:0:"";s:12:"content_size";i:427;s:13:"content_lines";i:11;s:6:"atLine";i:822;}i:65;a:7:{s:6:"header";s:74:"function getFFvalue($fieldName,$sheet='sDEF',$lang='lDEF',$value='vDEF')	{";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:58:"
 
 Return value from somewhere inside a FlexForm structure
-";s:5:"param";a:4:{i:0;a:2:{i:0;s:6:"string";i:1;s:143:"Field name to extract. Can be given like "test/el/2/test/el/field_templateObject" where each part will dig a level deeper in the FlexForm data.";}i:1;a:2:{i:0;s:6:"string";i:1;s:25:"Sheet pointer, eg. "sDEF"";}i:2;a:2:{i:0;s:6:"string";i:1;s:28:"Language pointer, eg. "lDEF"";}i:3;a:2:{i:0;s:6:"string";i:1;s:25:"Value pointer, eg. "vDEF"";}}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:12:"The content.";}}s:7:"content";s:0:"";s:12:"content_size";i:257;s:13:"content_lines";i:7;s:6:"atLine";i:736;}i:63;a:7:{s:6:"header";s:34:"function setDebugObj ($debugObj) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:4:{i:0;a:2:{i:0;s:6:"string";i:1;s:143:"Field name to extract. Can be given like "test/el/2/test/el/field_templateObject" where each part will dig a level deeper in the FlexForm data.";}i:1;a:2:{i:0;s:6:"string";i:1;s:25:"Sheet pointer, eg. "sDEF"";}i:2;a:2:{i:0;s:6:"string";i:1;s:28:"Language pointer, eg. "lDEF"";}i:3;a:2:{i:0;s:6:"string";i:1;s:25:"Value pointer, eg. "vDEF"";}}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:12:"The content.";}}s:7:"content";s:0:"";s:12:"content_size";i:257;s:13:"content_lines";i:7;s:6:"atLine";i:843;}i:67;a:7:{s:6:"header";s:34:"function setDebugObj ($debugObj) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:14:"$debugObj: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:417;s:13:"content_lines";i:15;s:6:"atLine";i:750;}i:65;a:8:{s:6:"header";s:24:"function addJs ($name) {";s:11:"parentClass";s:15:"tx_sglib_config";s:11:"sectionText";a:1:{i:0;s:12:"JS Functions";}s:4:"cDat";a:3:{s:4:"text";s:1:"
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1037;s:13:"content_lines";i:31;s:6:"atLine";i:770;}i:67;a:8:{s:6:"header";s:52:"public function initFlexForm($field='pi_flexform')	{";s:11:"parentClass";s:15:"tx_sglib_config";s:11:"sectionText";a:1:{i:0;s:13:"Local helpers";}s:4:"cDat";a:3:{s:4:"text";s:79:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:14:"$debugObj: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:228;s:13:"content_lines";i:9;s:6:"atLine";i:857;}i:69;a:6:{s:6:"header";s:47:"public function isIntField($table,$fieldname) {";s:11:"parentClass";s:15:"tx_sglib_config";s:7:"content";s:0:"";s:12:"content_size";i:124;s:13:"content_lines";i:7;s:6:"atLine";i:874;}i:71;a:6:{s:6:"header";s:49:"public function isFloatField($table,$fieldname) {";s:11:"parentClass";s:15:"tx_sglib_config";s:7:"content";s:0:"";s:12:"content_size";i:142;s:13:"content_lines";i:8;s:6:"atLine";i:889;}i:73;a:6:{s:6:"header";s:51:"public function isIntListField($table,$fieldname) {";s:11:"parentClass";s:15:"tx_sglib_config";s:7:"content";s:0:"";s:12:"content_size";i:203;s:13:"content_lines";i:8;s:6:"atLine";i:905;}i:75;a:6:{s:6:"header";s:47:"public function isNumField($table,$fieldname) {";s:11:"parentClass";s:15:"tx_sglib_config";s:7:"content";s:0:"";s:12:"content_size";i:202;s:13:"content_lines";i:8;s:6:"atLine";i:921;}i:77;a:6:{s:6:"header";s:50:"public function isStringField($table,$fieldname) {";s:11:"parentClass";s:15:"tx_sglib_config";s:7:"content";s:0:"";s:12:"content_size";i:142;s:13:"content_lines";i:8;s:6:"atLine";i:937;}i:79;a:6:{s:6:"header";s:55:"public function secValueSql($table,$fieldname,$value) {";s:11:"parentClass";s:15:"tx_sglib_config";s:7:"content";s:0:"";s:12:"content_size";i:393;s:13:"content_lines";i:17;s:6:"atLine";i:954;}i:81;a:6:{s:6:"header";s:56:"public function secValueHtml($table,$fieldname,$value) {";s:11:"parentClass";s:15:"tx_sglib_config";s:7:"content";s:0:"";s:12:"content_size";i:487;s:13:"content_lines";i:20;s:6:"atLine";i:980;}i:83;a:8:{s:6:"header";s:24:"function addJs ($name) {";s:11:"parentClass";s:15:"tx_sglib_config";s:11:"sectionText";a:1:{i:0;s:12:"JS Functions";}s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1037;s:13:"content_lines";i:31;s:6:"atLine";i:1005;}i:85;a:8:{s:6:"header";s:52:"public function initFlexForm($field='pi_flexform')	{";s:11:"parentClass";s:15:"tx_sglib_config";s:11:"sectionText";a:1:{i:0;s:13:"Local helpers";}s:4:"cDat";a:3:{s:4:"text";s:79:"
 
 Converts $this->cObj->data['pi_flexform'] from XML string to flexForm array.
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"string";i:1;s:21:"Field name to convert";}}s:6:"return";a:2:{i:0;s:4:"void";i:1;s:0:"";}}s:7:"content";s:0:"";s:12:"content_size";i:248;s:13:"content_lines";i:6;s:6:"atLine";i:808;}i:69;a:7:{s:6:"header";s:78:"private function _getFFvalueFromSheetArray($sheetArray,$fieldNameArr,$value)	{";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:6:{s:4:"text";s:72:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"string";i:1;s:21:"Field name to convert";}}s:6:"return";a:2:{i:0;s:4:"void";i:1;s:0:"";}}s:7:"content";s:0:"";s:12:"content_size";i:248;s:13:"content_lines";i:6;s:6:"atLine";i:1043;}i:87;a:7:{s:6:"header";s:78:"private function _getFFvalueFromSheetArray($sheetArray,$fieldNameArr,$value)	{";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:6:{s:4:"text";s:72:"
 
 Returns part of $sheetArray pointed to by the keys in $fieldNameArray
-";s:5:"param";a:3:{i:0;a:2:{i:0;s:5:"array";i:1;s:50:"Multidimensiona array, typically FlexForm contents";}i:1;a:2:{i:0;s:5:"array";i:1;s:331:"Array where each value points to a key in the FlexForms content - the input array will have the value returned pointed to by these keys. All integer keys will not take their integer counterparts, but rather traverse the current position in the array an return element number X (whether this is right behavior is not settled yet...)";}i:2;a:2:{i:0;s:6:"string";i:1;s:59:"Value for outermost key, typ. "vDEF" depending on language.";}}s:6:"return";a:2:{i:0;s:5:"mixed";i:1;s:23:"The value, typ. string.";}s:6:"access";s:7:"private";s:5:"other";a:1:{i:0;s:20:"@see pi_getFFvalue()";}s:11:"other_index";a:1:{s:4:"@see";a:1:{i:0;s:16:"pi_getFFvalue() ";}}}s:7:"content";s:0:"";s:12:"content_size";i:404;s:13:"content_lines";i:23;s:6:"atLine";i:825;}i:71;a:7:{s:6:"header";s:58:"private function _configTCA ($tableName='',$config=NULL) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:79:"
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:5:"array";i:1;s:50:"Multidimensiona array, typically FlexForm contents";}i:1;a:2:{i:0;s:5:"array";i:1;s:331:"Array where each value points to a key in the FlexForms content - the input array will have the value returned pointed to by these keys. All integer keys will not take their integer counterparts, but rather traverse the current position in the array an return element number X (whether this is right behavior is not settled yet...)";}i:2;a:2:{i:0;s:6:"string";i:1;s:59:"Value for outermost key, typ. "vDEF" depending on language.";}}s:6:"return";a:2:{i:0;s:5:"mixed";i:1;s:23:"The value, typ. string.";}s:6:"access";s:7:"private";s:5:"other";a:1:{i:0;s:20:"@see pi_getFFvalue()";}s:11:"other_index";a:1:{s:4:"@see";a:1:{i:0;s:16:"pi_getFFvalue() ";}}}s:7:"content";s:0:"";s:12:"content_size";i:404;s:13:"content_lines";i:23;s:6:"atLine";i:1060;}i:89;a:7:{s:6:"header";s:58:"private function _configTCA ($tableName='',$config=NULL) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:79:"
 
 TCA-Table, converted with dots, stored as static to avoid duplicate creation
-";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"string";i:1;s:9:"Tablename";}i:1;a:2:{i:0;s:5:"array";i:1;s:57:"If set, then set configTable; if NULL, return configTable";}}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:10:"configData";}}s:7:"content";s:0:"";s:12:"content_size";i:320;s:13:"content_lines";i:15;s:6:"atLine";i:856;}i:73;a:4:{s:6:"header";s:41:"private function _getDotArray($myValue) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:70:"
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"string";i:1;s:9:"Tablename";}i:1;a:2:{i:0;s:5:"array";i:1;s:57:"If set, then set configTable; if NULL, return configTable";}}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:10:"configData";}}s:7:"content";s:0:"";s:12:"content_size";i:320;s:13:"content_lines";i:15;s:6:"atLine";i:1091;}i:91;a:4:{s:6:"header";s:41:"private function _getDotArray($myValue) {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:70:"
 
 Converts Array to Array, where key of subarrays are followed by '.'
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:5:"mixed";i:1;s:22:"Array/Value to convert";}}s:6:"return";a:2:{i:0;s:4:"void";i:1;s:0:"";}}s:6:"atLine";i:878;}i:75;a:7:{s:6:"header";s:44:"public function getDescriptions($table='') {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:5:"mixed";i:1;s:22:"Array/Value to convert";}}s:6:"return";a:2:{i:0;s:4:"void";i:1;s:0:"";}}s:6:"atLine";i:1113;}i:93;a:7:{s:6:"header";s:44:"public function getDescriptions($table='') {";s:11:"parentClass";s:15:"tx_sglib_config";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:694;s:13:"content_lines";i:30;s:6:"atLine";i:902;}}}s:14:"MD5_979907dabc";a:4:{s:8:"filename";s:36:"classes/lib/class.tx_sglib_const.php";s:8:"filesize";i:14644;s:6:"header";N;s:3:"DAT";a:22:{i:1;a:8:{s:6:"header";s:22:"class tx_sglib_const {";s:5:"class";i:1;s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:961:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:694;s:13:"content_lines";i:30;s:6:"atLine";i:1137;}}}s:14:"MD5_979907dabc";a:4:{s:8:"filename";s:36:"classes/lib/class.tx_sglib_const.php";s:8:"filesize";i:15389;s:6:"header";N;s:3:"DAT";a:23:{i:1;a:8:{s:6:"header";s:22:"class tx_sglib_const {";s:5:"class";i:1;s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:961:"
 
 [CLASS/FUNCTION INDEX of SCRIPT]
 
@@ -192,67 +192,444 @@ Converts Array to Array, where key of subarrays are followed by '.'
 
 TOTAL FUNCTIONS: 18
 (This index is automatically created/updated by the extension "extdeveval")
-";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:359;s:13:"content_lines";i:19;s:6:"atLine";i:52;}i:3;a:6:{s:6:"header";s:79:"public static function getInstance($designator, tx_sglib_factory $factoryObj) {";s:11:"parentClass";s:14:"tx_sglib_const";s:7:"content";s:0:"";s:12:"content_size";i:204;s:13:"content_lines";i:7;s:6:"atLine";i:78;}i:5;a:7:{s:6:"header";s:53:"private function init(tx_sglib_factory $factoryObj) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:359;s:13:"content_lines";i:19;s:6:"atLine";i:52;}i:3;a:7:{s:6:"header";s:79:"public static function getInstance($designator, tx_sglib_factory $factoryObj) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:48:"
+
+Returns a singlton instance of tx_sglib_const
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"string";i:1;s:10:"Designator";}i:1;a:2:{i:0;s:16:"tx_sglib_factory";i:1;s:10:"FactoryObj";}}s:6:"return";a:2:{i:0;s:14:"tx_sglib_const";i:1;s:19:"Instantiated Object";}}s:7:"content";s:0:"";s:12:"content_size";i:204;s:13:"content_lines";i:7;s:6:"atLine";i:79;}i:5;a:7:{s:6:"header";s:53:"private function init(tx_sglib_factory $factoryObj) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:16:"$factoryObj: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:642;s:13:"content_lines";i:16;s:6:"atLine";i:92;}i:7;a:7:{s:6:"header";s:39:"private function _fCount ($name=NULL) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:16:"$factoryObj: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:642;s:13:"content_lines";i:16;s:6:"atLine";i:93;}i:7;a:7:{s:6:"header";s:39:"private function _fCount ($name=NULL) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:345;s:13:"content_lines";i:17;s:6:"atLine";i:115;}i:9;a:7:{s:6:"header";s:23:"function __destruct() {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:345;s:13:"content_lines";i:17;s:6:"atLine";i:116;}i:9;a:7:{s:6:"header";s:23:"function __destruct() {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:124;s:13:"content_lines";i:3;s:6:"atLine";i:138;}i:11;a:7:{s:6:"header";s:36:"private function _initWraps($conf) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:124;s:13:"content_lines";i:3;s:6:"atLine";i:139;}i:11;a:7:{s:6:"header";s:48:"private function _initWraps($conf,$preText='') {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$conf: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:344;s:13:"content_lines";i:8;s:6:"atLine";i:148;}i:13;a:7:{s:6:"header";s:36:"private function _initConst($conf) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$conf: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:13:"$preText: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:414;s:13:"content_lines";i:12;s:6:"atLine";i:150;}i:13;a:7:{s:6:"header";s:36:"private function _initConst($conf) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$conf: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1077;s:13:"content_lines";i:24;s:6:"atLine";i:163;}i:15;a:7:{s:6:"header";s:35:"private function _initMoreConst() {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$conf: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:945;s:13:"content_lines";i:22;s:6:"atLine";i:169;}i:15;a:7:{s:6:"header";s:35:"private function _initMoreConst() {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:2260;s:13:"content_lines";i:53;s:6:"atLine";i:193;}i:17;a:7:{s:6:"header";s:36:"private function _initIcons($conf) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:2260;s:13:"content_lines";i:53;s:6:"atLine";i:197;}i:17;a:7:{s:6:"header";s:50:"private function _initTsConst($conf,$preText='') {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$conf: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:310;s:13:"content_lines";i:7;s:6:"atLine";i:253;}i:19;a:7:{s:6:"header";s:38:"private function _initButtons($conf) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$conf: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:13:"$preText: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:386;s:13:"content_lines";i:11;s:6:"atLine";i:258;}i:19;a:7:{s:6:"header";s:48:"private function _initIcons($conf,$preText='') {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$conf: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:158;s:13:"content_lines";i:5;s:6:"atLine";i:267;}i:21;a:7:{s:6:"header";s:40:"function getWrap ($name=NULL,$part='') {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$conf: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:13:"$preText: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:379;s:13:"content_lines";i:11;s:6:"atLine";i:277;}i:21;a:7:{s:6:"header";s:38:"private function _initButtons($conf) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:10:"$part: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:262;s:13:"content_lines";i:12;s:6:"atLine";i:280;}i:23;a:7:{s:6:"header";s:32:"function getConst ($name=NULL) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$conf: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:158;s:13:"content_lines";i:5;s:6:"atLine";i:295;}i:23;a:7:{s:6:"header";s:40:"function getWrap ($name=NULL,$part='') {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:196;s:13:"content_lines";i:8;s:6:"atLine";i:299;}i:25;a:7:{s:6:"header";s:26:"function getIcon ($name) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:10:"$part: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:262;s:13:"content_lines";i:12;s:6:"atLine";i:308;}i:25;a:7:{s:6:"header";s:32:"function getConst ($name=NULL) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:158;s:13:"content_lines";i:8;s:6:"atLine";i:314;}i:27;a:7:{s:6:"header";s:33:"function isIconTypeText ($name) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:196;s:13:"content_lines";i:8;s:6:"atLine";i:327;}i:27;a:7:{s:6:"header";s:26:"function getIcon ($name) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:165;s:13:"content_lines";i:8;s:6:"atLine";i:329;}i:29;a:7:{s:6:"header";s:34:"function getIconResource ($name) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:158;s:13:"content_lines";i:8;s:6:"atLine";i:342;}i:29;a:7:{s:6:"header";s:33:"function isIconTypeText ($name) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:208;s:13:"content_lines";i:8;s:6:"atLine";i:344;}i:31;a:7:{s:6:"header";s:23:"function getMarkers() {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:165;s:13:"content_lines";i:8;s:6:"atLine";i:357;}i:31;a:7:{s:6:"header";s:34:"function getIconResource ($name) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:467;s:13:"content_lines";i:12;s:6:"atLine";i:358;}i:33;a:7:{s:6:"header";s:61:"function getButton($name,$defaultText='',$asResource=FALSE) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:208;s:13:"content_lines";i:8;s:6:"atLine";i:372;}i:33;a:7:{s:6:"header";s:23:"function getMarkers() {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:17:"$defaultText: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:16:"$asResource: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1585;s:13:"content_lines";i:37;s:6:"atLine";i:379;}i:35;a:7:{s:6:"header";s:30:"function buttonExists($name) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:467;s:13:"content_lines";i:12;s:6:"atLine";i:386;}i:35;a:7:{s:6:"header";s:61:"function getButton($name,$defaultText='',$asResource=FALSE) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:90;s:13:"content_lines";i:4;s:6:"atLine";i:423;}i:37;a:7:{s:6:"header";s:31:"function getButtonType($name) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:17:"$defaultText: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:16:"$asResource: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1585;s:13:"content_lines";i:37;s:6:"atLine";i:407;}i:37;a:7:{s:6:"header";s:30:"function buttonExists($name) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:80;s:13:"content_lines";i:4;s:6:"atLine";i:434;}i:39;a:7:{s:6:"header";s:31:"function getButtonConf($name) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:90;s:13:"content_lines";i:4;s:6:"atLine";i:451;}i:39;a:7:{s:6:"header";s:31:"function getButtonType($name) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:85;s:13:"content_lines";i:5;s:6:"atLine";i:445;}i:41;a:4:{s:6:"header";s:35:"function TSConstObj ($name,$conf) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:112:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:80;s:13:"content_lines";i:4;s:6:"atLine";i:462;}i:41;a:7:{s:6:"header";s:31:"function getButtonConf($name) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:85;s:13:"content_lines";i:5;s:6:"atLine";i:473;}i:43;a:4:{s:6:"header";s:35:"function TSConstObj ($name,$conf) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:112:"
 
 Renders singleObject; if $conf is not an array then $name is returned via getData (if LLL:) or via insertData
-";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"string";i:1;s:56:"The content object name, eg. "TEXT" or "USER" or "IMAGE"";}i:1;a:2:{i:0;s:5:"array";i:1;s:59:"The array with TypoScript properties for the content object";}}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:14:"cObject output";}}s:6:"atLine";i:458;}i:43;a:7:{s:6:"header";s:39:"function TSConstConfObj ($conf,$name) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:112:"
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"string";i:1;s:56:"The content object name, eg. "TEXT" or "USER" or "IMAGE"";}i:1;a:2:{i:0;s:5:"array";i:1;s:59:"The array with TypoScript properties for the content object";}}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:14:"cObject output";}}s:6:"atLine";i:486;}i:45;a:7:{s:6:"header";s:39:"function TSConstConfObj ($conf,$name) {";s:11:"parentClass";s:14:"tx_sglib_const";s:4:"cDat";a:3:{s:4:"text";s:112:"
 
 Renders singleObject; if $conf is not an array then $name is returned via getData (if LLL:) or via insertData
-";s:5:"param";a:2:{i:0;a:2:{i:0;s:5:"array";i:1;s:65:"The array with all TypoScript properties, containing TS for $name";}i:1;a:2:{i:0;s:6:"string";i:1;s:37:"The name of the TS Object or TS value";}}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:14:"cObject output";}}s:7:"content";s:0:"";s:12:"content_size";i:176;s:13:"content_lines";i:10;s:6:"atLine";i:472;}}}s:14:"MD5_c6fa5e4f2d";a:4:{s:8:"filename";s:37:"classes/lib/class.tx_sglib_params.php";s:8:"filesize";i:5702;s:6:"header";N;s:3:"DAT";a:14:{i:1;a:8:{s:6:"header";s:23:"class tx_sglib_params {";s:5:"class";i:1;s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:724:"
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:5:"array";i:1;s:65:"The array with all TypoScript properties, containing TS for $name";}i:1;a:2:{i:0;s:6:"string";i:1;s:37:"The name of the TS Object or TS value";}}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:14:"cObject output";}}s:7:"content";s:0:"";s:12:"content_size";i:176;s:13:"content_lines";i:10;s:6:"atLine";i:500;}}}s:14:"MD5_9cec98f067";a:4:{s:8:"filename";s:36:"classes/lib/class.tx_sglib_items.php";s:8:"filesize";i:24329;s:6:"header";N;s:3:"DAT";a:17:{i:1;a:8:{s:6:"header";s:22:"class tx_sglib_items {";s:5:"class";i:1;s:11:"parentClass";s:14:"tx_sglib_items";s:4:"cDat";a:3:{s:4:"text";s:1053:"
+
+[CLASS/FUNCTION INDEX of SCRIPT]
+
+
+
+  50: class tx_sglib_items
+  89:     protected function init(tx_sglib_factory $factoryObj)
+ 119:     protected function _fCount ($name=NULL)
+ 142:     function __destruct()
+ 155:     function prepareItems($table,$field,$em,$row)
+ 426:     function getItemList($table,$field,$em)
+ 440:     function getItemPid($table,$field,$index=NULL)
+ 457:     function getItemRecord($table,$field,$index=NULL)
+ 474:     function getItemSub($table,$field,$index=NULL)
+ 492:     function getItemCountAdd($table,$field,$index=NULL,$add=0)
+ 509:     protected function _addItemsFromTS($myItems,$itemsTS)
+ 530:     protected function _addItemsFromTCA($myItems,$itemsTCA)
+ 552:     protected function _addItemsFromFile($myItems,$itemsFileName,$em)
+ 579:     protected function _addItemsFromDB($myItems,$table,$field)
+ 627:     function getItemText($mode,$lnr,$field,$myItems,$key,$PCA=Array(),$key1='',$key2='textFormat',$key3='cntWrap')
+
+TOTAL FUNCTIONS: 14
+(This index is automatically created/updated by the extension "extdeveval")
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:571;s:13:"content_lines";i:26;s:6:"atLine";i:48;}i:3;a:7:{s:6:"header";s:79:"public static function getInstance($designator, tx_sglib_factory $factoryObj) {";s:11:"parentClass";s:14:"tx_sglib_items";s:4:"cDat";a:3:{s:4:"text";s:49:"
+
+Returns a singlton instance of tx_sglib_items
+
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"string";i:1;s:10:"Designator";}i:1;a:2:{i:0;s:16:"tx_sglib_factory";i:1;s:10:"FactoryObj";}}s:6:"return";a:2:{i:0;s:14:"tx_sglib_items";i:1;s:19:"Instantiated Object";}}s:7:"content";s:0:"";s:12:"content_size";i:204;s:13:"content_lines";i:7;s:6:"atLine";i:82;}i:5;a:7:{s:6:"header";s:55:"protected function init(tx_sglib_factory $factoryObj) {";s:11:"parentClass";s:14:"tx_sglib_items";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:134:"$tx_sglib_config $confObj, tx_sglib_debug $debugObj, tx_sglib_const $constObj, tx_sglib_lang $langObj, tx_sglib_permit $permitObj: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:702;s:13:"content_lines";i:24;s:6:"atLine";i:96;}i:7;a:7:{s:6:"header";s:41:"protected function _fCount ($name=NULL) {";s:11:"parentClass";s:14:"tx_sglib_items";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:345;s:13:"content_lines";i:17;s:6:"atLine";i:127;}i:9;a:7:{s:6:"header";s:23:"function __destruct() {";s:11:"parentClass";s:14:"tx_sglib_items";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:124;s:13:"content_lines";i:3;s:6:"atLine";i:150;}i:11;a:7:{s:6:"header";s:47:"function prepareItems($table,$field,$em,$row) {";s:11:"parentClass";s:14:"tx_sglib_items";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:4:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:11:"$field: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:8:"$em: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:9:"$row: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:10744;s:13:"content_lines";i:265;s:6:"atLine";i:163;}i:13;a:7:{s:6:"header";s:41:"function getItemList($table,$field,$em) {";s:11:"parentClass";s:14:"tx_sglib_items";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:11:"$field: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:8:"$em: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:110;s:13:"content_lines";i:5;s:6:"atLine";i:437;}i:15;a:7:{s:6:"header";s:48:"function getItemPid($table,$field,$index=NULL) {";s:11:"parentClass";s:14:"tx_sglib_items";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:11:"$field: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:11:"$index: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:181;s:13:"content_lines";i:8;s:6:"atLine";i:451;}i:17;a:7:{s:6:"header";s:51:"function getItemRecord($table,$field,$index=NULL) {";s:11:"parentClass";s:14:"tx_sglib_items";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:11:"$field: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:11:"$index: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:185;s:13:"content_lines";i:8;s:6:"atLine";i:468;}i:19;a:7:{s:6:"header";s:48:"function getItemSub($table,$field,$index=NULL) {";s:11:"parentClass";s:14:"tx_sglib_items";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:11:"$field: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:11:"$index: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:179;s:13:"content_lines";i:8;s:6:"atLine";i:485;}i:21;a:7:{s:6:"header";s:60:"function getItemCountAdd($table,$field,$index=NULL,$add=0) {";s:11:"parentClass";s:14:"tx_sglib_items";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:4:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:11:"$field: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:11:"$index: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:9:"$add: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:232;s:13:"content_lines";i:9;s:6:"atLine";i:503;}i:23;a:7:{s:6:"header";s:55:"protected function _addItemsFromTS($myItems,$itemsTS) {";s:11:"parentClass";s:14:"tx_sglib_items";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:13:"$myItems: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:13:"$itemsTS: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:413;s:13:"content_lines";i:13;s:6:"atLine";i:520;}i:25;a:7:{s:6:"header";s:57:"protected function _addItemsFromTCA($myItems,$itemsTCA) {";s:11:"parentClass";s:14:"tx_sglib_items";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:13:"$myItems: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:14:"$itemsTCA: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:328;s:13:"content_lines";i:13;s:6:"atLine";i:541;}i:27;a:7:{s:6:"header";s:67:"protected function _addItemsFromFile($myItems,$itemsFileName,$em) {";s:11:"parentClass";s:14:"tx_sglib_items";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:13:"$myItems: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:19:"$itemsFileName: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:8:"$em: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:538;s:13:"content_lines";i:18;s:6:"atLine";i:563;}i:29;a:7:{s:6:"header";s:60:"protected function _addItemsFromDB($myItems,$table,$field) {";s:11:"parentClass";s:14:"tx_sglib_items";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:13:"$myItems: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:11:"$field: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1384;s:13:"content_lines";i:33;s:6:"atLine";i:590;}i:31;a:4:{s:6:"header";s:112:"function getItemText($mode,$lnr,$field,$myItems,$key,$PCA=Array(),$key1='',$key2='textFormat',$key3='cntWrap') {";s:11:"parentClass";s:14:"tx_sglib_items";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:9:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$mode: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:9:"$lnr: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:11:"$field: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:13:"$myItems: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:9:"$key: ...";}i:5;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}i:6;a:2:{i:0;s:6:"[type]";i:1;s:10:"$key1: ...";}i:7;a:2:{i:0;s:6:"[type]";i:1;s:10:"$key2: ...";}i:8;a:2:{i:0;s:6:"[type]";i:1;s:10:"$key3: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:6:"atLine";i:638;}i:33;a:6:{s:6:"header";s:63:"public function getReferenceValue($value, $fieldName, $table) {";s:11:"parentClass";s:14:"tx_sglib_items";s:7:"content";s:0:"";s:12:"content_size";i:1722;s:13:"content_lines";i:37;s:6:"atLine";i:670;}}}s:14:"MD5_0a96f0fd2c";a:4:{s:8:"filename";s:35:"classes/lib/class.tx_sglib_lang.php";s:8:"filesize";i:10705;s:6:"header";N;s:3:"DAT";a:15:{i:1;a:8:{s:6:"header";s:21:"class tx_sglib_lang {";s:5:"class";i:1;s:11:"parentClass";s:13:"tx_sglib_lang";s:4:"cDat";a:3:{s:4:"text";s:742:"
+
+[CLASS/FUNCTION INDEX of SCRIPT]
+
+
+
+  50: class tx_sglib_lang
+  79:     private function init(tx_sglib_factory $factoryObj)
+ 104:     private function _fCount ($name=NULL)
+ 127:     function __destruct()
+ 136:     function _initGlobalLangObject ()
+ 156:     function setLocalLangFile($fileName)
+ 171:     function getActiveLanguage ()
+
+             SECTION: LocalLang
+ 208:     function getLLL($label,$default='')
+ 226:     function getLL($key,$alt='',$hsc=FALSE)
+ 247:     function getLangArray($fileNameBase,$fileNameExtension)
+
+             SECTION: String functions
+ 273:     function replaceLangOverlay(&$row,$table,$refTableLangOl=NULL)
+
+TOTAL FUNCTIONS: 10
+(This index is automatically created/updated by the extension "extdeveval")
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:267;s:13:"content_lines";i:14;s:6:"atLine";i:48;}i:3;a:7:{s:6:"header";s:79:"public static function getInstance($designator, tx_sglib_factory $factoryObj) {";s:11:"parentClass";s:13:"tx_sglib_lang";s:4:"cDat";a:3:{s:4:"text";s:48:"
+
+Returns a singlton instance of tx_sglib_lang
+
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"string";i:1;s:10:"Designator";}i:1;a:2:{i:0;s:16:"tx_sglib_factory";i:1;s:10:"FactoryObj";}}s:6:"return";a:2:{i:0;s:13:"tx_sglib_lang";i:1;s:19:"Instantiated Object";}}s:7:"content";s:0:"";s:12:"content_size";i:203;s:13:"content_lines";i:7;s:6:"atLine";i:70;}i:5;a:7:{s:6:"header";s:53:"private function init(tx_sglib_factory $factoryObj) {";s:11:"parentClass";s:13:"tx_sglib_lang";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:56:"$tx_sglib_config $confObj, tx_sglib_debug $debugObj: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:673;s:13:"content_lines";i:18;s:6:"atLine";i:84;}i:7;a:7:{s:6:"header";s:39:"private function _fCount ($name=NULL) {";s:11:"parentClass";s:13:"tx_sglib_lang";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:345;s:13:"content_lines";i:17;s:6:"atLine";i:109;}i:9;a:7:{s:6:"header";s:23:"function __destruct() {";s:11:"parentClass";s:13:"tx_sglib_lang";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:124;s:13:"content_lines";i:3;s:6:"atLine";i:132;}i:11;a:7:{s:6:"header";s:35:"function _initGlobalLangObject () {";s:11:"parentClass";s:13:"tx_sglib_lang";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:471;s:13:"content_lines";i:13;s:6:"atLine";i:141;}i:13;a:7:{s:6:"header";s:38:"function setLocalLangFile($fileName) {";s:11:"parentClass";s:13:"tx_sglib_lang";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:14:"$fileName: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:287;s:13:"content_lines";i:10;s:6:"atLine";i:161;}i:15;a:7:{s:6:"header";s:31:"function getActiveLanguage () {";s:11:"parentClass";s:13:"tx_sglib_lang";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:581;s:13:"content_lines";i:29;s:6:"atLine";i:177;}i:17;a:8:{s:6:"header";s:37:"function getLLL($label,$default='') {";s:11:"parentClass";s:13:"tx_sglib_lang";s:11:"sectionText";a:1:{i:0;s:9:"LocalLang";}s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$label: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:13:"$default: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:288;s:13:"content_lines";i:11;s:6:"atLine";i:214;}i:19;a:7:{s:6:"header";s:41:"function getLL($key,$alt='',$hsc=FALSE)	{";s:11:"parentClass";s:13:"tx_sglib_lang";s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:9:"$key: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:9:"$alt: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:9:"$hsc: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:568;s:13:"content_lines";i:16;s:6:"atLine";i:232;}i:21;a:7:{s:6:"header";s:57:"function getLangArray($fileNameBase,$fileNameExtension) {";s:11:"parentClass";s:13:"tx_sglib_lang";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:18:"$fileNameBase: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:23:"$fileNameExtension: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:494;s:13:"content_lines";i:19;s:6:"atLine";i:256;}i:23;a:8:{s:6:"header";s:92:"function replaceLangOverlayArray(&$rows,$table,$refTableLangOl=NULL,$refTableLangLol=NULL) {";s:11:"parentClass";s:13:"tx_sglib_lang";s:11:"sectionText";a:1:{i:0;s:16:"String functions";}s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:4:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:108:"$row: data-row; if langUid is not default, then values will be replaced by their aproppriate language-values";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:29:"$table: tablename of data-row";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:20:"$refTableLangOl: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:21:"$refTableLangLol: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:23:"$row: modified data-row";}}s:7:"content";s:0:"";s:12:"content_size";i:180;s:13:"content_lines";i:6;s:6:"atLine";i:283;}i:25;a:7:{s:6:"header";s:99:"function replaceLangOverlay(&$row,$table,$refTableLangOl=NULL,$refTableLangLol=NULL,$recursion=0) {";s:11:"parentClass";s:13:"tx_sglib_lang";s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:5:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:108:"$row: data-row; if langUid is not default, then values will be replaced by their aproppriate language-values";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:29:"$table: tablename of data-row";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:20:"$refTableLangOl: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:21:"$refTableLangLol: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:15:"$recursion: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:23:"$row: modified data-row";}}s:7:"content";s:0:"";s:12:"content_size";i:1555;s:13:"content_lines";i:41;s:6:"atLine";i:298;}i:27;a:3:{s:6:"header";s:31:"public function getLangUid () {";s:11:"parentClass";s:13:"tx_sglib_lang";s:6:"atLine";i:345;}i:29;a:6:{s:6:"header";s:51:"public function getLangOlString($label,$label_ol) {";s:11:"parentClass";s:13:"tx_sglib_lang";s:7:"content";s:0:"";s:12:"content_size";i:395;s:13:"content_lines";i:15;s:6:"atLine";i:356;}}}s:14:"MD5_6eefb1560a";a:4:{s:8:"filename";s:36:"classes/lib/class.tx_sglib_links.php";s:8:"filesize";i:14401;s:6:"header";N;s:3:"DAT";a:23:{i:1;a:8:{s:6:"header";s:22:"class tx_sglib_links {";s:5:"class";i:1;s:11:"parentClass";s:14:"tx_sglib_links";s:4:"cDat";a:3:{s:4:"text";s:549:"
+
+[CLASS/FUNCTION INDEX of SCRIPT]
+
+
+
+  46: class tx_sglib_links
+  75:     private function init(tx_sglib_factory $factoryObj)
+  94:     private function _fCount ($name=NULL)
+ 117:     function __destruct()
+ 126:     function getPluginlinks()
+ 135:     function getSearchmode()
+ 144:     function getSearch()
+ 153:     function getUid()
+ 162:     function getListMode()
+ 182:     function getListResultsPerPage()
+ 196:     function getListActivePage()
+
+TOTAL FUNCTIONS: 10
+(This index is automatically created/updated by the extension "extdeveval")
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1401;s:13:"content_lines";i:26;s:6:"atLine";i:44;}i:3;a:7:{s:6:"header";s:77:"public static function getInstance($designator='default', $factoryObj=NULL) {";s:11:"parentClass";s:14:"tx_sglib_links";s:4:"cDat";a:3:{s:4:"text";s:49:"
+
+Returns a singlton instance of tx_sglib_links
+
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"string";i:1;s:10:"Designator";}i:1;a:2:{i:0;s:16:"tx_sglib_factory";i:1;s:10:"FactoryObj";}}s:6:"return";a:2:{i:0;s:14:"tx_sglib_links";i:1;s:19:"Instantiated Object";}}s:7:"content";s:0:"";s:12:"content_size";i:266;s:13:"content_lines";i:9;s:6:"atLine";i:78;}i:5;a:7:{s:6:"header";s:55:"public function init($designator='', $destination='') {";s:11:"parentClass";s:14:"tx_sglib_links";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$designator";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:17:"$destination: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:844;s:13:"content_lines";i:26;s:6:"atLine";i:95;}i:7;a:7:{s:6:"header";s:32:"function anchor($anchorString) {";s:11:"parentClass";s:14:"tx_sglib_links";s:4:"cDat";a:3:{s:4:"text";s:67:"
+
+Set the section anchor of the url
+
+Anchor of page as url target.
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"string";i:1;s:10:"the anchor";}}s:6:"return";a:2:{i:0;s:6:"object";i:1;s:4:"self";}}s:7:"content";s:0:"";s:12:"content_size";i:60;s:13:"content_lines";i:4;s:6:"atLine";i:130;}i:9;a:7:{s:6:"header";s:40:"function designator($designatorString) {";s:11:"parentClass";s:14:"tx_sglib_links";s:4:"cDat";a:3:{s:4:"text";s:275:"
+
+Set the designator (parameter array name) as controler namespace
+
+Put the parameters into this array.
+<samp>Example: &tx_example[parameterName]=parameterValue</samp>
+tx_example is the designator, parameterName is the key,
+pararmeterValue is the value of one array element.
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"string";i:1;s:20:"parameter array name";}}s:6:"return";a:2:{i:0;s:6:"object";i:1;s:4:"self";}}s:7:"content";s:0:"";s:12:"content_size";i:68;s:13:"content_lines";i:4;s:6:"atLine";i:146;}i:11;a:7:{s:6:"header";s:33:"function idAttribute($idString) {";s:11:"parentClass";s:14:"tx_sglib_links";s:4:"cDat";a:3:{s:4:"text";s:34:"
+
+Set the id attribute of the tag
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"string";i:1;s:12:"id attribute";}}s:6:"return";a:2:{i:0;s:6:"object";i:1;s:4:"self";}}s:7:"content";s:0:"";s:12:"content_size";i:52;s:13:"content_lines";i:4;s:6:"atLine";i:157;}i:13;a:7:{s:6:"header";s:39:"function classAttribute($classString) {";s:11:"parentClass";s:14:"tx_sglib_links";s:4:"cDat";a:3:{s:4:"text";s:37:"
+
+Set the class attribute of the tag
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"string";i:1;s:10:"class name";}}s:6:"return";a:2:{i:0;s:6:"object";i:1;s:4:"self";}}s:7:"content";s:0:"";s:12:"content_size";i:58;s:13:"content_lines";i:4;s:6:"atLine";i:168;}i:15;a:7:{s:6:"header";s:36:"function destination($destination) {";s:11:"parentClass";s:14:"tx_sglib_links";s:4:"cDat";a:5:{s:4:"text";s:28:"
+
+Set the links destination
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:5:"mixed";i:1;s:38:"pageId, page alias, external url, etc.";}i:1;a:2:{i:0;s:7:"boolean";i:1;s:46:"if true don't parse through htmlspecialchars()";}}s:6:"return";a:2:{i:0;s:6:"object";i:1;s:4:"self";}s:5:"other";a:2:{i:0;s:36:"@see		TSref => typolink => parameter";i:1;s:28:"@see		tslib_cObj::typoLink()";}s:11:"other_index";a:1:{s:4:"@see";a:2:{i:0;s:30:"TSref => typolink => parameter";i:1;s:23:"tslib_cObj::typoLink() ";}}}s:7:"content";s:0:"";s:12:"content_size";i:58;s:13:"content_lines";i:4;s:6:"atLine";i:182;}i:17;a:7:{s:6:"header";s:20:"function noCache() {";s:11:"parentClass";s:14:"tx_sglib_links";s:4:"cDat";a:3:{s:4:"text";s:49:"
+
+Add no_cache=1 and disable the cHash parameter
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:7:"boolean";i:1;s:42:"if true don't make a cHash, set no_cache=1";}}s:6:"return";a:2:{i:0;s:6:"object";i:1;s:4:"self";}}s:7:"content";s:0:"";s:12:"content_size";i:53;s:13:"content_lines";i:4;s:6:"atLine";i:193;}i:19;a:7:{s:6:"header";s:19:"function noHash() {";s:11:"parentClass";s:14:"tx_sglib_links";s:4:"cDat";a:3:{s:4:"text";s:30:"
+
+Disable the cHash parameter
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:7:"boolean";i:1;s:26:"if true don't make a cHash";}}s:6:"return";a:2:{i:0;s:6:"object";i:1;s:4:"self";}}s:7:"content";s:0:"";s:12:"content_size";i:52;s:13:"content_lines";i:4;s:6:"atLine";i:204;}i:21;a:7:{s:6:"header";s:67:"function label($labelString, $hasAlreadyHtmlSpecialChars = false) {";s:11:"parentClass";s:14:"tx_sglib_links";s:4:"cDat";a:3:{s:4:"text";s:87:"
+
+Set the links label
+
+By default the label will be parsed through htmlspecialchars().
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"string";i:1;s:9:"the label";}i:1;a:2:{i:0;s:7:"boolean";i:1;s:46:"if true don't parse through htmlspecialchars()";}}s:6:"return";a:2:{i:0;s:6:"object";i:1;s:4:"self";}}s:7:"content";s:0:"";s:12:"content_size";i:130;s:13:"content_lines";i:5;s:6:"atLine";i:218;}i:23;a:7:{s:6:"header";s:52:"function overruled($overruledParameters = array()) {";s:11:"parentClass";s:14:"tx_sglib_links";s:4:"cDat";a:3:{s:4:"text";s:462:"
+
+Set array of parameters to be overruled by parameters
+
+The parameters will create a common array with the name $this->designatorString.
+<samp>Example: &tx_example[parameterName]=parameterValue</samp>
+tx_example is the designator, parameterName is the key,
+pararmeterValue is the value of one array element.
+
+Usually you set the incomming piVars here you wan't to forward.
+Like in tslib_pibase::pi_linkTP_keepPIvars the element DATA is unset during processing.
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:5:"mixed";i:1;s:10:"parameters";}}s:6:"return";a:2:{i:0;s:6:"object";i:1;s:4:"self";}}s:7:"content";s:0:"";s:12:"content_size";i:182;s:13:"content_lines";i:7;s:6:"atLine";i:238;}i:25;a:7:{s:6:"header";s:44:"function parameters($parameters = array()) {";s:11:"parentClass";s:14:"tx_sglib_links";s:4:"cDat";a:3:{s:4:"text";s:369:"
+
+Set array of new parameters to add to the link url
+
+The parameters will create a common array with the name $this->designatorString.
+<samp>Example: &tx_example[parameterName]=parameterValue</samp>
+tx_example is the designator, parameterName is the key,
+pararmeterValue is the value of one array element.
+
+This parameters overrule parameters in $this->baseParameters.
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:5:"mixed";i:1;s:10:"parameters";}}s:6:"return";a:2:{i:0;s:6:"object";i:1;s:4:"self";}}s:7:"content";s:0:"";s:12:"content_size";i:137;s:13:"content_lines";i:7;s:6:"atLine";i:259;}i:27;a:7:{s:6:"header";s:56:"function globalParameters($globalParameters = array()) {";s:11:"parentClass";s:14:"tx_sglib_links";s:4:"cDat";a:3:{s:4:"text";s:369:"
+
+Set array of new parameters to add to the link url
+
+The parameters will create a common array with the name $this->designatorString.
+<samp>Example: &tx_example[parameterName]=parameterValue</samp>
+tx_example is the designator, parameterName is the key,
+pararmeterValue is the value of one array element.
+
+This parameters overrule parameters in $this->baseParameters.
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:5:"mixed";i:1;s:10:"parameters";}}s:6:"return";a:2:{i:0;s:6:"object";i:1;s:4:"self";}}s:7:"content";s:0:"";s:12:"content_size";i:167;s:13:"content_lines";i:7;s:6:"atLine";i:280;}i:29;a:7:{s:6:"header";s:47:"function attributes($tagAttributes = array()) {";s:11:"parentClass";s:14:"tx_sglib_links";s:4:"cDat";a:5:{s:4:"text";s:101:"
+
+Set the attributes of the tag
+
+This is a general approach to set tag attributes by an array hash.
+
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:5:"array";i:1;s:15:"key value pairs";}}s:6:"return";a:2:{i:0;s:6:"object";i:1;s:4:"self";}s:5:"other";a:3:{i:0;s:21:"@see	classAttribute()";i:1;s:21:"@see	titleAttribute()";i:2;s:22:"@see	targetAttribute()";}s:11:"other_index";a:1:{s:4:"@see";a:3:{i:0;s:17:"classAttribute() ";i:1;s:17:"titleAttribute() ";i:2;s:18:"targetAttribute() ";}}}s:7:"content";s:0:"";s:12:"content_size";i:62;s:13:"content_lines";i:4;s:6:"atLine";i:299;}i:31;a:7:{s:6:"header";s:32:"function target($targetString) {";s:11:"parentClass";s:14:"tx_sglib_links";s:4:"cDat";a:3:{s:4:"text";s:34:"
+
+Set target attribute of the tag
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"string";i:1;s:16:"target attribute";}}s:6:"return";a:2:{i:0;s:6:"object";i:1;s:4:"self";}}s:7:"content";s:0:"";s:12:"content_size";i:60;s:13:"content_lines";i:4;s:6:"atLine";i:310;}i:33;a:7:{s:6:"header";s:49:"function externalTargetAttribute($targetString) {";s:11:"parentClass";s:14:"tx_sglib_links";s:4:"cDat";a:3:{s:4:"text";s:62:"
+
+Set external target attribute of the tag
+Defaults to _blank
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"string";i:1;s:25:"external target attribute";}}s:6:"return";a:2:{i:0;s:6:"object";i:1;s:4:"self";}}s:7:"content";s:0:"";s:12:"content_size";i:69;s:13:"content_lines";i:5;s:6:"atLine";i:322;}i:35;a:7:{s:6:"header";s:67:"function title($titleString, $hasAlreadyHtmlSpecialChars = false) {";s:11:"parentClass";s:14:"tx_sglib_links";s:4:"cDat";a:3:{s:4:"text";s:33:"
+
+Set title attribute of the tag
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"string";i:1;s:15:"title attribute";}i:1;a:2:{i:0;s:7:"boolean";i:1;s:44:"if true don't apply htmlspecialchars() again";}}s:6:"return";a:2:{i:0;s:6:"object";i:1;s:4:"self";}}s:7:"content";s:0:"";s:12:"content_size";i:323;s:13:"content_lines";i:9;s:6:"atLine";i:335;}i:37;a:7:{s:6:"header";s:20:"function makeTag() {";s:11:"parentClass";s:14:"tx_sglib_links";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+Return the link as tag
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:12:"the link tag";}}s:7:"content";s:0:"";s:12:"content_size";i:98;s:13:"content_lines";i:6;s:6:"atLine";i:350;}i:39;a:7:{s:6:"header";s:49:"function makeUrl($applyHtmlspecialchars = TRUE) {";s:11:"parentClass";s:14:"tx_sglib_links";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+Return the link as url
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:7:"boolean";i:1;s:54:"set to true to run htmlspecialchars() on generated url";}}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:12:"the link url";}}s:7:"content";s:0:"";s:12:"content_size";i:138;s:13:"content_lines";i:4;s:6:"atLine";i:363;}i:41;a:7:{s:6:"header";s:21:"function redirect() {";s:11:"parentClass";s:14:"tx_sglib_links";s:4:"cDat";a:3:{s:4:"text";s:31:"
+
+Redirect the page to the url
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:4:"void";i:1;s:0:"";}}s:7:"content";s:0:"";s:12:"content_size";i:370;s:13:"content_lines";i:9;s:6:"atLine";i:373;}i:43;a:4:{s:6:"header";s:29:"function _makeConfig($type) {";s:11:"parentClass";s:14:"tx_sglib_links";s:4:"cDat";a:4:{s:4:"text";s:56:"
+
+Make the full configuration for the typolink function
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"string";i:1;s:19:"$type: tag oder url";}}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:17:"the configuration";}s:6:"access";s:7:"private";}s:6:"atLine";i:390;}i:45;a:7:{s:6:"header";s:23:"function _makeLabel() {";s:11:"parentClass";s:14:"tx_sglib_links";s:4:"cDat";a:4:{s:4:"text";s:30:"
+
+Make the label for the link
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:9:"the label";}s:6:"access";s:7:"private";}s:7:"content";s:0:"";s:12:"content_size";i:503;s:13:"content_lines";i:21;s:6:"atLine";i:466;}}}s:14:"MD5_9124c23675";a:4:{s:8:"filename";s:38:"classes/lib/class.tx_sglib_markers.php";s:8:"filesize";i:13473;s:6:"header";N;s:3:"DAT";a:15:{i:1;a:8:{s:6:"header";s:24:"class tx_sglib_markers {";s:5:"class";i:1;s:11:"parentClass";s:16:"tx_sglib_markers";s:4:"cDat";a:3:{s:4:"text";s:609:"
+
+[CLASS/FUNCTION INDEX of SCRIPT]
+
+
+
+  44: class tx_sglib_markers
+  77:     private function init(tx_sglib_factory $factoryObj)
+  93:     protected function _fCount ($name=NULL)
+ 118:     public function __destruct()
+ 128:     public function __get($nm)
+ 148:     public function __set($nm, $val)
+ 168:     public function getDescriptions($table='', $markers=array())
+ 187:     public function getTtContent($ttConf,$markers=array())
+ 205:     public function getRefValues($record, $table='', $markers=array())
+
+TOTAL FUNCTIONS: 8
+(This index is automatically created/updated by the extension "extdeveval")
+
+
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:507;s:13:"content_lines";i:25;s:6:"atLine";i:54;}i:3;a:7:{s:6:"header";s:79:"public static function getInstance($designator, tx_sglib_factory $factoryObj) {";s:11:"parentClass";s:16:"tx_sglib_markers";s:4:"cDat";a:3:{s:4:"text";s:51:"
+
+Returns a singlton instance of tx_sglib_markers
+
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"string";i:1;s:10:"Designator";}i:1;a:2:{i:0;s:16:"tx_sglib_factory";i:1;s:10:"FactoryObj";}}s:6:"return";a:2:{i:0;s:16:"tx_sglib_markers";i:1;s:19:"Instantiated Object";}}s:7:"content";s:0:"";s:12:"content_size";i:206;s:13:"content_lines";i:7;s:6:"atLine";i:87;}i:5;a:7:{s:6:"header";s:53:"private function init(tx_sglib_factory $factoryObj) {";s:11:"parentClass";s:16:"tx_sglib_markers";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:56:"$tx_sglib_config $confObj, tx_sglib_debug $debugObj: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:10:"$cObj: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:409;s:13:"content_lines";i:12;s:6:"atLine";i:102;}i:7;a:7:{s:6:"header";s:41:"protected function _fCount ($name=NULL) {";s:11:"parentClass";s:16:"tx_sglib_markers";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:347;s:13:"content_lines";i:19;s:6:"atLine";i:121;}i:9;a:7:{s:6:"header";s:30:"public function __destruct() {";s:11:"parentClass";s:16:"tx_sglib_markers";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:124;s:13:"content_lines";i:3;s:6:"atLine";i:146;}i:11;a:7:{s:6:"header";s:30:"public function __get($nm)
+		{";s:11:"parentClass";s:16:"tx_sglib_markers";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:8:"$nm: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:291;s:13:"content_lines";i:13;s:6:"atLine";i:156;}i:13;a:7:{s:6:"header";s:35:"public function __set($nm, $val)
+	{";s:11:"parentClass";s:16:"tx_sglib_markers";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:8:"$nm: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:9:"$val: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:287;s:13:"content_lines";i:14;s:6:"atLine";i:178;}i:15;a:6:{s:6:"header";s:66:"public function viewHelperOptions($viewHelper,$name,$value=NULL) {";s:11:"parentClass";s:16:"tx_sglib_markers";s:7:"content";s:0:"";s:12:"content_size";i:269;s:13:"content_lines";i:10;s:6:"atLine";i:202;}i:17;a:7:{s:6:"header";s:74:"public function getDescriptions($table='', $markers=array(), $prefix='') {";s:11:"parentClass";s:16:"tx_sglib_markers";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:13:"$markers: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:12:"$prefix: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:440;s:13:"content_lines";i:11;s:6:"atLine";i:221;}i:19;a:7:{s:6:"header";s:56:"public function getTtContent($ttConf,$markers=array()) {";s:11:"parentClass";s:16:"tx_sglib_markers";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:13:"$markers: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:309;s:13:"content_lines";i:9;s:6:"atLine";i:240;}i:21;a:7:{s:6:"header";s:68:"public function getRefValues($record, $table='', $markers=array()) {";s:11:"parentClass";s:16:"tx_sglib_markers";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:12:"$record: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:13:"$markers: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1719;s:13:"content_lines";i:37;s:6:"atLine";i:258;}i:23;a:7:{s:6:"header";s:66:"public function getMarkers($record, $table='', $markers=array()) {";s:11:"parentClass";s:16:"tx_sglib_markers";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:12:"$record: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:13:"$markers: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:236;s:13:"content_lines";i:12;s:6:"atLine";i:304;}i:25;a:7:{s:6:"header";s:75:"public function addMarkersForField($value, $fieldName, $table, &$markers) {";s:11:"parentClass";s:16:"tx_sglib_markers";s:4:"cDat";a:3:{s:4:"text";s:366:"
+
+Adds markers for one data-field
+
+For every field, several markers are created:
+DATA_xxx contais the original Data from the Model
+TEXT_xxx contains a textual view of the data (means: references replaced to text)
+FORM_xxx contains the form-field for entering Data                    @TODO
+AUTO_xxx contains Text/Form, depending on the actual Mode of the view @TODO
+
+";s:5:"param";a:4:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:15:"$fieldName: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:11:"$value: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:13:"$markers: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:13:"$markers: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:386;s:13:"content_lines";i:8;s:6:"atLine";i:332;}i:27;a:3:{s:6:"header";s:62:"public function processValueType($value, $fieldName, $table) {";s:11:"parentClass";s:16:"tx_sglib_markers";s:6:"atLine";i:349;}i:29;a:6:{s:6:"header";s:91:"public function renderSpecialMarkers(array $markersList,$table,$row,array &$markers=NULL) {";s:11:"parentClass";s:16:"tx_sglib_markers";s:7:"content";s:0:"";s:12:"content_size";i:1801;s:13:"content_lines";i:48;s:6:"atLine";i:380;}}}s:14:"MD5_edee544338";a:4:{s:8:"filename";s:42:"classes/lib/class.tx_sglib_pagebrowser.php";s:8:"filesize";i:21514;s:6:"header";N;s:3:"DAT";a:15:{i:1;a:8:{s:6:"header";s:28:"class tx_sglib_pagebrowser {";s:5:"class";i:1;s:11:"parentClass";s:20:"tx_sglib_pagebrowser";s:4:"cDat";a:3:{s:4:"text";s:1171:"
+
+[CLASS/FUNCTION INDEX of SCRIPT]
+
+
+
+  63: class tx_sglib_pagebrowser
+  95:     private function init(tx_sglib_factory $factoryObj)
+ 135:     private function _fCount ($name=NULL)
+ 158:     function __destruct()
+
+             SECTION: User Functions
+ 171:     function getActiveFeUser()
+ 192:     function getActiveFeGroups()
+ 209:     function getActiveBeUser()
+ 230:     function getActiveBeGroups()
+ 249:     function getFeUid()
+ 259:     function getBeUid()
+ 270:     function getFeUser($name=NULL)
+ 285:     function getBeUser($name=NULL)
+ 299:     function getFeGroups()
+ 309:     function getBeGroups()
+ 321:     function checkFeUserIn ($chkUserList,$chkGroupList)
+ 368:     function checkBeUserIn ($chkUserList,$chkGroupList)
+
+             SECTION: FE-Editing permissons
+ 419:     function allowed($property)
+ 428:     function useEditMode()
+ 437:     function getEditPropertiesAsText ()
+ 447:     function processTemplate($template)
+
+             SECTION: Private functions
+ 506:     function _getEditMode ()
+ 814:     private function _getListOfEditors($myAllow)
+
+TOTAL FUNCTIONS: 21
+(This index is automatically created/updated by the extension "extdeveval")
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:662;s:13:"content_lines";i:28;s:6:"atLine";i:61;}i:3;a:7:{s:6:"header";s:79:"public static function getInstance($designator, tx_sglib_factory $factoryObj) {";s:11:"parentClass";s:20:"tx_sglib_pagebrowser";s:4:"cDat";a:3:{s:4:"text";s:55:"
+
+Returns a singlton instance of tx_sglib_pagebrowser
+
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"string";i:1;s:10:"Designator";}i:1;a:2:{i:0;s:16:"tx_sglib_factory";i:1;s:10:"FactoryObj";}}s:6:"return";a:2:{i:0;s:20:"tx_sglib_pagebrowser";i:1;s:19:"Instantiated Object";}}s:7:"content";s:0:"";s:12:"content_size";i:210;s:13:"content_lines";i:7;s:6:"atLine";i:97;}i:5;a:7:{s:6:"header";s:53:"private function init(tx_sglib_factory $factoryObj) {";s:11:"parentClass";s:20:"tx_sglib_pagebrowser";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:106:"$tx_sglib_config $confObj, tx_sglib_debug $debugObj, tx_sglib_const $constObj, tx_sglib_lang $langObj: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:2566;s:13:"content_lines";i:66;s:6:"atLine";i:111;}i:7;a:7:{s:6:"header";s:39:"private function _fCount ($name=NULL) {";s:11:"parentClass";s:20:"tx_sglib_pagebrowser";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:345;s:13:"content_lines";i:17;s:6:"atLine";i:184;}i:9;a:7:{s:6:"header";s:23:"function __destruct() {";s:11:"parentClass";s:20:"tx_sglib_pagebrowser";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:353;s:13:"content_lines";i:10;s:6:"atLine";i:207;}i:11;a:8:{s:6:"header";s:46:"public function setCountTotalEntires($value) {";s:11:"parentClass";s:20:"tx_sglib_pagebrowser";s:11:"sectionText";a:1:{i:0;s:14:"User Functions";}s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$value: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:84;s:13:"content_lines";i:4;s:6:"atLine";i:222;}i:13;a:7:{s:6:"header";s:40:"public function getCountTotalEntires() {";s:11:"parentClass";s:20:"tx_sglib_pagebrowser";s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:42;s:13:"content_lines";i:3;s:6:"atLine";i:230;}i:15;a:7:{s:6:"header";s:33:"public function getActivePage() {";s:11:"parentClass";s:20:"tx_sglib_pagebrowser";s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:35;s:13:"content_lines";i:3;s:6:"atLine";i:237;}i:17;a:7:{s:6:"header";s:42:"public function getCountEntriesPerPage() {";s:11:"parentClass";s:20:"tx_sglib_pagebrowser";s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:44;s:13:"content_lines";i:3;s:6:"atLine";i:244;}i:19;a:7:{s:6:"header";s:34:"public function getLimitString() {";s:11:"parentClass";s:20:"tx_sglib_pagebrowser";s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:102;s:13:"content_lines";i:3;s:6:"atLine";i:251;}i:21;a:7:{s:6:"header";s:39:"protected function setParamsFromURL() {";s:11:"parentClass";s:20:"tx_sglib_pagebrowser";s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:791;s:13:"content_lines";i:31;s:6:"atLine";i:258;}i:23;a:7:{s:6:"header";s:42:"public function calculateOrganisation () {";s:11:"parentClass";s:20:"tx_sglib_pagebrowser";s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1328;s:13:"content_lines";i:33;s:6:"atLine";i:293;}i:25;a:8:{s:6:"header";s:34:"public function getPageBrowser() {";s:11:"parentClass";s:20:"tx_sglib_pagebrowser";s:11:"sectionText";a:1:{i:0;s:14:"User Functions";}s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:117;s:13:"content_lines";i:7;s:6:"atLine";i:330;}i:27;a:4:{s:6:"header";s:41:"public function getPageBrowserMarkers() {";s:11:"parentClass";s:20:"tx_sglib_pagebrowser";s:4:"cDat";a:3:{s:4:"text";s:2:"
+
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:6:"atLine";i:341;}i:29;a:7:{s:6:"header";s:93:"function getTypolinkURL ($myPageID, $myParams='', $allowCaching=0, $myTarget='', $myDbg='') {";s:11:"parentClass";s:20:"tx_sglib_pagebrowser";s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:5:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:14:"$myPageID: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:14:"$myParams: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:18:"$allowCaching: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:14:"$myTarget: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:11:"$myDbg: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:891;s:13:"content_lines";i:27;s:6:"atLine";i:536;}}}s:14:"MD5_c6fa5e4f2d";a:4:{s:8:"filename";s:37:"classes/lib/class.tx_sglib_params.php";s:8:"filesize";i:6417;s:6:"header";N;s:3:"DAT";a:16:{i:1;a:8:{s:6:"header";s:23:"class tx_sglib_params {";s:5:"class";i:1;s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:724:"
 
 [CLASS/FUNCTION INDEX of SCRIPT]
 
@@ -275,43 +652,612 @@ Renders singleObject; if $conf is not an array then $name is returned via getDat
 
 TOTAL FUNCTIONS: 13
 (This index is automatically created/updated by the extension "extdeveval")
-";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:272;s:13:"content_lines";i:15;s:6:"atLine";i:47;}i:3;a:7:{s:6:"header";s:79:"public static function getInstance($designator, tx_sglib_factory $factoryObj) {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:286;s:13:"content_lines";i:15;s:6:"atLine";i:47;}i:3;a:7:{s:6:"header";s:79:"public static function getInstance($designator, tx_sglib_factory $factoryObj) {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:50:"
+
+Returns a singlton instance of tx_sglib_params
+
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"string";i:1;s:10:"Designator";}i:1;a:2:{i:0;s:16:"tx_sglib_factory";i:1;s:10:"FactoryObj";}}s:6:"return";a:2:{i:0;s:15:"tx_sglib_params";i:1;s:19:"Instantiated Object";}}s:7:"content";s:0:"";s:12:"content_size";i:205;s:13:"content_lines";i:7;s:6:"atLine";i:70;}i:5;a:6:{s:6:"header";s:49:"protected static function _GPmerged($parameter) {";s:11:"parentClass";s:15:"tx_sglib_params";s:7:"content";s:0:"";s:12:"content_size";i:344;s:13:"content_lines";i:9;s:6:"atLine";i:84;}i:7;a:7:{s:6:"header";s:53:"private function init(tx_sglib_factory $factoryObj) {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:46:"$designator, tx_sglib_factory $factoryObj: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:205;s:13:"content_lines";i:7;s:6:"atLine";i:69;}i:5;a:7:{s:6:"header";s:53:"private function init(tx_sglib_factory $factoryObj) {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:56:"$tx_sglib_config $confObj, tx_sglib_debug $debugObj: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:443;s:13:"content_lines";i:13;s:6:"atLine";i:100;}i:9;a:7:{s:6:"header";s:40:"public function updateParams ($params) {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:56:"$tx_sglib_config $confObj, tx_sglib_debug $debugObj: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:433;s:13:"content_lines";i:13;s:6:"atLine";i:83;}i:7;a:7:{s:6:"header";s:40:"public function updateParams ($params) {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:12:"$params: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:33;s:13:"content_lines";i:3;s:6:"atLine";i:120;}i:11;a:7:{s:6:"header";s:39:"private function _fCount ($name=NULL) {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:12:"$params: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:33;s:13:"content_lines";i:3;s:6:"atLine";i:103;}i:9;a:7:{s:6:"header";s:39:"private function _fCount ($name=NULL) {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:345;s:13:"content_lines";i:17;s:6:"atLine";i:130;}i:13;a:7:{s:6:"header";s:23:"function __destruct() {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:345;s:13:"content_lines";i:17;s:6:"atLine";i:113;}i:11;a:7:{s:6:"header";s:23:"function __destruct() {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:124;s:13:"content_lines";i:3;s:6:"atLine";i:153;}i:15;a:7:{s:6:"header";s:28:"function getPluginParams() {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:124;s:13:"content_lines";i:3;s:6:"atLine";i:136;}i:13;a:7:{s:6:"header";s:28:"function getPluginParams() {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:31;s:13:"content_lines";i:3;s:6:"atLine";i:162;}i:17;a:7:{s:6:"header";s:43:"function addPluginParams(array $myParams) {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:30;s:13:"content_lines";i:2;s:6:"atLine";i:145;}i:15;a:7:{s:6:"header";s:27:"function getPluginFiles() {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:21:"$array $myParams: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:92;s:13:"content_lines";i:3;s:6:"atLine";i:172;}i:19;a:7:{s:6:"header";s:27:"function getPluginFiles() {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:35;s:13:"content_lines";i:3;s:6:"atLine";i:153;}i:17;a:7:{s:6:"header";s:26:"function getSearchmode() {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:35;s:13:"content_lines";i:3;s:6:"atLine";i:181;}i:21;a:7:{s:6:"header";s:26:"function getSearchmode() {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:45;s:13:"content_lines";i:3;s:6:"atLine";i:162;}i:19;a:7:{s:6:"header";s:22:"function getSearch() {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:45;s:13:"content_lines";i:3;s:6:"atLine";i:190;}i:23;a:7:{s:6:"header";s:22:"function getSearch() {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:41;s:13:"content_lines";i:3;s:6:"atLine";i:171;}i:21;a:7:{s:6:"header";s:19:"function getUid() {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:41;s:13:"content_lines";i:3;s:6:"atLine";i:199;}i:25;a:7:{s:6:"header";s:30:"function getUid($name='uid') {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:107;s:13:"content_lines";i:4;s:6:"atLine";i:180;}i:23;a:7:{s:6:"header";s:24:"function getListMode() {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:136;s:13:"content_lines";i:4;s:6:"atLine";i:209;}i:27;a:7:{s:6:"header";s:24:"function getListMode() {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:386;s:13:"content_lines";i:14;s:6:"atLine";i:190;}i:25;a:4:{s:6:"header";s:34:"function getListResultsPerPage() {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:386;s:13:"content_lines";i:14;s:6:"atLine";i:219;}i:29;a:4:{s:6:"header";s:34:"function getListResultsPerPage() {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:6:"atLine";i:210;}i:27;a:7:{s:6:"header";s:30:"function getListActivePage() {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:6:"atLine";i:239;}i:31;a:7:{s:6:"header";s:30:"function getListActivePage() {";s:11:"parentClass";s:15:"tx_sglib_params";s:4:"cDat";a:3:{s:4:"text";s:25:"
 
 [Describe function...]
-";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:154;s:13:"content_lines";i:10;s:6:"atLine";i:224;}}}}}
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:154;s:13:"content_lines";i:10;s:6:"atLine";i:253;}}}s:14:"MD5_8b27a35f05";a:4:{s:8:"filename";s:37:"classes/lib/class.tx_sglib_permit.php";s:8:"filesize";i:32573;s:6:"header";N;s:3:"DAT";a:23:{i:1;a:8:{s:6:"header";s:23:"class tx_sglib_permit {";s:5:"class";i:1;s:11:"parentClass";s:15:"tx_sglib_permit";s:4:"cDat";a:3:{s:4:"text";s:1166:"
+
+[CLASS/FUNCTION INDEX of SCRIPT]
+
+
+
+  63: class tx_sglib_permit
+  95:     private function init(tx_sglib_factory $factoryObj)
+ 135:     private function _fCount ($name=NULL)
+ 158:     function __destruct()
+
+             SECTION: User Functions
+ 171:     function getActiveFeUser()
+ 192:     function getActiveFeGroups()
+ 209:     function getActiveBeUser()
+ 230:     function getActiveBeGroups()
+ 249:     function getFeUid()
+ 259:     function getBeUid()
+ 270:     function getFeUser($name=NULL)
+ 285:     function getBeUser($name=NULL)
+ 299:     function getFeGroups()
+ 309:     function getBeGroups()
+ 321:     function checkFeUserIn ($chkUserList,$chkGroupList)
+ 368:     function checkBeUserIn ($chkUserList,$chkGroupList)
+
+             SECTION: FE-Editing permissons
+ 419:     function allowed($property)
+ 428:     function useEditMode()
+ 437:     function getEditPropertiesAsText ()
+ 447:     function processTemplate($template)
+
+             SECTION: Private functions
+ 506:     function _getEditMode ()
+ 814:     private function _getListOfEditors($myAllow)
+
+TOTAL FUNCTIONS: 21
+(This index is automatically created/updated by the extension "extdeveval")
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:304;s:13:"content_lines";i:17;s:6:"atLine";i:61;}i:3;a:7:{s:6:"header";s:79:"public static function getInstance($designator, tx_sglib_factory $factoryObj) {";s:11:"parentClass";s:15:"tx_sglib_permit";s:4:"cDat";a:3:{s:4:"text";s:50:"
+
+Returns a singlton instance of tx_sglib_permit
+
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"string";i:1;s:10:"Designator";}i:1;a:2:{i:0;s:16:"tx_sglib_factory";i:1;s:10:"FactoryObj";}}s:6:"return";a:2:{i:0;s:15:"tx_sglib_permit";i:1;s:19:"Instantiated Object";}}s:7:"content";s:0:"";s:12:"content_size";i:205;s:13:"content_lines";i:7;s:6:"atLine";i:86;}i:5;a:7:{s:6:"header";s:53:"private function init(tx_sglib_factory $factoryObj) {";s:11:"parentClass";s:15:"tx_sglib_permit";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:106:"$tx_sglib_config $confObj, tx_sglib_debug $debugObj, tx_sglib_const $constObj, tx_sglib_lang $langObj: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1191;s:13:"content_lines";i:33;s:6:"atLine";i:100;}i:7;a:7:{s:6:"header";s:39:"private function _fCount ($name=NULL) {";s:11:"parentClass";s:15:"tx_sglib_permit";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:345;s:13:"content_lines";i:17;s:6:"atLine";i:140;}i:9;a:7:{s:6:"header";s:23:"function __destruct() {";s:11:"parentClass";s:15:"tx_sglib_permit";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:352;s:13:"content_lines";i:9;s:6:"atLine";i:163;}i:11;a:8:{s:6:"header";s:28:"function getActiveFeUser() {";s:11:"parentClass";s:15:"tx_sglib_permit";s:11:"sectionText";a:1:{i:0;s:14:"User Functions";}s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:360;s:13:"content_lines";i:15;s:6:"atLine";i:176;}i:13;a:7:{s:6:"header";s:30:"function getActiveFeGroups() {";s:11:"parentClass";s:15:"tx_sglib_permit";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:278;s:13:"content_lines";i:11;s:6:"atLine";i:197;}i:15;a:7:{s:6:"header";s:28:"function getActiveBeUser() {";s:11:"parentClass";s:15:"tx_sglib_permit";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:375;s:13:"content_lines";i:15;s:6:"atLine";i:214;}i:17;a:7:{s:6:"header";s:30:"function getActiveBeGroups() {";s:11:"parentClass";s:15:"tx_sglib_permit";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:378;s:13:"content_lines";i:13;s:6:"atLine";i:235;}i:19;a:7:{s:6:"header";s:21:"function getFeUid() {";s:11:"parentClass";s:15:"tx_sglib_permit";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:61;s:13:"content_lines";i:4;s:6:"atLine";i:254;}i:21;a:7:{s:6:"header";s:21:"function getBeUid() {";s:11:"parentClass";s:15:"tx_sglib_permit";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:61;s:13:"content_lines";i:4;s:6:"atLine";i:264;}i:23;a:7:{s:6:"header";s:32:"function getFeUser($name=NULL) {";s:11:"parentClass";s:15:"tx_sglib_permit";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:126;s:13:"content_lines";i:8;s:6:"atLine";i:275;}i:25;a:7:{s:6:"header";s:32:"function getBeUser($name=NULL) {";s:11:"parentClass";s:15:"tx_sglib_permit";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:126;s:13:"content_lines";i:8;s:6:"atLine";i:290;}i:27;a:7:{s:6:"header";s:24:"function getFeGroups() {";s:11:"parentClass";s:15:"tx_sglib_permit";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:64;s:13:"content_lines";i:4;s:6:"atLine";i:304;}i:29;a:7:{s:6:"header";s:24:"function getBeGroups() {";s:11:"parentClass";s:15:"tx_sglib_permit";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:64;s:13:"content_lines";i:4;s:6:"atLine";i:314;}i:31;a:7:{s:6:"header";s:53:"function checkFeUserIn ($chkUserList,$chkGroupList) {";s:11:"parentClass";s:15:"tx_sglib_permit";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:17:"$chkUserList: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:18:"$chkGroupList: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1576;s:13:"content_lines";i:39;s:6:"atLine";i:326;}i:33;a:7:{s:6:"header";s:53:"function checkBeUserIn ($chkUserList,$chkGroupList) {";s:11:"parentClass";s:15:"tx_sglib_permit";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:17:"$chkUserList: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:18:"$chkGroupList: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1797;s:13:"content_lines";i:46;s:6:"atLine";i:373;}i:35;a:8:{s:6:"header";s:29:"function allowed($property) {";s:11:"parentClass";s:15:"tx_sglib_permit";s:11:"sectionText";a:1:{i:0;s:21:"FE-Editing permissons";}s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:14:"$property: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:39;s:13:"content_lines";i:3;s:6:"atLine";i:424;}i:37;a:7:{s:6:"header";s:24:"function useEditMode() {";s:11:"parentClass";s:15:"tx_sglib_permit";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:39;s:13:"content_lines";i:3;s:6:"atLine";i:433;}i:39;a:7:{s:6:"header";s:37:"function getEditPropertiesAsText () {";s:11:"parentClass";s:15:"tx_sglib_permit";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:35;s:13:"content_lines";i:3;s:6:"atLine";i:442;}i:41;a:7:{s:6:"header";s:37:"function processTemplate($template) {";s:11:"parentClass";s:15:"tx_sglib_permit";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:14:"$template: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1909;s:13:"content_lines";i:54;s:6:"atLine";i:452;}i:43;a:5:{s:6:"header";s:26:"function _getEditMode () {";s:11:"parentClass";s:15:"tx_sglib_permit";s:11:"sectionText";a:1:{i:0;s:17:"Private functions";}s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:12:"$myConf: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:6:"atLine";i:511;}i:45;a:7:{s:6:"header";s:46:"private function _getListOfEditors($myAllow) {";s:11:"parentClass";s:15:"tx_sglib_permit";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:13:"$myAllow: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:3219;s:13:"content_lines";i:88;s:6:"atLine";i:857;}}}s:14:"MD5_506fb1e44b";a:4:{s:8:"filename";s:37:"classes/lib/class.tx_sglib_search.php";s:8:"filesize";i:16158;s:6:"header";N;s:3:"DAT";a:14:{i:1;a:8:{s:6:"header";s:23:"class tx_sglib_search {";s:5:"class";i:1;s:11:"parentClass";s:15:"tx_sglib_search";s:4:"cDat";a:3:{s:4:"text";s:396:"
+
+[CLASS/FUNCTION INDEX of SCRIPT]
+
+
+
+  44: class tx_sglib_markers
+  77:     private function init(tx_sglib_factory $factoryObj)
+  93:     protected function _fCount ($name=NULL)
+ 118:     public function __destruct()
+ 128:     public function __get($nm)
+ 148:     public function __set($nm, $val)
+
+TOTAL FUNCTIONS: 8
+(This index is automatically created/updated by the extension "extdeveval")
+
+
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:319;s:13:"content_lines";i:17;s:6:"atLine";i:39;}i:3;a:7:{s:6:"header";s:79:"public static function getInstance($designator, tx_sglib_factory $factoryObj) {";s:11:"parentClass";s:15:"tx_sglib_search";s:4:"cDat";a:3:{s:4:"text";s:51:"
+
+Returns a singlton instance of tx_sglib_markers
+
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"string";i:1;s:10:"Designator";}i:1;a:2:{i:0;s:16:"tx_sglib_factory";i:1;s:10:"FactoryObj";}}s:6:"return";a:2:{i:0;s:16:"tx_sglib_markers";i:1;s:19:"Instantiated Object";}}s:7:"content";s:0:"";s:12:"content_size";i:205;s:13:"content_lines";i:7;s:6:"atLine";i:64;}i:5;a:7:{s:6:"header";s:53:"private function init(tx_sglib_factory $factoryObj) {";s:11:"parentClass";s:15:"tx_sglib_search";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:56:"$tx_sglib_config $confObj, tx_sglib_debug $debugObj: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:10:"$cObj: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:409;s:13:"content_lines";i:12;s:6:"atLine";i:79;}i:7;a:7:{s:6:"header";s:41:"protected function _fCount ($name=NULL) {";s:11:"parentClass";s:15:"tx_sglib_search";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:347;s:13:"content_lines";i:19;s:6:"atLine";i:98;}i:9;a:7:{s:6:"header";s:30:"public function __destruct() {";s:11:"parentClass";s:15:"tx_sglib_search";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:124;s:13:"content_lines";i:3;s:6:"atLine";i:123;}i:11;a:7:{s:6:"header";s:32:"public function __get($nm)
+    {";s:11:"parentClass";s:15:"tx_sglib_search";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:8:"$nm: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:235;s:13:"content_lines";i:11;s:6:"atLine";i:133;}i:13;a:7:{s:6:"header";s:35:"public function __set($nm, $val)
+	{";s:11:"parentClass";s:15:"tx_sglib_search";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:8:"$nm: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:9:"$val: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:222;s:13:"content_lines";i:11;s:6:"atLine";i:153;}i:15;a:6:{s:6:"header";s:68:"public function resolveSearchReferences($table,&$searchReferences) {";s:11:"parentClass";s:15:"tx_sglib_search";s:7:"content";s:0:"";s:12:"content_size";i:808;s:13:"content_lines";i:16;s:6:"atLine";i:173;}i:17;a:6:{s:6:"header";s:77:"public function resolveSearchReference($table,$searchKey,&$searchReference) {";s:11:"parentClass";s:15:"tx_sglib_search";s:7:"content";s:0:"";s:12:"content_size";i:2996;s:13:"content_lines";i:55;s:6:"atLine";i:198;}i:19;a:6:{s:6:"header";s:73:"protected function searchInFields($table,array &$searchReferenceFields) {";s:11:"parentClass";s:15:"tx_sglib_search";s:7:"content";s:0:"";s:12:"content_size";i:675;s:13:"content_lines";i:14;s:6:"atLine";i:260;}i:21;a:6:{s:6:"header";s:56:"protected function getByIdList($table,$refKey,$idList) {";s:11:"parentClass";s:15:"tx_sglib_search";s:7:"content";s:0:"";s:12:"content_size";i:339;s:13:"content_lines";i:5;s:6:"atLine";i:283;}i:23;a:6:{s:6:"header";s:57:"protected function logicalAndArrayKeys($array1,$array2) {";s:11:"parentClass";s:15:"tx_sglib_search";s:7:"content";s:0:"";s:12:"content_size";i:311;s:13:"content_lines";i:17;s:6:"atLine";i:296;}i:25;a:3:{s:6:"header";s:92:"public function getQueries($table, array $searchFields, $tables=Array(), $queries=Array()) {";s:11:"parentClass";s:15:"tx_sglib_search";s:6:"atLine";i:322;}i:27;a:6:{s:6:"header";s:90:"public function getStringQuery($table, $searchKey, $value, $searchConf, $listMode=FALSE) {";s:11:"parentClass";s:15:"tx_sglib_search";s:7:"content";s:0:"";s:12:"content_size";i:1854;s:13:"content_lines";i:38;s:6:"atLine";i:428;}}}s:14:"MD5_f16db1e10d";a:4:{s:8:"filename";s:39:"classes/lib/class.tx_sglib_template.php";s:8:"filesize";i:31507;s:6:"header";N;s:3:"DAT";a:20:{i:1;a:8:{s:6:"header";s:25:"class tx_sglib_template {";s:5:"class";i:1;s:11:"parentClass";s:17:"tx_sglib_template";s:4:"cDat";a:3:{s:4:"text";s:949:"
+
+[CLASS/FUNCTION INDEX of SCRIPT]
+
+
+
+  48: class tx_sglib_template
+  80:     private function init(tx_sglib_factory $factoryObj)
+ 102:     private function _fCount ($name=NULL)
+ 125:     function __destruct()
+ 135:     private function _initTemplateFiles($conf)
+ 170:     function getTemplate ($templateName,$globalMarkers=Array())
+ 205:     function getSubPartName($forWhat)
+ 227:     function getSubpart ($tmpl,$name,$default='')
+ 274:     function get3Subpart ($tmpl,$name,$altName='',$default='')
+ 294:     private function _getASubpart ($tmpl,$list=Array(),$info='',$hideMissing=0)
+ 358:     function getConfSubpart ($tmpl,$subpartname,$PCA='',$extConf='',$typConf='',$defdef='',$hideMissing=0)
+ 462:     function getConfSubpartArray ($tmpl,$subpartname,&$PCA,$defaultdefault='')
+ 522:     function getSubpartFromArray ($spArray,$PCA='',$row='')
+
+TOTAL FUNCTIONS: 12
+(This index is automatically created/updated by the extension "extdeveval")
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:345;s:13:"content_lines";i:17;s:6:"atLine";i:46;}i:3;a:7:{s:6:"header";s:79:"public static function getInstance($designator, tx_sglib_factory $factoryObj) {";s:11:"parentClass";s:17:"tx_sglib_template";s:4:"cDat";a:3:{s:4:"text";s:52:"
+
+Returns a singlton instance of tx_sglib_template
+
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"string";i:1;s:10:"Designator";}i:1;a:2:{i:0;s:16:"tx_sglib_factory";i:1;s:10:"FactoryObj";}}s:6:"return";a:2:{i:0;s:17:"tx_sglib_template";i:1;s:19:"Instantiated Object";}}s:7:"content";s:0:"";s:12:"content_size";i:207;s:13:"content_lines";i:7;s:6:"atLine";i:71;}i:5;a:6:{s:6:"header";s:53:"private function init(tx_sglib_factory $factoryObj) {";s:11:"parentClass";s:17:"tx_sglib_template";s:7:"content";s:0:"";s:12:"content_size";i:507;s:13:"content_lines";i:15;s:6:"atLine";i:85;}i:7;a:7:{s:6:"header";s:39:"private function _fCount ($name=NULL) {";s:11:"parentClass";s:17:"tx_sglib_template";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:345;s:13:"content_lines";i:17;s:6:"atLine";i:107;}i:9;a:7:{s:6:"header";s:23:"function __destruct() {";s:11:"parentClass";s:17:"tx_sglib_template";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:124;s:13:"content_lines";i:3;s:6:"atLine";i:130;}i:11;a:7:{s:6:"header";s:44:"private function _initTemplateFiles($conf) {";s:11:"parentClass";s:17:"tx_sglib_template";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$conf: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1097;s:13:"content_lines";i:27;s:6:"atLine";i:140;}i:13;a:7:{s:6:"header";s:67:"function getTemplate ($templateName,array $globalMarkers=Array()) {";s:11:"parentClass";s:17:"tx_sglib_template";s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:4:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:18:"$templateName: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:19:"$globalmarkers: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:11:"$gConf: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:10:"$from: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1311;s:13:"content_lines";i:33;s:6:"atLine";i:175;}i:15;a:7:{s:6:"header";s:35:"function getSubPartName($forWhat) {";s:11:"parentClass";s:17:"tx_sglib_template";s:4:"cDat";a:3:{s:4:"text";s:222:"
+
+********************************************************************************************
+
+Functions for Templates
+
+**********************************************************************************************/
+
+	/*
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:13:"$forWhat: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:447;s:13:"content_lines";i:15;s:6:"atLine";i:221;}i:17;a:7:{s:6:"header";s:47:"function getSubpart ($tmpl,$name,$default='') {";s:11:"parentClass";s:17:"tx_sglib_template";s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$tmpl: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:13:"$default: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1459;s:13:"content_lines";i:39;s:6:"atLine";i:243;}i:19;a:7:{s:6:"header";s:60:"function get3Subpart ($tmpl,$name,$altName='',$default='') {";s:11:"parentClass";s:17:"tx_sglib_template";s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:4:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$tmpl: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:13:"$altName: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:13:"$default: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:277;s:13:"content_lines";i:12;s:6:"atLine";i:290;}i:21;a:7:{s:6:"header";s:77:"private function _getASubpart ($tmpl,$list=Array(),$info='',$hideMissing=0) {";s:11:"parentClass";s:17:"tx_sglib_template";s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:4:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$tmpl: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:10:"$list: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:10:"$info: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:17:"$hideMissing: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:2084;s:13:"content_lines";i:53;s:6:"atLine";i:310;}i:23;a:7:{s:6:"header";s:104:"function getConfSubpart ($tmpl,$subpartname,$PCA='',$extConf='',$typConf='',$defdef='',$hideMissing=0) {";s:11:"parentClass";s:17:"tx_sglib_template";s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:7:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$tmpl: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:17:"$subpartname: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:53:"$mode: if true ==> use '_FORM' Subpart, if available;";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:13:"$extConf: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:13:"$typConf: ...";}i:5;a:2:{i:0;s:6:"[type]";i:1;s:12:"$defdef: ...";}i:6;a:2:{i:0;s:6:"[type]";i:1;s:17:"$hideMissing: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:3831;s:13:"content_lines";i:96;s:6:"atLine";i:374;}i:25;a:7:{s:6:"header";s:76:"function getConfSubpartArray ($tmpl,$subpartname,&$PCA,$defaultdefault='') {";s:11:"parentClass";s:17:"tx_sglib_template";s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:4:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$tmpl: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:17:"$subpartname: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:53:"$mode: if true ==> use '_FORM' Subpart, if available;";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:20:"$defaultdefault: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:2866;s:13:"content_lines";i:53;s:6:"atLine";i:478;}i:27;a:7:{s:6:"header";s:57:"function getSubpartFromArray ($spArray,$PCA='',$row='') {";s:11:"parentClass";s:17:"tx_sglib_template";s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$tmpl: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:17:"$subpartname: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:53:"$mode: if true ==> use '_FORM' Subpart, if available;";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:3028;s:13:"content_lines";i:76;s:6:"atLine";i:538;}i:29;a:7:{s:6:"header";s:58:"public function getNamed ($named,$globalMarkers=Array()) {";s:11:"parentClass";s:17:"tx_sglib_template";s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:4:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:18:"$templateName: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:19:"$globalmarkers: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:11:"$gConf: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:10:"$from: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:930;s:13:"content_lines";i:20;s:6:"atLine";i:622;}i:31;a:6:{s:6:"header";s:28:"public function getView () {";s:11:"parentClass";s:17:"tx_sglib_template";s:7:"content";s:0:"";s:12:"content_size";i:44;s:13:"content_lines";i:5;s:6:"atLine";i:648;}i:33;a:6:{s:6:"header";s:103:"public function getMarkersWithWrap(array &$markers=NULL,$table,array $row,$mode='default',$prefix='') {";s:11:"parentClass";s:17:"tx_sglib_template";s:7:"content";s:0:"";s:12:"content_size";i:2477;s:13:"content_lines";i:55;s:6:"atLine";i:663;}i:35;a:6:{s:6:"header";s:108:"public function getListPart(array $rows=NULL, $table, $template, array &$parentMarkers=NULL, $parent=NULL) {";s:11:"parentClass";s:17:"tx_sglib_template";s:7:"content";s:0:"";s:12:"content_size";i:224;s:13:"content_lines";i:4;s:6:"atLine";i:728;}i:37;a:3:{s:6:"header";s:135:"public function getListSubpart($key,array $rows=NULL,$table,$template,array &$parentMarkers=NULL,$goIntoSubArrays=TRUE, $parent=NULL) {";s:11:"parentClass";s:17:"tx_sglib_template";s:6:"atLine";i:743;}i:39;a:6:{s:6:"header";s:53:"public function getListOfSpecialMarkers ($template) {";s:11:"parentClass";s:17:"tx_sglib_template";s:7:"content";s:0:"";s:12:"content_size";i:788;s:13:"content_lines";i:22;s:6:"atLine";i:821;}}}s:14:"MD5_12d4ee4058";a:4:{s:8:"filename";s:39:"classes/lib/class.tx_sglib_validate.php";s:8:"filesize";i:7791;s:6:"header";N;s:3:"DAT";a:10:{i:1;a:8:{s:6:"header";s:25:"class tx_sglib_validate {";s:5:"class";i:1;s:11:"parentClass";s:17:"tx_sglib_validate";s:4:"cDat";a:3:{s:4:"text";s:724:"
+
+[CLASS/FUNCTION INDEX of SCRIPT]
+
+
+
+  49: class tx_sglib_params
+  71:     public static function getInstance($designator, tx_sglib_factory $factoryObj)
+  85:     private function init(tx_sglib_factory $factoryObj)
+ 105:     public function updateParams ($params)
+ 115:     private function _fCount ($name=NULL)
+ 138:     function __destruct()
+ 147:     function getPluginParams()
+ 155:     function getPluginFiles()
+ 164:     function getSearchmode()
+ 173:     function getSearch()
+ 182:     function getUid()
+ 192:     function getListMode()
+ 212:     function getListResultsPerPage()
+ 226:     function getListActivePage()
+
+TOTAL FUNCTIONS: 13
+(This index is automatically created/updated by the extension "extdeveval")
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:345;s:13:"content_lines";i:18;s:6:"atLine";i:47;}i:3;a:7:{s:6:"header";s:79:"public static function getInstance($designator, tx_sglib_factory $factoryObj) {";s:11:"parentClass";s:17:"tx_sglib_validate";s:4:"cDat";a:3:{s:4:"text";s:50:"
+
+Returns a singlton instance of tx_sglib_params
+
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"string";i:1;s:10:"Designator";}i:1;a:2:{i:0;s:16:"tx_sglib_factory";i:1;s:10:"FactoryObj";}}s:6:"return";a:2:{i:0;s:15:"tx_sglib_params";i:1;s:19:"Instantiated Object";}}s:7:"content";s:0:"";s:12:"content_size";i:207;s:13:"content_lines";i:7;s:6:"atLine";i:73;}i:5;a:7:{s:6:"header";s:53:"private function init(tx_sglib_factory $factoryObj) {";s:11:"parentClass";s:17:"tx_sglib_validate";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:56:"$tx_sglib_config $confObj, tx_sglib_debug $debugObj: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:274;s:13:"content_lines";i:9;s:6:"atLine";i:87;}i:7;a:7:{s:6:"header";s:39:"private function _fCount ($name=NULL) {";s:11:"parentClass";s:17:"tx_sglib_validate";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:345;s:13:"content_lines";i:17;s:6:"atLine";i:103;}i:9;a:7:{s:6:"header";s:23:"function __destruct() {";s:11:"parentClass";s:17:"tx_sglib_validate";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:124;s:13:"content_lines";i:3;s:6:"atLine";i:126;}i:11;a:6:{s:6:"header";s:43:"public function setStep ($max,$conf=NULL) {";s:11:"parentClass";s:17:"tx_sglib_validate";s:7:"content";s:0:"";s:12:"content_size";i:217;s:13:"content_lines";i:5;s:6:"atLine";i:137;}i:13;a:6:{s:6:"header";s:76:"public function setStepByParams ($step,$max,$prev,$next,$valid,$conf=NULL) {";s:11:"parentClass";s:17:"tx_sglib_validate";s:7:"content";s:0:"";s:12:"content_size";i:342;s:13:"content_lines";i:22;s:6:"atLine";i:154;}i:15;a:6:{s:6:"header";s:53:"public function validate (array $data, array $conf) {";s:11:"parentClass";s:17:"tx_sglib_validate";s:7:"content";s:0:"";s:12:"content_size";i:950;s:13:"content_lines";i:23;s:6:"atLine";i:183;}i:17;a:3:{s:6:"header";s:37:"public function getFieldMessages () {";s:11:"parentClass";s:17:"tx_sglib_validate";s:6:"atLine";i:212;}i:19;a:6:{s:6:"header";s:94:"public function checkFieldFor(&$errorMessage, array $data, $fieldName, $testName, $testConf) {";s:11:"parentClass";s:17:"tx_sglib_validate";s:7:"content";s:0:"";s:12:"content_size";i:2169;s:13:"content_lines";i:61;s:6:"atLine";i:225;}}}s:14:"MD5_bf688ac7cb";a:4:{s:8:"filename";s:31:"classes/lib/class.tx_sgzlib.php";s:8:"filesize";i:238171;s:6:"header";a:5:{s:4:"text";s:19:"
+
+Plugin 'sg_zlib'.";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}s:5:"other";a:1:{i:0;s:48:"@author	Stefan Geith <typo3dev2007@geithware.de>";}s:11:"other_index";a:1:{s:7:"@author";a:1:{i:0;s:40:"Stefan Geith <typo3dev2007@geithware.de>";}}}s:3:"DAT";a:82:{i:1;a:7:{s:6:"header";s:17:"class tx_sgzlib {";s:5:"class";i:1;s:11:"parentClass";s:9:"tx_sgzlib";s:7:"content";s:0:"";s:12:"content_size";i:1072;s:13:"content_lines";i:53;s:6:"atLine";i:157;}i:3;a:8:{s:6:"header";s:31:"function _fCount ($name=NULL) {";s:11:"parentClass";s:9:"tx_sgzlib";s:11:"sectionText";a:1:{i:0;s:33:"CLASS instantiate and init/config";}s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:345;s:13:"content_lines";i:17;s:6:"atLine";i:215;}i:5;a:7:{s:6:"header";s:23:"function __destruct() {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:124;s:13:"content_lines";i:3;s:6:"atLine";i:238;}i:7;a:7:{s:6:"header";s:58:"function init($designator, tx_sglib_factory $factoryObj)	{";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:55:"$tx_sglib_config $confObj,tx_sglib_debug $debugObj: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:2974;s:13:"content_lines";i:82;s:6:"atLine";i:246;}i:9;a:8:{s:6:"header";s:37:"function GPdefault($gp,$default='') {";s:11:"parentClass";s:9:"tx_sgzlib";s:11:"sectionText";a:1:{i:0;s:49:"Some helper functions (should become obsolete...)";}s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:8:"$gp: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:13:"$default: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:491;s:13:"content_lines";i:25;s:6:"atLine";i:336;}i:11;a:8:{s:6:"header";s:36:"function getTypoLinkItem ($params) {";s:11:"parentClass";s:9:"tx_sgzlib";s:11:"sectionText";a:1:{i:0;s:9:"Typolinks";}s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:12:"$params: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:565;s:13:"content_lines";i:14;s:6:"atLine";i:366;}i:13;a:7:{s:6:"header";s:89:"function getTypolinkURL ($myPageID,$myParams='',$allowCaching=0,$myTarget='',$myDbg='') {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:5:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:14:"$myPageID: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:14:"$myParams: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:18:"$allowCaching: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:14:"$myTarget: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:11:"$myDbg: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:666;s:13:"content_lines";i:19;s:6:"atLine";i:389;}i:15;a:7:{s:6:"header";s:96:"function getTypolink ($textLink,$myPageID,$myParams='',$allowCaching=0,$myTarget='',$myDbg='') {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:6:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:14:"$textLink: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:14:"$myPageID: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:14:"$myParams: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:18:"$allowCaching: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:14:"$myTarget: ...";}i:5;a:2:{i:0;s:6:"[type]";i:1;s:11:"$myDbg: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:646;s:13:"content_lines";i:18;s:6:"atLine";i:420;}i:17;a:7:{s:6:"header";s:27:"function clearCache($PCA) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1295;s:13:"content_lines";i:40;s:6:"atLine";i:445;}i:19;a:8:{s:6:"header";s:34:"function quote ($text,$komma='') {";s:11:"parentClass";s:9:"tx_sgzlib";s:11:"sectionText";a:1:{i:0;s:18:"Some usefull Wraps";}s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$text: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:11:"$komma: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:51;s:13:"content_lines";i:3;s:6:"atLine";i:493;}i:21;a:7:{s:6:"header";s:35:"function dquote ($text,$komma='') {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$text: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:11:"$komma: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:51;s:13:"content_lines";i:3;s:6:"atLine";i:504;}i:23;a:7:{s:6:"header";s:64:"function replaceArray ($content,$markers,$more=FALSE,$wrap='') {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:4:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$text: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:13:"$markers: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:10:"$more: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:10:"$wrap: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:525;s:13:"content_lines";i:21;s:6:"atLine";i:517;}i:25;a:7:{s:6:"header";s:69:"function replaceArrayArray ($content,$markers,$more=FALSE,$wrap='') {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:4:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:13:"$content: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:13:"$markers: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:10:"$more: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:10:"$wrap: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:292;s:13:"content_lines";i:12;s:6:"atLine";i:548;}i:27;a:7:{s:6:"header";s:63:"function sendMail ($mailto,$subject,$mailbody,$hd,$params='') {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:5:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:12:"$mailto: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:13:"$subject: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:14:"$mailbody: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:8:"$hd: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:12:"$params: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1048;s:13:"content_lines";i:29;s:6:"atLine";i:571;}i:29;a:8:{s:6:"header";s:27:"function jsInsert ($text) {";s:11:"parentClass";s:9:"tx_sgzlib";s:11:"sectionText";a:1:{i:0;s:12:"JS functions";}s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$text: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:306;s:13:"content_lines";i:21;s:6:"atLine";i:605;}i:31;a:8:{s:6:"header";s:99:"function writelog($details,$action=1,$data=Array(),$type=10,$details_nr=1,$error=0,$event_pid=1 ) {";s:11:"parentClass";s:9:"tx_sgzlib";s:11:"sectionText";a:1:{i:0;s:7:"Logging";}s:4:"cDat";a:3:{s:4:"text";s:33:"
+
+Writes an entry in the logfile
+";s:5:"param";a:7:{i:0;a:2:{i:0;s:6:"string";i:1;s:47:"$details: Default text that follows the message";}i:1;a:2:{i:0;s:7:"integer";i:1;s:83:"$action: denotes which specific operation that wrote the entry: 1=warning 2=message";}i:2;a:2:{i:0;s:5:"array";i:1;s:77:"$data: Data that follows the log. Might be used to carry special information.";}i:3;a:2:{i:0;s:7:"integer";i:1;s:66:"$type: denotes which module that has submitted the entry. 10 = Dev";}i:4;a:2:{i:0;s:7:"integer";i:1;s:69:"$details_nr: The message number. Specific for each $type and $action.";}i:5;a:2:{i:0;s:7:"integer";i:1;s:52:"$error: flag. 0 = message, 1 = error (user problem),";}i:6;a:2:{i:0;s:7:"integer";i:1;s:103:"$event_pid: The page_uid (pid) where the event occurred. Used to select log-content for specific pages.";}}s:6:"return";a:2:{i:0;s:4:"void";i:1;s:0:"";}}s:7:"content";s:0:"";s:12:"content_size";i:1468;s:13:"content_lines";i:49;s:6:"atLine";i:639;}i:33;a:8:{s:6:"header";s:114:"function getPCA ($dbTable,$pluginName='myData',$myPid=0,$pluginConf=Array(),$piVars=Array(),$PCA=Array(),$dbg=0) {";s:11:"parentClass";s:9:"tx_sgzlib";s:11:"sectionText";a:1:{i:0;s:68:"Partial implementation of getFeSingleField - functionally like in be";}s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:7:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:13:"$dbTable: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:16:"$pluginName: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:11:"$myPid: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:16:"$pluginConf: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}i:5;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}i:6;a:2:{i:0;s:6:"[type]";i:1;s:9:"$dbg: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:8741;s:13:"content_lines";i:175;s:6:"atLine";i:699;}i:35;a:7:{s:6:"header";s:35:"function prepareXajax ($prefixId) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:14:"$prefixId: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:728;s:13:"content_lines";i:20;s:6:"atLine";i:881;}i:37;a:7:{s:6:"header";s:51:"function doXajaxFieldWrap($text,$id="test",$em=0) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$text: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:8:"$id: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:8:"$em: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:100;s:13:"content_lines";i:2;s:6:"atLine";i:910;}i:39;a:7:{s:6:"header";s:47:"function mergeTsArray ($dest,$source,$mode=0) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$dest: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:12:"$source: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:10:"$mode: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:716;s:13:"content_lines";i:26;s:6:"atLine";i:921;}i:41;a:7:{s:6:"header";s:79:"function getFeSingleField($table,$field,$row,$em=0,$PCA=Array(),$opt=Array())	{";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:6:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:11:"$field: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:9:"$row: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:8:"$em: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}i:5;a:2:{i:0;s:6:"[type]";i:1;s:9:"$opt: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:95;s:13:"content_lines";i:4;s:6:"atLine";i:959;}i:43;a:7:{s:6:"header";s:61:"function getPAfieldParam ($PCA,$field,$value,$wrap=Array()) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:4:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:11:"$field: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:11:"$value: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:10:"$wrap: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:226;s:13:"content_lines";i:9;s:6:"atLine";i:973;}i:45;a:7:{s:6:"header";s:73:"function getFeSingleField_SW($table,$field,$row,$em,&$PCA,$opt=Array())	{";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:6:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:11:"$field: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:9:"$row: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:8:"$em: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}i:5;a:2:{i:0;s:6:"[type]";i:1;s:9:"$opt: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:3072;s:13:"content_lines";i:84;s:6:"atLine";i:994;}i:47;a:7:{s:6:"header";s:86:"function getSingleField_typeInput($table,$field,$row,$em,&$PCA,$myMode,$opt=Array()) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:7:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:11:"$field: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:9:"$row: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:8:"$em: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}i:5;a:2:{i:0;s:6:"[type]";i:1;s:12:"$myMode: ...";}i:6;a:2:{i:0;s:6:"[type]";i:1;s:9:"$opt: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:3443;s:13:"content_lines";i:79;s:6:"atLine";i:1091;}i:49;a:7:{s:6:"header";s:85:"function getSingleField_typeText($table,$field,$row,$em,&$PCA,$myMode,$opt=Array()) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:7:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:11:"$field: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:9:"$row: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:8:"$em: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}i:5;a:2:{i:0;s:6:"[type]";i:1;s:12:"$myMode: ...";}i:6;a:2:{i:0;s:6:"[type]";i:1;s:9:"$opt: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:2102;s:13:"content_lines";i:53;s:6:"atLine";i:1183;}i:51;a:7:{s:6:"header";s:89:"function getSingleField_typeCheck($table,$field,$row,$em,&$PCA,$myMode='',$opt=Array()) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:7:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:11:"$field: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:9:"$row: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:8:"$em: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}i:5;a:2:{i:0;s:6:"[type]";i:1;s:12:"$myMode: ...";}i:6;a:2:{i:0;s:6:"[type]";i:1;s:9:"$opt: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1916;s:13:"content_lines";i:39;s:6:"atLine";i:1249;}i:53;a:7:{s:6:"header";s:87:"function getSingleField_typeSelect($table,$field,$row,$em,&$PCA,$myMode,$opt=Array()) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:7:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:11:"$field: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:9:"$row: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:8:"$em: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}i:5;a:2:{i:0;s:6:"[type]";i:1;s:12:"$myMode: ...";}i:6;a:2:{i:0;s:6:"[type]";i:1;s:9:"$opt: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:14021;s:13:"content_lines";i:297;s:6:"atLine";i:1301;}i:55;a:7:{s:6:"header";s:41:"function getOnchangeSelect($PCA,$field) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:11:"$field: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1444;s:13:"content_lines";i:25;s:6:"atLine";i:1606;}i:57;a:7:{s:6:"header";s:95:"function getSelectSearchList($myItems,$name,$field,$value,$onc,$classname,$myMode,$PCA,$em=0) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:9:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:13:"$myItems: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:11:"$field: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:11:"$value: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:15:"$classname: ...";}i:5;a:2:{i:0;s:6:"[type]";i:1;s:12:"$myMode: ...";}i:6;a:2:{i:0;s:6:"[type]";i:1;s:12:"$myUsed: ...";}i:7;a:2:{i:0;s:6:"[type]";i:1;s:8:"$em: ...";}i:8;a:2:{i:0;s:6:"[type]";i:1;s:8:"$em: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:7814;s:13:"content_lines";i:188;s:6:"atLine";i:1646;}i:59;a:7:{s:6:"header";s:88:"function getSelectFormList($myItems,$name,$field,$value,$classname,$myMode,$PCA,$em=0) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:8:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:13:"$myItems: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:10:"$name: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:11:"$field: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:11:"$value: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:15:"$classname: ...";}i:5;a:2:{i:0;s:6:"[type]";i:1;s:12:"$myMode: ...";}i:6;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}i:7;a:2:{i:0;s:6:"[type]";i:1;s:8:"$em: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:5373;s:13:"content_lines";i:120;s:6:"atLine";i:1848;}i:61;a:7:{s:6:"header";s:103:"function getSingleField_typeList($table,$field,$row,$em,&$PCA,$myMode,$size='s',$mode=0,$opt=Array()) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:9:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:11:"$field: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:9:"$row: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:8:"$em: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}i:5;a:2:{i:0;s:6:"[type]";i:1;s:12:"$myMode: ...";}i:6;a:2:{i:0;s:6:"[type]";i:1;s:10:"$size: ...";}i:7;a:2:{i:0;s:6:"[type]";i:1;s:10:"$mode: ...";}i:8;a:2:{i:0;s:6:"[type]";i:1;s:9:"$opt: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1594;s:13:"content_lines";i:32;s:6:"atLine";i:1983;}i:63;a:7:{s:6:"header";s:66:"function getClassTag($field,$classType,$PCA,$mode=0,$submode='') {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:5:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$field: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:15:"$classType: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:10:"$mode: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:13:"$submode: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1764;s:13:"content_lines";i:43;s:6:"atLine";i:2026;}i:65;a:7:{s:6:"header";s:71:"function getClassModeTag($field,$classType,$PCA,$mode='',$submode='') {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:5:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$field: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:15:"$classType: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:10:"$mode: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:13:"$submode: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1019;s:13:"content_lines";i:25;s:6:"atLine";i:2080;}i:67;a:7:{s:6:"header";s:74:"function getImages ($table,$field,$row,$PCA,$size,$mode,$cpt='',$url='') {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:8:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:11:"$field: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:9:"$row: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:10:"$size: ...";}i:5;a:2:{i:0;s:6:"[type]";i:1;s:10:"$mode: ...";}i:6;a:2:{i:0;s:6:"[type]";i:1;s:9:"$cpt: ...";}i:7;a:2:{i:0;s:6:"[type]";i:1;s:9:"$url: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:4835;s:13:"content_lines";i:116;s:6:"atLine";i:2119;}i:69;a:7:{s:6:"header";s:49:"function getFileLinks ($table,$field,$row,$PCA) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:4:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:11:"$field: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:9:"$row: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:2453;s:13:"content_lines";i:51;s:6:"atLine";i:2245;}i:71;a:8:{s:6:"header";s:32:"function getDbList ($q,$dbg=0) {";s:11:"parentClass";s:9:"tx_sgzlib";s:11:"sectionText";a:1:{i:0;s:12:"DB functions";}s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:7:"$q: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:9:"$dbg: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:2737;s:13:"content_lines";i:70;s:6:"atLine";i:2302;}i:73;a:7:{s:6:"header";s:86:"function getDbPages ($r,$markers=Array(),$myPage='',$pageId=0,$pConf=Array(),$dbg=0) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:6:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:7:"$r: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:13:"$markers: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:12:"$myPage: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:9:"$dbg: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:9:"$dbg: ...";}i:5;a:2:{i:0;s:6:"[type]";i:1;s:9:"$dbg: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:632;s:13:"content_lines";i:21;s:6:"atLine";i:2384;}i:75;a:7:{s:6:"header";s:86:"function getPageBrowser ($r,$pageId,$params,$pointer='pg',$pConf=Array(),$idlist='') {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:6:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:7:"$r: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:12:"$pageId: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:12:"$params: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:13:"$pointer: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:11:"$pConf: ...";}i:5;a:2:{i:0;s:6:"[type]";i:1;s:12:"$idlist: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:9275;s:13:"content_lines";i:206;s:6:"atLine";i:2417;}i:77;a:7:{s:6:"header";s:80:"function getDbSearchFields ($dbName,$PCA,$piVarSearch,$markers=Array(),$dbg=0) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:5:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:12:"$dbName: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:17:"$piVarSearch: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:13:"$markers: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:9:"$dbg: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:16056;s:13:"content_lines";i:332;s:6:"atLine";i:2634;}i:79;a:7:{s:6:"header";s:88:"function getDbExportSection ($dbName,$PCA,$piVarSearch=Array(),$qa=Array(),$r=Array()) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:5:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:12:"$dbName: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:17:"$piVarSearch: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:8:"$qa: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:7:"$r: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1210;s:13:"content_lines";i:27;s:6:"atLine";i:2977;}i:81;a:6:{s:6:"header";s:86:"function getDeleteSection ($dbName,$PCA,$piVarSearch=Array(),$qa=Array(),$r=Array()) {";s:11:"parentClass";s:9:"tx_sgzlib";s:7:"content";s:0:"";s:12:"content_size";i:596;s:13:"content_lines";i:16;s:6:"atLine";i:3015;}i:83;a:6:{s:6:"header";s:90:"function getUndoDeleteSection ($dbName,$PCA,$piVarSearch=Array(),$qa=Array(),$r=Array()) {";s:11:"parentClass";s:9:"tx_sgzlib";s:7:"content";s:0:"";s:12:"content_size";i:608;s:13:"content_lines";i:16;s:6:"atLine";i:3042;}i:85;a:6:{s:6:"header";s:26:"function getMd5Link($qa) {";s:11:"parentClass";s:9:"tx_sgzlib";s:7:"content";s:0:"";s:12:"content_size";i:483;s:13:"content_lines";i:15;s:6:"atLine";i:3065;}i:87;a:6:{s:6:"header";s:42:"function getJsAlert ($jsConf,$md5,$mode) {";s:11:"parentClass";s:9:"tx_sgzlib";s:7:"content";s:0:"";s:12:"content_size";i:465;s:13:"content_lines";i:12;s:6:"atLine";i:3089;}i:89;a:7:{s:6:"header";s:78:"function getDbBuildQuery ($dbName,$PCA,$piVarSearch,$markers=Array(),$dbg=0) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:5:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:12:"$dbName: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:17:"$piVarSearch: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:13:"$markers: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:9:"$dbg: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:5657;s:13:"content_lines";i:142;s:6:"atLine";i:3112;}i:91;a:7:{s:6:"header";s:63:"function getDbBuildSingleQuery ($dbName,$PCA,$key,$def,$text) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:5:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:12:"$dbName: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:9:"$key: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:9:"$def: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:10:"$text: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:5752;s:13:"content_lines";i:119;s:6:"atLine";i:3265;}i:93;a:7:{s:6:"header";s:60:"function getDbEnableColumns ($dbName,$PCA,$piVarSearch,$q) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:5:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:12:"$dbName: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:17:"$piVarSearch: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:13:"$markers: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:9:"$dbg: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:5414;s:13:"content_lines";i:123;s:6:"atLine";i:3395;}i:95;a:7:{s:6:"header";s:78:"function getDbBuildOrder ($dbName,$PCA,$piVarSearch,$markers=Array(),$dbg=0) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:5:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:12:"$dbName: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:17:"$piVarSearch: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:13:"$markers: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:9:"$dbg: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:585;s:13:"content_lines";i:23;s:6:"atLine";i:3529;}i:97;a:7:{s:6:"header";s:78:"function getDbBuildGroup ($dbName,$PCA,$piVarSearch,$markers=Array(),$dbg=0) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:5:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:12:"$dbName: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:17:"$piVarSearch: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:13:"$markers: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:9:"$dbg: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:585;s:13:"content_lines";i:23;s:6:"atLine";i:3563;}i:99;a:7:{s:6:"header";s:60:"function getDbHeaders ($dbName,$PCA,$markers=Array(),$dbg) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:4:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:12:"$dbName: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:13:"$markers: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:9:"$dbg: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:982;s:13:"content_lines";i:26;s:6:"atLine";i:3596;}i:101;a:7:{s:6:"header";s:74:"function getDbRow ($dbName,$n,$row,&$PCA, $markers=Array(),$em=0,$dbg=0) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:7:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:12:"$dbName: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:7:"$n: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:9:"$row: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:13:"$markers: ...";}i:5;a:2:{i:0;s:6:"[type]";i:1;s:8:"$em: ...";}i:6;a:2:{i:0;s:6:"[type]";i:1;s:9:"$dbg: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:23415;s:13:"content_lines";i:439;s:6:"atLine";i:3635;}i:103;a:7:{s:6:"header";s:45:"function getDbFieldLink ($PCA,$m,$row,$key) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:4:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:7:"$m: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:9:"$row: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:9:"$key: ...";}}s:6:"return";a:2:{i:0;s:9:"[boolean]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:3187;s:13:"content_lines";i:95;s:6:"atLine";i:4084;}i:105;a:7:{s:6:"header";s:59:"function checkDbRowForSave ($dbName,&$row,&$PCA,&$errors) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:4:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:12:"$dbName: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:9:"$row: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:12:"$errors: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:11179;s:13:"content_lines";i:212;s:6:"atLine";i:4189;}i:107;a:7:{s:6:"header";s:49:"function saveRowToDb ($dbName,&$myPiVars,&$PCA) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:12:"$dbName: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:14:"$myPiVars: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:9519;s:13:"content_lines";i:224;s:6:"atLine";i:4410;}i:109;a:7:{s:6:"header";s:40:"function dateTimeStringToTime($myDate) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:12:"$myDate: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:290;s:13:"content_lines";i:15;s:6:"atLine";i:4641;}i:111;a:7:{s:6:"header";s:65:"function dateStringToTime($myDate,$hour=-1,$minute=0,$second=1) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:4:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:12:"$myDate: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:10:"$hour: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:12:"$minute: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:12:"$second: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:733;s:13:"content_lines";i:23;s:6:"atLine";i:4666;}i:113;a:7:{s:6:"header";s:36:"function timeStringToTime($myTime) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:12:"$myTime: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:495;s:13:"content_lines";i:14;s:6:"atLine";i:4696;}i:115;a:6:{s:6:"header";s:31:"function formatDate ($myTime) {";s:11:"parentClass";s:9:"tx_sgzlib";s:7:"content";s:0:"";s:12:"content_size";i:136;s:13:"content_lines";i:4;s:6:"atLine";i:4717;}i:117;a:6:{s:6:"header";s:35:"function formatDateTime ($myTime) {";s:11:"parentClass";s:9:"tx_sgzlib";s:7:"content";s:0:"";s:12:"content_size";i:142;s:13:"content_lines";i:4;s:6:"atLine";i:4728;}i:119;a:6:{s:6:"header";s:31:"function formatTime ($myTime) {";s:11:"parentClass";s:9:"tx_sgzlib";s:7:"content";s:0:"";s:12:"content_size";i:130;s:13:"content_lines";i:6;s:6:"atLine";i:4739;}i:121;a:7:{s:6:"header";s:47:"function dateCompareString ($myDate,$myFName) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:12:"$myDate: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:13:"$myFName: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:3345;s:13:"content_lines";i:115;s:6:"atLine";i:4753;}i:123;a:7:{s:6:"header";s:53:"function checkForLogMail ($mailConf,$mailMode,$dbg) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:14:"$mailConf: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:14:"$mailMode: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:9:"$dbg: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:2523;s:13:"content_lines";i:52;s:6:"atLine";i:4877;}i:125;a:7:{s:6:"header";s:67:"function sendLogMail ($PCA,$mailMode,$row,$oldrow=Array(),$dbg=0) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:5:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:14:"$mailMode: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:9:"$row: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:12:"$oldrow: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:9:"$dbg: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:5401;s:13:"content_lines";i:115;s:6:"atLine";i:4940;}i:127;a:8:{s:6:"header";s:84:"function getAddButton ($jsCode='',$hrefCode='',$bigMode=0,$lockMode=0,$message='') {";s:11:"parentClass";s:9:"tx_sgzlib";s:11:"sectionText";a:1:{i:0;s:16:"Button Functions";}s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:5:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:12:"$jsCode: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:14:"$hrefCode: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:13:"$bigMode: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:14:"$lockMode: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:13:"$message: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:533;s:13:"content_lines";i:19;s:6:"atLine";i:5064;}i:129;a:7:{s:6:"header";s:78:"function getAddEntryButton ($jsCode='',$hrefCode='',$lockMode=0,$message='') {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:4:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:12:"$jsCode: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:14:"$hrefCode: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:13:"$bigMode: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:13:"$message: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:519;s:13:"content_lines";i:17;s:6:"atLine";i:5091;}i:131;a:7:{s:6:"header";s:141:"function getEditButton ($jsCode='',$hrefCode='',$bigMode=0,$myHiddenState,$myOwner,$myLocked=0,$editAsNew=0,$row=Array(),$isLocked=Array()) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:9:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:12:"$jsCode: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:14:"$hrefCode: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:13:"$bigMode: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:19:"$myHiddenState: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:13:"$myOwner: ...";}i:5;a:2:{i:0;s:6:"[type]";i:1;s:14:"$myLocked: ...";}i:6;a:2:{i:0;s:6:"[type]";i:1;s:15:"$editAsNew: ...";}i:7;a:2:{i:0;s:6:"[type]";i:1;s:9:"$row: ...";}i:8;a:2:{i:0;s:6:"[type]";i:1;s:14:"$isLocked: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:2309;s:13:"content_lines";i:54;s:6:"atLine";i:5123;}i:133;a:7:{s:6:"header";s:92:"function getXtraEditButton ($jsCode='',$hrefCode='',$bigMode=0,$myHiddenState,$myXtraUser) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:5:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:12:"$jsCode: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:14:"$hrefCode: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:13:"$bigMode: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:19:"$myHiddenState: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:13:"$myOwner: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:426;s:13:"content_lines";i:15;s:6:"atLine";i:5188;}i:135;a:7:{s:6:"header";s:101:"function getViewButton ($jsCode='',$hrefCode='',$bigMode=0,$myHiddenState,$myOwner,$params=Array()) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:6:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:12:"$jsCode: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:14:"$hrefCode: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:13:"$bigMode: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:19:"$myHiddenState: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:13:"$myOwner: ...";}i:5;a:2:{i:0;s:6:"[type]";i:1;s:12:"$params: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:637;s:13:"content_lines";i:18;s:6:"atLine";i:5215;}i:137;a:7:{s:6:"header";s:96:"function getViewTitle ($jsCode='',$hrefCode='',$title,$myHiddenState,$myOwner,$params=Array()) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:6:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:12:"$jsCode: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:14:"$hrefCode: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:11:"$title: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:19:"$myHiddenState: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:13:"$myOwner: ...";}i:5;a:2:{i:0;s:6:"[type]";i:1;s:12:"$params: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:607;s:13:"content_lines";i:17;s:6:"atLine";i:5245;}i:139;a:7:{s:6:"header";s:30:"function getFormSaveButton() {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:510;s:13:"content_lines";i:13;s:6:"atLine";i:5268;}i:141;a:7:{s:6:"header";s:32:"function getFormReloadButton() {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:156;s:13:"content_lines";i:4;s:6:"atLine";i:5287;}i:143;a:7:{s:6:"header";s:32:"function getFormUpdateButton() {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:156;s:13:"content_lines";i:4;s:6:"atLine";i:5297;}i:145;a:7:{s:6:"header";s:64:"function getFormCancelButton($myPage,$entryParam,$closeMode=0) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:12:"$myPage: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:16:"$entryParam: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:15:"$closeMode: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:393;s:13:"content_lines";i:12;s:6:"atLine";i:5310;}i:147;a:7:{s:6:"header";s:111:"function getHiddenStateSwitch ($myState,$myPage,$uid,$wordparam,$myOwner,$row=Array(),$noText=0,$PCA=Array()) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:8:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:13:"$myState: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:12:"$myPage: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:9:"$uid: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:15:"$wordparam: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:13:"$myOwner: ...";}i:5;a:2:{i:0;s:6:"[type]";i:1;s:9:"$row: ...";}i:6;a:2:{i:0;s:6:"[type]";i:1;s:12:"$noText: ...";}i:7;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1621;s:13:"content_lines";i:36;s:6:"atLine";i:5336;}i:149;a:7:{s:6:"header";s:101:"function getDeleteButton($myHiddenState,$myPage,$uid,$wordparam,$myOwner,$myParams='',$row=Array()) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:7:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:19:"$myHiddenState: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:12:"$myPage: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:9:"$uid: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:15:"$wordparam: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:13:"$myOwner: ...";}i:5;a:2:{i:0;s:6:"[type]";i:1;s:14:"$myParams: ...";}i:6;a:2:{i:0;s:6:"[type]";i:1;s:9:"$row: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1505;s:13:"content_lines";i:38;s:6:"atLine";i:5385;}i:151;a:8:{s:6:"header";s:77:"function addFileLink ($PCA,$field,$listmode='unknown',$mode=0,$row=Array()) {";s:11:"parentClass";s:9:"tx_sgzlib";s:11:"sectionText";a:1:{i:0;s:51:"Functions vor JavaScript FE-Editing and Searchforms";}s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:5:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:11:"$field: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:14:"$listmode: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:10:"$mode: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:15:"$winparams: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1672;s:13:"content_lines";i:50;s:6:"atLine";i:5434;}i:153;a:7:{s:6:"header";s:53:"function addDbLink ($PCA,$field,$mode,$row=Array()) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:4:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:11:"$field: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:10:"$mode: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:9:"$row: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:2410;s:13:"content_lines";i:71;s:6:"atLine";i:5494;}i:155;a:7:{s:6:"header";s:61:"function addListModify ($PCA,$varname,$mode='Up',$idMode=0) {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:4:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:9:"$PCA: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:13:"$varname: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:10:"$mode: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:12:"$idMode: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:926;s:13:"content_lines";i:21;s:6:"atLine";i:5575;}i:157;a:7:{s:6:"header";s:24:"function autoInsert () {";s:11:"parentClass";s:9:"tx_sgzlib";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:6417;s:13:"content_lines";i:188;s:6:"atLine";i:5602;}i:159;a:8:{s:6:"header";s:79:"function getImportFile ($filename,$mincount,$delim="\t",$concat=1,$recode='') {";s:11:"parentClass";s:9:"tx_sgzlib";s:11:"sectionText";a:1:{i:0;s:20:"Functions for Import";}s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:5:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:14:"$filename: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:14:"$mincount: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:11:"$delim: ...";}i:3;a:2:{i:0;s:6:"[type]";i:1;s:12:"$concat: ...";}i:4;a:2:{i:0;s:6:"[type]";i:1;s:12:"$recode: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:2812;s:13:"content_lines";i:71;s:6:"atLine";i:5799;}i:161;a:5:{s:6:"header";s:44:"function getHiddenText($PCA,$row,$mode='') {";s:11:"parentClass";s:9:"tx_sgzlib";s:11:"sectionText";a:1:{i:0;s:17:"General Functions";}s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:17:"text or array ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:9:"$row: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:10:"$mode: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:6:"atLine";i:5877;}i:163;a:6:{s:6:"header";s:33:"function getImageDownloadLink() {";s:11:"parentClass";s:9:"tx_sgzlib";s:7:"content";s:0:"";s:12:"content_size";i:239;s:13:"content_lines";i:11;s:6:"atLine";i:5914;}}}s:14:"MD5_4625282856";a:4:{s:8:"filename";s:42:"classes/model/class.tx_sglib_modelbase.php";s:8:"filesize";i:47022;s:6:"header";a:5:{s:4:"text";s:1533:"
+
+
+PHP versions 5
+
+ (c) 2007-2010 Stefan Geith (typo3devYYYY@geithware.de)
+
+LICENSE:
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+*
+
+-----------------------------------------------------------------------
+
+On Creation of this Object, we need the following Data:
+- Information, if parent is cached (=1) or not
+- plugin.tx_myplugin.tx_mytable - Information
+
+Then we need optional information:
+- Search-Parameters (default empty)
+- Order-Parameters (default empty)
+- Group-Parameters (default empty)
+- Pager-Parameters: maxPP (default 10000), pg (default 1)
+- Should we list *all*, if no searchquery is given (default no)
+
+Then we can perform the Search
+
+Then we need to provide the folowing Information:
+- Total count of results
+- Count of result on active Page (pager)
+- The Row-Headers (= Names of the fields)
+- The Result-List (= data object)
+- Objects for all (used) references
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}s:5:"other";a:5:{i:0;s:17:"@package    TYPO3";i:1;s:19:"@subpackage sg_zlib";i:2;s:52:"@author     Stefan Geith (typo3devYYYY@geithware.de)";i:3;s:34:"@copyright  2007-2010 Stefan Geith";i:4;s:68:"@license    http://www.opensource.org/licenses/lgpl-license.php LGPL";}s:11:"other_index";a:5:{s:8:"@package";a:1:{i:0;s:6:"TYPO3 ";}s:11:"@subpackage";a:1:{i:0;s:8:"sg_zlib ";}s:7:"@author";a:1:{i:0;s:40:"Stefan Geith (typo3devYYYY@geithware.de)";}s:10:"@copyright";a:1:{i:0;s:22:"2007-2010 Stefan Geith";}s:8:"@license";a:1:{i:0;s:56:"http://www.opensource.org/licenses/lgpl-license.php LGPL";}}}s:3:"DAT";a:22:{i:1;a:8:{s:6:"header";s:48:"class tx_sglib_modelbase extends tx_sglib_data {";s:5:"class";i:1;s:11:"parentClass";s:18:"tx_sglib_modelbase";s:4:"cDat";a:3:{s:4:"text";s:1704:"
+
+[CLASS/FUNCTION INDEX of SCRIPT]
+
+
+
+  98: class tx_sglib_modelbase extends tx_sglib_data
+ 131:     public function __construct ($designator, tx_sglib_factory $factoryObj, $rootTable='', $mainTable='')
+ 164:     protected function init()
+
+             SECTION: Settings
+ 180:     public function showAllIfEmptySearch($mode)
+
+             SECTION: Setters
+ 197:     public function setPageBrowser($pageBrowser=NULL)
+ 209:     protected function setActivePage($value)
+ 222:     protected function setResultsPerPage($value)
+
+             SECTION: Info Getters
+ 241:     public function getTotalCount()
+ 250:     public function getPageBrowser()
+
+             SECTION: Getters
+ 267:     public function getRecords($selection=NULL, $referencesLevel=0)
+ 282:     public function getByIdlist(array $idList, $referencesLevel=0)
+
+             SECTION: Processors
+ 306:     public function readRecords($selection=NULL, $referencesLevel=0)
+ 387:     protected function getAllReferencedData($referencesLevel)
+ 425:     protected function getSingleReference($fieldname,$table,$referencesLevel)
+ 456:     protected function getListReference($fieldname,$table,$referencesLevel)
+ 489:     protected function getListMMReference($fieldname,$table,$referencesLevel)
+ 501:     protected function getInlineReference($fieldname,$table,$referencesLevel)
+ 531:     protected function getInlineMMReference($fieldname,$table,$referencesLevel)
+ 543:     public function setSearchParams($searchParams)
+ 557:     public function getDebugArray()
+ 604:     function setWhereRestrict($params)
+ 637:     function clearExtraParams($params)
+
+TOTAL FUNCTIONS: 21
+(This index is automatically created/updated by the extension "extdeveval")
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:767;s:13:"content_lines";i:31;s:6:"atLine";i:96;}i:3;a:6:{s:6:"header";s:103:"public function __construct ($designator, tx_sglib_factory $factoryObj, $rootTable='', $mainTable='') {";s:11:"parentClass";s:18:"tx_sglib_modelbase";s:7:"content";s:0:"";s:12:"content_size";i:631;s:13:"content_lines";i:27;s:6:"atLine";i:129;}i:5;a:7:{s:6:"header";s:27:"protected function init() {";s:11:"parentClass";s:18:"tx_sglib_modelbase";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:282;s:13:"content_lines";i:9;s:6:"atLine";i:162;}i:7;a:8:{s:6:"header";s:45:"public function showAllIfEmptySearch($mode) {";s:11:"parentClass";s:18:"tx_sglib_modelbase";s:11:"sectionText";a:1:{i:0;s:8:"Settings";}s:4:"cDat";a:3:{s:4:"text";s:66:"
+
+Option: Load all IconSources, if no search-parameters are given
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:7:"boolean";i:1;s:37:"$mode: true, if all should be loaded,";}}s:6:"return";a:2:{i:0;s:4:"void";i:1;s:0:"";}}s:7:"content";s:0:"";s:12:"content_size";i:293;s:13:"content_lines";i:10;s:6:"atLine";i:178;}i:9;a:8:{s:6:"header";s:51:"public function setPageBrowser($pageBrowser=NULL) {";s:11:"parentClass";s:18:"tx_sglib_modelbase";s:11:"sectionText";a:1:{i:0;s:7:"Setters";}s:4:"cDat";a:3:{s:4:"text";s:20:"
+
+Set a Pagebrowser
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"object";i:1;s:19:"$value: pageBrowser";}}s:6:"return";a:2:{i:0;s:4:"void";i:1;s:0:"";}}s:7:"content";s:0:"";s:12:"content_size";i:228;s:13:"content_lines";i:5;s:6:"atLine";i:195;}i:11;a:7:{s:6:"header";s:42:"protected function setActivePage($value) {";s:11:"parentClass";s:18:"tx_sglib_modelbase";s:4:"cDat";a:3:{s:4:"text";s:31:"
+
+Set active page to be loaded
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:3:"int";i:1;s:12:"$value: page";}}s:6:"return";a:2:{i:0;s:4:"void";i:1;s:0:"";}}s:7:"content";s:0:"";s:12:"content_size";i:86;s:13:"content_lines";i:6;s:6:"atLine";i:207;}i:13;a:7:{s:6:"header";s:46:"protected function setResultsPerPage($value) {";s:11:"parentClass";s:18:"tx_sglib_modelbase";s:4:"cDat";a:3:{s:4:"text";s:51:"
+
+Sets the number of results to be loaded per page
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:3:"int";i:1;s:34:"$value: number of results per page";}}s:6:"return";a:2:{i:0;s:4:"void";i:1;s:0:"";}}s:7:"content";s:0:"";s:12:"content_size";i:314;s:13:"content_lines";i:13;s:6:"atLine";i:220;}i:15;a:8:{s:6:"header";s:33:"public function getTotalCount() {";s:11:"parentClass";s:18:"tx_sglib_modelbase";s:11:"sectionText";a:1:{i:0;s:12:"Info Getters";}s:4:"cDat";a:3:{s:4:"text";s:45:"
+
+Retuns count of iconsources in this object
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:3:"int";i:1;s:27:"count of iconDirect_sources";}}s:7:"content";s:0:"";s:12:"content_size";i:35;s:13:"content_lines";i:3;s:6:"atLine";i:239;}i:17;a:7:{s:6:"header";s:34:"public function getPageBrowser() {";s:11:"parentClass";s:18:"tx_sglib_modelbase";s:4:"cDat";a:3:{s:4:"text";s:56:"
+
+Get the pageBrowser, previously set by setPageBrowser
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"object";i:1;s:11:"pageBrowser";}}s:7:"content";s:0:"";s:12:"content_size";i:254;s:13:"content_lines";i:9;s:6:"atLine";i:248;}i:19;a:8:{s:6:"header";s:65:"public function getRecords($selection=NULL, $referencesLevel=0) {";s:11:"parentClass";s:18:"tx_sglib_modelbase";s:11:"sectionText";a:1:{i:0;s:7:"Getters";}s:4:"cDat";a:3:{s:4:"text";s:68:"
+
+Get selected records; If none selected, get Records by $selection
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:5:"mixed";i:1;s:10:"$selection";}i:1;a:2:{i:0;s:3:"int";i:1;s:16:"$referencesLevel";}}s:6:"return";a:2:{i:0;s:18:"tx_sglib_modelbase";i:1;s:0:"";}}s:7:"content";s:0:"";s:12:"content_size";i:104;s:13:"content_lines";i:7;s:6:"atLine";i:265;}i:21;a:7:{s:6:"header";s:64:"public function getByIdlist(array $idList, $referencesLevel=0) {";s:11:"parentClass";s:18:"tx_sglib_modelbase";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+Get Records by $idList
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:5:"array";i:1;s:7:"$idList";}i:1;a:2:{i:0;s:3:"int";i:1;s:16:"$referencesLevel";}}s:6:"return";a:2:{i:0;s:18:"tx_sglib_modelbase";i:1;s:0:"";}}s:7:"content";s:0:"";s:12:"content_size";i:446;s:13:"content_lines";i:18;s:6:"atLine";i:280;}i:23;a:8:{s:6:"header";s:66:"public function readRecords($selection=NULL, $referencesLevel=0) {";s:11:"parentClass";s:18:"tx_sglib_modelbase";s:11:"sectionText";a:1:{i:0;s:10:"Processors";}s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:15:"$selection: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:21:"$referencesLevel: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:3472;s:13:"content_lines";i:74;s:6:"atLine";i:304;}i:25;a:7:{s:6:"header";s:59:"protected function getAllReferencedData($referencesLevel) {";s:11:"parentClass";s:18:"tx_sglib_modelbase";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:21:"$referencesLevel: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1342;s:13:"content_lines";i:29;s:6:"atLine";i:385;}i:27;a:7:{s:6:"header";s:75:"protected function getSingleReference($fieldname,$table,$referencesLevel) {";s:11:"parentClass";s:18:"tx_sglib_modelbase";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:15:"$fieldname: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:21:"$referencesLevel: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:606;s:13:"content_lines";i:22;s:6:"atLine";i:423;}i:29;a:7:{s:6:"header";s:73:"protected function getListReference($fieldname,$table,$referencesLevel) {";s:11:"parentClass";s:18:"tx_sglib_modelbase";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:15:"$fieldname: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:21:"$referencesLevel: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:763;s:13:"content_lines";i:24;s:6:"atLine";i:454;}i:31;a:7:{s:6:"header";s:75:"protected function getListMMReference($fieldname,$table,$referencesLevel) {";s:11:"parentClass";s:18:"tx_sglib_modelbase";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:15:"$fieldname: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:21:"$referencesLevel: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:152;s:13:"content_lines";i:3;s:6:"atLine";i:487;}i:33;a:7:{s:6:"header";s:75:"protected function getInlineReference($fieldname,$table,$referencesLevel) {";s:11:"parentClass";s:18:"tx_sglib_modelbase";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:15:"$fieldname: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:21:"$referencesLevel: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1041;s:13:"content_lines";i:21;s:6:"atLine";i:499;}i:35;a:7:{s:6:"header";s:77:"protected function getInlineMMReference($fieldname,$table,$referencesLevel) {";s:11:"parentClass";s:18:"tx_sglib_modelbase";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:15:"$fieldname: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:11:"$table: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:21:"$referencesLevel: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:158;s:13:"content_lines";i:7;s:6:"atLine";i:529;}i:37;a:7:{s:6:"header";s:48:"public function setSearchParams($searchParams) {";s:11:"parentClass";s:18:"tx_sglib_modelbase";s:4:"cDat";a:3:{s:4:"text";s:1:"
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:18:"$searchParams: ...";}}s:6:"return";a:2:{i:0;s:16:"tx_trails_tracks";i:1;s:19:"Instantiated Object";}}s:7:"content";s:0:"";s:12:"content_size";i:258;s:13:"content_lines";i:8;s:6:"atLine";i:541;}i:39;a:7:{s:6:"header";s:33:"public function getDebugArray() {";s:11:"parentClass";s:18:"tx_sglib_modelbase";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:721;s:13:"content_lines";i:40;s:6:"atLine";i:555;}i:41;a:4:{s:6:"header";s:36:"function setWhereRestrict($params) {";s:11:"parentClass";s:18:"tx_sglib_modelbase";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:12:"$params: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:6:"atLine";i:602;}i:43;a:7:{s:6:"header";s:36:"function clearExtraParams($params) {";s:11:"parentClass";s:18:"tx_sglib_modelbase";s:4:"cDat";a:3:{s:4:"text";s:25:"
+
+[Describe function...]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:12:"$params: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:26964;s:13:"content_lines";i:746;s:6:"atLine";i:635;}}}}}

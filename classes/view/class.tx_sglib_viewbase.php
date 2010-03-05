@@ -76,6 +76,9 @@ abstract class tx_sglib_viewbase  {
 	protected $cached;
 	protected $registeredFunctions = Array();
 	protected $output = NULL;
+	public $selectsToDefault = Array();
+	public $redirectToDefault = Array();
+	public $setToFirstIfOnly = 0;
 
 	function __construct ($designator, $factoryObj, $model, $cached) {
 		$this->designator = $designator;
@@ -298,23 +301,42 @@ abstract class tx_sglib_viewbase  {
 				$defParams[$this->designator.'[search]['.$key.']'] = $pValue;
 			}
 			//for (reset($myItems);$key=key($myItems);next($myItems)) {
+			$thisIsTheDefault = 0;
+			$cnt = 0;
+			foreach ($myItems as $key=>$iValue) {
+				if (!$thisIsTheDefault && $key) {
+					$thisIsTheDefault = $key;
+				}
+				if ($key) {
+					$cnt ++;
+				}
+			}
+			if ($thisIsTheDefault>0 && $cnt==1) {
+				$this->selectsToDefault[$field] = $thisIsTheDefault;
+				if ($this->setToFirstIfOnly) {
+					$value = $thisIsTheDefault;
+				}
+				// t3lib_div::debug(Array('$this->selectsToDefault'=>$this->selectsToDefault, 'File:Line'=>__FILE__.':'.__LINE__));
+			}
 			foreach ($myItems as $key=>$iValue) {
 				$lnr++;
-				$vValue = urlencode((substr($key,-1)=='.') ? substr($key,0,-1) : $key);
-				//TODO// $itemText = $this->itemsObj->getItemText('search',$lnr,$field,$myItems,$key,$PCA);
-				$itemText = $iValue['title'];
-				if (strlen($value)>0) {
-					$tmpItems .= TAB.$wrap[0].'<option '.($vValue==$value?'selected="selected" ':'').
-							' value="'.$vValue.'" '.$classname.'>'.$itemText.'</option>'.$wrap[1].CRLF;
-				} else {
-					$tmpItems .= TAB.$wrap[0].'<option '.(!$set?'selected="selected" ':'').
-							' value="'.$vValue.'" '.$classname.'>'.$itemText.'</option>'.$wrap[1].CRLF;
+				if (!$this->setToFirstIfOnly || $cnt!=1 || $key) {
+					$vValue = urlencode((substr($key,-1)=='.') ? substr($key,0,-1) : $key);
+					//TODO// $itemText = $this->itemsObj->getItemText('search',$lnr,$field,$myItems,$key,$PCA);
+					$itemText = $iValue['title'];
+					if (strlen($value)>0) {
+						$tmpItems .= TAB.$wrap[0].'<option '.($vValue==$value?'selected="selected" ':'').
+								' value="'.$vValue.'" '.$classname.'>'.$itemText.'</option>'.$wrap[1].CRLF;
+					} else {
+						$tmpItems .= TAB.$wrap[0].'<option '.(!$set?'selected="selected" ':'').
+								' value="'.$vValue.'" '.$classname.'>'.$itemText.'</option>'.$wrap[1].CRLF;
+						$set = true;
+					}
+					$myParams = $defParams;
+					$myParams[$this->designator.'[search]['.$field.']'] = $vValue;
+					$myConf['additionalParams'] = t3lib_div::implodeArrayForUrl('',$myParams,'',1);
+					$link_options[] = QT.$this->cObj->typoLink_URL($myConf).QT;
 				}
-				$myParams = $defParams;
-				$myParams[$this->designator.'[search]['.$field.']'] = $vValue;
-				$myConf['additionalParams'] = t3lib_div::implodeArrayForUrl('',$myParams,'',1);
-				$link_options[] = QT.$this->cObj->typoLink_URL($myConf).QT;
-				$set = true;
 			}
 			if (count($link_options)) {
 				$this->js_array = 'dl_'.$this->designator.' = new Array('.implode(',',$link_options).');';
@@ -333,6 +355,12 @@ abstract class tx_sglib_viewbase  {
 			}
 
 			$item .= $tmpItems.'</select>'.CRLF;
+
+			// check, if single hast to be autoselected
+			if ($thisIsTheDefault>0 && $cnt==1) {
+				$this->redirectToDefault[$field] = $link_options[0];
+			}
+
 			$item .= $wrapAll[1];
 		}
 		return ($item);

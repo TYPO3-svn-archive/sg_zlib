@@ -69,6 +69,53 @@ class tx_userfunction_constedit {
 	}
 	
 	/**
+	 * Builds a selection list of all frontend groups.
+	 * @param		array		Parameter array.  Contains fieldName and fieldValue.
+	 * @return		string		HTML output for form widget.
+	 */
+	function feGroupList($params) {
+		/* Pull the current fieldname and value from constants */
+		$fieldName = $params['fieldName'];
+		$fieldValue = $params['fieldValue'];
+		
+		/* Construct the SQL query */
+		$res = $GLOBALS['TYPO3_DB']->exec_selectQuery('*', 'fe_groups', '1=1'.t3lib_beFunc::deleteClause('fe_groups'));
+		
+		/* Build the HTML select tag */
+		$content = array();
+		$content[] = '<select name="'. $fieldName .'">';
+
+		if ($fieldValue<0) {
+			$content[] = '<option value="-1" selected="selected">ANY Usergroup</option>';
+		} else {
+			$content[] = '<option value="-1">ANY Usergroup</option>';
+		}
+
+		if (strcmp(intval($fieldValue),$fieldValue)==0 && $fieldValue==0) {
+			$content[] = '<option value="0" selected="selected">NO Usergroup</option>';
+		} else {
+			$content[] = '<option value="0">NO Usergroup</option>';
+		}
+
+		while($group = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			$label = t3lib_beFunc::getRecordTitle('fe_groups', $group);
+			
+			/* If the current user matches the field value, mark it as default */
+			if ($group['uid'] == $fieldValue) {
+				$selected = 'selected="selected"';
+			} else {
+				$selected = '';
+			}
+			
+			/* Build the option tag */
+			$content[] = '<option value="'. $group['uid'] .'" '. $selected .'>'.$label.'</option>';
+		}
+		$content[] = '</select>';
+		
+		return implode(chr(10), $content);
+	}
+
+	/**
 	 * Builds an input form that also includes the link popup wizard.
 	 * @param		array		Parameter array.  Contains fieldName and fieldValue.
 	 * @return		string		HTML output for form widget.

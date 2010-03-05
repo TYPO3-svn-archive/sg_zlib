@@ -22,6 +22,18 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+require_once(t3lib_extMgm::extPath('sg_zlib').'classes/viewhelpers/class.tx_sglib_viewhelpers_search.php');
+require_once(t3lib_extMgm::extPath('sg_zlib').'classes/viewhelpers/class.tx_sglib_viewhelpers_input.php');
+require_once(t3lib_extMgm::extPath('sg_zlib').'classes/viewhelpers/class.tx_sglib_viewhelpers_image.php');
+require_once(t3lib_extMgm::extPath('sg_zlib').'classes/viewhelpers/class.tx_sglib_viewhelpers_file.php');
+require_once(t3lib_extMgm::extPath('sg_zlib').'classes/viewhelpers/class.tx_sglib_viewhelpers_link.php');
+require_once(t3lib_extMgm::extPath('sg_zlib').'classes/viewhelpers/class.tx_sglib_viewhelpers_email.php');
+require_once(t3lib_extMgm::extPath('sg_zlib').'classes/viewhelpers/class.tx_sglib_viewhelpers_const.php');
+require_once(t3lib_extMgm::extPath('sg_zlib').'classes/viewhelpers/class.tx_sglib_viewhelpers_lll.php');
+require_once(t3lib_extMgm::extPath('sg_zlib').'classes/viewhelpers/class.tx_sglib_viewhelpers_obj.php');
+require_once(t3lib_extMgm::extPath('sg_zlib').'classes/viewhelpers/class.tx_sglib_viewhelpers_ref.php');
+require_once(t3lib_extMgm::extPath('sg_zlib').'classes/viewhelpers/class.tx_sglib_viewhelpers_wrap.php');
+
 /**
  * [CLASS/FUNCTION INDEX of SCRIPT]
  *
@@ -41,6 +53,8 @@
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
+
+
 class tx_sglib_markers {
 	private static $instance = Array();
 
@@ -51,14 +65,29 @@ class tx_sglib_markers {
 	protected $itemsObj;
 	protected $defaultDesignator;
 	protected $model;
+	protected $cObj;
 
 	protected $conf;
 	protected $mainTable;
 	protected $mainConf = Array();
 
+	protected $formName = '';
+	protected $lastLinkOK = false;
+
+	protected $viewHelpers = array();
+	protected $viewHelperSettings = Array();
+
 	protected function __construct() {}
 
 	private function __clone() {}
+
+	/**
+	 * Returns a singlton instance of tx_sglib_markers
+	 *
+	 * @param	string				Designator
+	 * @param	tx_sglib_factory	FactoryObj
+	 * @return	tx_sglib_markers	Instantiated Object
+	 */
 
 	public static function getInstance($designator, tx_sglib_factory $factoryObj) {
 		if (!isset(self::$instance[$designator])) {
@@ -84,6 +113,8 @@ class tx_sglib_markers {
 		$this->langObj = $factoryObj->langObj;
 		$this->itemsObj = $factoryObj->itemsObj;
 		$this->mainTable = $this->confObj->getTCAname();
+		$this->cObj = t3lib_div::makeInstance('tslib_cObj');
+
 	}
 
 	/**
@@ -127,18 +158,20 @@ class tx_sglib_markers {
 	 * @param	[type]		$nm: ...
 	 * @return	[type]		...
 	 */
-    public function __get($nm)
-    {
-		switch ($nm) {
+		public function __get($nm)
+		{
+		switch (strtolower($nm)) {
 			case 'model':
 				return ($this->model);
+			case 'formname':
+				return ($this->formName);
 			default:
 				$error = 'get("'.$nm.'") failed ... Variable unknown !!';
 				$this->debugObj->showError(0,$error,0,'','',1);
 				return ('');
 		}
 		return ('');
-    }
+		}
 
 	/**
 	 * [Describe function...]
@@ -149,9 +182,12 @@ class tx_sglib_markers {
 	 */
 	public function __set($nm, $val)
 	{
-		switch ($nm) {
+		switch (strtolower($nm)) {
 			case 'model':
 				$this->model = $val;
+				break;
+			case 'formname':
+				$this->formName = $val;
 				break;
 			default:
 				$error = 'set("'.$nm.'") failed ... Variable unknown !!';
@@ -160,6 +196,17 @@ class tx_sglib_markers {
 		}
 	}
 
+	public function viewHelperOptions($viewHelper,$name,$value=NULL) {
+		if (!is_array($this->viewHelperSettings[$viewHelper])) {
+			$this->viewHelperSettings[$viewHelper] = Array();
+		}
+
+		if (!is_null($value)) {
+			$this->viewHelperSettings[$viewHelper][$name] = $value;
+		}
+
+		return ($this->viewHelperSettings[$viewHelper][$name]);
+	}
 	/**
 	 * [Describe function...]
 	 *
@@ -167,13 +214,13 @@ class tx_sglib_markers {
 	 * @param	[type]		$markers: ...
 	 * @return	[type]		...
 	 */
-	public function getDescriptions($table='', $markers=array()) {
+	public function getDescriptions($table='', $markers=array(), $prefix='') {
 		$tmp = $this->confObj->getDescriptions($table);
 		if (is_array($tmp) && count($tmp)) foreach ($tmp as $key=>$value) {
 			if (is_array($value)) {
-				$markers['###DESCR_'.strtoupper($key).'###'] = $this->confObj->TSobj($value['name'],$value['conf']);
+				$markers['###DESCR_'.strtoupper(($prefix ? $prefix.'_' : '').$key).'###'] = $this->confObj->TSobj($value['name'],$value['conf']);
 			} else {
-				$markers['###DESCR_'.strtoupper($key).'###'] = $this->langObj->getLLL($value);
+				$markers['###DESCR_'.strtoupper(($prefix ? $prefix.'_' : '').$key).'###'] = $this->langObj->getLLL($value);
 			}
 		}
 		return ($markers);
@@ -265,13 +312,13 @@ class tx_sglib_markers {
 
 	/**
 	 * Adds markers for one data-field
-	 * 
+	 *
 	 * For every field, several markers are created:
 	 * DATA_xxx contais the original Data from the Model
 	 * TEXT_xxx contains a textual view of the data (means: references replaced to text)
 	 * FORM_xxx contains the form-field for entering Data                    @TODO
 	 * AUTO_xxx contains Text/Form, depending on the actual Mode of the view @TODO
-	 * 
+	 *
 	 *
 	 * @param	[type]		$fieldName: ...
 	 * @param	[type]		$value: ...
@@ -294,7 +341,7 @@ class tx_sglib_markers {
 //		if ($em>=SGZ_SEARCH && isset($PCA['search'][$field]['formtype'])) {
 //			$myType = strtolower($PCA['search'][$field]['formtype']);
 //		}
-		
+
 		switch($type)	{
 			case 'date':
 				$textValue = $value ? date('d.m.Y',$value) : '';
@@ -309,6 +356,64 @@ class tx_sglib_markers {
 
 		return ($textValue);
 	}
+
+
+	public function renderSpecialMarkers(array $markersList,$table,$row,array &$markers=NULL) {
+		// t3lib_div::debug(Array('$markersList'=>$markersList, 'File:Line'=>__FILE__.':'.__LINE__));
+		if (!is_array($markers)) {
+			$markers = Array();
+		}
+		foreach ($markersList as $specialMarker) {
+			$view = explode(':',$specialMarker,2);
+			$type = strtolower(trim($view[0]));
+			if (strcmp(trim($view[0]),strtoupper($type))==0) {
+				$endMode = false;
+				if (strncmp($type,'/',1)==0) {
+					$type = substr($type,1);
+					$endMode = true;
+				}
+				$parameters = trim($view[1]);
+
+				if ($type && !$this->viewHelpers[$type]) {
+					if (class_exists('tx_sglib_viewhelpers_'.$type)) {
+						$this->viewHelpers[$type] = t3lib_div::makeInstance('tx_sglib_viewhelpers_'.$type);
+						$this->viewHelpers[$type]->init($this->factoryObj,$this->formName,$type,$this->viewHelperSettings[$type]);
+					} else if ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sg_zlib']['viewhelpers'][strtoupper($type)]) {
+						$this->viewHelpers[$type] = t3lib_div::makeInstance($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sg_zlib']['viewhelpers'][strtoupper($type)]);
+						$this->viewHelpers[$type]->init($this->factoryObj,$this->formName,$type,$this->viewHelperSettings[$type]);
+					} else {
+						t3lib_div::debug(Array('ERROR: Viewhelper missing:'=>$type, 'File:Line'=>__FILE__.':'.__LINE__));
+					}
+				}
+
+				if ($type) {
+					if ($this->viewHelpers[$type]) {
+						$markers['###'.$specialMarker.'###'] = $endMode ?
+							$this->viewHelpers[$type]->renderClosingTag($table,$row,$parameters):
+							$this->viewHelpers[$type]->render($table,$row,$parameters);
+					} else {
+						$markers['###'.$specialMarker.'###'] = '[Marker ***'.$specialMarker.'*** viewhelper '.$type.' unbekannt]';
+					}
+				} else {
+					$markers['###'.$specialMarker.'###'] = '[Marker ***'.$specialMarker.'*** unbekannt]';
+				}
+
+			}
+		}
+	}
+
+	/***********************************************************************************************
+	 *
+	 * Magic Methods
+	 *
+	 ***********************************************************************************************/
+
+	public function __call ($name, array $arguments=Array()) {
+		t3lib_div::debug(Array('ERROR'=>'Function "$name" not implemented', 'Class'=>get_class($this), 'File:Line'=>__FILE__.':'.__LINE__));
+		return ('ERROR: method "'.get_class($this).'->'.$name.'(...)" does not exist. ');
+	}
+
+
 }
 
 

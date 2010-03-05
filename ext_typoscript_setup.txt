@@ -224,6 +224,37 @@ plugin.tx_sgzlib {
 }
 
 
+lib.tx_sgzlib {
+	pageBrowserCntPpBr {
+		entriesPerPage = 20
+		first = TEXT
+		first.insertData = 1
+		first.value = [{LLL:EXT:sg_zlib/locallang.xml:pb_first}]
+		last = TEXT
+		last.insertData = 1
+		last.value = [{LLL:EXT:sg_zlib/locallang.xml:pb_last}]
+		prev = TEXT
+		prev.insertData = 1
+		prev.value = [{LLL:EXT:sg_zlib/locallang.xml:pb_prevpage}]
+		next = TEXT
+		next.insertData = 1
+		next.value = [{LLL:EXT:sg_zlib/locallang.xml:pb_nextpage}]
+		divider = 10
+		around = 4
+		countText = TEXT
+		countText.insertData = 1
+		countText.value = {LLL:EXT:sg_zlib/locallang.xml:pb_counttext}
+		pageBrowser = TEXT
+		pageBrowser.insertData = 1
+		pageBrowser.value = ###COUNT### &nbsp; ###RESULTSPP### {LLL:EXT:sg_zlib/locallang.xml:pb_perPage}<br />###PAGES###<br /><br />
+
+		pageBrowserAlsoSingle = 1
+		showFirstLast = 1
+		gotoPageAlsoSingle = 0
+		userResPP = 5,10,20,50,100,200,500,1000
+	}
+}
+
 
 tx_sgzlib >
 tx_sgzlib = < plugin.tx_sgzlib

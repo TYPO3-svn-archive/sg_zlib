@@ -49,31 +49,44 @@
 class tx_sglib_params {
 	private static $instance = Array();
 
-	private $factoryObj = NULL;
-	private $confObj;
-	private $debugObj;
-	private $defaultDesignator;
-	private $params;
-	private $fileParams;
+	protected $factoryObj = NULL;
+	protected $confObj;
+	protected $debugObj;
+	protected $defaultDesignator;
+	protected $params;
+	protected $fileParams;
+	protected $uploads = Array();
 
-	private $conf=Array();
+	protected $conf=Array();
 
 	protected function __construct() {}
 
 	private function __clone() {}
 
 	/**
-	 * [Describe function...]
+	 * Returns a singlton instance of tx_sglib_params
 	 *
-	 * @param	[type]		$designator, tx_sglib_factory $factoryObj: ...
-	 * @return	[type]		...
+	 * @param	string				Designator
+	 * @param	tx_sglib_factory	FactoryObj
+	 * @return	tx_sglib_params	Instantiated Object
 	 */
+	
 	public static function getInstance($designator, tx_sglib_factory $factoryObj) {
 		if (!isset(self::$instance[$designator])) {
 			self::$instance[$designator] = new tx_sglib_params();
 			self::$instance[$designator]->init($factoryObj);
 		}
 		return (self::$instance[$designator]);
+	}
+
+	protected static function _GPmerged($parameter) {
+		$postParameter = is_array($_POST[$parameter]) ? $_POST[$parameter] : array();
+		$getParameter  = is_array($_GET[$parameter])  ? $_GET[$parameter]  : array();
+
+		$mergedParameters = t3lib_div::array_merge_recursive_overrule($getParameter, $postParameter);
+		t3lib_div::stripSlashesOnArray($mergedParameters);
+
+		return $mergedParameters;
 	}
 
 	/**
@@ -90,9 +103,14 @@ class tx_sglib_params {
 		$this->debugObj = $factoryObj->debugObj;
 
 		if ($this->defaultDesignator)	{
-			$this->params = t3lib_div::GParrayMerged($this->defaultDesignator);
+			$this->params = $this->_GPmerged($this->defaultDesignator);
 			$this->fileParams = (array) $_FILES[$this->defaultDesignator];
-			$this->uid = t3lib_div::_GP('uid');
+			$this->uid = htmlspecialchars(t3lib_div::_GP('uid'));
+		}
+
+		if (is_array($this->fileParams) && count($this->fileParams)) {
+			// t3lib_div::debug(Array('$this->fileParams'=>$this->fileParams, 'File:Line'=>__FILE__.':'.__LINE__));
+			$this->uploads = $this->processUploads($this->fileParams);
 		}
 	}
 
@@ -147,6 +165,16 @@ class tx_sglib_params {
 	function getPluginParams() {
 		return ($this->params);
 	}
+
+	/**
+	 * [Describe function...]
+	 *
+	 * @return	[type]		...
+	 */
+	function addPluginParams(array $myParams) {
+		$this->params = t3lib_div::array_merge_recursive_overrule($this->params, $myParams);
+	}
+
 	/**
 	 * [Describe function...]
 	 *
@@ -179,8 +207,8 @@ class tx_sglib_params {
 	 *
 	 * @return	[type]		...
 	 */
-	function getUid() {
-		$uid = (intval($this->params['uid'])) ? intval($this->params['uid']) : $this->uid;
+	function getUid($name='uid') {
+		$uid = htmlspecialchars((intval($this->params[$name])) ? intval($this->params[$name]) : t3lib_div::_GP($name));
 		return ($uid);
 	}
 
@@ -229,6 +257,37 @@ class tx_sglib_params {
 		return ($retVal);
 	}
 
+
+	public function getUploads($fieldname) {
+		return ($this->uploads[$fieldname]);
+	}
+
+	protected function processUploads($fileParams) {
+		$uploads = Array();
+		
+		if (is_array($fileParams['name'])) foreach ($fileParams['name'] as $fieldName=>$fileName) {
+			$uploads[$fieldName] = tx_sglib_fileupload::getInstance($fieldName,$this->factoryObj);
+			$uploads[$fieldName]->set($fileParams['name'][$fieldName], 
+					$fileParams['type'][$fieldName], 
+					$fileParams['tmp_name'][$fieldName], 
+					$fileParams['error'][$fieldName], 
+					$fileParams['size'][$fieldName]);
+		}
+
+		return ($uploads);
+	}
+
+
+	/***********************************************************************************************
+	 *
+	 * Magic Methods
+	 *
+	 ***********************************************************************************************/
+
+	public function __call ($name, array $arguments=Array()) {
+		t3lib_div::debug(Array('ERROR'=>'Function "$name" not implemented', 'Class'=>get_class($this), 'File:Line'=>__FILE__.':'.__LINE__));
+		return ('ERROR: method "'.get_class($this).'->'.$name.'(...)" does not exist. ');
+	}
 
 
 }

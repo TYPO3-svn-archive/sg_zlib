@@ -44,7 +44,7 @@ class tx_sgzlib_tcemainprocdm {
 		$query = 'parent IN ('.$parentList.')'.' AND deleted=0 AND hidden=0';
 		$order = 'uid';
 		$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('uid',$table,$query,'',$order);
-		// t3lib_div::debug(Array('count($rows)'=>count($rows), 'File:Line'=>__FILE__.':'.__LINE__));
+		// t3lib_div::debug(Array('count($rows)'=>count($rows), '$table'=>$table, '$query'=>$query, '$order'=>$order, 'File:Line'=>__FILE__.':'.__LINE__));
 		if (count($rows)) {
 			for ($i=0;$i<count($rows);$i++) {
 				$ll[$level][] = $rows[$i]['uid'];

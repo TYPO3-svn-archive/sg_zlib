@@ -2211,10 +2211,14 @@ class txsg_base_import extends txsg_base {
 			}
 			for ($i=0;$i<count($myValList);$i++) {
 				$myValList[$i] = $this->getMedia($myValList[$i],$myData,$settings,$errText,$errors,$isError,$isWarning);
+				$this->checkExtendedMedia($myValList[$i],$myData,$settings,$errText,$errors,$isError,$isWarning);
 			}
 			$myVal = implode(',',$myValList);
 		} 
 		return ($myVal);
+	}
+
+	function checkExtendedMedia($myVal,$myData,$settings,&$errText,&$errors,&$isError,&$isWarning) {
 	}
 
 	function getMedia($myVal,$myData,$settings,&$errText,&$errors,&$isError,&$isWarning) {

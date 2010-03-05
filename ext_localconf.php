@@ -29,6 +29,8 @@ if (TYPO3_MODE=='FE') {
 	define ('SGZLIB_SEARCHUSED', 8);
 	define ('SGZLIB_SEARCHUSEDPLUS', 9);
 
+	require_once(t3lib_extMgm::extPath('sg_zlib').'classes/tools/class.tx_sglib_json.php');
+
 	require_once(PATH_tslib.'class.tslib_pibase.php');
 	require_once(t3lib_extMgm::extPath('sg_zlib').'classes/essentials/class.tx_sglib_factory.php');
 	require_once(t3lib_extMgm::extPath('sg_zlib').'classes/essentials/class.tx_sglib_exceptions.php');
@@ -39,12 +41,20 @@ if (TYPO3_MODE=='FE') {
 	require_once(t3lib_extMgm::extPath('sg_zlib').'classes/lib/class.tx_sglib_data.php');
 	require_once(t3lib_extMgm::extPath('sg_zlib').'classes/lib/class.tx_sglib_debug.php');
 	require_once(t3lib_extMgm::extPath('sg_zlib').'classes/lib/class.tx_sglib_params.php');
+	require_once(t3lib_extMgm::extPath('sg_zlib').'classes/lib/class.tx_sglib_pagebrowser.php');
 	require_once(t3lib_extMgm::extPath('sg_zlib').'classes/lib/class.tx_sglib_permit.php');
 	require_once(t3lib_extMgm::extPath('sg_zlib').'classes/lib/class.tx_sglib_lang.php');
 	require_once(t3lib_extMgm::extPath('sg_zlib').'classes/lib/class.tx_sglib_template.php');
 	require_once(t3lib_extMgm::extPath('sg_zlib').'classes/lib/class.tx_sglib_items.php');
 	require_once(t3lib_extMgm::extPath('sg_zlib').'classes/lib/class.tx_sglib_markers.php');
+	require_once(t3lib_extMgm::extPath('sg_zlib').'classes/lib/class.tx_sglib_search.php');
+	require_once(t3lib_extMgm::extPath('sg_zlib').'classes/lib/class.tx_sglib_validate.php');
+	require_once(t3lib_extMgm::extPath('sg_zlib').'classes/lib/class.tx_sglib_fileupload.php');
 	require_once(t3lib_extMgm::extPath('sg_zlib').'classes/lib/class.tx_sgzlib.php');
+
+	require_once(t3lib_extMgm::extPath('sg_zlib').'classes/tools/class.tx_sglib_json.php');
+
+	require_once(t3lib_extMgm::extPath('sg_zlib').'classes/model/class.tx_sglib_modelbase.php');
 
 	//require_once(t3lib_extMgm::extPath('sg_zlib').'classes/model/class.tx_sgzlib_tcaObject.php');
 	//require_once(t3lib_extMgm::extPath('sg_zlib').'classes/model/class.tx_sgzlib_tcaObjectAccessor.php');
